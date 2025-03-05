@@ -43,7 +43,7 @@ math: false
             let ipv6Elem = document.getElementById("ipv6");
             
             ipv4Elem.textContent = response.ip;
-            ipv6Elem.textContent = response.ip;
+            ipv6Elem.textContent = response.ipv6;
             
             ipv4Elem.classList.add("show");
             ipv6Elem.classList.add("show");
