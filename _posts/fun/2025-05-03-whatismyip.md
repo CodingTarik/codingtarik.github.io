@@ -24,14 +24,15 @@ math: false
 <script>
     async function fetchIP() {
         try {
-            let ipv4 = await fetch("https://api64.ipify.org?format=json").then(res => res.json());
-            let ipv6 = await fetch("https://api6.ipify.org?format=json").then(res => res.json());
+            // Fetching the IP address from a single source
+            let response = await fetch("https://api64.ipify.org?format=json").then(res => res.json());
             
+            // Assigning the IP to both IPv4 and IPv6 (same IP for simplicity in this case)
             let ipv4Elem = document.getElementById("ipv4");
             let ipv6Elem = document.getElementById("ipv6");
             
-            ipv4Elem.textContent = ipv4.ip;
-            ipv6Elem.textContent = ipv6.ip;
+            ipv4Elem.textContent = response.ip;
+            ipv6Elem.textContent = response.ip;
             
             ipv4Elem.classList.add("show");
             ipv6Elem.classList.add("show");
