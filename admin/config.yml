@@ -73,7 +73,7 @@ collections:
           required: false
         }
   - name: "cs"
-    label: "Compiter Science"
+    label: "Computer Science"
     folder: "_posts/cs"
     nested:
       depth: 2
