@@ -1,7 +1,7 @@
 ---
 title: Color Palette Generator for Your Designs
 description: Generate beautiful color combinations for your projects.
-date: 2025-03-06T12:00:00.000Z
+date: 2025-03-06T11:00:00.000Z
 tags:
   - Tools
   - Design

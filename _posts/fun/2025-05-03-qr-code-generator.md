@@ -1,7 +1,7 @@
 ---
 title: QR Code Generator
 description: Generate QR codes for URLs, Text, WiFi, and vCards.
-date: 2025-03-06T10:00:00.000Z
+date: 2025-03-06T2:02:00.000Z
 tags:
   - tools
   - technology

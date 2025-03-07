@@ -1,7 +1,7 @@
 ---
 title: Emoji Nachricht Kodierer
 description: Verstecke deine Nachricht in Emojis!
-date: 2025-03-06T10:00:00.000Z
+date: 2025-03-06T4:00:00.000Z
 tags:
   - emoji
   - coding
