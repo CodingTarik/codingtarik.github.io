@@ -201,3 +201,5 @@ jekyll-archives:
     category: /categories/:name/
 
 future: true
+
+google_adsense: '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5652820658752575" crossorigin="anonymous"></script>'

@@ -96,4 +96,9 @@
   {% endunless %}
 
   {% include metadata-hook.html %}
+  
+  {% if site.google_adsense %}
+	{{ site.google_adsense | safe }}
+  {% endif %}
+
 </head>
