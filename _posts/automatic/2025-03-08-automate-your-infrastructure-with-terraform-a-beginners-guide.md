@@ -1,6 +1,5 @@
 ---
 title: Automate Your Infrastructure with Terraform: A Beginner's Guide
-description:
 date: 2025-03-08T19:37:31.000Z
 categories:
   - DevOps
