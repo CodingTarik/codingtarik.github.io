@@ -2,8 +2,12 @@
 title: "Functional Interfaces in Java: A Comprehensive Guide"
 description: "Understanding the role and benefits of functional interfaces in Java, especially in the context of lambda expressions and functional programming paradigms."
 date: 2025-03-08T18:37:27.477Z
-categories: [Java, Programming, Functional Programming]
-tags: [Java, Functional Interface, Lambda Expressions, Programming]
+categories: 
+  - Java
+  - Programming
+  - Functional Programming
+tags:
+  - Java
 ---
 
 # Functional Interfaces in Java: A Comprehensive Guide
