@@ -74,7 +74,7 @@ function VideoPlayer({ videoUrl, onClose }) {
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-stone-700">
           <h3 className="text-xl font-bold text-white">
-            📹 Video Playback
+            📹 Video
           </h3>
           <button
             onClick={onClose}
@@ -135,7 +135,7 @@ function VideoPlayer({ videoUrl, onClose }) {
             {/* Speed Controls */}
             <div className="flex items-center gap-2">
               <Gauge size={20} className="text-stone-400" />
-              <span className="text-sm text-stone-400 mr-2">Speed:</span>
+              <span className="text-sm text-stone-400 mr-2">⚡</span>
               {speeds.map(speed => (
                 <button
                   key={speed}
@@ -156,12 +156,12 @@ function VideoPlayer({ videoUrl, onClose }) {
           <div className="mt-4 text-center">
             {playbackSpeed < 1 && (
               <div className="text-orange-400 text-sm font-semibold">
-                🐌 Slow Motion: {playbackSpeed}x
+                🐌 Slow-Mo: {playbackSpeed}x
               </div>
             )}
             {playbackSpeed > 1 && (
               <div className="text-teal-400 text-sm font-semibold">
-                ⚡ Fast Forward: {playbackSpeed}x
+                ⚡ Fast: {playbackSpeed}x
               </div>
             )}
           </div>

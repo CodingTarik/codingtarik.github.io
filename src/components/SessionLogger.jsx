@@ -4,7 +4,7 @@ import { createSession, addBoulder } from '../utils/sessionStorage';
 import { useLanguage } from '../context/LanguageContext';
 
 function SessionLogger({ onComplete, onCancel }) {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   const [sessionDuration, setSessionDuration] = useState('');
   const [sessionFeeling, setSessionFeeling] = useState(5);
   const [sessionNotes, setSessionNotes] = useState('');
@@ -65,7 +65,7 @@ function SessionLogger({ onComplete, onCancel }) {
 
   const addCurrentBoulder = () => {
     if (!currentBoulder.grade) {
-      alert('Bitte wähle einen Grad!');
+      alert(t('pleaseSelectGrade'));
       return;
     }
 
@@ -89,7 +89,7 @@ function SessionLogger({ onComplete, onCancel }) {
 
   const handleSaveSession = () => {
     if (!sessionDuration) {
-      alert('Bitte gib die Session-Dauer ein!');
+      alert(t('pleaseEnterDuration'));
       return;
     }
 
@@ -115,20 +115,20 @@ function SessionLogger({ onComplete, onCancel }) {
   return (
     <div className="max-w-2xl mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-stone-800 dark:text-stone-100 mb-6">
-        📝 {language === 'de' ? 'Session Logger' : 'Session Logger'}
+        📝 {t('sessionLogger')}
       </h1>
 
       {/* Session Details */}
       <div className="bg-white dark:bg-stone-800 rounded-lg shadow-md p-6 mb-6">
         <h2 className="text-xl font-bold text-stone-800 dark:text-stone-100 mb-4">
-          {language === 'de' ? 'Session Details' : 'Session Details'}
+          {t('sessionDetails')}
         </h2>
 
         {/* Duration */}
         <div className="mb-4">
           <label className="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-2">
             <Clock size={16} className="inline mr-2" />
-            {language === 'de' ? 'Dauer (Minuten)' : 'Duration (Minutes)'}
+            {t('durationMinutes')}
           </label>
           <input
             type="number"
@@ -142,7 +142,7 @@ function SessionLogger({ onComplete, onCancel }) {
         {/* Feeling */}
         <div className="mb-4">
           <label className="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-2">
-            {language === 'de' ? 'Wie fühlst du dich? (1-10)' : 'How do you feel? (1-10)'}
+            {t('howDoYouFeel')}
           </label>
           <div className="flex gap-2">
             {[1,2,3,4,5,6,7,8,9,10].map(num => (
@@ -165,12 +165,12 @@ function SessionLogger({ onComplete, onCancel }) {
         <div>
           <label className="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-2">
             <MessageSquare size={16} className="inline mr-2" />
-            {language === 'de' ? 'Notizen' : 'Notes'}
+            {t('notes')}
           </label>
           <textarea
             value={sessionNotes}
             onChange={(e) => setSessionNotes(e.target.value)}
-            placeholder={language === 'de' ? 'Wie war die Session? Was lief gut/schlecht?' : 'How was the session? What went well/badly?'}
+            placeholder={t('sessionNotes')}
             rows={3}
             className="w-full px-4 py-2 border-2 border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-800 dark:text-stone-100 rounded-lg focus:border-teal-500 focus:outline-none resize-none"
           />
@@ -181,20 +181,20 @@ function SessionLogger({ onComplete, onCancel }) {
       <div className="bg-white dark:bg-stone-800 rounded-lg shadow-md p-6 mb-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-bold text-stone-800 dark:text-stone-100">
-            {language === 'de' ? 'Gekletterte Boulder' : 'Climbed Boulders'} ({boulders.length})
+            {t('climbedBoulders')} ({boulders.length})
           </h2>
           <button
             onClick={() => setShowBoulderForm(true)}
             className="bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors flex items-center gap-2"
           >
             <Plus size={20} />
-            {language === 'de' ? 'Boulder hinzufügen' : 'Add Boulder'}
+            {t('addBoulder')}
           </button>
         </div>
 
         {boulders.length === 0 ? (
           <p className="text-stone-500 dark:text-stone-400 text-center py-8">
-            {language === 'de' ? 'Noch keine Boulder geloggt' : 'No boulders logged yet'}
+            {t('noBoulders')}
           </p>
         ) : (
           <div className="space-y-3">
@@ -205,7 +205,7 @@ function SessionLogger({ onComplete, onCancel }) {
                     <span className="text-2xl font-bold text-teal-600">{boulder.grade}</span>
                     {boulder.sent && <span className="bg-green-500 text-white px-2 py-1 rounded text-xs font-semibold">✓ SENT</span>}
                     {boulder.flash && <span className="bg-yellow-500 text-white px-2 py-1 rounded text-xs font-semibold">⚡ FLASH</span>}
-                    <span className="text-sm text-stone-600 dark:text-stone-400">{boulder.attempts} {language === 'de' ? 'Versuche' : 'attempts'}</span>
+                    <span className="text-sm text-stone-600 dark:text-stone-400">{boulder.attempts} {t('attempts')}</span>
                   </div>
                   <div className="flex items-center gap-2 mb-2">
                     {[...Array(5)].map((_, i) => (
@@ -244,14 +244,14 @@ function SessionLogger({ onComplete, onCancel }) {
           onClick={onCancel}
           className="flex-1 bg-stone-200 dark:bg-stone-700 hover:bg-stone-300 dark:hover:bg-stone-600 text-stone-800 dark:text-stone-100 font-semibold py-3 px-6 rounded-lg transition-colors"
         >
-          {language === 'de' ? 'Abbrechen' : 'Cancel'}
+          {t('cancel')}
         </button>
         <button
           onClick={handleSaveSession}
           className="flex-1 bg-teal-500 hover:bg-teal-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center justify-center gap-2"
         >
           <Save size={20} />
-          {language === 'de' ? 'Session speichern' : 'Save Session'}
+          {t('saveSession')}
         </button>
       </div>
 
@@ -261,13 +261,13 @@ function SessionLogger({ onComplete, onCancel }) {
           <div className="bg-white dark:bg-stone-800 rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
             <div className="p-6">
               <h3 className="text-xl font-bold text-stone-800 dark:text-stone-100 mb-4">
-                {language === 'de' ? 'Boulder hinzufügen' : 'Add Boulder'}
+                {t('addBoulder')}
               </h3>
 
               {/* Grade */}
               <div className="mb-4">
                 <label className="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-2">
-                  {language === 'de' ? 'Grad' : 'Grade'}
+                  {t('grade')}
                 </label>
                 <select
                   value={currentBoulder.grade}
@@ -283,7 +283,7 @@ function SessionLogger({ onComplete, onCancel }) {
               {/* Attempts */}
               <div className="mb-4">
                 <label className="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-2">
-                  {language === 'de' ? 'Versuche' : 'Attempts'}
+                  {t('attempts')}
                 </label>
                 <input
                   type="number"
@@ -304,7 +304,7 @@ function SessionLogger({ onComplete, onCancel }) {
                     className="w-5 h-5 text-teal-500 rounded focus:ring-teal-500"
                   />
                   <span className="text-stone-700 dark:text-stone-300">
-                    ✓ {language === 'de' ? 'Geschafft (Sent)' : 'Sent'}
+                    ✓ {t('sent')}
                   </span>
                 </label>
                 {currentBoulder.sent && (
@@ -316,7 +316,7 @@ function SessionLogger({ onComplete, onCancel }) {
                       className="w-5 h-5 text-yellow-500 rounded focus:ring-yellow-500"
                     />
                     <span className="text-stone-700 dark:text-stone-300">
-                      ⚡ {language === 'de' ? 'Flash (1. Versuch)' : 'Flash (1st try)'}
+                      ⚡ {t('flash')}
                     </span>
                   </label>
                 )}
@@ -325,7 +325,7 @@ function SessionLogger({ onComplete, onCancel }) {
               {/* Feeling */}
               <div className="mb-4">
                 <label className="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-2">
-                  {language === 'de' ? 'Schwierigkeit (1-5 ⭐)' : 'Difficulty (1-5 ⭐)'}
+                  {t('difficulty')} (1-5 ⭐)
                 </label>
                 <div className="flex gap-2">
                   {[1,2,3,4,5].map(num => (
@@ -348,7 +348,7 @@ function SessionLogger({ onComplete, onCancel }) {
               <div className="mb-4">
                 <label className="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-2">
                   <Camera size={16} className="inline mr-2" />
-                  {language === 'de' ? 'Fotos' : 'Photos'}
+                  {t('photos')}
                 </label>
                 <input
                   ref={photoInputRef}
@@ -364,7 +364,7 @@ function SessionLogger({ onComplete, onCancel }) {
                   type="button"
                   className="w-full bg-stone-100 dark:bg-stone-700 hover:bg-stone-200 dark:hover:bg-stone-600 text-stone-700 dark:text-stone-300 font-semibold py-2 px-4 rounded-lg transition-colors"
                 >
-                  {language === 'de' ? 'Foto aufnehmen/hochladen' : 'Take/Upload Photo'}
+                  {t('takePhoto')}
                 </button>
                 {currentBoulder.photos.length > 0 && (
                   <div className="flex flex-wrap gap-2 mt-2">
@@ -391,7 +391,7 @@ function SessionLogger({ onComplete, onCancel }) {
               <div className="mb-4">
                 <label className="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-2">
                   <Video size={16} className="inline mr-2" />
-                  {language === 'de' ? 'Videos' : 'Videos'}
+                  {t('videos')}
                 </label>
                 <input
                   ref={videoInputRef}
@@ -406,11 +406,11 @@ function SessionLogger({ onComplete, onCancel }) {
                   type="button"
                   className="w-full bg-stone-100 dark:bg-stone-700 hover:bg-stone-200 dark:hover:bg-stone-600 text-stone-700 dark:text-stone-300 font-semibold py-2 px-4 rounded-lg transition-colors"
                 >
-                  {language === 'de' ? 'Video aufnehmen/hochladen' : 'Record/Upload Video'}
+                  {t('recordVideo')}
                 </button>
                 {currentBoulder.videos.length > 0 && (
                   <div className="mt-2 text-sm text-teal-600 dark:text-teal-400">
-                    📹 {currentBoulder.videos.length} Video(s) hinzugefügt
+                    📹 {currentBoulder.videos.length} {t('videosAdded')}
                   </div>
                 )}
               </div>
@@ -418,12 +418,12 @@ function SessionLogger({ onComplete, onCancel }) {
               {/* Notes */}
               <div className="mb-6">
                 <label className="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-2">
-                  {language === 'de' ? 'Notizen' : 'Notes'}
+                  {t('notes')}
                 </label>
                 <textarea
                   value={currentBoulder.notes}
                   onChange={(e) => setCurrentBoulder({...currentBoulder, notes: e.target.value})}
-                  placeholder={language === 'de' ? 'Z.B. schwieriger Move, Beta...' : 'E.g. difficult move, beta...'}
+                  placeholder={t('exampleNotes')}
                   rows={2}
                   className="w-full px-4 py-2 border-2 border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-800 dark:text-stone-100 rounded-lg focus:border-teal-500 focus:outline-none resize-none"
                 />
@@ -436,14 +436,14 @@ function SessionLogger({ onComplete, onCancel }) {
                   type="button"
                   className="flex-1 bg-stone-200 dark:bg-stone-700 hover:bg-stone-300 dark:hover:bg-stone-600 text-stone-800 dark:text-stone-100 font-semibold py-2 px-4 rounded-lg transition-colors"
                 >
-                  {language === 'de' ? 'Abbrechen' : 'Cancel'}
+                  {t('cancel')}
                 </button>
                 <button
                   onClick={addCurrentBoulder}
                   type="button"
                   className="flex-1 bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
                 >
-                  {language === 'de' ? 'Hinzufügen' : 'Add'}
+                  {t('add')}
                 </button>
               </div>
             </div>

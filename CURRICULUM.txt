@@ -11,7 +11,24 @@ Empfohlene Dauer: 6-12 Monate für alle Lektionen
 PHASE 1: GRUNDLAGEN & ERSTE SCHRITTE (Woche 1-4)
 ═══════════════════════════════════════════════════════════════════════════════
 
-MODUL 1.1: EINFÜHRUNG INS BOULDERN
+MODUL 1.1: FUNDAMENTALE BEWEGUNGSPRINZIPIEN
+───────────────────────────────────────────
+□ Bewegung aus den Füßen einleiten
+  - Mantra: "Beine drücken, Arme balancieren"
+  - Kraft aus den größten Muskelgruppen nutzen
+  - Bewusstsein dafür schaffen, wann man zieht und wann man drückt
+
+□ Die Hüfte als Zentrum der Bewegung
+  - Hüfte nah an der Wand halten = Effizienz
+  - Eindrehen der Hüfte zur Reichweiten-Maximierung
+  - Hüft-Position bestimmt die Körper-Ausrichtung
+
+□ Spannung vs. Entspannung
+  - Gezielte Ganzkörperspannung für schwere Züge
+  - Bewusstes Lockern an guten Griffen zur Erholung
+  - Vermeiden von "Dauer-Verkrampfung"
+
+MODUL 1.2: EINFÜHRUNG INS BOULDERN
 ──────────────────────────────────
 □ Was ist Bouldern? Geschichte & Philosophie
   - Definition: Klettern in Absprunghöhe ohne Seil
@@ -32,7 +49,7 @@ MODUL 1.1: EINFÜHRUNG INS BOULDERN
   - Wettkämpfe & Events (auch für Anfänger!)
 
 
-MODUL 1.2: SICHERHEIT - DIE WICHTIGSTE LEKTION!
+MODUL 1.3: SICHERHEIT - DIE WICHTIGSTE LEKTION!
 ────────────────────────────────────────────────
 □ Richtig Fallen (THE MOST IMPORTANT SKILL!)
   - Anatomie eines sicheren Falls
@@ -64,7 +81,7 @@ MODUL 1.2: SICHERHEIT - DIE WICHTIGSTE LEKTION!
   - Bei Schmerz: PAUSE (nicht "durchtrainieren"!)
 
 
-MODUL 1.3: ROUTEN LESEN & VERSTEHEN
+MODUL 1.4: ROUTEN LESEN & VERSTEHEN
 ────────────────────────────────────
 □ Griff-Markierungen & Farben
   - Farbsysteme in verschiedenen Hallen
@@ -92,7 +109,7 @@ MODUL 1.3: ROUTEN LESEN & VERSTEHEN
   - Sandbag: Boulder ist schwerer als Grad suggeriert
 
 
-MODUL 1.4: AUSRÜSTUNG - GEAR FÜR ANFÄNGER
+MODUL 1.5: AUSRÜSTUNG - GEAR FÜR ANFÄNGER
 ──────────────────────────────────────────
 □ Kletterschuhe (DAS wichtigste Investment!)
   - Warum spezielle Schuhe? (Sticky Rubber, Vorspannung)
@@ -154,7 +171,8 @@ MODUL 2.2: ARME & HANDGELENKE RICHTIG NUTZEN
   - Anfängerfehler: Hochziehen wie Klimmzüge
   - Skelett trägt Gewicht, nicht Muskeln
   - "Hängen" statt "Halten"
-  
+  - Arme als passive Verbindung zur Wand sehen
+
 □ Straight Arm vs. Bent Arm Climbing
   - Wann gestreckter Arm? (90% der Zeit!)
   - Wann Lock-Off nötig? (Dynamische Moves, Manteln)
@@ -224,6 +242,15 @@ MODUL 2.4: FUSSTECHNIK - DAS WICHTIGSTE!
   - Bewusstes Platzieren
   - Vertrauen in die Schuhe
 
+□ Fußwechsel (Swapping Feet)
+  - Auf einem Tritt den Fuß wechseln
+  - Statisch (langsam) vs. dynamisch (mit kleinem Sprung)
+  - Wichtig für Sequenzierung & Körperposition
+
+□ Pivoting (Drehen auf dem Tritt)
+  - Körper um den Fuß auf dem Tritt drehen, um die Hüfte zu positionieren
+  - Ermöglicht flüssige Richtungswechsel
+
 □ Smearing (Anschmieren)
   - Kein Tritt sichtbar? Ganzen Schuh flach aufsetzen
   - Reibung gegen Wand
@@ -263,6 +290,11 @@ MODUL 2.5: BALANCE & SCHWERPUNKT
   - Immer 3 Punkte an der Wand (2 Füße, 1 Hand oder umgekehrt)
   - Ausnahme: Dynamische Moves
 
+□ Das Balance-Dreieck
+  - Visualisiere das Dreieck zwischen den Kontaktpunkten
+  - Der Schwerpunkt sollte idealerweise innerhalb dieses Dreiecks bleiben
+  - Aktives Verlagern des Dreiecks zur nächsten Position
+
 □ Flagging (Bein als Gegengewicht)
   - Inside Flag vs. Outside Flag
   - Verhindert Drehung ("Barn Door")
@@ -271,6 +303,19 @@ MODUL 2.5: BALANCE & SCHWERPUNKT
 □ Gegendruck (Opposition)
   - Drücken vs. Ziehen gleichzeitig
   - Z.B. Undergriff + Fußdruck
+
+MODUL 2.6: PACING & ERHOLUNG AN DER WAND
+─────────────────────────────────────────
+□ Kletter-Atmung
+  - Nicht die Luft anhalten! (häufigster Fehler)
+  - Tiefes Ausatmen bei schweren Zügen ("Power-Schrei")
+  - Ruhige, tiefe Atmung an Rastpositionen zur Puls-Senkung
+
+□ Shake-Outs & Rastpositionen finden
+  - Aktives "Ausschütteln" der Arme an guten Griffen
+  - Einen Arm nach dem anderen lockern, um Pump abzubauen
+  - No-Hands-Rests (Knee-Bars, Bat Hangs) identifizieren
+  - Das richtige Timing: Wann lohnt sich eine Pause?
 
 
 ═══════════════════════════════════════════════════════════════════════════════
@@ -300,6 +345,16 @@ MODUL 3.1: DYNAMISCHE BEWEGUNGEN
   - Campus Board (NUR für Fortgeschrittene!)
   - Plyometrische Übungen
   - Sprung-Kraft entwickeln
+
+□ Anlauf & Koordination (Competition Style)
+  - Laufen an der Wand vor dem Absprung
+  - Mehrere Tritte schnell hintereinander nutzen
+  - Timing & Präzision bei voller Geschwindigkeit
+
+□ Campus-Moves an der Wand
+  - Ohne Füße zwischen Griffen bewegen
+  - Trainiert Oberkörperkraft & Lock-Off
+  - ⚠️ Hohes Verletzungsrisiko, langsam steigern
 
 
 MODUL 3.2: ÜBERHANG-TECHNIKEN
@@ -333,6 +388,16 @@ MODUL 3.2: ÜBERHANG-TECHNIKEN
 □ Rose Move
   - Komplexer Move mit verdrehtem Körper
   - Meist mit Backstep + Hook
+
+□ Moon Kick / I-Pogo
+  - Bein-Schwung für Momentum
+  - Erzeugt Aufwärtsbewegung ohne Ziehen
+  - Sehr Core-intensiv
+
+□ Kontrolliertes "Füße Schneiden" (Cutting Feet)
+  - Wenn Füße vom Tritt rutschen/schwingen
+  - Core anspannen, um Schwingen zu stoppen
+  - Schnell Füße wieder an die Wand bringen
 
 
 MODUL 3.3: MANTLING (Hochdrücken)
@@ -411,12 +476,35 @@ MODUL 3.6: ROUTE READING - BOULDER KNACKEN MIT KOPF
   - Beta ist subjektiv (deine Lösung ≠ meine Lösung)
   - Respektvoller Austausch
 
+□ Kletterstile erkennen & nutzen
+  - Power vs. Technik vs. Balance
+  - Eigene Stärken/Schwächen identifizieren
+  - Boulder suchen, die Schwächen trainieren
+
+□ Forerunning (Bewegungen am Boden simulieren)
+  - Bewegungsabläufe trocken üben
+  - Hilft bei komplexen Sequenzen
+  - Muskelgedächtnis aufbauen
+
 
 ═══════════════════════════════════════════════════════════════════════════════
 PHASE 4: TRAINING & KONDITIONIERUNG (Ab Woche 12, kontinuierlich)
 ═══════════════════════════════════════════════════════════════════════════════
 
-MODUL 4.1: TRAININGSPLANUNG FÜR ANFÄNGER
+MODUL 4.1: STRUKTURIERTES AUFWÄRMEN & ABWÄRMEN
+──────────────────────────────────────────────
+□ Die 4 Phasen des perfekten Warm-ups
+  - 1. Puls erhöhen (5 Min): Seilspringen, Hampelmänner, leichtes Rudern
+  - 2. Dynamische Dehnung & Mobilität (5 Min): Armkreisen, Beinpendel, Hüftrotationen
+  - 3. Aktivierung (5 Min): Schulter-Aktivierung (Theraband), Core (Plank), Finger (Knetball)
+  - 4. Kletterspezifisches Aufwärmen (10-15 Min): Traversieren, sehr leichte Boulder klettern, Fokus auf saubere Bewegung
+
+□ Cool-down - Die oft vergessene Phase
+  - Wichtigkeit zur Förderung der Regeneration
+  - Leichtes statisches Dehnen (Unterarme, Schultern, Hüfte) - 30s pro Dehnung
+  - Antagonisten-Übungen (5-10 Min): Leichte Liegestütze, Finger-Strecker
+
+MODUL 4.2: TRAININGSPLANUNG FÜR ANFÄNGER
 ─────────────────────────────────────────
 □ Wie oft trainieren?
   - Anfänger: 2-3x pro Woche
@@ -444,8 +532,24 @@ MODUL 4.1: TRAININGSPLANUNG FÜR ANFÄNGER
   - Besonderheiten: Schmerzen? Durchbrüche?
   - Muster erkennen (bester Ruhetag-Rhythmus?)
 
+MODUL 4.3: PRAKTISCHE TECHNIK-ÜBUNGEN (DRILLS)
+───────────────────────────────────────────────
+□ Bewegungs-Flow Übungen
+  - "Boulder-Golf": Einen Boulder mit so wenig Zügen wie möglich klettern
+  - "Add-On": Bei jeder Wiederholung einen Zug hinzufügen
+  - "Nur Füße": Eine Route nur mit den Füßen traversieren, Hände an einer Leiste
 
-MODUL 4.2: FINGER-KRAFT & HANGBOARD-TRAINING
+□ Elimination Drills (Bewegungseinschränkung)
+  - "Einarmig": Leichte Boulder nur mit einem Arm klettern
+  - "Stumme Füße": So leise klettern wie möglich, um Fußtechnik zu schulen
+  - "Sloper-Only": Nur auf Slopern klettern, um Körperpositionierung zu lernen
+
+□ Präzisions-Drills
+  - "Hovering": Hand/Fuß 2-3 Sekunden über dem nächsten Griff/Tritt schweben lassen
+  - "No-Read": Einen Boulder klettern, ohne ihn vorher anzusehen (trainiert Intuition)
+  - "Sticky Hands/Feet": Einmal platziert, dürfen Hände/Füße nicht mehr angepasst werden
+
+MODUL 4.4: FINGER-KRAFT & HANGBOARD-TRAINING
 ─────────────────────────────────────────────
 □ Finger-Anatomie verstehen
   - Pulley-System (Ringbänder)
@@ -473,8 +577,7 @@ MODUL 4.2: FINGER-KRAFT & HANGBOARD-TRAINING
   - Finger-Strecker (Gummiband-Übungen)
   - Push-Übungen (Liegestütze, Dips) gegen Pull-Übungen
 
-
-MODUL 4.3: KRAFT-TRAINING OFF THE WALL
+MODUL 4.5: KRAFT-TRAINING OFF THE WALL
 ───────────────────────────────────────
 □ Core-Training
   - Plank-Variationen
@@ -493,6 +596,8 @@ MODUL 4.3: KRAFT-TRAINING OFF THE WALL
   - Liegestütze (normal, diamond, archer)
   - Dips
   - Overhead Press
+  - Face Pulls (Schultergesundheit!)
+  - Handgelenk-Strecker (gegen Kletter-Ellenbogen)
   - ⚠️ Balance! Nicht nur Ziehen trainieren
 
 □ Bein-Training
@@ -506,8 +611,7 @@ MODUL 4.3: KRAFT-TRAINING OFF THE WALL
   - Hamstrings (bessere Reichweite)
   - Faszien-Training (Foam Rolling)
 
-
-MODUL 4.4: AUSDAUER & KAMPFKRAFT
+MODUL 4.6: AUSDAUER & KAMPFKRAFT
 ─────────────────────────────────
 □ Was ist "Pump"?
   - Unterarm-Übersäuerung (Laktat)
@@ -528,8 +632,7 @@ MODUL 4.4: AUSDAUER & KAMPFKRAFT
   - Cardio: Laufen, Radfahren (2x Woche, 30 Min)
   - Schnellere Recovery zwischen Sessions
 
-
-MODUL 4.5: ERNÄHRUNG FÜR BOULDERER
+MODUL 4.7: ERNÄHRUNG FÜR BOULDERER
 ───────────────────────────────────
 □ Basics
   - Protein für Muskel-Recovery (1.6-2g / kg Körpergewicht)
@@ -556,8 +659,7 @@ MODUL 4.5: ERNÄHRUNG FÜR BOULDERER
   - Vitamin D (besonders im Winter)
   - Omega-3 (Entzündungshemmung)
 
-
-MODUL 4.6: RECOVERY & REGENERATION
+MODUL 4.8: RECOVERY & REGENERATION
 ───────────────────────────────────
 □ Schlaf - Die wichtigste Recovery!
   - 7-9 Stunden pro Nacht
@@ -767,6 +869,17 @@ MODUL 6.3: SPEZIAL-STILE & NISCHEN
   - "Schönheit" der Bewegung
   - Klassische Linien, elegante Moves
   - Font-Bouldering-Kultur
+
+□ Board Climbing (MoonBoard, Kilter, Tension)
+  - Systematisches Training an Brettern mit definierter Griff-Anordnung
+  - Sehr kraft-intensiv, für Fortgeschrittene
+  - Weltweite Community & Benchmark-Probleme
+  - App-gesteuert mit LED-Lichtern
+
+□ System Board Training
+  - Training an einer Wand mit symmetrischem Griff-Layout
+  - Gezieltes Training von Schwächen
+  - Erstellen eigener Boulder-Probleme
 
 
 MODUL 6.4: LANGFRISTIGE KLETTER-KARRIERE

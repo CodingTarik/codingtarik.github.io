@@ -5,7 +5,7 @@ import { useLanguage } from '../context/LanguageContext';
 import VideoPlayer from './VideoPlayer';
 
 function SessionStats() {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   const [selectedVideo, setSelectedVideo] = useState(null);
   
   const sessions = loadSessions();
@@ -25,17 +25,17 @@ function SessionStats() {
     <div className="max-w-4xl mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-stone-800 dark:text-stone-100 mb-6 flex items-center gap-2">
         <BarChart3 className="text-teal-500" />
-        {language === 'de' ? 'Statistiken' : 'Statistics'}
+        {t('statistics')}
       </h1>
 
       {sessions.length === 0 ? (
         <div className="bg-white dark:bg-stone-800 rounded-lg shadow-md p-12 text-center">
           <Calendar size={64} className="mx-auto mb-4 text-stone-300" />
           <p className="text-stone-600 dark:text-stone-400 text-lg">
-            {language === 'de' ? 'Noch keine Sessions geloggt!' : 'No sessions logged yet!'}
+            {t('noSessionsYet')}
           </p>
           <p className="text-stone-500 dark:text-stone-500 text-sm mt-2">
-            {language === 'de' ? 'Starte eine neue Session um Stats zu sehen' : 'Start a new session to see stats'}
+            {t('startSessionToSeeStats')}
           </p>
         </div>
       ) : (
@@ -44,29 +44,27 @@ function SessionStats() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
             <div className="bg-gradient-to-br from-teal-500 to-teal-600 rounded-lg shadow-md p-6 text-white">
               <div className="text-4xl font-bold mb-1">{sessionStats.totalSessions}</div>
-              <div className="text-teal-100 text-sm">
-                {language === 'de' ? 'Sessions' : 'Sessions'}
-              </div>
+              <div className="text-teal-100 text-sm">Sessions</div>
             </div>
 
             <div className="bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg shadow-md p-6 text-white">
               <div className="text-4xl font-bold mb-1">{sessionStats.totalBoulders}</div>
               <div className="text-orange-100 text-sm">
-                {language === 'de' ? 'Boulder' : 'Boulders'}
+                {t('boulders')}
               </div>
             </div>
 
             <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg shadow-md p-6 text-white">
               <div className="text-4xl font-bold mb-1">{boulderStats.sendRate}%</div>
               <div className="text-purple-100 text-sm">
-                {language === 'de' ? 'Send Rate' : 'Send Rate'}
+                {t('sendRate')}
               </div>
             </div>
 
             <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-lg shadow-md p-6 text-white">
               <div className="text-4xl font-bold mb-1">{maxGrade || '?'}</div>
               <div className="text-green-100 text-sm">
-                {language === 'de' ? 'Max Grad' : 'Max Grade'}
+                {t('maxGrade')}
               </div>
             </div>
           </div>
@@ -76,7 +74,7 @@ function SessionStats() {
             <div className="bg-white dark:bg-stone-800 rounded-lg shadow-md p-6 mb-8">
               <h2 className="text-xl font-bold text-stone-800 dark:text-stone-100 mb-4 flex items-center gap-2">
                 <Award className="text-teal-500" />
-                {language === 'de' ? 'Boulder-Pyramide' : 'Boulder Pyramid'}
+                {t('boulderPyramid')}
               </h2>
               <div className="space-y-2">
                 {pyramid.reverse().map(({ grade, count }) => {
@@ -107,7 +105,7 @@ function SessionStats() {
           <div className="bg-white dark:bg-stone-800 rounded-lg shadow-md p-6 mb-8">
             <h2 className="text-xl font-bold text-stone-800 dark:text-stone-100 mb-4 flex items-center gap-2">
               <Calendar className="text-teal-500" />
-              {language === 'de' ? 'Letzte Sessions' : 'Recent Sessions'}
+              {t('recentSessions')}
             </h2>
             <div className="space-y-3">
               {sessions.slice(0, 5).map(session => (
@@ -158,7 +156,7 @@ function SessionStats() {
           <div className="bg-white dark:bg-stone-800 rounded-lg shadow-md p-6">
             <h2 className="text-xl font-bold text-stone-800 dark:text-stone-100 mb-4 flex items-center gap-2">
               <TrendingUp className="text-teal-500" />
-              {language === 'de' ? 'Letzte Boulder' : 'Recent Boulders'}
+              {t('recentBoulders')}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {boulders.slice(0, 6).map(boulder => (
@@ -183,13 +181,13 @@ function SessionStats() {
                   )}
 
                   {boulder.videos && boulder.videos.length > 0 && (
-                    <button
-                      onClick={() => setSelectedVideo(boulder.videos[0])}
-                      className="w-full bg-teal-500 hover:bg-teal-600 text-white text-sm font-semibold py-2 px-3 rounded flex items-center justify-center gap-2 transition-colors"
-                    >
-                      <Play size={16} />
-                      {language === 'de' ? 'Video ansehen' : 'Watch Video'}
-                    </button>
+                  <button
+                    onClick={() => setSelectedVideo(boulder.videos[0])}
+                    className="w-full bg-teal-500 hover:bg-teal-600 text-white text-sm font-semibold py-2 px-3 rounded flex items-center justify-center gap-2 transition-colors"
+                  >
+                    <Play size={16} />
+                    {t('watchVideo')}
+                  </button>
                   )}
 
                   {boulder.notes && (

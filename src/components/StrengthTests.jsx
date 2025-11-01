@@ -4,7 +4,7 @@ import { addStrengthTest, loadStrengthTests } from '../utils/sessionStorage';
 import { useLanguage } from '../context/LanguageContext';
 
 function StrengthTests() {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   const [showTestForm, setShowTestForm] = useState(false);
   const [tests, setTests] = useState(loadStrengthTests());
   
@@ -15,17 +15,17 @@ function StrengthTests() {
   });
 
   const testTypes = [
-    { id: 'max_hang', name: language === 'de' ? 'Max Hang (20mm)' : 'Max Hang (20mm)', unit: 'seconds', icon: Timer },
-    { id: 'pullups', name: language === 'de' ? 'Klimmzüge' : 'Pull-ups', unit: 'reps', icon: Repeat },
-    { id: 'weighted_pullup', name: language === 'de' ? 'Klimmzüge (+kg)' : 'Weighted Pull-up (+kg)', unit: 'kg', icon: Activity },
-    { id: 'plank', name: 'Plank', unit: 'seconds', icon: Timer },
-    { id: 'leg_raise', name: language === 'de' ? 'Beinheben' : 'Leg Raises', unit: 'reps', icon: Repeat },
-    { id: 'one_arm_hang', name: language === 'de' ? 'Einarmiges Hängen' : 'One-Arm Hang', unit: 'seconds', icon: Timer },
+    { id: 'max_hang', name: t('maxHang'), unit: 'seconds', icon: Timer },
+    { id: 'pullups', name: t('pullups'), unit: 'reps', icon: Repeat },
+    { id: 'weighted_pullup', name: t('weightedPullup'), unit: 'kg', icon: Activity },
+    { id: 'plank', name: t('plank'), unit: 'seconds', icon: Timer },
+    { id: 'leg_raise', name: t('legRaise'), unit: 'reps', icon: Repeat },
+    { id: 'one_arm_hang', name: t('oneArmHang'), unit: 'seconds', icon: Timer },
   ];
 
   const handleAddTest = () => {
     if (!newTest.value) {
-      alert(language === 'de' ? 'Bitte gib einen Wert ein!' : 'Please enter a value!');
+      alert(t('value') + '!');
       return;
     }
 
@@ -62,14 +62,14 @@ function StrengthTests() {
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-3xl font-bold text-stone-800 dark:text-stone-100 flex items-center gap-2">
           <Activity className="text-teal-500" />
-          {language === 'de' ? 'Kraft-Tests' : 'Strength Tests'}
+          {t('strengthTests')}
         </h1>
         <button
           onClick={() => setShowTestForm(true)}
           className="bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors flex items-center gap-2"
         >
           <Plus size={20} />
-          {language === 'de' ? 'Test hinzufügen' : 'Add Test'}
+          {t('addTest')}
         </button>
       </div>
 
@@ -77,10 +77,10 @@ function StrengthTests() {
         <div className="bg-white dark:bg-stone-800 rounded-lg shadow-md p-12 text-center">
           <Activity size={64} className="mx-auto mb-4 text-stone-300" />
           <p className="text-stone-600 dark:text-stone-400 text-lg">
-            {language === 'de' ? 'Noch keine Tests durchgeführt!' : 'No tests performed yet!'}
+            {t('noTestsYet')}
           </p>
           <p className="text-stone-500 dark:text-stone-500 text-sm mt-2">
-            {language === 'de' ? 'Füge deinen ersten Kraft-Test hinzu' : 'Add your first strength test'}
+            {t('addFirstTest')}
           </p>
         </div>
       ) : (
@@ -103,7 +103,7 @@ function StrengthTests() {
                     {testType?.name || type}
                   </div>
                   <div className="text-teal-200 text-xs mt-1">
-                    {language === 'de' ? 'Persönliche Bestleistung' : 'Personal Best'}
+                    {t('personalBest')}
                   </div>
                 </div>
               );
@@ -130,14 +130,14 @@ function StrengthTests() {
                     </h2>
                   </div>
                   <div className="text-sm text-stone-600 dark:text-stone-400">
-                    {language === 'de' ? 'Beste' : 'Best'}: <span className="font-bold text-teal-600">{best} {testType.unit}</span>
+                    {t('best')}: <span className="font-bold text-teal-600">{best} {testType.unit}</span>
                   </div>
                 </div>
 
                 {/* Progress Bar */}
                 <div className="mb-4">
                   <div className="flex items-center justify-between text-sm text-stone-600 dark:text-stone-400 mb-1">
-                    <span>{language === 'de' ? 'Aktueller Fortschritt' : 'Current Progress'}</span>
+                    <span>{t('currentProgress')}</span>
                     <span>{progressPercent}%</span>
                   </div>
                   <div className="w-full bg-stone-200 dark:bg-stone-700 rounded-full h-3">
@@ -161,7 +161,7 @@ function StrengthTests() {
                         </div>
                         {test.value === best && (
                           <div className="text-xs bg-yellow-500 text-white px-2 py-1 rounded font-semibold">
-                            🏆 {language === 'de' ? 'PR' : 'PR'}
+                            🏆 PR
                           </div>
                         )}
                       </div>
@@ -184,11 +184,11 @@ function StrengthTests() {
                   <div className="mt-3 flex items-center gap-2 text-sm">
                     <TrendingUp size={16} className="text-green-500" />
                     <span className="text-stone-600 dark:text-stone-400">
-                      {language === 'de' ? 'Trend' : 'Trend'}: 
+                      {t('trend')}: 
                       <span className="font-semibold ml-1">
                         {testsOfType[0].value > testsOfType[1].value 
-                          ? (language === 'de' ? '📈 Aufwärts' : '📈 Improving')
-                          : (language === 'de' ? '📉 Abwärts' : '📉 Declining')
+                          ? '📈 ' + t('improving')
+                          : '📉 ' + t('declining')
                         }
                       </span>
                     </span>
@@ -205,13 +205,13 @@ function StrengthTests() {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white dark:bg-stone-800 rounded-lg shadow-xl max-w-md w-full p-6">
             <h3 className="text-xl font-bold text-stone-800 dark:text-stone-100 mb-4">
-              {language === 'de' ? 'Test hinzufügen' : 'Add Test'}
+              {t('addTest')}
             </h3>
 
             {/* Test Type */}
             <div className="mb-4">
               <label className="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-2">
-                {language === 'de' ? 'Test-Typ' : 'Test Type'}
+                {t('testType')}
               </label>
               <select
                 value={newTest.type}
@@ -227,7 +227,7 @@ function StrengthTests() {
             {/* Value */}
             <div className="mb-4">
               <label className="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-2">
-                {language === 'de' ? 'Wert' : 'Value'} ({testTypes.find(t => t.id === newTest.type)?.unit})
+                {t('value')} ({testTypes.find(t => t.id === newTest.type)?.unit})
               </label>
               <input
                 type="number"
@@ -242,12 +242,12 @@ function StrengthTests() {
             {/* Notes */}
             <div className="mb-6">
               <label className="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-2">
-                {language === 'de' ? 'Notizen (optional)' : 'Notes (optional)'}
+                {t('notesOptional')}
               </label>
               <textarea
                 value={newTest.notes}
                 onChange={(e) => setNewTest({...newTest, notes: e.target.value})}
-                placeholder={language === 'de' ? 'Z.B. "Nach Aufwärmen"' : 'E.g. "After warmup"'}
+                placeholder={t('exampleAfterWarmup')}
                 rows={2}
                 className="w-full px-4 py-2 border-2 border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-900 text-stone-800 dark:text-stone-100 rounded-lg focus:border-teal-500 focus:outline-none resize-none"
               />
@@ -259,13 +259,13 @@ function StrengthTests() {
                 onClick={() => setShowTestForm(false)}
                 className="flex-1 bg-stone-200 dark:bg-stone-700 hover:bg-stone-300 dark:hover:bg-stone-600 text-stone-800 dark:text-stone-100 font-semibold py-2 px-4 rounded-lg transition-colors"
               >
-                {language === 'de' ? 'Abbrechen' : 'Cancel'}
+                {t('cancel')}
               </button>
               <button
                 onClick={handleAddTest}
                 className="flex-1 bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
               >
-                {language === 'de' ? 'Hinzufügen' : 'Add'}
+                {t('add')}
               </button>
             </div>
           </div>

@@ -28,10 +28,10 @@ function TrainingPage({ onCreateWorkout, onEditWorkout, onStartWorkout }) {
   };
 
   const tabs = [
-    { id: 'workouts', label: language === 'de' ? 'Workouts' : 'Workouts', icon: Dumbbell },
-    { id: 'logger', label: language === 'de' ? 'Session Logger' : 'Session Logger', icon: ClipboardList },
-    { id: 'stats', label: language === 'de' ? 'Statistiken' : 'Statistics', icon: BarChart3 },
-    { id: 'strength', label: language === 'de' ? 'Kraft-Tests' : 'Strength Tests', icon: Activity },
+    { id: 'workouts', label: 'Workouts', icon: Dumbbell },
+    { id: 'logger', label: t('sessionLogger'), icon: ClipboardList },
+    { id: 'stats', label: t('statistics'), icon: BarChart3 },
+    { id: 'strength', label: t('strengthTests'), icon: Activity },
   ];
 
   // Session Logger view
@@ -223,7 +223,7 @@ function TrainingPage({ onCreateWorkout, onEditWorkout, onStartWorkout }) {
           <div className="mb-6">
             <h1 className="text-3xl font-bold text-stone-800 dark:text-stone-100 mb-2 flex items-center gap-2">
               <ClipboardList className="text-teal-500" />
-              {language === 'de' ? 'Session Logger' : 'Session Logger'}
+              {t('sessionLogger')}
             </h1>
             <p className="text-stone-600 dark:text-stone-400">
               {language === 'de'
@@ -238,9 +238,9 @@ function TrainingPage({ onCreateWorkout, onEditWorkout, onStartWorkout }) {
           >
             <Plus size={28} />
             <div className="text-left">
-              <div className="text-xl">{language === 'de' ? 'Neue Session starten' : 'Start New Session'}</div>
+              <div className="text-xl">{t('startNewSession')}</div>
               <div className="text-sm text-teal-100">
-                {language === 'de' ? 'Boulder loggen mit Fotos & Videos' : 'Log boulders with photos & videos'}
+                {t('logBoulders')}
               </div>
             </div>
           </button>
