@@ -31,6 +31,7 @@ export const translations = {
     // Training Plan
     myNextTraining: 'Mein nächstes Training',
     noTasksSaved: 'Speichere Aufgaben aus den Lektionen, um dein Training zu planen!',
+    trainingPlanTip: 'Tipp: Jede Lektion enthält praktische Übungen, die du speichern kannst.',
     fromLesson: 'Aus Lektion',
     watchFor: 'Worauf achten:',
     tasks: 'Aufgaben',
@@ -39,8 +40,10 @@ export const translations = {
     
     // Training System
     trainingAndWarmup: 'Training & Aufwärmen',
+    workouts: 'Workouts',
     createNewWorkout: 'Neues Workout erstellen',
     noWorkoutsYet: 'Noch keine Workouts erstellt',
+    noWorkoutsDescription: 'Erstelle dein erstes Workout mit custom Übungen, Pausen und Zielen!',
     exercises: 'Übungen',
     sessions: 'Sessions',
     lastTraining: 'Letztes Training',
@@ -54,6 +57,7 @@ export const translations = {
     edit: 'Bearbeiten',
     done: 'Fertig',
     saved: 'Gespeichert!',
+    more: 'mehr',
     
     // Settings
     language: 'Sprache',
@@ -170,6 +174,7 @@ export const translations = {
     // Training Plan
     myNextTraining: 'My Next Training',
     noTasksSaved: 'Save tasks from lessons to plan your training!',
+    trainingPlanTip: 'Tip: Every lesson contains practical exercises that you can save.',
     fromLesson: 'From Lesson',
     watchFor: 'Watch for:',
     tasks: 'Tasks',
@@ -178,8 +183,10 @@ export const translations = {
     
     // Training System
     trainingAndWarmup: 'Training & Warmup',
+    workouts: 'Workouts',
     createNewWorkout: 'Create New Workout',
     noWorkoutsYet: 'No workouts created yet',
+    noWorkoutsDescription: 'Create your first workout with custom exercises, breaks and goals!',
     exercises: 'Exercises',
     sessions: 'Sessions',
     lastTraining: 'Last Training',
@@ -193,6 +200,7 @@ export const translations = {
     edit: 'Edit',
     done: 'Done',
     saved: 'Saved!',
+    more: 'more',
     
     // Settings
     language: 'Language',
@@ -287,7 +295,7 @@ export function LanguageProvider({ children }) {
   const [language, setLanguage] = useState(() => {
     // Initialize from localStorage immediately
     const saved = localStorage.getItem('boulderBuddyLanguage');
-    return (saved && ['de', 'en'].includes(saved)) ? saved : 'de';
+    return (saved && ['de', 'en'].includes(saved)) ? saved : 'en';
   });
 
   useEffect(() => {
@@ -295,8 +303,8 @@ export function LanguageProvider({ children }) {
     if (saved && ['de', 'en'].includes(saved)) {
       setLanguage(saved);
     } else {
-      // Set default to German
-      localStorage.setItem('boulderBuddyLanguage', 'de');
+      // Set default to English
+      localStorage.setItem('boulderBuddyLanguage', 'en');
     }
   }, []);
 

@@ -17,7 +17,7 @@ import WorkoutBuilder from './components/WorkoutBuilder';
 import WorkoutExecutor from './components/WorkoutExecutor';
 
 // Data
-import allLessons from './data/lessons';
+import { lessons } from './data/lessons';
 import { warmupExercises } from './data/warmupExercises';
 
 function AppContent() {
@@ -165,7 +165,6 @@ function AppContent() {
       case 'lektionen':
         return (
           <LessonsPage
-            lessons={allLessons}
             onSelectLesson={setCurrentLesson}
           />
         );

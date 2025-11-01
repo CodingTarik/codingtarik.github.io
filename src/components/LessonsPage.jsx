@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { BookOpen, CheckCircle, Circle, Award } from 'lucide-react';
+import { BookOpen, CheckCircle2, Circle, Award } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import { getTranslatedLesson } from '../data/lessonTranslations';
+import { lessons as lessonData } from '../data/lessons';
+import { categoryTranslations, getTranslatedLesson } from '../data/lessonTranslations';
 import { loadLessonProgress, getLessonProgressStats, markLessonComplete, markLessonIncomplete } from '../utils/sessionStorage';
 
-function LessonsPage({ lessons, onSelectLesson }) {
+// Sound effect for completing a lesson
+const completionSound = new Audio('/sounds/complete.mp3');
+
+function LessonsPage({ onSelectLesson }) {
   const { language, t } = useLanguage();
   const [progress, setProgress] = useState({});
   
   useEffect(() => {
     setProgress(loadLessonProgress());
   }, []);
-  
-  // Translate lessons
-  const translatedLessons = lessons.map(lesson => getTranslatedLesson(lesson, language));
-  const categories = [...new Set(translatedLessons.map(l => l.category))];
-  
-  // Get progress stats
-  const stats = getLessonProgressStats(translatedLessons.length);
+
+  const allLessons = lessonData.flatMap(category => category.lessons);
+  const stats = getLessonProgressStats(allLessons.length);
 
   const toggleLessonComplete = (e, lessonId) => {
     e.stopPropagation();
@@ -28,6 +28,7 @@ function LessonsPage({ lessons, onSelectLesson }) {
     } else {
       const newProgress = markLessonComplete(lessonId);
       setProgress(newProgress);
+      completionSound.play();
     }
   };
 
@@ -69,23 +70,24 @@ function LessonsPage({ lessons, onSelectLesson }) {
         )}
       </div>
       
-      {categories.map(category => {
-        const categoryLessons = translatedLessons.filter(l => l.category === category);
-        const categoryCompleted = categoryLessons.filter(l => progress[l.id]?.completed).length;
-        
+      {lessonData.map(category => {
+        const categoryCompleted = category.lessons.filter(l => progress[l.id]?.completed).length;
+        const categoryTitle = categoryTranslations[category.id]?.[language] || categoryTranslations[category.id]?.en;
+
         return (
-          <div key={category} className="mb-8">
+          <div key={category.id} className="mb-8">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-bold text-stone-700 dark:text-stone-300 border-b-2 border-teal-500 pb-2">
-                {category}
+                {categoryTitle}
               </h2>
               <span className="text-sm text-stone-600 dark:text-stone-400 font-semibold">
-                {categoryCompleted}/{categoryLessons.length}
+                {categoryCompleted}/{category.lessons.length}
               </span>
             </div>
             <div className="space-y-3">
-              {categoryLessons.map(lesson => {
+              {category.lessons.map(lesson => {
                 const isComplete = progress[lesson.id]?.completed || false;
+                const translatedLesson = getTranslatedLesson(lesson, language);
                 
                 return (
                   <div
@@ -95,20 +97,20 @@ function LessonsPage({ lessons, onSelectLesson }) {
                     }`}
                   >
                     <button
-                      onClick={() => onSelectLesson(lesson)}
+                      onClick={() => onSelectLesson({ ...lesson, category: category.id })}
                       className="w-full p-4 hover:shadow-lg transition-all text-left hover:bg-stone-50 dark:hover:bg-stone-700 hover:scale-[1.02] rounded-lg"
                     >
                       <div className="flex items-start gap-3">
-                        <lesson.icon className="text-teal-500 flex-shrink-0 mt-1" size={24} />
+                        {/* The icon has been removed as it's not in the new data structure */}
                         <div className="flex-1">
                           <h3 className={`font-bold mb-1 ${
                             isComplete 
                               ? 'text-stone-600 dark:text-stone-400 line-through' 
                               : 'text-stone-800 dark:text-stone-100'
                           }`}>
-                            {lesson.title}
+                            {translatedLesson.title}
                           </h3>
-                          <p className="text-sm text-stone-600 dark:text-stone-400">{lesson.description}</p>
+                          <p className="text-sm text-stone-600 dark:text-stone-400">{translatedLesson.description}</p>
                         </div>
                         
                         {/* Checkbox */}
@@ -116,26 +118,18 @@ function LessonsPage({ lessons, onSelectLesson }) {
                           onClick={(e) => toggleLessonComplete(e, lesson.id)}
                           className="flex-shrink-0 hover:scale-110 transition-transform"
                           title={isComplete 
-                            ? (language === 'de' ? 'Als unvollständig markieren' : 'Mark as incomplete')
-                            : (language === 'de' ? 'Als abgeschlossen markieren' : 'Mark as complete')
+                            ? t('markAsIncomplete')
+                            : t('markAsComplete')
                           }
                         >
                           {isComplete ? (
-                            <CheckCircle size={28} className="text-green-500" />
+                            <CheckCircle2 size={28} className="text-white fill-green-500" />
                           ) : (
                             <Circle size={28} className="text-stone-400 dark:text-stone-600" />
                           )}
                         </button>
                       </div>
                     </button>
-                    
-                    {isComplete && (
-                      <div className="absolute top-2 right-2">
-                        <span className="text-xs bg-green-500 text-white px-2 py-1 rounded font-semibold">
-                          ✓
-                        </span>
-                      </div>
-                    )}
                   </div>
                 );
               })}

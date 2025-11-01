@@ -7,7 +7,7 @@ import SessionStats from './SessionStats';
 import StrengthTests from './StrengthTests';
 
 function TrainingPage({ onCreateWorkout, onEditWorkout, onStartWorkout }) {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   const [workouts, setWorkouts] = useState([]);
   const [activeTab, setActiveTab] = useState('workouts'); // workouts, logger, stats, strength
   const [showSessionLogger, setShowSessionLogger] = useState(false);
@@ -28,7 +28,7 @@ function TrainingPage({ onCreateWorkout, onEditWorkout, onStartWorkout }) {
   };
 
   const tabs = [
-    { id: 'workouts', label: 'Workouts', icon: Dumbbell },
+    { id: 'workouts', label: t('workouts'), icon: Dumbbell },
     { id: 'logger', label: t('sessionLogger'), icon: ClipboardList },
     { id: 'stats', label: t('statistics'), icon: BarChart3 },
     { id: 'strength', label: t('strengthTests'), icon: Activity },
@@ -101,12 +101,10 @@ function TrainingPage({ onCreateWorkout, onEditWorkout, onStartWorkout }) {
             <div className="bg-white dark:bg-stone-800 rounded-lg shadow-md p-12 text-center">
               <Dumbbell size={64} className="mx-auto mb-4 text-stone-300" />
               <p className="text-stone-600 dark:text-stone-400 text-lg mb-2">
-                {language === 'de' ? 'Noch keine Workouts erstellt' : 'No workouts created yet'}
+                {t('noWorkoutsYet')}
               </p>
               <p className="text-stone-500 dark:text-stone-500 text-sm">
-                {language === 'de'
-                  ? 'Erstelle dein erstes Workout mit custom Übungen, Pausen und Zielen!'
-                  : 'Create your first workout with custom exercises, breaks and goals!'}
+                {t('noWorkoutsDescription')}
               </p>
             </div>
           ) : (
@@ -151,21 +149,21 @@ function TrainingPage({ onCreateWorkout, onEditWorkout, onStartWorkout }) {
                           {workout.exercises?.length || 0}
                         </div>
                         <div className="text-xs text-stone-600 dark:text-stone-400">
-                          {language === 'de' ? 'Übungen' : 'Exercises'}
+                          {t('exercises')}
                         </div>
                       </div>
                       <div className="bg-stone-50 dark:bg-stone-900 rounded-lg p-3 text-center">
                         <div className="text-2xl font-bold text-orange-600">
                           {stats ? stats.total : 0}
                         </div>
-                        <div className="text-xs text-stone-600 dark:text-stone-400">Sessions</div>
+                        <div className="text-xs text-stone-600 dark:text-stone-400">{t('sessions')}</div>
                       </div>
                       <div className="bg-stone-50 dark:bg-stone-900 rounded-lg p-3 text-center">
                         <div className="text-2xl font-bold text-teal-600">
                           <TrendingUp size={24} className="mx-auto" />
                         </div>
                         <div className="text-xs text-stone-600 dark:text-stone-400">
-                          {language === 'de' ? 'Fortschritt' : 'Progress'}
+                          {t('progress')}
                         </div>
                       </div>
                     </div>
@@ -175,7 +173,7 @@ function TrainingPage({ onCreateWorkout, onEditWorkout, onStartWorkout }) {
                       <div className="mb-4 text-sm text-stone-600 dark:text-stone-400 flex items-center gap-2">
                         <Clock size={16} className="text-teal-500" />
                         <span>
-                          {language === 'de' ? 'Letztes Training' : 'Last workout'}: {new Date(stats.lastDate).toLocaleDateString(language === 'de' ? 'de-DE' : 'en-US')}
+                          {t('lastTraining')}: {new Date(stats.lastDate).toLocaleDateString(language === 'de' ? 'de-DE' : 'en-US')}
                         </span>
                       </div>
                     )}
@@ -183,7 +181,7 @@ function TrainingPage({ onCreateWorkout, onEditWorkout, onStartWorkout }) {
                     {/* Exercise Preview */}
                     <div className="mb-4">
                       <div className="text-xs text-stone-500 dark:text-stone-400 mb-2 uppercase tracking-wide">
-                        {language === 'de' ? 'Übungen:' : 'Exercises:'}
+                        {t('exercises')}:
                       </div>
                       <div className="flex flex-wrap gap-2">
                         {workout.exercises?.slice(0, 5).map((ex, idx) => (
@@ -196,7 +194,7 @@ function TrainingPage({ onCreateWorkout, onEditWorkout, onStartWorkout }) {
                         ))}
                         {workout.exercises?.length > 5 && (
                           <span className="text-xs text-stone-500 px-2 py-1">
-                            +{workout.exercises.length - 5} {language === 'de' ? 'mehr' : 'more'}
+                            +{workout.exercises.length - 5} {t('more')}
                           </span>
                         )}
                       </div>
@@ -208,7 +206,7 @@ function TrainingPage({ onCreateWorkout, onEditWorkout, onStartWorkout }) {
                       className="w-full bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 px-6 rounded-lg transition-all transform hover:scale-[1.02] flex items-center justify-center gap-2"
                     >
                       <Play size={20} />
-                      {language === 'de' ? 'Workout starten' : 'Start Workout'}
+                      {t('startWorkout')}
                     </button>
                   </div>
                 );

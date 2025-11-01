@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { ChevronLeft, Save, Target, CheckCircle } from 'lucide-react';
 import LessonContent from './LessonContent';
 import { useLanguage } from '../context/LanguageContext';
-import { getTranslatedLesson } from '../data/lessonTranslations';
+import { getTranslatedLesson, categoryTranslations } from '../data/lessonTranslations';
 import { isLessonComplete, markLessonComplete, markLessonIncomplete } from '../utils/sessionStorage';
 
 function LessonDetailPage({ lesson, onBack, onSaveTask }) {
   const { language, t } = useLanguage();
   const translatedLesson = getTranslatedLesson(lesson, language);
+  const categoryTitle = categoryTranslations[lesson.category]?.[language] || categoryTranslations[lesson.category]?.en;
   const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
@@ -39,9 +40,9 @@ function LessonDetailPage({ lesson, onBack, onSaveTask }) {
       <div className="bg-white dark:bg-stone-800 rounded-lg shadow-md p-6 mb-6">
         <div className="flex items-start justify-between gap-4 mb-4">
           <div className="flex items-start gap-4">
-            <translatedLesson.icon className="text-teal-500 flex-shrink-0" size={32} />
+            {/* Icon removed */}
             <div>
-              <div className="text-sm text-stone-500 dark:text-stone-400 mb-1">{translatedLesson.category}</div>
+              <div className="text-sm text-stone-500 dark:text-stone-400 mb-1">{categoryTitle}</div>
               <h1 className="text-2xl font-bold text-stone-800 dark:text-stone-100">{translatedLesson.title}</h1>
             </div>
           </div>
