@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, Save, Target, CheckCircle } from 'lucide-react';
+import { ChevronLeft, Save, Target, CheckCircle, ArrowRight } from 'lucide-react';
 import LessonContent from './LessonContent';
+import Quiz from './Quiz';
 import { useLanguage } from '../context/LanguageContext';
 import { getTranslatedLesson, categoryTranslations } from '../data/lessonTranslations';
 import { isLessonComplete, markLessonComplete, markLessonIncomplete } from '../utils/sessionStorage';
 
-function LessonDetailPage({ lesson, onBack, onSaveTask }) {
+function LessonDetailPage({ lesson, onBack, onSaveTask, onGoToNextLesson }) {
   const { language, t } = useLanguage();
   const translatedLesson = getTranslatedLesson(lesson, language);
   const categoryTitle = categoryTranslations[lesson.category]?.[language] || categoryTranslations[lesson.category]?.en;
@@ -102,6 +103,22 @@ function LessonDetailPage({ lesson, onBack, onSaveTask }) {
           >
             <Save size={20} />
             {t('saveForTraining')}
+          </button>
+        </div>
+      )}
+
+      {/* Quiz Section */}
+      {translatedLesson.quiz && <Quiz questions={translatedLesson.quiz} />}
+
+      {/* Go to Next Lesson Button */}
+      {onGoToNextLesson && (
+        <div className="mt-8 text-center">
+          <button
+            onClick={onGoToNextLesson}
+            className="w-full md:w-auto bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-lg shadow-md transition-all transform hover:scale-105 flex items-center justify-center gap-2"
+          >
+            <span>{t('nextLesson')}</span>
+            <ArrowRight size={20} />
           </button>
         </div>
       )}

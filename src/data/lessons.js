@@ -47,3 +47,16 @@ export const getAllLessons = () => {
   );
 };
 
+export const getLessonById = (id) => {
+  return getAllLessons().find(lesson => lesson.id === id);
+};
+
+export const getNextLesson = (currentLessonId) => {
+  const allLessons = getAllLessons();
+  const currentIndex = allLessons.findIndex(lesson => lesson.id === currentLessonId);
+  if (currentIndex === -1 || currentIndex === allLessons.length - 1) {
+    return null; // No next lesson
+  }
+  return allLessons[currentIndex + 1];
+};
+

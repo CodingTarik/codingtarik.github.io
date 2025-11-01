@@ -4,32 +4,41 @@ import { useLanguage } from '../context/LanguageContext';
 import { lessons as lessonData } from '../data/lessons';
 import { categoryTranslations, getTranslatedLesson } from '../data/lessonTranslations';
 import { loadLessonProgress, getLessonProgressStats, markLessonComplete, markLessonIncomplete } from '../utils/sessionStorage';
-
-// Sound effect for completing a lesson
-const completionSound = new Audio('/sounds/complete.mp3');
+import { playCompletionSound } from '../utils/sounds';
 
 function LessonsPage({ onSelectLesson }) {
   const { language, t } = useLanguage();
   const [progress, setProgress] = useState({});
   
+  const allLessons = lessonData.flatMap(category => category.lessons);
+
+  // Load initial progress on component mount
   useEffect(() => {
     setProgress(loadLessonProgress());
   }, []);
 
-  const allLessons = lessonData.flatMap(category => category.lessons);
-  const stats = getLessonProgressStats(allLessons.length);
+  // DERIVED STATE: Stats are now calculated directly from the 'progress' state on every render.
+  // This ensures they are always in sync.
+  // Count only entries where completed is true AND the lesson ID still exists in the current lesson list
+  const validLessonIds = new Set(allLessons.map(l => l.id));
+  const completedCount = Object.entries(progress)
+    .filter(([lessonId, data]) => data?.completed === true && validLessonIds.has(lessonId))
+    .length;
+  const stats = getLessonProgressStats(completedCount, allLessons.length);
 
   const toggleLessonComplete = (e, lessonId) => {
     e.stopPropagation();
     
+    let newProgress;
     if (progress[lessonId]?.completed) {
-      const newProgress = markLessonIncomplete(lessonId);
-      setProgress(newProgress);
+      newProgress = markLessonIncomplete(lessonId);
     } else {
-      const newProgress = markLessonComplete(lessonId);
-      setProgress(newProgress);
-      completionSound.play();
+      newProgress = markLessonComplete(lessonId);
+      playCompletionSound();
     }
+    
+    // Simply update the progress state. The stats will be recalculated automatically on re-render.
+    setProgress(newProgress);
   };
 
   return (

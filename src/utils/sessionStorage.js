@@ -238,9 +238,7 @@ export const isLessonComplete = (lessonId) => {
   return progress[lessonId]?.completed || false;
 };
 
-export const getLessonProgressStats = (totalLessons) => {
-  const progress = loadLessonProgress();
-  const completed = Object.keys(progress).length;
+export const getLessonProgressStats = (completed, totalLessons) => {
   const percentage = totalLessons > 0 ? Math.round((completed / totalLessons) * 100) : 0;
   
   return {

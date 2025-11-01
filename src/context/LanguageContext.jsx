@@ -144,7 +144,15 @@ export const translations = {
     markAsIncomplete: 'Als unvollständig markieren',
     completed: 'Abgeschlossen',
     markAsRead: 'Als gelesen markieren',
-    of: 'von'
+    of: 'von',
+    nextLesson: 'Nächste Lektion',
+
+    // Quiz
+    knowledgeCheck: 'Wissens-Check',
+    flipCard: 'Karte umdrehen',
+    quizComplete: 'Quiz abgeschlossen!',
+    quizCompleteMessage: 'Super! Du hast alle Fragen beantwortet.',
+    quizRestart: 'Neustarten'
   },
   en: {
     // Navigation
@@ -287,7 +295,15 @@ export const translations = {
     markAsIncomplete: 'Mark as incomplete',
     completed: 'Completed',
     markAsRead: 'Mark as read',
-    of: 'of'
+    of: 'of',
+    nextLesson: 'Next Lesson',
+
+    // Quiz
+    knowledgeCheck: 'Knowledge Check',
+    flipCard: 'Flip Card',
+    quizComplete: 'Quiz Complete!',
+    quizCompleteMessage: 'Great job! You\'ve answered all the questions.',
+    quizRestart: 'Restart'
   }
 };
 

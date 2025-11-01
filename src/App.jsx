@@ -17,7 +17,7 @@ import WorkoutBuilder from './components/WorkoutBuilder';
 import WorkoutExecutor from './components/WorkoutExecutor';
 
 // Data
-import { lessons } from './data/lessons';
+import { lessons, getLessonById, getNextLesson } from './data/lessons';
 import { warmupExercises } from './data/warmupExercises';
 
 function AppContent() {
@@ -35,6 +35,53 @@ function AppContent() {
   // Tasks state (for Training Plan)
   const [savedTasks, setSavedTasks] = useState([]);
   const [showSaveConfirmation, setShowSaveConfirmation] = useState(false);
+
+  // Handle URL hash for routing
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash;
+      const lessonMatch = hash.match(/^#\/lessons\/(m\d+_\d+_l\d+)$/);
+
+      if (lessonMatch) {
+        const lessonId = lessonMatch[1];
+        const lesson = getLessonById(lessonId);
+        if (lesson) {
+          setCurrentLesson(lesson);
+          setCurrentPage('lektionen');
+        }
+      } else if (hash === '#/lektionen') {
+        setCurrentLesson(null);
+        setCurrentPage('lektionen');
+      } else if (hash === '#/plan') {
+        setCurrentLesson(null);
+        setCurrentPage('plan');
+      } else if (hash === '#/training') {
+        setCurrentLesson(null);
+        setCurrentPage('training');
+      } else {
+        setCurrentLesson(null);
+        setCurrentPage('home');
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    handleHashChange(); // Initial check
+
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  // Update URL hash when state changes
+  const handleSetCurrentPage = (page) => {
+    window.location.hash = `#/${page}`;
+  };
+
+  const handleSetCurrentLesson = (lesson) => {
+    if (lesson) {
+      window.location.hash = `#/lessons/${lesson.id}`;
+    } else {
+      window.location.hash = '#/lektionen';
+    }
+  };
 
   // Load saved tasks from localStorage
   useEffect(() => {
@@ -140,11 +187,13 @@ function AppContent() {
 
     // Lesson Detail (full screen)
     if (currentLesson) {
+      const nextLesson = getNextLesson(currentLesson.id);
       return (
         <LessonDetailPage
           lesson={currentLesson}
-          onBack={() => setCurrentLesson(null)}
+          onBack={() => handleSetCurrentLesson(null)}
           onSaveTask={saveTask}
+          onGoToNextLesson={nextLesson ? () => handleSetCurrentLesson(nextLesson) : null}
         />
       );
     }
@@ -155,8 +204,7 @@ function AppContent() {
         return (
           <HomePage
             onStartLesson={() => {
-              setCurrentPage('lektionen');
-              setCurrentLesson(null);
+              handleSetCurrentPage('lektionen');
             }}
             onStartWarmup={() => setShowWarmupTimer(true)}
           />
@@ -165,7 +213,7 @@ function AppContent() {
       case 'lektionen':
         return (
           <LessonsPage
-            onSelectLesson={setCurrentLesson}
+            onSelectLesson={handleSetCurrentLesson}
           />
         );
       
@@ -207,7 +255,7 @@ function AppContent() {
 
       {/* Bottom Navigation - only show on main pages */}
       {!currentLesson && !showWarmupTimer && !showWorkoutBuilder && !showWorkoutExecutor && (
-        <BottomNavigation currentPage={currentPage} setCurrentPage={setCurrentPage} />
+        <BottomNavigation currentPage={currentPage} setCurrentPage={handleSetCurrentPage} />
       )}
     </div>
   );

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, Play, Pause, SkipForward, Check, X, Edit, TrendingUp } from 'lucide-react';
 import { saveExerciseHistory, getLastExerciseData, saveWorkoutSession } from '../utils/workoutStorage';
+import { playTimerSound } from '../utils/sounds';
 
 function WorkoutExecutor({ workout, onBack, onComplete }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -10,7 +11,6 @@ function WorkoutExecutor({ workout, onBack, onComplete }) {
   const [showManualInput, setShowManualInput] = useState(false);
   const [manualValue, setManualValue] = useState('');
   const [manualWeight, setManualWeight] = useState('');
-  const audioRef = useRef(null);
 
   const currentEx = workout.exercises[currentIndex];
   const isLastExercise = currentIndex === workout.exercises.length - 1;
@@ -63,9 +63,7 @@ function WorkoutExecutor({ workout, onBack, onComplete }) {
   }, [isRunning, currentEx]);
 
   const playSound = () => {
-    if (audioRef.current) {
-      audioRef.current.play().catch(() => {});
-    }
+    playTimerSound();
   };
 
   const handleExerciseComplete = (value = null, weight = null) => {
@@ -393,11 +391,6 @@ function WorkoutExecutor({ workout, onBack, onComplete }) {
           </div>
         </div>
       )}
-
-      {/* Audio element for completion sound */}
-      <audio ref={audioRef}>
-        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBzWO0/HDeCgFIXPD795+OgwWZ7fs3JJGDClKm93nv2IfCDGJ0O+/eCkGInC/7dh5PgsUYbXm4qVYEwxCmtvptmMcBjON0fC/eCkGInC/7dh5Pw" type="audio/wav"/>
-      </audio>
     </div>
   );
 }
