@@ -1,0 +1,895 @@
+═══════════════════════════════════════════════════════════════════════════════
+  BOULDERBUDDY - KOMPLETTES CURRICULUM FÜR BOULDER-ANFÄNGER BIS FORTGESCHRITTEN
+═══════════════════════════════════════════════════════════════════════════════
+
+Version: 1.0
+Zielgruppe: Absolute Anfänger bis mittleres Niveau (ca. 3a-6c)
+Empfohlene Dauer: 6-12 Monate für alle Lektionen
+
+
+═══════════════════════════════════════════════════════════════════════════════
+PHASE 1: GRUNDLAGEN & ERSTE SCHRITTE (Woche 1-4)
+═══════════════════════════════════════════════════════════════════════════════
+
+MODUL 1.1: EINFÜHRUNG INS BOULDERN
+──────────────────────────────────
+□ Was ist Bouldern? Geschichte & Philosophie
+  - Definition: Klettern in Absprunghöhe ohne Seil
+  - Ursprung: Fontainebleau (Frankreich) & Yosemite Valley
+  - Unterschied zu Seilklettern, Freiklettern, Sportklettern
+  - Warum Bouldern? (Physisch, mental, sozial)
+  
+□ Halle vs. Outdoor-Bouldern
+  - Vor- und Nachteile Boulderhalle
+  - Was ist beim Outdoor-Bouldern anders?
+  - Crashpads, Spotting, Wetter, LNT (Leave No Trace)
+  - Ethik: Chalk-Nutzung, Vogelschutz, Respekt vor Natur
+  
+□ Die Boulder-Community
+  - Hallen-Kultur & Sozialdynamik
+  - Online-Communities (Instagram, YouTube, Reddit r/bouldering)
+  - Lokale Boulder-Gruppen finden
+  - Wettkämpfe & Events (auch für Anfänger!)
+
+
+MODUL 1.2: SICHERHEIT - DIE WICHTIGSTE LEKTION!
+────────────────────────────────────────────────
+□ Richtig Fallen (THE MOST IMPORTANT SKILL!)
+  - Anatomie eines sicheren Falls
+  - Kontrolliert abspringen (nicht einfach loslassen)
+  - Landung: Füße → Knie gebeugt → Abrollen
+  - Was NICHT tun: Steif landen, Hände abstützen, rückwärts fallen
+  - Übung: Falltraining von verschiedenen Höhen
+  - Häufigste Verletzungen beim Fallen (Knöchel, Handgelenke)
+
+□ Spotting - Den Partner sichern
+  - Rolle des Spotters (lenken, nicht fangen!)
+  - Richtige Position & Handstellung
+  - Kommunikation mit Kletterer
+  - Wann Spotting besonders wichtig ist (Traverse, Highballs)
+
+□ Hallen-Etikette & Regeln
+  - NIEMALS unter Kletternden durchlaufen
+  - Matten freihalten (kein Gepäck, Handy, Wasserflaschen)
+  - Auf andere achten vor dem Einsteigen in Route
+  - "Next!" rufen wenn Boulder frei sein sollte
+  - Schuhe ausziehen außerhalb der Matten
+  - Chalk sparsam nutzen & Griffe säubern
+  - Lautstärke & Musik (Rücksicht!)
+
+□ Verletzungsprävention - Basics
+  - Warum Aufwärmen essentiell ist
+  - Typische Boulder-Verletzungen (Pulley, Tendinitis, Schulterschäden)
+  - Red Flags: Schmerz vs. Muskelkater
+  - Bei Schmerz: PAUSE (nicht "durchtrainieren"!)
+
+
+MODUL 1.3: ROUTEN LESEN & VERSTEHEN
+────────────────────────────────────
+□ Griff-Markierungen & Farben
+  - Farbsysteme in verschiedenen Hallen
+  - Start-Griffe erkennen (oft doppelt markiert)
+  - Top-Griffe & Zonen
+  - "Feet follow" vs. markierte Tritte
+  - Volumes & Strukturen
+
+□ Schwierigkeitsgrade verstehen
+  - Fontainebleau-Skala (3a, 4a, 5a, 6a, 6a+, 6b, 6b+...)
+  - V-Scale (USA): V0, V1, V2...
+  - Relative Schwierigkeit (Halle vs. Halle unterschiedlich!)
+  - Subjektive Faktoren (Körpergröße, Stil, Stärken)
+  
+□ Boulder-Vokabular (das musst du kennen!)
+  - Crux: Schwerste Stelle im Boulder
+  - Beta: Lösung/Sequenz für einen Boulder
+  - Flash: Beim 1. Versuch geschafft (mit Beta)
+  - Onsight: 1. Versuch OHNE vorherige Infos
+  - Redpoint: Nach mehreren Versuchen geschafft
+  - Project: Boulder an dem man langfristig arbeitet
+  - Send: Boulder erfolgreich abgeschlossen
+  - Pump: Unterarme sind "dicht" (Übersäuerung)
+  - Crispy: Sehr gute Form/Leistung
+  - Sandbag: Boulder ist schwerer als Grad suggeriert
+
+
+MODUL 1.4: AUSRÜSTUNG - GEAR FÜR ANFÄNGER
+──────────────────────────────────────────
+□ Kletterschuhe (DAS wichtigste Investment!)
+  - Warum spezielle Schuhe? (Sticky Rubber, Vorspannung)
+  - Die 3 Schuhtypen: Neutral, Moderat, Aggressiv
+  - Passform: Eng aber nicht schmerzhaft
+  - Leisten vs. Klettverschluss vs. Schnürung
+  - Asymmetrie & Downturn
+  - Anfänger-Empfehlungen: La Sportiva Tarantula, Scarpa Origin, Five Ten Rogue
+  - Marken & Passformen: La Sportiva (schmal), Scarpa (breit), Five Ten (komfortabel)
+  - Pflege: Geruch vermeiden, richtig lagern, Resohlen
+
+□ Chalk - Für besseren Grip
+  - Warum Magnesiumcarbonat?
+  - Pulver vs. Block vs. Liquid Chalk
+  - Chalk-Bag vs. Chalk-Bucket
+  - Hallen-Regeln (viele nur Liquid Chalk!)
+  - Wie viel ist zu viel? (Over-chalking = schlechter Grip)
+
+□ Weiteres Equipment
+  - Bürste: Griffe reinigen für besseren Grip
+  - Tape: Hautschutz bei Verletzungen
+  - Nagelfeile: Scharfe Kanten glätten
+  - Hautpflege: Creme, Balsam (z.B. Climb On!, Rhino Repair)
+  - Crashpad (Outdoor): Größe, Dicke, Hinge vs. Taco-Pad
+
+□ Budget-Guide
+  - Minimal-Setup: Schuhe (geliehen), Liquid Chalk, Halleneintritt
+  - Starter-Set: ~100-150€
+  - Was kann warten? (Eigenes Crashpad, teure Schuhe)
+  - Gebraucht kaufen: Worauf achten?
+
+
+═══════════════════════════════════════════════════════════════════════════════
+PHASE 2: GRUNDTECHNIKEN ENTWICKELN (Woche 5-12)
+═══════════════════════════════════════════════════════════════════════════════
+
+MODUL 2.1: KÖRPERSPANNUNG - DAS FUNDAMENT
+──────────────────────────────────────────
+□ Was ist Körperspannung?
+  - Aktive Kontrolle von Kopf bis Fuß
+  - Core-Engagement (Bauch, Rücken)
+  - Nicht verkrampfen, sondern kontrolliert spannen!
+
+□ Der "Stille Affe"
+  - Gute Kletterer sind leise & flüssig
+  - Keine unkontrollierten Bewegungen
+  - Kein Beine-Schlackern oder Tritte-Knallen
+
+□ Praktische Übungen
+  - Statisches Halten an der Wand (Core-Training)
+  - Langsame, kontrollierte Bewegungen
+  - Plank, Hollow Body Hold, L-Sit
+  - Hängen an der Stange mit angewinkelten Beinen
+
+
+MODUL 2.2: ARME & HANDGELENKE RICHTIG NUTZEN
+─────────────────────────────────────────────
+□ Arme gestreckt lassen!
+  - Anfängerfehler: Hochziehen wie Klimmzüge
+  - Skelett trägt Gewicht, nicht Muskeln
+  - "Hängen" statt "Halten"
+  
+□ Straight Arm vs. Bent Arm Climbing
+  - Wann gestreckter Arm? (90% der Zeit!)
+  - Wann Lock-Off nötig? (Dynamische Moves, Manteln)
+
+□ Schultergesundheit
+  - Rotatorenmanschette schützen
+  - Antagonisten-Training: Liegestütze, Dips
+  - Schulter-Mobility-Übungen
+
+
+MODUL 2.3: GREIFTECHNIKEN - DIE 7 HAUPTGRIFFE
+──────────────────────────────────────────────
+□ 1. JUG (Henkel)
+  - Einfach umfassen, hängen, verschnaufen
+  - Beste Freunde des Anfängers
+
+□ 2. CRIMP (Leiste)
+  - Nur erste beiden Fingerglieder
+  - Open Crimp vs. Closed Crimp (Half Crimp vs. Full Crimp)
+  - ⚠️ Verletzungsrisiko! Anfänger: Open Crimp bevorzugen
+  - Finger-Kraft & Sehnen-Anpassung dauert Monate
+
+□ 3. SLOPER (Aufleger)
+  - Runder, abfallender Griff
+  - Nicht "greifen", sondern auflegen & Reibung nutzen
+  - Arme gestreckt, Körper tief, Schwerpunkt zentral
+  - Reibung = Kraft (Chalk wichtig!)
+
+□ 4. PINCH (Zange)
+  - Daumen vs. Finger (Opposition)
+  - Daumen-Kraft trainieren
+  - Variation: Side-Pinch, Thumb-Catch
+
+□ 5. POCKET (Loch)
+  - 1-Finger (Mono), 2-Finger, 3-Finger Pockets
+  - ⚠️ Hohe Belastung! Vorsicht als Anfänger
+  - Mittel- & Ringfinger meist am stärksten
+  - Nie ruckartig belasten
+
+□ 6. UNDERCLING (Untergriff)
+  - Griff von unten halten
+  - Arme ziehen, Füße drücken (Opposition!)
+  - Körperspannung extrem wichtig
+
+□ 7. SIDE-PULL (Seitgriff)
+  - Griff seitlich ziehen
+  - Körper in Opposition zum Zug
+  - Oft mit Flagging kombiniert
+
+
+MODUL 2.4: FUSSTECHNIK - DAS WICHTIGSTE!
+─────────────────────────────────────────
+□ Grundprinzip: Beine drücken, Arme halten Balance!
+  - Beine sind 3x stärker als Arme
+  - Gute Fußarbeit = Energieersparnis
+
+□ Präzises Treten
+  - Schaue auf den Tritt BEVOR du drauf steigst!
+  - Innenkante (meist präziser)
+  - Spitze (für kleinste Tritte)
+  - Außenkante (beim Eindrehen)
+  - Ferse (Heel Hook)
+  - Oberseite (Toe Hook)
+
+□ Leise Treten = Gute Technik
+  - Kein Knallen oder Rutschen
+  - Bewusstes Platzieren
+  - Vertrauen in die Schuhe
+
+□ Smearing (Anschmieren)
+  - Kein Tritt sichtbar? Ganzen Schuh flach aufsetzen
+  - Reibung gegen Wand
+  - Körpergewicht nach vorn
+
+□ Eindrehen (Drop Knee Turn)
+  - Reichweite +20cm!
+  - Seitlich zur Wand drehen
+  - Außenkante des Fußes auf Tritt
+  - Hüfte nah an die Wand
+  - Die effizienteste Technik für hohe Griffe!
+
+□ Heel Hook (Fersen-Haken)
+  - Ferse auf Griff/Volume haken
+  - Zieht dich hoch oder stabilisiert
+  - Core-intensiv!
+  - In Überhängen essentiell
+
+□ Toe Hook (Zehen-Haken)
+  - Oberseite des Schuhs über Griff
+  - Sehr Core-intensiv
+  - Braucht flexible Schuhe
+
+□ Backstep
+  - Außenkante des Fußes zur Wand
+  - Knie zeigt von Wand weg
+  - Effizient in Überhängen
+
+
+MODUL 2.5: BALANCE & SCHWERPUNKT
+─────────────────────────────────
+□ Körperschwerpunkt nah an der Wand
+  - Hüfte zur Wand drücken
+  - Nicht "abhängen" vom Griff
+
+□ Drei-Punkt-Kontakt
+  - Immer 3 Punkte an der Wand (2 Füße, 1 Hand oder umgekehrt)
+  - Ausnahme: Dynamische Moves
+
+□ Flagging (Bein als Gegengewicht)
+  - Inside Flag vs. Outside Flag
+  - Verhindert Drehung ("Barn Door")
+  - Stabilität ohne zusätzlichen Tritt
+
+□ Gegendruck (Opposition)
+  - Drücken vs. Ziehen gleichzeitig
+  - Z.B. Undergriff + Fußdruck
+
+
+═══════════════════════════════════════════════════════════════════════════════
+PHASE 3: FORTGESCHRITTENE TECHNIKEN (Woche 13-24)
+═══════════════════════════════════════════════════════════════════════════════
+
+MODUL 3.1: DYNAMISCHE BEWEGUNGEN
+─────────────────────────────────
+□ Dead Point
+  - Kontrollierter Schwung zum Griff
+  - Timing: Greifen im "Schwerelosigkeits-Moment"
+  - Koordination Arme + Beine
+  - Keine Füße verlassen Tritte
+
+□ Dyno (Dynamischer Sprung)
+  - Beide Füße verlassen Tritte
+  - Explosiver Push mit Beinen
+  - Voll-Körper-Einsatz
+  - Risiko: Sturzgefahr, hohe Belastung
+  - Subtypen: Double Dyno, Triple Dyno (beide Hände fliegen!)
+
+□ Jump & Catch
+  - Timing ist alles
+  - Landung abfedern (Griff "einfangen", nicht reißen)
+
+□ Coordination Training
+  - Campus Board (NUR für Fortgeschrittene!)
+  - Plyometrische Übungen
+  - Sprung-Kraft entwickeln
+
+
+MODUL 3.2: ÜBERHANG-TECHNIKEN
+──────────────────────────────
+□ Warum Überhänge anders sind
+  - Mehr Armkraft nötig
+  - Core extrem wichtig
+  - Spezielle Rest-Positionen
+
+□ Knee-Bar (Knie-Stange)
+  - Fuß + Knie klemmen dich ein
+  - Hände-frei-Position!
+  - Zum Ausruhen & Chalken
+  - Wo finden? Volumes, große Griffe über Tritten
+
+□ Bat Hang (Fledermaus)
+  - Kopfüber hängen mit Heel Hooks
+  - Extrem Core-intensiv
+  - Meist in horizontalen Dächern
+
+□ Drop Knee
+  - Extremes Eindrehen
+  - Ein Knie zeigt nach unten
+  - Hüfte GANZ nah an Wand
+  - Spart Armkraft
+
+□ Bicycle (Fahrrad)
+  - Füße klemmen um Volume/Feature
+  - Ein Fuß drückt, einer zieht (Hook)
+
+□ Rose Move
+  - Komplexer Move mit verdrehtem Körper
+  - Meist mit Backstep + Hook
+
+
+MODUL 3.3: MANTLING (Hochdrücken)
+──────────────────────────────────
+□ Was ist ein Mantel?
+  - Hochdrücken auf eine Ablage/Volumen
+  - Wie aus Pool hochdrücken
+
+□ Technik
+  - Von Ziehen zu Drücken wechseln
+  - Fuß hochbringen (smearing oder auf Griff)
+  - Gewicht verlagern
+  - Explosiv hochdrücken (Trizeps!)
+
+□ Mantel-Varianten
+  - Low Mantel (niedriges Hochdrücken)
+  - High Mantel (explosiv)
+
+
+MODUL 3.4: SLAB-KLETTERN (Platten)
+───────────────────────────────────
+□ Was ist Slab?
+  - Wandneigung < 90° (zurückgelehnt)
+  - Technisch sehr anspruchsvoll
+  - Balance > Kraft
+
+□ Slab-Techniken
+  - Gewicht auf Füße (nicht ziehen mit Armen!)
+  - Hüfte nah an Wand
+  - Smearing & Präzision
+  - Vertrauen in die Schuhe
+
+□ Mental Challenge
+  - Höhenangst (exponiert!)
+  - Vertrauen entwickeln
+
+
+MODUL 3.5: COMPRESSION (Kompression)
+─────────────────────────────────────
+□ Was ist Compression?
+  - Zwei Griffe gegeneinander drücken/ziehen
+  - Massive Core-Spannung nötig
+  - Oft Side-Pulls oder Slopers
+
+□ Technik
+  - Arme & Core arbeiten zusammen
+  - Füße oft nur minimal belastet
+  - Richtung: Griffe "zusammenpressen"
+
+
+MODUL 3.6: ROUTE READING - BOULDER KNACKEN MIT KOPF
+────────────────────────────────────────────────────
+□ Pre-Climb Analysis (vor dem Klettern analysieren!)
+  - Alle Griffe identifizieren
+  - Crux finden
+  - Mögliche Sequenzen durchdenken
+  - Rest-Positionen planen
+
+□ Andere beobachten
+  - Beta von anderen lernen (aber nicht blind kopieren!)
+  - Körpergrößen-Unterschiede beachten
+  - Was funktioniert? Was nicht?
+
+□ Visualisierung
+  - Boulder im Kopf klettern
+  - Bewegungen in der Luft durchgehen
+  - Mental Rehearsal (wie Athleten vor Wettkampf)
+
+□ Von oben nach unten denken
+  - Oft einfacher als Start → Top
+  - Wo muss ich sein, um den Top-Griff zu erreichen?
+  - Rückwärts-Sequenz planen
+
+□ Beta-Sharing & Community
+  - "Spray Wall" (über Boulder reden & analysieren)
+  - Beta ist subjektiv (deine Lösung ≠ meine Lösung)
+  - Respektvoller Austausch
+
+
+═══════════════════════════════════════════════════════════════════════════════
+PHASE 4: TRAINING & KONDITIONIERUNG (Ab Woche 12, kontinuierlich)
+═══════════════════════════════════════════════════════════════════════════════
+
+MODUL 4.1: TRAININGSPLANUNG FÜR ANFÄNGER
+─────────────────────────────────────────
+□ Wie oft trainieren?
+  - Anfänger: 2-3x pro Woche
+  - Fortgeschritten: 3-4x pro Woche
+  - Profis: 5-6x pro Woche (+ Ruhetage!)
+
+□ Session-Typen
+  - Technik-Session: Leichte Boulder, Fokus auf saubere Ausführung
+  - Limit-Session: Boulder an persönlichem Limit, mehrere Versuche
+  - Ausdauer-Session: Viele Boulder, wenig Pause (Pump-Training)
+  - Projekt-Session: An einem schweren Boulder arbeiten
+
+□ Periodisierung
+  - 4 Wochen Training → 1 Woche Deload (reduzierte Intensität)
+  - Langfristige Planung (Saison-Ziele)
+
+□ Progression messen
+  - Nicht nur nach Grad!
+  - Wie fühlt sich Boulder an?
+  - Mehr Versuche ohne Pump?
+  - Sauberere Technik?
+
+□ Trainingslog führen
+  - Datum, Boulder geklettert, Gefühl (1-10)
+  - Besonderheiten: Schmerzen? Durchbrüche?
+  - Muster erkennen (bester Ruhetag-Rhythmus?)
+
+
+MODUL 4.2: FINGER-KRAFT & HANGBOARD-TRAINING
+─────────────────────────────────────────────
+□ Finger-Anatomie verstehen
+  - Pulley-System (Ringbänder)
+  - Sehnen vs. Muskeln (Sehnen brauchen LÄNGER!)
+  - A2-Pulley = häufigste Verletzung
+
+□ Häufigste Finger-Verletzungen
+  - Pulley-Riss: Knacken + sofortiger Schmerz
+  - Tendinitis (Sehnenentzündung): Schleichender Schmerz
+  - Kapsel-Zerrung: Geschwollene Gelenke
+
+□ Verletzungsprävention
+  - Progressive Belastung (10%-Regel!)
+  - Open Hand > Closed Crimp
+  - IMMER aufwärmen (10-15 Min!)
+  - Bei Schmerz: PAUSE!
+
+□ Hangboard-Training (NUR nach 6-12 Monaten Bouldern!)
+  - Warum so spät? Sehnen brauchen Zeit!
+  - Max Hangs (10 Sek, hohes Gewicht)
+  - Repeater (7/3 Sek on/off, moderate Intensität)
+  - Progressions-Protokolle (z.B. Eva López, Bechtel)
+
+□ Antagonisten-Training
+  - Finger-Strecker (Gummiband-Übungen)
+  - Push-Übungen (Liegestütze, Dips) gegen Pull-Übungen
+
+
+MODUL 4.3: KRAFT-TRAINING OFF THE WALL
+───────────────────────────────────────
+□ Core-Training
+  - Plank-Variationen
+  - Hollow Body Hold
+  - L-Sit / V-Sit
+  - Beinheben hängend
+  - Russian Twists
+  - Ab-Wheel Rollouts
+
+□ Pull-Training
+  - Klimmzüge (verschiedene Griffarten)
+  - One-Arm Hangs (progression zu One-Arm Pullup)
+  - Frenchies (Lock-Offs auf verschiedenen Höhen)
+
+□ Push-Training (Antagonisten!)
+  - Liegestütze (normal, diamond, archer)
+  - Dips
+  - Overhead Press
+  - ⚠️ Balance! Nicht nur Ziehen trainieren
+
+□ Bein-Training
+  - Kniebeugen (Explosive Power)
+  - Ausfallschritte (Balance)
+  - Box Jumps (Plyometrie für Dynos)
+
+□ Flexibility & Mobility
+  - Hüft-Mobility (für hohe Tritte & Hooks)
+  - Schulter-Mobility (Overhead Reaches)
+  - Hamstrings (bessere Reichweite)
+  - Faszien-Training (Foam Rolling)
+
+
+MODUL 4.4: AUSDAUER & KAMPFKRAFT
+─────────────────────────────────
+□ Was ist "Pump"?
+  - Unterarm-Übersäuerung (Laktat)
+  - Gefühl: Arme werden dick & schwach
+  - Progression: Später pump = länger klettern
+
+□ Pump-Resistance Training
+  - 4x4s: 4 Boulder, 4 mal durchklettern, minimale Pause
+  - Pyramids: Aufsteigend schwierig, dann absteigend
+  - Linked Boulders: 2-3 Boulder hintereinander
+
+□ Power Endurance
+  - Lange, intensive Boulder mehrmals wiederholen
+  - Interval Training an der Wand
+
+□ Aerobe Fitness
+  - Klettern hilft, aber nicht genug!
+  - Cardio: Laufen, Radfahren (2x Woche, 30 Min)
+  - Schnellere Recovery zwischen Sessions
+
+
+MODUL 4.5: ERNÄHRUNG FÜR BOULDERER
+───────────────────────────────────
+□ Basics
+  - Protein für Muskel-Recovery (1.6-2g / kg Körpergewicht)
+  - Kohlenhydrate für Energie (vor & nach Session)
+  - Gesunde Fette (Hormone, Gelenke)
+  - Hydration! (Wasser vor, während, nach Training)
+
+□ Pre-Session Nutrition
+  - 1-2h vorher: Leichte Mahlzeit (Kohlenhydrate + etwas Protein)
+  - Beispiel: Banane + Nussbutter, Haferflocken, Reiswaffeln
+
+□ Post-Session Recovery
+  - 30-60 Min nach Training: Protein + Kohlenhydrate
+  - Beispiel: Protein-Shake, Hühnchen + Reis, Quark + Obst
+
+□ Gewichtsmanagement
+  - ⚠️ Vorsicht! Essstörungen in der Kletter-Community verbreitet
+  - Performance ≠ leicht sein
+  - Kraft-zu-Gewicht-Verhältnis, aber Gesundheit zuerst!
+
+□ Supplements (optional)
+  - Protein-Pulver (Convenience)
+  - Creatin (Kraft & Power)
+  - Vitamin D (besonders im Winter)
+  - Omega-3 (Entzündungshemmung)
+
+
+MODUL 4.6: RECOVERY & REGENERATION
+───────────────────────────────────
+□ Schlaf - Die wichtigste Recovery!
+  - 7-9 Stunden pro Nacht
+  - Muskel-Reparatur & Neuroplastizität (Bewegungen lernen)
+
+□ Aktive Regeneration
+  - Yoga / Stretching
+  - Leichtes Cardio (Durchblutung)
+  - Spazieren, Schwimmen
+
+□ Passive Regeneration
+  - Rest Days sind ESSENTIELL!
+  - Mindestens 1-2 komplette Ruhetage pro Woche
+
+□ Recovery-Tools
+  - Foam Rolling (Faszien)
+  - Massage (professionell oder Selbst-Massage)
+  - Kontrast-Bad (Wechsel warm/kalt)
+  - Kompression (Compression Sleeves)
+
+□ Übertraining erkennen
+  - Ständige Müdigkeit
+  - Schlechte Performance trotz Training
+  - Erhöhter Ruhepuls
+  - Reizbarkeit
+  - → Lösung: WOCHE PAUSE!
+
+
+═══════════════════════════════════════════════════════════════════════════════
+PHASE 5: MENTALE STÄRKE & PSYCHOLOGIE (Kontinuierlich)
+═══════════════════════════════════════════════════════════════════════════════
+
+MODUL 5.1: ANGST ÜBERWINDEN
+────────────────────────────
+□ Höhenangst beim Bouldern
+  - Auch 4 Meter können Angst auslösen!
+  - Progressive Desensibilisierung: Langsam höher
+  - Falltechnik üben → Vertrauen entwickeln
+  - Abspringen üben (bewusst loslassen)
+
+□ Versagensangst
+  - "Alle schauen zu!"
+  - Realität: Niemand urteilt (Boulder-Community ist supportive!)
+  - Fallen gehört dazu (Profis fallen mehr als Anfänger!)
+
+□ Angst vor Verletzung
+  - Berechtigt! Aber nicht lähmend
+  - Risiko-Management: Gute Technik, Aufwärmen, Grenzen kennen
+  - "Educated Risk" (kalkuliertes Risiko)
+
+
+MODUL 5.2: MENTALE TECHNIKEN
+─────────────────────────────
+□ Visualisierung
+  - Boulder mental durchklettern (vor dem Versuch)
+  - Erfolgreiche Moves im Kopf verankern
+  - Wissenschaftlich belegt: Neuronen feuern wie bei echter Bewegung!
+
+□ Positives Self-Talk
+  - Innerer Dialog: "Ich kann das!" statt "Ich schaff das nie!"
+  - Growth Mindset (Wachstums-Mentalität)
+  - Fehler = Lern-Chancen
+
+□ Atemtechniken
+  - Tiefes Atmen reduziert Stress
+  - 4-7-8 Atmung (4 Sek einatmen, 7 Sek halten, 8 Sek ausatmen)
+  - Während des Kletterns: Nicht Luft anhalten!
+
+□ Fokus & Flow-State
+  - "Im Moment sein"
+  - Tunnel-Vision entwickeln (nur Boulder, keine Ablenkungen)
+  - Musik? Manche ja, manche nein (Präferenz)
+
+
+MODUL 5.3: FRUSTRATION & PLATEAUS MEISTERN
+───────────────────────────────────────────
+□ Der Boulder, der nicht geht
+  - 10, 20, 50 Versuche... und immer derselbe Fehler
+  - Strategie 1: Pause machen (nächster Tag / nächste Woche)
+  - Strategie 2: Beta ändern (neue Sequenz probieren)
+  - Strategie 3: Akzeptieren & weiter gehen (nicht jeder Boulder für jeden)
+
+□ Plateaus (keine Progression)
+  - Normal! Jeder hat sie
+  - Körper & Geist brauchen Zeit zum Adaptieren
+  - Fokus auf Prozess, nicht Ergebnis
+  - Verschiedene Aspekte trainieren (Technik, Kraft, Flexibilität)
+
+□ Vergleich mit anderen
+  - "Der ist viel besser als ich und klettert kürzer!"
+  - Jeder hat andere Stärken, Körper, Vorgeschichte
+  - Fokus auf eigene Progression
+
+
+MODUL 5.4: GOALS SETZEN (Ziele)
+────────────────────────────────
+□ SMART-Ziele
+  - Specific (spezifisch)
+  - Measurable (messbar)
+  - Achievable (erreichbar)
+  - Relevant (relevant für dich)
+  - Time-bound (zeitlich definiert)
+
+□ Kurz-, Mittel-, Langfristige Ziele
+  - Kurzfristig: "Diese Woche 3x trainieren"
+  - Mittelfristig: "In 3 Monaten 5c klettern"
+  - Langfristig: "In 1 Jahr Outdoor bouldern in Fontainebleau"
+
+□ Prozess-Ziele vs. Ergebnis-Ziele
+  - Prozess: "Jede Session 10 Min Fußtechnik üben"
+  - Ergebnis: "Boulder XY schaffen"
+  - Prozess-Ziele = besser kontrollierbar!
+
+□ Celebrations (Erfolge feiern!)
+  - Auch kleine Fortschritte wertschätzen
+  - Mit Freunden teilen
+  - Trainingslog: "Wins" notieren
+
+
+═══════════════════════════════════════════════════════════════════════════════
+PHASE 6: SPEZIAL-THEMEN & OUTDOOR (Fortgeschritten)
+═══════════════════════════════════════════════════════════════════════════════
+
+MODUL 6.1: OUTDOOR-BOULDERN - DER NÄCHSTE SCHRITT
+───────────────────────────────────────────────────
+□ Vorbereitung
+  - Crashpad kaufen/leihen (Hinge, Taco, Größe)
+  - Bürste, Chalk, Tape
+  - Guidebook oder App (27 Crags, Mountain Project)
+  - Wetter checken (Regen = rutschiger Fels!)
+
+□ Fels-Typen verstehen
+  - Granit (Fontainebleau, Yosemite): Reibung, Sloper
+  - Sandstein (Elbsandgebirge): Soft, Verletzungs-anfällig
+  - Kalkstein (Frankenjura): Pockets, Leisten
+  - Basalt, Gneis, etc.
+
+□ Unterschiede Halle → Outdoor
+  - Keine Farb-Markierungen (Routenfindung schwieriger!)
+  - Wetter-Einfluss (Temperatur, Luftfeuchtigkeit)
+  - Unebener Boden (Spotting wichtiger!)
+  - Natürliche Griffe (keine Schrauben-Griffe)
+
+□ Spotting Outdoor
+  - Crashpads positionieren
+  - Mehrere Pads überlappen
+  - Spotter MUSS aufmerksam sein (keine Ablenkung!)
+
+□ Leave No Trace (LNT) Ethik
+  - Chalk minimieren (kann Fels beschädigen)
+  - Keine Bäume/Pflanzen beschädigen
+  - Müll mitnehmen
+  - Lärm reduzieren (Anwohner, Wildtiere)
+  - Zugangs-Beschränkungen respektieren (Vogelschutz!)
+
+□ Beliebte Outdoor-Gebiete
+  - Europa: Fontainebleau (FR), Albarracín (ES), Magic Wood (CH), Ticino (CH)
+  - USA: Bishop, Hueco Tanks, Red Rock, Squamish
+  - Welt: Rocklands (SA), Hampi (IN), Shiobara (JP)
+
+
+MODUL 6.2: WETTKÄMPFE & COMPETITIONS
+────────────────────────────────────
+□ Arten von Wettkämpfen
+  - Locals: Hallen-Comps (oft Anfänger-freundlich!)
+  - Regional: Landes-Cups
+  - National: Deutsche Meisterschaften
+  - International: World Cups, Olympia
+
+□ Wettbewerbs-Formate
+  - Boulder-Format: X Probleme, Y Minuten, Punkte für Tops/Zones
+  - Flash-Format: Ein Versuch pro Boulder
+  - Onsight: Keine Vorschau
+
+□ Warum an Comps teilnehmen? (auch als Anfänger!)
+  - Motivation & Ziele
+  - Community treffen
+  - Spaß!
+  - Keine Profi-Ambitionen nötig
+
+□ Wettkampf-Vorbereitung
+  - Mental vorbereiten (Nervosität ist normal!)
+  - Aufwärmen (länger als normal!)
+  - Ernährung & Hydration
+  - Spaß haben!
+
+
+MODUL 6.3: SPEZIAL-STILE & NISCHEN
+───────────────────────────────────
+□ Highball Bouldering
+  - Sehr hohe Boulder (6-12 Meter)
+  - Sturzrisiko extrem hoch!
+  - Nur für Erfahrene
+  - Mentale Stärke essentiell
+
+□ Deep Water Soloing (DWS)
+  - Über Wasser klettern, Fall ins Wasser
+  - Mallorca (Es Pontàs), Thailand (Railay)
+  - Einzigartige Erfahrung!
+
+□ Competition Climbing (als Stil)
+  - Sehr dynamisch, athletisch
+  - Künstliche Volumes & Griffe
+  - Kreative Probleme
+
+□ Ästhetik-Bouldern
+  - "Schönheit" der Bewegung
+  - Klassische Linien, elegante Moves
+  - Font-Bouldering-Kultur
+
+
+MODUL 6.4: LANGFRISTIGE KLETTER-KARRIERE
+─────────────────────────────────────────
+□ Mit Verletzungen umgehen
+  - Unvermeidbar über Jahre
+  - Richtig rehabilitieren (nicht zu früh zurück!)
+  - Physiotherapie
+  - Alternative Training während Heilung
+
+□ Altern & Bouldern
+  - Viele klettern bis 60+ Jahre!
+  - Fokus verschiebt sich: Kraft → Technik
+  - Anpassung des Trainings (weniger Intensität, mehr Recovery)
+
+□ Balance mit Leben
+  - Bouldern als Hobby vs. Obsession
+  - Work-Life-Climb Balance
+  - Soziale Aspekte (Freunde, Familie)
+
+□ Andere Kletter-Disziplinen erkunden
+  - Sport Climbing (Seilklettern)
+  - Trad Climbing (mit eigener Sicherung)
+  - Alpines Klettern (Berge!)
+
+
+═══════════════════════════════════════════════════════════════════════════════
+ZUSÄTZLICHE RESSOURCEN & QUELLEN
+═══════════════════════════════════════════════════════════════════════════════
+
+BÜCHER (Must-Reads)
+───────────────────
+□ "The Rock Climber's Training Manual" - Michael & Mark Anderson
+□ "9 Out of 10 Climbers Make the Same Mistakes" - Dave MacLeod
+□ "The Self-Coached Climber" - Dan Hague & Douglas Hunter
+□ "Training for the New Alpinism" - Steve House & Scott Johnston
+□ "The Rock Warrior's Way" - Arno Ilgner (Mental Training)
+
+YOUTUBE-KANÄLE
+──────────────
+□ Lattice Training (Technik & Training)
+□ Magnus Midtbø (Wettkämpfe & Challenges)
+□ Eric Karlsson Bouldering (Outdoor)
+□ Catalyst Climbing (Coaching)
+□ Hooper's Beta (Verletzungs-Prävention)
+
+APPS & WEBSITES
+───────────────
+□ 27 Crags / Mountain Project (Guidebooks)
+□ Crimpd / TopLogger (Training-Tracking)
+□ Instagram: #bouldering #climbing
+□ Reddit: r/bouldering, r/climbharder
+□ 8a.nu (Logbook)
+
+PODCASTS
+────────
+□ The Struggle Climbing Show
+□ The Nugget Climbing Podcast
+□ TrainingBeta Podcast
+
+
+═══════════════════════════════════════════════════════════════════════════════
+PROGRESSIVE SKILL-CHECKLISTE
+═══════════════════════════════════════════════════════════════════════════════
+
+ANFÄNGER (Monat 1-3)
+────────────────────
+□ Kann sicher fallen & abrollen
+□ Kennt Hallen-Etikette
+□ Klettert 3a-4c Boulder konsistent
+□ Erkennt alle Hauptgriffarten
+□ Tritt präzise & leise
+□ Grundlegende Körperspannung
+□ Arme meist gestreckt
+□ Hat eigene Kletterschuhe
+
+FORTGESCHRITTEN ANFÄNGER (Monat 4-6)
+─────────────────────────────────────
+□ Klettert 5a-5c Boulder
+□ Kann eindrehen bei hohen Griffen
+□ Grundlegende Heel Hooks
+□ Kann Sloper halten (offene Hand)
+□ Trainiert 2-3x/Woche konsistent
+□ Versteht Beta-Konzept
+□ Kann Boulder vorher analysieren (Route Reading)
+□ Erste Outdoor-Erfahrung
+
+MITTELSTUFE (Monat 7-12)
+────────────────────────
+□ Klettert 6a-6c Boulder
+□ Beherrscht Dead Points
+□ Kann Knee Bars nutzen
+□ Toe Hooks & Heel Hooks flüssig
+□ Versteht eigenen Trainingsplan
+□ Kann an Projekt arbeiten (mehrere Sessions)
+□ Grundlegendes Hangboard-Training (nach 12 Monaten!)
+□ Regelmäßige Outdoor-Sessions
+
+FORTGESCHRITTEN (1-2 Jahre+)
+────────────────────────────
+□ Klettert 7a+ Boulder
+□ Dynos & dynamische Moves sicher
+□ Fortgeschrittene Überhang-Techniken
+□ Eigenes strukturiertes Training
+□ Wettkampf-Erfahrung
+□ Mehrere Outdoor-Trips
+□ Kann andere coachen (Beta geben)
+□ Versteht eigene Schwächen & arbeitet daran
+
+
+═══════════════════════════════════════════════════════════════════════════════
+ENDE DES CURRICULUMS
+═══════════════════════════════════════════════════════════════════════════════
+
+Dieses Curriculum deckt alle essentiellen Bereiche ab, von absoluten Basics bis
+zu fortgeschrittenem Training. Es ist als Leitfaden gedacht - nicht jeder muss
+alles in dieser Reihenfolge machen!
+
+WICHTIG: 
+- Genieße den Prozess! Bouldern soll Spaß machen
+- Höre auf deinen Körper (Verletzungsprävention!)
+- Community ist alles - finde deine Kletter-Freunde
+- "The best climber is the one having the most fun." - Alex Lowe
+
+Version: 1.0 | Erstellt: 2025 | BoulderBuddy App
+
