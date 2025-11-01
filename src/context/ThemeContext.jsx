@@ -4,18 +4,25 @@ const ThemeContext = createContext();
 
 export function ThemeProvider({ children }) {
   const [isDark, setIsDark] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
+    // Check localStorage on mount
     const saved = localStorage.getItem('boulderBuddyTheme');
     if (saved === 'dark') {
       setIsDark(true);
       document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
     }
+    setIsInitialized(true);
   }, []);
 
   const toggleTheme = () => {
-    setIsDark(!isDark);
-    if (!isDark) {
+    const newIsDark = !isDark;
+    setIsDark(newIsDark);
+    
+    if (newIsDark) {
       document.documentElement.classList.add('dark');
       localStorage.setItem('boulderBuddyTheme', 'dark');
     } else {
@@ -23,6 +30,11 @@ export function ThemeProvider({ children }) {
       localStorage.setItem('boulderBuddyTheme', 'light');
     }
   };
+
+  // Don't render until initialized to prevent flash
+  if (!isInitialized) {
+    return null;
+  }
 
   return (
     <ThemeContext.Provider value={{ isDark, toggleTheme }}>

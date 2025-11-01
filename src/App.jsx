@@ -15,7 +15,6 @@ import WarmupTimer from './components/WarmupTimer';
 import TrainingPage from './components/TrainingPage';
 import WorkoutBuilder from './components/WorkoutBuilder';
 import WorkoutExecutor from './components/WorkoutExecutor';
-import SettingsModal from './components/SettingsModal';
 
 // Data
 import allLessons from './data/lessons';
@@ -189,9 +188,6 @@ function AppContent() {
           />
         );
 
-      case 'settings':
-        return <SettingsModal onClose={() => setCurrentPage('home')} />;
-      
       default:
         return <HomePage onStartLesson={() => setCurrentPage('lektionen')} onStartWarmup={() => setShowWarmupTimer(true)} />;
     }
@@ -211,7 +207,7 @@ function AppContent() {
       {renderContent()}
 
       {/* Bottom Navigation - only show on main pages */}
-      {!currentLesson && !showWarmupTimer && !showWorkoutBuilder && !showWorkoutExecutor && currentPage !== 'settings' && (
+      {!currentLesson && !showWarmupTimer && !showWorkoutBuilder && !showWorkoutExecutor && (
         <BottomNavigation currentPage={currentPage} setCurrentPage={setCurrentPage} />
       )}
     </div>

@@ -120,12 +120,19 @@ export const translations = {
 };
 
 export function LanguageProvider({ children }) {
-  const [language, setLanguage] = useState('de');
+  const [language, setLanguage] = useState(() => {
+    // Initialize from localStorage immediately
+    const saved = localStorage.getItem('boulderBuddyLanguage');
+    return (saved && ['de', 'en'].includes(saved)) ? saved : 'de';
+  });
 
   useEffect(() => {
     const saved = localStorage.getItem('boulderBuddyLanguage');
     if (saved && ['de', 'en'].includes(saved)) {
       setLanguage(saved);
+    } else {
+      // Set default to German
+      localStorage.setItem('boulderBuddyLanguage', 'de');
     }
   }, []);
 

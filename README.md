@@ -35,6 +35,35 @@ Eine Progressive Web App (PWA) für Boulder-Anfänger mit interaktiven Lektionen
 - **Workout-Sets**: Speichere mehrere Trainingsprogramme
 - **Aufwärm-Timer**: Interaktiver Timer mit 10 Aufwärm-Übungen
 
+### 📊 Session Logger & Tracking
+- **Boulder Session Logger**:
+  - Logge jede Boulder-Session mit Dauer, Feeling & Notizen
+  - Boulder einzeln tracken (Grad, Versuche, Send/Flash Status)
+  - Fotos von Boulder aufnehmen (Kamera oder Upload)
+  - Videos aufnehmen für spätere Analyse
+  - 5-Sterne Bewertung für jeden Boulder
+  - Notizen zu jedem Boulder (Beta, schwierige Moves, etc.)
+- **Video-Player mit Slow-Motion**:
+  - Videos in 0.25x, 0.5x, 0.75x, 1x, 1.5x, 2x abspielen
+  - Perfekt für Bewegungsanalyse & Technik-Verbesserung
+  - Frame-genaues Spulen & Pausieren
+- **Detaillierte Statistiken**:
+  - Gesamt-Sessions & Boulder Count
+  - Send Rate & Flash Rate Berechnung
+  - Boulder-Pyramide (Grad-Verteilung)
+  - Max Grad Tracking
+  - Session History mit Feeling-Verlauf
+  - Foto & Video Galerie deiner Boulder
+- **Kraft-Tests**:
+  - Max Hang (20mm Edge)
+  - Klimmzüge (normal & gewichtet)
+  - Plank Hold
+  - Beinheben
+  - Einarmiges Hängen
+  - Personal Best (PR) Tracking
+  - Progress-Visualisierung
+  - Test-History mit Trendanalyse
+
 ### 🎨 Design & UX
 - **Ausrüstungs-Guide** mit Budget-Tipps
 - **Responsive Design** für Web, iOS und Android
@@ -135,10 +164,14 @@ Die App ist modular aufgebaut mit separaten Komponenten:
 - **LessonDetailPage** - Einzelne Lektion mit Aufgabe & Speichern
 
 ### Training System (`src/components/`)
-- **TrainingPage** - Übersicht aller Custom Workouts
+- **TrainingPage** - Tab-basierte Übersicht (Workouts, Logger, Stats, Strength)
 - **WorkoutBuilder** - Workout erstellen/bearbeiten mit Drag & Drop
 - **WorkoutExecutor** - Interaktiver Timer/Counter während des Trainings
 - **WarmupTimer** - Spezieller Timer für Aufwärm-Routinen
+- **SessionLogger** - Boulder-Session Logger mit Foto & Video
+- **SessionStats** - Statistiken & Boulder-Pyramide
+- **StrengthTests** - Kraft-Test Tracking & PR-Historie
+- **VideoPlayer** - Slow-Motion Video Player
 
 ### Other (`src/components/`)
 - **TrainingPlanPage** - Gespeicherte Lektions-Aufgaben mit Progress
@@ -151,21 +184,48 @@ Die App ist modular aufgebaut mit separaten Komponenten:
 
 ### Utils (`src/utils/`)
 - **workoutStorage.js** - LocalStorage Helper für Workouts & History
+- **sessionStorage.js** - LocalStorage Helper für Sessions, Boulder & Strength Tests
 
 ## 💾 Daten-Persistenz
 
-- **LocalStorage** speichert gespeicherte Trainingsaufgaben
+- **LocalStorage** speichert alle Daten lokal:
+  - Gespeicherte Trainingsaufgaben aus Lektionen
+  - Custom Workouts & Workout History
+  - Boulder-Sessions mit Fotos & Videos (als Base64)
+  - Kraft-Test Historie
+  - Sprach- & Theme-Einstellungen
 - Daten bleiben auch nach Schließen der App erhalten
 - Keine Server-Anbindung nötig - alles lokal!
+- **Hinweis**: Bei großen Mengen an Fotos/Videos kann LocalStorage-Limit (5-10MB) erreicht werden
 
 ## 🎯 Nutzung
 
+### Lektionen & Theorie
 1. **Start**: Lies die Willkommensseite und starte Lektion 1
 2. **Lektionen durcharbeiten**: Lies Theorie & klicke auf interessante Lektionen
 3. **Aufgaben speichern**: In jeder Lektion findest du praktische Trainingsaufgaben - speichere sie für dein nächstes Training
 4. **Training planen**: Gehe zu "Mein Plan" und arbeite deine Aufgaben ab
 5. **Checklisten abhaken**: Markiere erledigte Punkte während deines Trainings
 6. **Aufgaben löschen**: Nach Abschluss kannst du Aufgaben entfernen
+
+### Training & Session Logging
+1. **Workouts**: Erstelle custom Trainings-Routinen mit Timer & Wiederholungen
+2. **Session Logger**: Logge deine Boulder-Sessions:
+   - Gib Session-Dauer & Feeling ein
+   - Füge Boulder hinzu (Grad, Versuche, Send/Flash)
+   - Mache Fotos von interessanten Boulder
+   - Nimm Videos für spätere Analyse auf
+   - Speichere Session-Notizen
+3. **Statistiken**: Analysiere deinen Fortschritt:
+   - Boulder-Pyramide nach Grad
+   - Send Rate & Flash Rate
+   - Max Grad Tracking
+   - Session History
+4. **Kraft-Tests**: Tracke regelmäßig deine Kraft-Werte:
+   - Max Hang, Klimmzüge, Plank, etc.
+   - Vergleiche mit Personal Best
+   - Erkenne Trends
+5. **Video-Analyse**: Schaue Videos in Slow-Motion (0.25x - 2x)
 
 ## 🛠️ Technologie-Stack
 

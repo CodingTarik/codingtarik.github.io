@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, BookOpen, ListTodo, Dumbbell, Settings } from 'lucide-react';
+import { Home, BookOpen, ListTodo, Dumbbell } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 function BottomNavigation({ currentPage, setCurrentPage }) {
@@ -10,7 +10,6 @@ function BottomNavigation({ currentPage, setCurrentPage }) {
     { id: 'lektionen', icon: BookOpen, label: t('lessons') },
     { id: 'training', icon: Dumbbell, label: t('training') },
     { id: 'plan', icon: ListTodo, label: t('plan') },
-    { id: 'settings', icon: Settings, label: '⚙️' },
   ];
 
   return (

@@ -1,13 +1,58 @@
 import React from 'react';
-import { Mountain, BookOpen, Target, TrendingUp, Zap } from 'lucide-react';
+import { Mountain, BookOpen, Target, TrendingUp, Zap, Globe, Sun, Moon } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
+import { useTheme } from '../context/ThemeContext';
 
 function HomePage({ onStartLesson, onStartWarmup }) {
+  const { language, changeLanguage, t } = useLanguage();
+  const { isDark, toggleTheme } = useTheme();
+
   return (
     <div className="max-w-2xl mx-auto px-4 py-8">
+      {/* Language & Theme Controls */}
+      <div className="flex justify-end gap-3 mb-6">
+        {/* Language Selector */}
+        <div className="flex gap-2 bg-white dark:bg-stone-800 rounded-lg shadow-md p-2">
+          <button
+            onClick={() => changeLanguage('de')}
+            className={`px-3 py-2 rounded-lg font-semibold text-sm transition-all ${
+              language === 'de'
+                ? 'bg-teal-500 text-white shadow-sm'
+                : 'text-stone-600 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-stone-700'
+            }`}
+          >
+            🇩🇪 DE
+          </button>
+          <button
+            onClick={() => changeLanguage('en')}
+            className={`px-3 py-2 rounded-lg font-semibold text-sm transition-all ${
+              language === 'en'
+                ? 'bg-teal-500 text-white shadow-sm'
+                : 'text-stone-600 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-stone-700'
+            }`}
+          >
+            🇬🇧 EN
+          </button>
+        </div>
+
+        {/* Theme Toggle */}
+        <button
+          onClick={toggleTheme}
+          className="bg-white dark:bg-stone-800 rounded-lg shadow-md p-3 hover:scale-105 transition-transform"
+          title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+        >
+          {isDark ? (
+            <Sun size={20} className="text-amber-500" />
+          ) : (
+            <Moon size={20} className="text-stone-600" />
+          )}
+        </button>
+      </div>
+
       {/* Hero Section */}
       <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold text-stone-800 mb-4">
-          Willkommen beim BoulderBuddy! 🧗
+        <h1 className="text-4xl font-bold text-stone-800 dark:text-stone-100 mb-4">
+          {t('welcome')} 🧗
         </h1>
         
         {/* Climbing Wall SVG */}
@@ -36,9 +81,8 @@ function HomePage({ onStartLesson, onStartWarmup }) {
           </svg>
         </div>
 
-        <p className="text-lg text-stone-700 mb-6 leading-relaxed">
-          Dein kostenloser Begleiter auf dem Weg zum Bouldern. Lerne die Grundlagen, 
-          entdecke Techniken und plane dein nächstes Training.
+        <p className="text-lg text-stone-700 dark:text-stone-300 mb-6 leading-relaxed">
+          {t('welcomeSubtitle')}
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center mb-8">
@@ -48,7 +92,7 @@ function HomePage({ onStartLesson, onStartWarmup }) {
           >
             <span className="flex items-center justify-center gap-2 text-lg">
               <Mountain size={24} />
-              Starte Lektion 1
+              {t('startLesson')}
             </span>
           </button>
 
@@ -58,7 +102,7 @@ function HomePage({ onStartLesson, onStartWarmup }) {
           >
             <span className="flex items-center justify-center gap-2 text-lg">
               <Zap size={24} />
-              Aufwärm-Timer
+              {t('warmupTimer')}
             </span>
           </button>
         </div>
@@ -66,31 +110,39 @@ function HomePage({ onStartLesson, onStartWarmup }) {
 
       {/* Quick Info Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-12">
-        <div className="bg-white rounded-lg shadow-md p-6 text-center hover:shadow-lg transition-shadow">
+        <div className="bg-white dark:bg-stone-800 rounded-lg shadow-md p-6 text-center hover:shadow-lg transition-shadow">
           <BookOpen size={32} className="mx-auto mb-3 text-teal-500" />
-          <h3 className="font-bold text-stone-800 mb-2">14+ Lektionen</h3>
-          <p className="text-sm text-stone-600">Von Basics bis Profi-Techniken</p>
+          <h3 className="font-bold text-stone-800 dark:text-stone-100 mb-2">{t('lessonsCount')}</h3>
+          <p className="text-sm text-stone-600 dark:text-stone-400">
+            {language === 'de' ? 'Von Basics bis Profi-Techniken' : 'From basics to pro techniques'}
+          </p>
         </div>
-        <div className="bg-white rounded-lg shadow-md p-6 text-center hover:shadow-lg transition-shadow">
+        <div className="bg-white dark:bg-stone-800 rounded-lg shadow-md p-6 text-center hover:shadow-lg transition-shadow">
           <Target size={32} className="mx-auto mb-3 text-orange-500" />
-          <h3 className="font-bold text-stone-800 mb-2">Praktische Aufgaben</h3>
-          <p className="text-sm text-stone-600">Direkt an der Wand anwendbar</p>
+          <h3 className="font-bold text-stone-800 dark:text-stone-100 mb-2">{t('practicalTasks')}</h3>
+          <p className="text-sm text-stone-600 dark:text-stone-400">
+            {language === 'de' ? 'Direkt an der Wand anwendbar' : 'Directly applicable at the wall'}
+          </p>
         </div>
-        <div className="bg-white rounded-lg shadow-md p-6 text-center hover:shadow-lg transition-shadow">
+        <div className="bg-white dark:bg-stone-800 rounded-lg shadow-md p-6 text-center hover:shadow-lg transition-shadow">
           <TrendingUp size={32} className="mx-auto mb-3 text-teal-500" />
-          <h3 className="font-bold text-stone-800 mb-2">Trainingsplan</h3>
-          <p className="text-sm text-stone-600">Speichere & tracke deinen Fortschritt</p>
+          <h3 className="font-bold text-stone-800 dark:text-stone-100 mb-2">{t('trainingPlan')}</h3>
+          <p className="text-sm text-stone-600 dark:text-stone-400">
+            {language === 'de' ? 'Speichere & tracke deinen Fortschritt' : 'Save & track your progress'}
+          </p>
         </div>
       </div>
 
       {/* Call to Action */}
-      <div className="mt-12 bg-gradient-to-br from-teal-50 to-orange-50 rounded-lg shadow-md p-8 border-2 border-teal-300">
-        <h2 className="text-2xl font-bold text-stone-800 mb-4 text-center">
-          🎯 Bereit loszulegen?
+      <div className="mt-12 bg-gradient-to-br from-teal-50 to-orange-50 dark:from-teal-900/20 dark:to-orange-900/20 rounded-lg shadow-md p-8 border-2 border-teal-300 dark:border-teal-700">
+        <h2 className="text-2xl font-bold text-stone-800 dark:text-stone-100 mb-4 text-center">
+          🎯 {t('readyToStart')}
         </h2>
-        <p className="text-stone-700 text-center mb-6">
-          Starte mit den Grundlagen oder wärme dich mit unserem interaktiven Timer auf. 
-          Jede große Reise beginnt mit dem ersten Schritt – oder in diesem Fall, dem ersten Griff!
+        <p className="text-stone-700 dark:text-stone-300 text-center mb-6">
+          {language === 'de' 
+            ? 'Starte mit den Grundlagen oder wärme dich mit unserem interaktiven Timer auf. Jede große Reise beginnt mit dem ersten Schritt – oder in diesem Fall, dem ersten Griff!'
+            : 'Start with the basics or warm up with our interactive timer. Every great journey begins with the first step – or in this case, the first grip!'
+          }
         </p>
         <div className="flex justify-center gap-4">
           <div className="text-center">
