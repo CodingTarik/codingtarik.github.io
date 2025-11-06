@@ -49,12 +49,15 @@ import Footer from './shared/components/Footer';
 import PrivacyPage from './shared/components/PrivacyPage';
 import ImprintPageFooter from './shared/components/ImprintPageFooter';
 
+// Admin Panel
+import AdminPanel from './admin/AdminPanel';
+
 function AppContent() {
   const { activeBuddy, currentBuddyConfig, allBuddies, switchBuddy } = useBuddy();
   const { language } = useLanguage();
   
-  // App view state (blog vs learnbuddy)
-  const [appView, setAppView] = useState('learnbuddy'); // 'blog' or 'learnbuddy'
+  // App view state (blog vs learnbuddy vs admin)
+  const [appView, setAppView] = useState('learnbuddy'); // 'blog', 'learnbuddy', or 'admin'
   
   // Navigation state
   const [currentPage, setCurrentPage] = useState('home');
@@ -132,6 +135,12 @@ function AppContent() {
       // Check for Imprint route
       if (hash === '#/imprint') {
         setAppView('imprint');
+        return;
+      }
+
+      // Check for Admin route
+      if (hash.startsWith('#/admin')) {
+        setAppView('admin');
         return;
       }
 
@@ -582,6 +591,11 @@ function AppContent() {
       
       // Default Blog Page (Posts overview) - only if no other blog route matched
       return <BlogPage onPostClick={handlePostClick} onBackToLearnBuddy={() => handleViewChange('learnbuddy')} />;
+    }
+
+    // Admin Panel View
+    if (appView === 'admin') {
+      return <AdminPanel />;
     }
 
     // LearnBuddy View

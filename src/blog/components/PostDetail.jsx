@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
-import Markdown from 'markdown-to-jsx';
 import { motion } from 'framer-motion';
 import { Calendar, Clock, Tag, ArrowLeft, Share2 } from 'lucide-react';
 import { formatDate, calculateReadingTime } from '../utils/blogUtils';
 import { generateBlogPostStructuredData, injectStructuredData } from '../utils/seoUtils';
 import ReadingProgress from './ReadingProgress';
 import ViewCounter from './ViewCounter';
+import BlogPostContent from './BlogPostContent';
 import { trackPostView, trackPostShare } from './Analytics';
 
 export default function PostDetail({ post, onBack, onPostClick }) {
@@ -231,50 +231,7 @@ export default function PostDetail({ post, onBack, onPostClick }) {
         )}
         
         {/* Content */}
-        <div className="prose prose-lg dark:prose-invert max-w-none
-          prose-headings:font-bold prose-headings:text-text prose-headings:scroll-mt-24
-          prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:pb-2 prose-h2:border-b prose-h2:border-border
-          prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3
-          prose-p:text-muted prose-p:leading-relaxed
-          prose-a:text-primary prose-a:font-medium prose-a:no-underline hover:prose-a:underline
-          prose-code:text-secondary prose-code:bg-secondary/10 prose-code:px-1.5 prose-code:py-1 prose-code:rounded-md prose-code:font-mono
-          prose-pre:bg-card prose-pre:text-text prose-pre:p-4 prose-pre:rounded-lg prose-pre:overflow-x-auto prose-pre:scrollbar-thin
-          prose-img:rounded-lg prose-img:shadow-md
-          prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:bg-background prose-blockquote:p-4 prose-blockquote:text-base
-          prose-ul:text-muted
-          prose-ol:text-muted
-          prose-li:my-1
-          prose-strong:text-text
-        ">
-          <Markdown
-            options={{
-              overrides: {
-                h2: {
-                  component: ({ children, ...props }) => {
-                    const id = children
-                      ?.toString()
-                      .toLowerCase()
-                      .replace(/[^a-z0-9]+/g, '-')
-                      .replace(/(^-|-$)/g, '');
-                    return <h2 id={id} {...props}>{children}</h2>;
-                  },
-                },
-                h3: {
-                  component: ({ children, ...props }) => {
-                    const id = children
-                      ?.toString()
-                      .toLowerCase()
-                      .replace(/[^a-z0-9]+/g, '-')
-                      .replace(/(^-|-$)/g, '');
-                    return <h3 id={id} {...props}>{children}</h3>;
-                  },
-                },
-              },
-            }}
-          >
-            {post.content}
-          </Markdown>
-        </div>
+        <BlogPostContent content={post.content} />
 
         {/* Post Footer */}
         <footer className="mt-12 pt-8 border-t border-border">
