@@ -868,9 +868,9 @@ export default function CVPage() {
             padding: 10mm 12mm 1rem 12mm !important;
             border-radius: 0 !important;
             background-color: #1e40af !important;
-            background-image: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #6366f1 100%) !important;
+            background-image: linear-gradient(135deg, #0f172a 0%, #1e40af 25%, #3b82f6 60%, #60a5fa 100%) !important;
             box-shadow: none !important;
-            border-bottom: 3px solid #1e293b !important;
+            border-bottom: 4px solid #000000 !important;
           }
           
           /* Force all child elements to have transparent background */
