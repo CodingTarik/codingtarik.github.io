@@ -62,6 +62,7 @@ function AppContent() {
   
   // Blog state
   const [currentPost, setCurrentPost] = useState(null);
+  const [currentHash, setCurrentHash] = useState(window.location.hash);
   
   // Boulder-specific state
   const [showWorkoutExecutor, setShowWorkoutExecutor] = useState(false);
@@ -120,6 +121,7 @@ function AppContent() {
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash;
+      setCurrentHash(hash); // Update state to trigger re-render
       
       // Check for Privacy route
       if (hash === '#/privacy') {
