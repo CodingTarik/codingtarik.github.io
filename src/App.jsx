@@ -15,6 +15,7 @@ import HomePage from './shared/components/HomePage';
 import LessonsPage from './shared/components/LessonsPage';
 import LessonDetailPage from './shared/components/LessonDetailPage';
 import PlanPage from './shared/components/PlanPage';
+import ImprintPage from './shared/components/ImprintPage';
 
 // Boulder-specific components
 import TrainingPage from './buddies/boulder/components/TrainingPage';
@@ -56,15 +57,73 @@ function AppContent() {
     return null;
   };
 
+  // Update document title based on active buddy and page
+  useEffect(() => {
+    const buddyName = currentBuddyConfig.name[language];
+    let title = `${buddyName} - LearnBuddy`;
+    
+    if (currentLesson) {
+      const lessonTitle = currentLesson.title?.[language] || currentLesson.title;
+      title = `${lessonTitle} - ${buddyName}`;
+    } else if (currentPage === 'lektionen') {
+      title = `${language === 'en' ? 'Lessons' : 'Lektionen'} - ${buddyName}`;
+    } else if (currentPage === 'plan') {
+      title = `${language === 'en' ? 'Plan' : 'Plan'} - ${buddyName}`;
+    } else if (currentPage.startsWith('custom-')) {
+      const tabId = currentPage.replace('custom-', '');
+      const customTab = currentBuddyConfig.customTabs?.find(tab => tab.id === tabId);
+      if (customTab) {
+        title = `${customTab.name[language]} - ${buddyName}`;
+      }
+    }
+    
+    document.title = title;
+  }, [activeBuddy, currentBuddyConfig, currentPage, currentLesson, language]);
+
   // Handle URL hash for routing
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash;
       
-      // Check for buddy selection in URL (e.g., #/swimbuddy, #/boulderbuddy)
-      const buddyMatch = hash.match(/^#\/(boulder|swim|run|gym|cook|yoga|lifeskills|cybersecurity|piano|english)buddy$/i);
+      // Check for buddy selection in URL (e.g., #/boulder/home, #/swim/lessons)
+      const buddyMatch = hash.match(/^#\/(boulder|swim|run|gym|cook|yoga|lifeskills|cybersecurity|piano|english)(\/.*)?$/i);
       if (buddyMatch) {
         const buddyId = buddyMatch[1].toLowerCase();
+        const path = buddyMatch[2] || '/home';
+        
+        if (allBuddies[buddyId] && buddyId !== activeBuddy) {
+          switchBuddy(buddyId);
+        }
+        
+        // Parse the path
+        if (path === '/home' || path === '/') {
+          setCurrentLesson(null);
+          setCurrentPage('home');
+        } else if (path === '/lessons' || path === '/lektionen') {
+          setCurrentLesson(null);
+          setCurrentPage('lektionen');
+        } else if (path === '/plan') {
+          setCurrentLesson(null);
+          setCurrentPage('plan');
+        } else if (path.startsWith('/lessons/')) {
+          const lessonId = path.replace('/lessons/', '');
+          const lesson = getLessonById(lessonId);
+          if (lesson) {
+            setCurrentLesson(lesson);
+            setCurrentPage('lektionen');
+          }
+        } else if (path.startsWith('/custom-')) {
+          const tabId = path.replace('/custom-', '');
+          setCurrentLesson(null);
+          setCurrentPage(`custom-${tabId}`);
+        }
+        return;
+      }
+      
+      // Legacy support for old URLs
+      const oldBuddyMatch = hash.match(/^#\/(boulder|swim|run|gym|cook|yoga|lifeskills|cybersecurity|piano|english)buddy$/i);
+      if (oldBuddyMatch) {
+        const buddyId = oldBuddyMatch[1].toLowerCase();
         if (allBuddies[buddyId] && buddyId !== activeBuddy) {
           switchBuddy(buddyId);
         }
@@ -93,6 +152,9 @@ function AppContent() {
         const tabId = hash.replace('#/custom-', '');
         setCurrentLesson(null);
         setCurrentPage(`custom-${tabId}`);
+      } else if (hash === '#/imprint') {
+        setCurrentLesson(null);
+        setCurrentPage('imprint');
       } else {
         setCurrentLesson(null);
         setCurrentPage('home');
@@ -108,18 +170,27 @@ function AppContent() {
   // Update URL hash when state changes
   const handleSetCurrentPage = (page) => {
     if (page.startsWith('custom-')) {
-      window.location.hash = `#/${page}`;
+      window.location.hash = `#/${activeBuddy}/${page}`;
+    } else if (page === 'home') {
+      window.location.hash = `#/${activeBuddy}/home`;
+    } else if (page === 'lektionen') {
+      window.location.hash = `#/${activeBuddy}/lessons`;
+    } else if (page === 'plan') {
+      window.location.hash = `#/${activeBuddy}/plan`;
     } else {
-      window.location.hash = page === 'home' ? '#/' : `#/${page}`;
+      window.location.hash = `#/${activeBuddy}/${page}`;
     }
+    setCurrentPage(page);
+    setCurrentLesson(null);
   };
 
   const handleSetCurrentLesson = (lesson) => {
     if (lesson) {
-      window.location.hash = `#/lessons/${lesson.id}`;
+      window.location.hash = `#/${activeBuddy}/lessons/${lesson.id}`;
     } else {
-      window.location.hash = '#/lektionen';
+      window.location.hash = `#/${activeBuddy}/lessons`;
     }
+    setCurrentLesson(lesson);
   };
 
   // Load saved plan items from localStorage (buddy-specific)
@@ -265,6 +336,9 @@ function AppContent() {
             />
           </div>
         );
+      
+      case 'imprint':
+        return <ImprintPage />;
       
       default:
         // Check if it's a custom tab
