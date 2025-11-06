@@ -187,31 +187,32 @@ export default function CVPage() {
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="cv-header bg-white dark:bg-slate-800 rounded-xl print:rounded-none shadow-lg print:shadow-none p-8 mb-6 print:mb-2 print:p-4"
+          className="cv-header bg-white dark:bg-slate-800 rounded-xl shadow-lg p-8 mb-6"
         >
-          <div className="flex flex-row gap-6 items-center">
+          <div className="flex flex-row gap-6 items-center print:p-4 print:pt-6 print:pb-8">
             {/* Profile Picture */}
             <div className="flex-shrink-0">
               <img 
                 src="/src/cv/pictures/cv_profile_picture.jpeg" 
                 alt="Tarik Azzouzi" 
-                className="w-32 h-32 print:w-24 print:h-24 rounded-full object-cover border-4 border-blue-500 shadow-lg"
+                className="w-32 h-32 print:w-32 print:h-40 rounded-full print:rounded-lg object-cover border-4 border-blue-500 print:border-0 shadow-lg print:shadow-xl"
+                style={{ objectPosition: '50% 35%' }}
               />
             </div>
 
             {/* Header Info */}
             <div className="flex-1">
-              <h1 className="text-4xl md:text-5xl print:text-3xl font-bold text-slate-900 dark:text-white mb-2 print:mb-1">
+              <h1 className="text-4xl md:text-5xl print:text-3xl font-bold text-slate-900 dark:text-white print:text-white mb-2 print:mb-1">
                 Tarik Azzouzi
               </h1>
-              <p className="text-xl print:text-lg text-slate-600 dark:text-slate-300 mb-4 print:mb-2">
+              <p className="text-xl print:text-lg text-slate-600 dark:text-slate-300 print:text-blue-50 mb-4 print:mb-2">
                 {language === 'en' ? 'Full-Stack Developer & AI Engineer' : 'Full-Stack Entwickler & KI-Ingenieur'}
               </p>
               
-              <div className="flex flex-wrap gap-4 print:gap-2 text-sm print:text-xs text-slate-600 dark:text-slate-400">
+              <div className="flex flex-wrap gap-4 print:gap-2 text-sm print:text-xs text-slate-600 dark:text-slate-400 print:text-blue-100">
                 <div className="flex items-center gap-2 print:gap-1">
                   <Mail size={16} className="print:hidden" />
-                  <a href="mailto:BlogCodingTarik@web.de" className="hover:text-blue-500">
+                  <a href="mailto:BlogCodingTarik@web.de" className="hover:text-blue-500 print:text-blue-100">
                     BlogCodingTarik@web.de
                   </a>
                 </div>
@@ -221,7 +222,7 @@ export default function CVPage() {
                 </div>
                 <div className="flex items-center gap-2 print:gap-1">
                   <Globe size={16} className="print:hidden" />
-                  <a href="https://codingtarik.github.io" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500">
+                  <a href="https://codingtarik.github.io" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 print:text-blue-100">
                     codingtarik.github.io
                   </a>
                 </div>
@@ -633,10 +634,10 @@ export default function CVPage() {
       {/* Print Styles */}
       <style>{`
         @media print {
-          /* Page Setup - no margins */
+          /* Page Setup - no top margin for blue header */
           @page {
             size: A4;
-            margin: 0;
+            margin: 0mm 0mm 15mm 0mm;
           }
           
           /* Force exact color printing */
@@ -656,11 +657,12 @@ export default function CVPage() {
             display: none !important;
           }
 
-          /* Reset body - ensure background extends to all pages */
+          /* Reset body - clean white background */
           html {
             margin: 0 !important;
             padding: 0 !important;
             height: 100% !important;
+            background: white !important;
           }
           
           body {
@@ -668,20 +670,21 @@ export default function CVPage() {
             padding: 0 !important;
             width: 100% !important;
             height: 100% !important;
+            background: white !important;
           }
           
-          /* Main container background */
+          /* Main container - clean white */
           body > div {
-            background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 50%, #f8fafc 100%) !important;
+            background: white !important;
             min-height: 100vh !important;
           }
 
-          /* CV Container - keep all styles */
+          /* CV Container - clean professional layout with side margins */
           .cv-print-container {
             max-width: 100% !important;
             margin: 0 !important;
-            padding: 0.5rem 1rem !important;
-            background: transparent !important;
+            padding: 0 12mm 0 12mm !important;
+            background: white !important;
           }
 
           /* Allow sections to break across pages, but keep header with first item */
@@ -733,72 +736,156 @@ export default function CVPage() {
             margin-top: 0.2rem !important;
           }
           
-          /* Reduce section padding significantly */
+          /* Professional section styling */
           .cv-print-container section {
-            padding: 0.6rem !important;
-            margin-bottom: 0.4rem !important;
-            border-radius: 0.5rem !important;
+            padding: 0.5rem 0 !important;
+            margin-bottom: 0.6rem !important;
+            border-radius: 0 !important;
+            background: white !important;
+            box-shadow: none !important;
           }
           
-          /* Compact header */
+          /* Section headers with accent line */
+          .cv-print-container section > div:first-child {
+            border-bottom: 1.5px solid #e2e8f0 !important;
+            padding-bottom: 0.3rem !important;
+            margin-bottom: 0.4rem !important;
+          }
+          
+          /* Professional header with beautiful gradient - full width from top */
           .cv-print-container .cv-header {
-            padding: 0.75rem !important;
-            margin-bottom: 0.4rem !important;
-            border-radius: 0.5rem !important;
+            position: relative !important;
+            margin-left: -12mm !important;
+            margin-right: -12mm !important;
+            margin-top: 0 !important;
+            margin-bottom: 0.8rem !important;
+            width: 100vw !important;
+            max-width: none !important;
+            padding: 15mm 12mm 1.5rem 12mm !important;
+            border-radius: 0 !important;
+            background-color: #1e40af !important;
+            background-image: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #6366f1 100%) !important;
+            box-shadow: none !important;
           }
           
-          /* Compact text sizes */
+          /* Force all child elements to have transparent background */
+          .cv-print-container .cv-header * {
+            background-color: transparent !important;
+            background-image: none !important;
+          }
+          
+          /* Force white text on header */
+          .cv-print-container .cv-header h1 {
+            color: #ffffff !important;
+          }
+          
+          .cv-print-container .cv-header p {
+            color: #dbeafe !important;
+          }
+          
+          .cv-print-container .cv-header div,
+          .cv-print-container .cv-header span,
+          .cv-print-container .cv-header a {
+            color: #e0f2fe !important;
+          }
+          
+          /* Professional typography */
           .cv-print-container h1 {
-            font-size: 1.75rem !important;
-            margin-bottom: 0.25rem !important;
+            font-size: 2rem !important;
+            margin-bottom: 0.2rem !important;
+            color: #1e3a8a !important;
+            font-weight: 700 !important;
           }
           
           .cv-print-container h2 {
-            font-size: 1.1rem !important;
+            font-size: 1.15rem !important;
             margin-bottom: 0.3rem !important;
+            color: #1e40af !important;
+            font-weight: 600 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
           }
           
           .cv-print-container h3 {
-            font-size: 0.9rem !important;
+            font-size: 0.95rem !important;
             margin-bottom: 0.15rem !important;
+            color: #1e3a8a !important;
+            font-weight: 600 !important;
           }
           
           .cv-print-container h4 {
-            font-size: 0.8rem !important;
+            font-size: 0.85rem !important;
+            color: #475569 !important;
+            font-weight: 500 !important;
           }
           
           .cv-print-container p,
           .cv-print-container span,
           .cv-print-container div {
-            font-size: 0.8rem !important;
-            line-height: 1.3 !important;
+            font-size: 0.85rem !important;
+            line-height: 1.4 !important;
+            color: #334155 !important;
           }
           
-          /* Very compact skill tags */
+          /* Professional body text */
+          .cv-print-container .text-sm,
+          .cv-print-container .text-xs {
+            color: #475569 !important;
+          }
+          
+          /* Professional skill tags */
           .cv-print-container [class*="px-2"] {
-            padding-left: 0.3rem !important;
-            padding-right: 0.3rem !important;
+            padding-left: 0.4rem !important;
+            padding-right: 0.4rem !important;
+            background: white !important;
+            border: 1px solid #cbd5e1 !important;
+            color: #334155 !important;
+            border-radius: 3px !important;
           }
           
           .cv-print-container [class*="py-1"] {
-            padding-top: 0.15rem !important;
-            padding-bottom: 0.15rem !important;
+            padding-top: 0.2rem !important;
+            padding-bottom: 0.2rem !important;
           }
           
-          /* Compact borders with rounded corners */
-          .cv-print-container [class*="border-l-4"],
-          .cv-print-container [class*="border-blue"],
-          .cv-print-container [class*="border-green"],
+          /* Remove gradient backgrounds from tags */
+          .cv-print-container [class*="bg-gradient"] {
+            background: white !important;
+            border: 1px solid #cbd5e1 !important;
+          }
+          
+          /* Professional accent borders */
+          .cv-print-container [class*="border-l-4"] {
+            border-left-width: 3px !important;
+            border-left-color: #3b82f6 !important;
+            padding: 0.4rem 0 0.4rem 0.6rem !important;
+            margin-bottom: 0.4rem !important;
+            border-radius: 0 !important;
+            background: #f8fafc !important;
+          }
+          
+          /* Subtle background for items */
+          .cv-print-container [class*="border-blue"] {
+            background: #f8fafc !important;
+          }
+          
+          .cv-print-container [class*="border-green"] {
+            background: #f0fdf4 !important;
+          }
+          
           .cv-print-container [class*="border-purple"] {
-            padding: 0.4rem 0.5rem !important;
-            margin-bottom: 0.3rem !important;
-            border-radius: 0.375rem !important;
+            background: #faf5ff !important;
           }
           
-          /* Compact profile picture */
+          /* Professional profile picture - larger rectangular without border */
           .cv-print-container .cv-header img {
-            width: 90px !important;
-            height: 90px !important;
+            width: 128px !important;
+            height: 160px !important;
+            border-radius: 0.5rem !important;
+            border: none !important;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.25) !important;
+            object-fit: cover !important;
+            object-position: 50% 35% !important;
           }
           
           /* Reduce gap in grid */
@@ -814,6 +901,33 @@ export default function CVPage() {
           /* Smaller icons/emojis */
           .cv-print-container .text-2xl {
             font-size: 1rem !important;
+          }
+          
+          /* Hide decorative icons in print for cleaner look */
+          .cv-print-container section svg {
+            display: none !important;
+          }
+          
+          /* Professional date/period styling */
+          .cv-print-container .text-right {
+            color: #64748b !important;
+            font-weight: 500 !important;
+          }
+          
+          /* Clean link styling */
+          .cv-print-container a {
+            color: #3b82f6 !important;
+            text-decoration: none !important;
+          }
+          
+          /* Professional spacing between entries */
+          .cv-print-container .space-y-4 > * + * {
+            margin-top: 0.5rem !important;
+          }
+          
+          /* Ensure consistent text color */
+          .cv-print-container * {
+            color: inherit !important;
           }
         }
       `}</style>
@@ -913,20 +1027,26 @@ function SkillCategory({ title, skills }) {
   );
 }
 
-function Certificate({ title, issuer, year, link }) {
+function Certificate({ title, issuer, year, link, description }) {
   return (
-    <div className="text-sm">
+    <div className="text-sm border-l-4 border-purple-500 print:border-blue-500 pl-4 print:pl-3 py-2 print:py-1 bg-gradient-to-r from-purple-50 to-transparent dark:from-purple-900/20 print:from-blue-50 print:to-transparent rounded-r-lg print:rounded-r-md">
       <div className="flex items-start justify-between gap-2">
         <div className="flex-1">
-          <h4 className="font-semibold text-slate-900 dark:text-white">{title}</h4>
-          <p className="text-xs text-slate-600 dark:text-slate-400">{issuer}</p>
+          <div className="flex items-center gap-2">
+            <Award size={14} className="text-purple-500 print:text-blue-600 flex-shrink-0 print:hidden" />
+            <h4 className="font-semibold text-slate-900 dark:text-white">{title}</h4>
+          </div>
+          <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">{issuer}</p>
+          {description && (
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 print:mt-0.5 leading-relaxed">{description}</p>
+          )}
         </div>
-        <span className="text-xs text-slate-500 whitespace-nowrap">{year}</span>
+        <span className="text-xs font-medium text-purple-600 print:text-blue-600 dark:text-purple-400 whitespace-nowrap bg-purple-100 print:bg-blue-100 dark:bg-purple-900/30 px-2 py-1 rounded print:rounded-sm">{year}</span>
       </div>
       {link && (
-        <a href={link} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-500 hover:underline flex items-center gap-1 mt-1 print:hidden">
+        <a href={link} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-500 hover:text-blue-600 hover:underline flex items-center gap-1 mt-2 print:hidden transition-colors">
           <ExternalLink size={12} />
-          Verify
+          <span>Verify Certificate</span>
         </a>
       )}
     </div>
