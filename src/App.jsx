@@ -31,6 +31,8 @@ import ReadingLibrary from './learnbuddy/buddies/english/components/ReadingLibra
 // Blog Components
 import BlogPage from './blog/components/BlogPage';
 import PostDetail from './blog/components/PostDetail';
+import BlogSidebar from './blog/components/BlogSidebar';
+import RecentPosts from './blog/components/RecentPosts';
 import { getPostById } from './blog/utils/blogUtils';
 
 // CV Component
@@ -355,7 +357,49 @@ function AppContent() {
     // Blog View
     if (appView === 'blog') {
       if (currentPost) {
-        return <PostDetail post={currentPost} onBack={handleBackToBlog} />;
+        // Blog Post Detail with Sidebar and Recent Posts
+        return (
+          <div className="min-h-screen bg-stone-50 dark:bg-stone-900 flex">
+            {/* Left Sidebar */}
+            <BlogSidebar
+              onBackToLearnBuddy={() => handleViewChange('learnbuddy')}
+              selectedTab="posts"
+              onTabChange={() => {}}
+              onCategorySelect={() => {}}
+              selectedCategory={null}
+              isOpen={false}
+              onClose={() => {}}
+            />
+
+            {/* Main Content - Blog Post */}
+            <div className="lg:ml-80 flex-1 flex">
+              {/* Mobile Menu Button */}
+              <button
+                onClick={() => {}}
+                className="lg:hidden fixed bottom-6 right-6 p-4 bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 rounded-full shadow-lg hover:scale-110 transition-transform z-30"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="3" y1="12" x2="21" y2="12"></line>
+                  <line x1="3" y1="6" x2="21" y2="6"></line>
+                  <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+              </button>
+
+              {/* Post Content */}
+              <div className="flex-1 max-w-4xl mx-auto px-4 md:px-8 py-4 md:py-8">
+                <PostDetail post={currentPost} onBack={handleBackToBlog} onPostClick={handlePostClick} />
+              </div>
+
+              {/* Right Sidebar - Recent Posts (Hidden on mobile) */}
+              <div className="hidden xl:block w-80 p-4 md:p-8">
+                <RecentPosts 
+                  onPostClick={handlePostClick} 
+                  currentPostId={currentPost.id}
+                />
+              </div>
+            </div>
+          </div>
+        );
       }
       return <BlogPage onPostClick={handlePostClick} onBackToLearnBuddy={() => handleViewChange('learnbuddy')} />;
     }

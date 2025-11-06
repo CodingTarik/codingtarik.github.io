@@ -4,7 +4,7 @@ import { Calendar, Clock, Tag, ArrowLeft, Share2 } from 'lucide-react';
 import { formatDate, calculateReadingTime } from '../utils/blogUtils';
 import { generateBlogPostStructuredData, injectStructuredData } from '../utils/seoUtils';
 
-export default function PostDetail({ post, onBack }) {
+export default function PostDetail({ post, onBack, onPostClick }) {
   const readingTime = calculateReadingTime(post.content);
 
   // Update document title and inject structured data for SEO
@@ -105,11 +105,7 @@ export default function PostDetail({ post, onBack }) {
   };
 
   return (
-    <div className="min-h-screen bg-stone-50 dark:bg-stone-900 flex">
-      {/* Placeholder for sidebar space - only on desktop */}
-      <div className="hidden lg:block lg:w-80"></div>
-      
-      <article className="flex-1 max-w-4xl mx-auto px-4 md:px-8 py-4 md:py-8">
+      <article className="w-full">
         {/* Back Button */}
         <button
           onClick={onBack}
@@ -263,7 +259,6 @@ export default function PostDetail({ post, onBack }) {
           </button>
         </footer>
       </article>
-    </div>
   );
 }
 
