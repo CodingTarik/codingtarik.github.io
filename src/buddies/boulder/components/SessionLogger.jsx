@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Camera, Video, Plus, Save, X, Star, Clock, MessageSquare } from 'lucide-react';
-import { createSession, addBoulder } from '../utils/sessionStorage';
-import { useLanguage } from '../context/LanguageContext';
+import { createSession, addBoulder } from '../../../utils/sessionStorage';
+import { useLanguage } from '../../../context/LanguageContext';
 
 function SessionLogger({ onComplete, onCancel }) {
   const { language, t } = useLanguage();

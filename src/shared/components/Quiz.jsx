@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { RefreshCw, ChevronLeft, ChevronRight, Check } from 'lucide-react';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../../context/LanguageContext';
 
 function Quiz({ questions }) {
   const { t } = useLanguage();

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, Play, Pause, SkipForward, Check, X, Edit, TrendingUp } from 'lucide-react';
-import { saveExerciseHistory, getLastExerciseData, saveWorkoutSession } from '../utils/workoutStorage';
-import { playTimerSound } from '../utils/sounds';
+import { saveExerciseHistory, getLastExerciseData, saveWorkoutSession } from '../../../utils/workoutStorage';
+import { playTimerSound } from '../../../utils/sounds';
 
 function WorkoutExecutor({ workout, onBack, onComplete }) {
   const [currentIndex, setCurrentIndex] = useState(0);

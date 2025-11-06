@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Dumbbell, Plus, Play, Edit, Trash2, TrendingUp, Clock, ClipboardList, BarChart3, Activity } from 'lucide-react';
-import { loadWorkouts, deleteWorkout, getWorkoutSessionStats } from '../utils/workoutStorage';
-import { useLanguage } from '../context/LanguageContext';
+import { loadWorkouts, deleteWorkout, getWorkoutSessionStats } from '../../../utils/workoutStorage';
+import { useLanguage } from '../../../context/LanguageContext';
 import SessionLogger from './SessionLogger';
 import SessionStats from './SessionStats';
 import StrengthTests from './StrengthTests';

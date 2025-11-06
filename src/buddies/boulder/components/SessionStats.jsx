@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TrendingUp, Calendar, BarChart3, Award, Play } from 'lucide-react';
-import { loadSessions, loadBoulders, getSessionStats, getBoulderStats, getMaxGrade } from '../utils/sessionStorage';
-import { useLanguage } from '../context/LanguageContext';
+import { loadSessions, loadBoulders, getSessionStats, getBoulderStats, getMaxGrade } from '../../../utils/sessionStorage';
+import { useLanguage } from '../../../context/LanguageContext';
 import VideoPlayer from './VideoPlayer';
 
 function SessionStats() {

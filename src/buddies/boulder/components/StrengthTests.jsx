@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Activity, Plus, Timer, Repeat, TrendingUp } from 'lucide-react';
-import { addStrengthTest, loadStrengthTests } from '../utils/sessionStorage';
-import { useLanguage } from '../context/LanguageContext';
+import { addStrengthTest, loadStrengthTests } from '../../../utils/sessionStorage';
+import { useLanguage } from '../../../context/LanguageContext';
 
 function StrengthTests() {
   const { language, t } = useLanguage();

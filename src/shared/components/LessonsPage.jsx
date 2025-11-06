@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { BookOpen, CheckCircle2, Circle, Award } from 'lucide-react';
-import { useLanguage } from '../context/LanguageContext';
-import { lessons as lessonData } from '../data/lessons';
-import { categoryTranslations, getTranslatedLesson } from '../data/lessonTranslations';
-import { loadLessonProgress, getLessonProgressStats, markLessonComplete, markLessonIncomplete } from '../utils/sessionStorage';
-import { playCompletionSound } from '../utils/sounds';
+import { useLanguage } from '../../context/LanguageContext';
+import { lessons as lessonData } from '../../buddies/boulder/data/lessons';
+import { categoryTranslations, getTranslatedLesson } from '../../buddies/boulder/data/lessonTranslations';
+import { loadLessonProgress, getLessonProgressStats, markLessonComplete, markLessonIncomplete } from '../../utils/sessionStorage';
+import { playCompletionSound } from '../../utils/sounds';
 
 function LessonsPage({ onSelectLesson }) {
   const { language, t } = useLanguage();
@@ -42,7 +42,7 @@ function LessonsPage({ onSelectLesson }) {
   };
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-8">
+    <div>{/* Padding handled by App.jsx */}
       <h1 className="text-3xl font-bold text-stone-800 dark:text-stone-100 mb-6 flex items-center gap-2">
         <BookOpen className="text-teal-500" />
         {t('boulderLessons')}

@@ -1,7 +1,7 @@
 
 import { Shell, VenetianMask, BrainCircuit, HeartPulse, Users, Zap, Leaf, ShieldCheck, Scroll, Scale, Mountain, Target, Sparkles } from 'lucide-react';
 import { useState } from 'react';
-import { InteractiveWelcome } from '../../components/InteractiveWelcome';
+import { InteractiveWelcome } from '../../../../shared/components/InteractiveWelcome';
 
 export const whatIsBouldering = {
   de: {

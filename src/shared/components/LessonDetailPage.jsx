@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { ChevronLeft, Save, Target, CheckCircle, ArrowRight } from 'lucide-react';
 import LessonContent from './LessonContent';
 import Quiz from './Quiz';
-import { useLanguage } from '../context/LanguageContext';
-import { getTranslatedLesson, categoryTranslations } from '../data/lessonTranslations';
-import { isLessonComplete, markLessonComplete, markLessonIncomplete } from '../utils/sessionStorage';
+import { useLanguage } from '../../context/LanguageContext';
+import { getTranslatedLesson, categoryTranslations } from '../../buddies/boulder/data/lessonTranslations';
+import { isLessonComplete, markLessonComplete, markLessonIncomplete } from '../../utils/sessionStorage';
 
 function LessonDetailPage({ lesson, onBack, onSaveTask, onGoToNextLesson }) {
   const { language, t } = useLanguage();
