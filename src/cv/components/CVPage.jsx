@@ -974,27 +974,34 @@ export default function CVPage() {
             border: 1px solid #cbd5e1 !important;
           }
           
-          /* Professional accent borders */
+          /* Professional accent borders - modern rounded style */
           .cv-print-container [class*="border-l-4"] {
-            border-left-width: 3px !important;
+            border-left-width: 4px !important;
             border-left-color: #3b82f6 !important;
-            padding: 0.4rem 0 0.4rem 0.6rem !important;
-            margin-bottom: 0.4rem !important;
-            border-radius: 0 !important;
-            background: #f8fafc !important;
+            border-top: 1px solid #e2e8f0 !important;
+            border-right: 1px solid #e2e8f0 !important;
+            border-bottom: 1px solid #e2e8f0 !important;
+            padding: 0.5rem 0.7rem !important;
+            margin-bottom: 0.5rem !important;
+            border-radius: 0.5rem !important;
+            background: linear-gradient(to right, #f8fafc 0%, #ffffff 100%) !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
           }
           
-          /* Subtle background for items */
+          /* Subtle background for items - enhanced with gradients */
           .cv-print-container [class*="border-blue"] {
-            background: #f8fafc !important;
+            background: linear-gradient(to right, #f8fafc 0%, #ffffff 100%) !important;
+            border-color: #e2e8f0 !important;
           }
           
           .cv-print-container [class*="border-green"] {
-            background: #f0fdf4 !important;
+            background: linear-gradient(to right, #f0fdf4 0%, #ffffff 100%) !important;
+            border-color: #d1fae5 !important;
           }
           
           .cv-print-container [class*="border-purple"] {
-            background: #faf5ff !important;
+            background: linear-gradient(to right, #faf5ff 0%, #ffffff 100%) !important;
+            border-color: #e9d5ff !important;
           }
           
           /* Professional profile picture - compact rectangular without border */
