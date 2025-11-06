@@ -111,19 +111,23 @@ export default function BlogSidebar({
 
         {/* Header - Profile */}
         <motion.div 
-          className="p-6 border-b border-border text-center"
+          className="p-4 border-b border-border text-center"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-        {/* Profile Photo Placeholder with Gradient Border */}
+        {/* Profile Photo with Gradient Border */}
         <motion.div 
-          className="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-primary via-secondary to-primary flex items-center justify-center p-1"
+          className="w-40 h-40 mx-auto mb-3 rounded-full bg-gradient-to-br from-primary via-secondary to-primary flex items-center justify-center p-1"
           whileHover={{ scale: 1.05, rotate: 5 }}
           transition={{ type: "spring", stiffness: 300 }}
         >
-          <div className="w-full h-full rounded-full bg-background flex items-center justify-center">
-            <User size={40} className="text-primary" />
+          <div className="w-full h-full rounded-full overflow-hidden bg-card">
+            <img 
+              src="/src/blog/pictures/profile/profile.jpeg" 
+              alt="Tarik Azzouzi" 
+              className="w-full h-full object-cover scale-125 -translate-y-4"
+            />
           </div>
         </motion.div>
         
