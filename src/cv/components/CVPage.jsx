@@ -849,11 +849,23 @@ export default function CVPage() {
             box-shadow: none !important;
           }
           
-          /* Section headers with accent line */
+          /* Section headers with accent line - more elegant */
           .cv-print-container section > div:first-child {
-            border-bottom: 1.5px solid #e2e8f0 !important;
-            padding-bottom: 0.3rem !important;
-            margin-bottom: 0.4rem !important;
+            border-bottom: 2px solid #e2e8f0 !important;
+            padding-bottom: 0.4rem !important;
+            margin-bottom: 0.6rem !important;
+            position: relative !important;
+          }
+          
+          /* Add accent underline to section headers */
+          .cv-print-container section > div:first-child::after {
+            content: '' !important;
+            position: absolute !important;
+            bottom: -2px !important;
+            left: 0 !important;
+            width: 60px !important;
+            height: 2px !important;
+            background: linear-gradient(to right, #3b82f6, #60a5fa) !important;
           }
           
           /* Professional header with beautiful gradient - full width from top */
@@ -953,39 +965,51 @@ export default function CVPage() {
             color: #475569 !important;
           }
           
-          /* Professional skill tags */
+          /* Professional skill tags - modern pill style */
           .cv-print-container [class*="px-2"] {
-            padding-left: 0.4rem !important;
-            padding-right: 0.4rem !important;
-            background: white !important;
-            border: 1px solid #cbd5e1 !important;
-            color: #334155 !important;
-            border-radius: 3px !important;
+            padding-left: 0.5rem !important;
+            padding-right: 0.5rem !important;
+            background: #f8fafc !important;
+            border: 1px solid #e2e8f0 !important;
+            color: #475569 !important;
+            border-radius: 0.375rem !important;
+            font-weight: 500 !important;
+            font-size: 0.8rem !important;
           }
           
           .cv-print-container [class*="py-1"] {
-            padding-top: 0.2rem !important;
-            padding-bottom: 0.2rem !important;
+            padding-top: 0.25rem !important;
+            padding-bottom: 0.25rem !important;
           }
           
           /* Remove gradient backgrounds from tags */
           .cv-print-container [class*="bg-gradient"] {
-            background: white !important;
-            border: 1px solid #cbd5e1 !important;
+            background: #f8fafc !important;
+            border: 1px solid #e2e8f0 !important;
           }
           
           /* Professional accent borders - modern rounded style */
           .cv-print-container [class*="border-l-4"] {
-            border-left-width: 4px !important;
-            border-left-color: #3b82f6 !important;
-            border-top: 1px solid #e2e8f0 !important;
-            border-right: 1px solid #e2e8f0 !important;
-            border-bottom: 1px solid #e2e8f0 !important;
-            padding: 0.5rem 0.7rem !important;
-            margin-bottom: 0.5rem !important;
-            border-radius: 0.5rem !important;
-            background: linear-gradient(to right, #f8fafc 0%, #ffffff 100%) !important;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
+            border: none !important;
+            border-left: 4px solid #3b82f6 !important;
+            padding: 0.6rem 0.8rem !important;
+            margin-bottom: 0.6rem !important;
+            border-radius: 0.375rem !important;
+            background: #ffffff !important;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 0 0 1px rgba(0,0,0,0.02) !important;
+            position: relative !important;
+          }
+          
+          /* Add subtle left accent gradient */
+          .cv-print-container [class*="border-l-4"]::before {
+            content: '' !important;
+            position: absolute !important;
+            left: 0 !important;
+            top: 0 !important;
+            bottom: 0 !important;
+            width: 4px !important;
+            background: linear-gradient(to bottom, #3b82f6 0%, #60a5fa 100%) !important;
+            border-radius: 0.375rem 0 0 0.375rem !important;
           }
           
           /* Subtle background for items - enhanced with gradients */
