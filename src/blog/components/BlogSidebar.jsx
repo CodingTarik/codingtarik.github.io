@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Github, Linkedin, FileText, BookOpen, Sun, Moon, User, FolderOpen, Code, Shield, Coffee, Box, Target, X, Rss } from 'lucide-react';
+import { Mail, Github, Linkedin, FileText, BookOpen, Sun, Moon, User, FolderOpen, Code, Shield, Coffee, Box, Target, X, Rss, Search } from 'lucide-react';
 import { getAllCategories } from '../utils/blogUtils';
 import { useTheme } from '../../learnbuddy/context/ThemeContext';
 import { generateRSSFeed } from '../utils/rssUtils';
@@ -30,6 +30,7 @@ export default function BlogSidebar({
 
   const tabs = [
     { id: 'posts', label: 'Posts', icon: FileText },
+    { id: 'search', label: 'Suche', icon: Search },
     { id: 'categories', label: 'Categories', icon: FolderOpen },
     { id: 'projects', label: 'Projects', icon: Code },
     { id: 'cv', label: 'CV', icon: User }
@@ -128,7 +129,13 @@ export default function BlogSidebar({
           return (
             <button
               key={tab.id}
-              onClick={() => onTabChange(tab.id)}
+              onClick={() => {
+                if (tab.id === 'search') {
+                  window.location.hash = '#/blog/search';
+                } else {
+                  onTabChange(tab.id);
+                }
+              }}
               className={`w-full px-6 py-3 text-left font-medium transition-all ${
                 selectedTab === tab.id
                   ? 'bg-stone-100 dark:bg-stone-800 text-stone-900 dark:text-stone-100 border-l-4 border-stone-900 dark:border-stone-100'

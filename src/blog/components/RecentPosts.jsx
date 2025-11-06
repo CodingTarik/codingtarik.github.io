@@ -9,11 +9,11 @@ export default function RecentPosts({ onPostClick, currentPostId }) {
     .slice(0, 5);
 
   return (
-    <div className="sticky top-8">
+    <div className="mt-8">
       <div className="bg-white dark:bg-stone-800 rounded-lg shadow-sm border border-stone-200 dark:border-stone-700 p-4">
-        <h3 className="text-lg font-bold text-stone-900 dark:text-stone-100 mb-4 flex items-center gap-2">
-          <Calendar size={18} />
-          <span>Neueste Posts</span>
+        <h3 className="text-sm font-semibold text-stone-600 dark:text-stone-400 mb-3 flex items-center gap-2 uppercase tracking-wide">
+          <Calendar size={14} />
+          <span>Weiterlesen</span>
         </h3>
         
         <div className="space-y-3">

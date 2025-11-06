@@ -33,10 +33,19 @@ import BlogPage from './blog/components/BlogPage';
 import PostDetail from './blog/components/PostDetail';
 import BlogSidebar from './blog/components/BlogSidebar';
 import RecentPosts from './blog/components/RecentPosts';
+import TableOfContents from './blog/components/TableOfContents';
+import ScrollToTop from './blog/components/ScrollToTop';
+import SearchPage from './blog/components/SearchPage';
+import SearchBar from './blog/components/SearchBar';
 import { getPostById } from './blog/utils/blogUtils';
 
 // CV Component
 import CVPage from './cv/components/CVPage';
+
+// Shared Components
+import Footer from './shared/components/Footer';
+import PrivacyPage from './shared/components/PrivacyPage';
+import ImprintPageFooter from './shared/components/ImprintPageFooter';
 
 function AppContent() {
   const { activeBuddy, currentBuddyConfig, allBuddies, switchBuddy } = useBuddy();
@@ -110,6 +119,18 @@ function AppContent() {
     const handleHashChange = () => {
       const hash = window.location.hash;
       
+      // Check for Privacy route
+      if (hash === '#/privacy') {
+        setAppView('privacy');
+        return;
+      }
+
+      // Check for Imprint route
+      if (hash === '#/imprint') {
+        setAppView('imprint');
+        return;
+      }
+
       // Check for CV route
       if (hash === '#/cv') {
         setAppView('cv');
@@ -119,6 +140,12 @@ function AppContent() {
       // Check for blog routes
       if (hash.startsWith('#/blog')) {
         setAppView('blog');
+        
+        // Check if viewing search page
+        if (hash.startsWith('#/blog/search')) {
+          setCurrentPost(null);
+          return;
+        }
         
         // Check if viewing a specific post
         const postMatch = hash.match(/^#\/blog\/post\/(.+)$/);
@@ -132,7 +159,7 @@ function AppContent() {
           setCurrentPost(null);
         }
         return;
-      } else if (hash !== '#/cv') {
+      } else if (hash !== '#/cv' && hash !== '#/privacy' && hash !== '#/imprint') {
         setAppView('learnbuddy');
       }
       
@@ -349,6 +376,16 @@ function AppContent() {
 
   // Determine what to render
   const renderContent = () => {
+    // Privacy View
+    if (appView === 'privacy') {
+      return <PrivacyPage />;
+    }
+
+    // Imprint View
+    if (appView === 'imprint') {
+      return <ImprintPageFooter />;
+    }
+
     // CV View
     if (appView === 'cv') {
       return <CVPage />;
@@ -356,8 +393,31 @@ function AppContent() {
 
     // Blog View
     if (appView === 'blog') {
+      // Check for search page
+      if (window.location.hash.startsWith('#/blog/search')) {
+        return (
+          <div className="min-h-screen bg-stone-50 dark:bg-stone-900 flex">
+            {/* Left Sidebar */}
+            <BlogSidebar
+              onBackToLearnBuddy={() => handleViewChange('learnbuddy')}
+              selectedTab="posts"
+              onTabChange={() => {}}
+              onCategorySelect={() => {}}
+              selectedCategory={null}
+              isOpen={false}
+              onClose={() => {}}
+            />
+            
+            {/* Search Page */}
+            <div className="lg:ml-80 flex-1">
+              <SearchPage onPostClick={handlePostClick} />
+            </div>
+          </div>
+        );
+      }
+      
       if (currentPost) {
-        // Blog Post Detail with Sidebar and Recent Posts
+        // Blog Post Detail with Sidebar, Search and Recent Posts
         return (
           <div className="min-h-screen bg-stone-50 dark:bg-stone-900 flex">
             {/* Left Sidebar */}
@@ -387,16 +447,34 @@ function AppContent() {
 
               {/* Post Content */}
               <div className="flex-1 max-w-4xl mx-auto px-4 md:px-8 py-4 md:py-8">
+                {/* Search Bar - Top Right */}
+                <div className="mb-6 flex justify-end">
+                  <div className="w-full md:w-96">
+                    <SearchBar 
+                      onSearch={(query) => {
+                        window.location.hash = `#/blog/search?q=${encodeURIComponent(query)}`;
+                      }}
+                    />
+                  </div>
+                </div>
+                
                 <PostDetail post={currentPost} onBack={handleBackToBlog} onPostClick={handlePostClick} />
               </div>
 
-              {/* Right Sidebar - Recent Posts (Hidden on mobile) */}
-              <div className="hidden xl:block w-80 p-4 md:p-8">
+              {/* Right Sidebar - Table of Contents & Recent Posts (Hidden on mobile) */}
+              <div className="hidden xl:block w-80 p-4 md:p-8 space-y-6">
+                {/* Table of Contents */}
+                <TableOfContents content={currentPost.content} />
+                
+                {/* Recent Posts */}
                 <RecentPosts 
                   onPostClick={handlePostClick} 
                   currentPostId={currentPost.id}
                 />
               </div>
+
+              {/* Scroll to Top Button */}
+              <ScrollToTop />
             </div>
           </div>
         );
@@ -500,14 +578,14 @@ function AppContent() {
   };
 
   return (
-    <div className="min-h-screen bg-stone-50 dark:bg-stone-900">
+    <div className="min-h-screen bg-stone-50 dark:bg-stone-900 flex flex-col">
       {/* LearnBuddy Header - Only in LearnBuddy view */}
       {appView === 'learnbuddy' && (
         <GlobalHeader currentView={appView} onViewChange={handleViewChange} />
       )}
       
       {/* Main Content */}
-      <div className={appView === 'learnbuddy' ? 'pt-16 pb-20' : ''}>
+      <div className={`flex-1 ${appView === 'learnbuddy' ? 'pt-16 pb-20' : ''}`}>
         {renderContent()}
       </div>
       
@@ -526,6 +604,9 @@ function AppContent() {
           setCurrentPage={handleSetCurrentPage}
         />
       )}
+
+      {/* Footer - Show on all pages */}
+      <Footer />
     </div>
   );
 }

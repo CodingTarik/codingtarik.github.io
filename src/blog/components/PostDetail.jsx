@@ -187,18 +187,45 @@ export default function PostDetail({ post, onBack, onPostClick }) {
               overrides: {
                 // Custom styling for markdown elements
                 h1: {
-                  props: {
-                    className: 'text-3xl font-bold text-stone-800 dark:text-stone-100 mt-8 mb-4',
+                  component: ({ children, ...props }) => {
+                    const id = children
+                      ?.toString()
+                      .toLowerCase()
+                      .replace(/[^a-z0-9]+/g, '-')
+                      .replace(/(^-|-$)/g, '');
+                    return (
+                      <h1 id={id} className="text-3xl font-bold text-stone-800 dark:text-stone-100 mt-8 mb-4 scroll-mt-20" {...props}>
+                        {children}
+                      </h1>
+                    );
                   },
                 },
                 h2: {
-                  props: {
-                    className: 'text-2xl font-bold text-stone-800 dark:text-stone-100 mt-6 mb-3',
+                  component: ({ children, ...props }) => {
+                    const id = children
+                      ?.toString()
+                      .toLowerCase()
+                      .replace(/[^a-z0-9]+/g, '-')
+                      .replace(/(^-|-$)/g, '');
+                    return (
+                      <h2 id={id} className="text-2xl font-bold text-stone-800 dark:text-stone-100 mt-6 mb-3 scroll-mt-20" {...props}>
+                        {children}
+                      </h2>
+                    );
                   },
                 },
                 h3: {
-                  props: {
-                    className: 'text-xl font-bold text-stone-800 dark:text-stone-100 mt-4 mb-2',
+                  component: ({ children, ...props }) => {
+                    const id = children
+                      ?.toString()
+                      .toLowerCase()
+                      .replace(/[^a-z0-9]+/g, '-')
+                      .replace(/(^-|-$)/g, '');
+                    return (
+                      <h3 id={id} className="text-xl font-bold text-stone-800 dark:text-stone-100 mt-4 mb-2 scroll-mt-20" {...props}>
+                        {children}
+                      </h3>
+                    );
                   },
                 },
                 p: {
