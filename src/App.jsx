@@ -68,7 +68,7 @@ function AppContent() {
       const hash = window.location.hash;
       
       // Check for buddy selection in URL (e.g., #/swimbuddy, #/boulderbuddy)
-      const buddyMatch = hash.match(/^#\/(boulder|swim|run|gym|cook)buddy$/i);
+      const buddyMatch = hash.match(/^#\/(boulder|swim|run|gym|cook|yoga|lifeskills|cybersecurity|piano|english)buddy$/i);
       if (buddyMatch) {
         const buddyId = buddyMatch[1].toLowerCase();
         if (allBuddies[buddyId] && buddyId !== activeBuddy) {

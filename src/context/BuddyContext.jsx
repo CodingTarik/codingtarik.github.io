@@ -4,6 +4,11 @@ import { swimBuddyConfig } from '../buddies/swim/config';
 import { runBuddyConfig } from '../buddies/run/config';
 import { gymBuddyConfig } from '../buddies/gym/config';
 import { cookBuddyConfig } from '../buddies/cook/config';
+import { yogaBuddyConfig } from '../buddies/yoga/config';
+import { lifeskillsBuddyConfig } from '../buddies/lifeskills/config';
+import { cybersecurityBuddyConfig } from '../buddies/cybersecurity/config';
+import { pianoBuddyConfig } from '../buddies/piano/config';
+import { englishBuddyConfig } from '../buddies/english/config';
 
 const BuddyContext = createContext();
 
@@ -13,7 +18,12 @@ export const BUDDIES = {
   swim: swimBuddyConfig,
   run: runBuddyConfig,
   gym: gymBuddyConfig,
-  cook: cookBuddyConfig
+  cook: cookBuddyConfig,
+  yoga: yogaBuddyConfig,
+  lifeskills: lifeskillsBuddyConfig,
+  cybersecurity: cybersecurityBuddyConfig,
+  piano: pianoBuddyConfig,
+  english: englishBuddyConfig
 };
 
 export function BuddyProvider({ children }) {
