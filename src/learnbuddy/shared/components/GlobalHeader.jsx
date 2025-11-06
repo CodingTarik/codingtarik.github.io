@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Sun, Moon, ChevronDown, Check, Star, Grid3x3, Info, Settings } from 'lucide-react';
+import { Sun, Moon, ChevronDown, Check, Star, Grid3x3, Info, Settings, Newspaper } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import { useTheme } from '../../context/ThemeContext';
 import { useBuddy } from '../../context/BuddyContext';
 
-function GlobalHeader() {
+function GlobalHeader({ currentView, onViewChange }) {
   const { language, changeLanguage } = useLanguage();
   const { isDark, toggleTheme } = useTheme();
   const { activeBuddy, currentBuddyConfig, allBuddies, switchBuddy } = useBuddy();
@@ -60,16 +60,37 @@ function GlobalHeader() {
     <div className="fixed top-0 left-0 right-0 bg-white dark:bg-stone-900 border-b border-stone-200 dark:border-stone-700 shadow-sm z-50">
       <div className="max-w-7xl mx-auto px-4 py-3">
         <div className="flex justify-between items-center gap-4">
-          {/* LearnBuddy Logo */}
+          {/* LearnBuddy Logo & Blog Button */}
           <div className="flex items-center gap-3">
             <button
               onClick={() => {
-                window.location.hash = `#/${activeBuddy}/home`;
+                if (onViewChange) {
+                  onViewChange('learnbuddy');
+                } else {
+                  window.location.hash = `#/learnbuddy/${activeBuddy}/home`;
+                }
                 setIsDropdownOpen(false);
               }}
               className="text-2xl font-bold bg-gradient-to-r from-teal-600 to-orange-600 bg-clip-text text-transparent hover:opacity-80 transition-opacity cursor-pointer"
             >
               LearnBuddy
+            </button>
+            
+            {/* Blog Button - nur im Desktop sichtbar */}
+            <button
+              onClick={() => {
+                if (onViewChange) {
+                  onViewChange('blog');
+                }
+              }}
+              className={`hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
+                currentView === 'blog'
+                  ? 'bg-purple-500 text-white shadow-md'
+                  : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-700'
+              }`}
+            >
+              <Newspaper size={16} />
+              <span>Blog</span>
             </button>
           </div>
 

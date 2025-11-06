@@ -2,39 +2,50 @@ import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { Check } from 'lucide-react';
 
 // Context Providers
-import { LanguageProvider } from './context/LanguageContext';
-import { ThemeProvider } from './context/ThemeContext';
-import { BuddyProvider, useBuddy } from './context/BuddyContext';
-import { SettingsProvider } from './context/SettingsContext';
-import { useLanguage } from './context/LanguageContext';
+import { LanguageProvider } from './learnbuddy/context/LanguageContext';
+import { ThemeProvider } from './learnbuddy/context/ThemeContext';
+import { BuddyProvider, useBuddy } from './learnbuddy/context/BuddyContext';
+import { SettingsProvider } from './learnbuddy/context/SettingsContext';
+import { useLanguage } from './learnbuddy/context/LanguageContext';
 
-// Shared Components
-import GlobalHeader from './shared/components/GlobalHeader';
-import SupportBanner from './shared/components/SupportBanner';
-import BottomNavigation from './shared/components/BottomNavigation';
-import HomePage from './shared/components/HomePage';
-import LessonsPage from './shared/components/LessonsPage';
-import LessonDetailPage from './shared/components/LessonDetailPage';
-import PlanPage from './shared/components/PlanPage';
-import ImprintPage from './shared/components/ImprintPage';
-import SettingsPage from './shared/components/SettingsPage';
+// LearnBuddy Shared Components
+import GlobalHeader from './learnbuddy/shared/components/GlobalHeader';
+import SupportBanner from './learnbuddy/shared/components/SupportBanner';
+import BottomNavigation from './learnbuddy/shared/components/BottomNavigation';
+import HomePage from './learnbuddy/shared/components/HomePage';
+import LessonsPage from './learnbuddy/shared/components/LessonsPage';
+import LessonDetailPage from './learnbuddy/shared/components/LessonDetailPage';
+import PlanPage from './learnbuddy/shared/components/PlanPage';
+import ImprintPage from './learnbuddy/shared/components/ImprintPage';
+import SettingsPage from './learnbuddy/shared/components/SettingsPage';
 
 // Boulder-specific components
-import TrainingPage from './buddies/boulder/components/TrainingPage';
-import SessionLogger from './buddies/boulder/components/SessionLogger';
-import WorkoutExecutor from './buddies/boulder/components/WorkoutExecutor';
+import TrainingPage from './learnbuddy/buddies/boulder/components/TrainingPage';
+import SessionLogger from './learnbuddy/buddies/boulder/components/SessionLogger';
+import WorkoutExecutor from './learnbuddy/buddies/boulder/components/WorkoutExecutor';
 
 // English-specific components
-import GrammarLevels from './buddies/english/components/GrammarLevels';
-import ReadingLibrary from './buddies/english/components/ReadingLibrary';
+import GrammarLevels from './learnbuddy/buddies/english/components/GrammarLevels';
+import ReadingLibrary from './learnbuddy/buddies/english/components/ReadingLibrary';
+
+// Blog Components
+import BlogPage from './blog/components/BlogPage';
+import PostDetail from './blog/components/PostDetail';
+import { getPostById } from './blog/utils/blogUtils';
 
 function AppContent() {
   const { activeBuddy, currentBuddyConfig, allBuddies, switchBuddy } = useBuddy();
   const { language } = useLanguage();
   
+  // App view state (blog vs learnbuddy)
+  const [appView, setAppView] = useState('learnbuddy'); // 'blog' or 'learnbuddy'
+  
   // Navigation state
   const [currentPage, setCurrentPage] = useState('home');
   const [currentLesson, setCurrentLesson] = useState(null);
+  
+  // Blog state
+  const [currentPost, setCurrentPost] = useState(null);
   
   // Boulder-specific state
   const [showWorkoutExecutor, setShowWorkoutExecutor] = useState(false);
@@ -94,8 +105,28 @@ function AppContent() {
     const handleHashChange = () => {
       const hash = window.location.hash;
       
-      // Check for buddy selection in URL (e.g., #/boulder/home, #/swim/lessons)
-      const buddyMatch = hash.match(/^#\/(boulder|swim|run|gym|cook|yoga|lifeskills|cybersecurity|piano|english)(\/.*)?$/i);
+      // Check for blog routes
+      if (hash.startsWith('#/blog')) {
+        setAppView('blog');
+        
+        // Check if viewing a specific post
+        const postMatch = hash.match(/^#\/blog\/post\/(.+)$/);
+        if (postMatch) {
+          const postId = postMatch[1];
+          const post = getPostById(postId);
+          if (post) {
+            setCurrentPost(post);
+          }
+        } else {
+          setCurrentPost(null);
+        }
+        return;
+      } else {
+        setAppView('learnbuddy');
+      }
+      
+      // Check for buddy selection in URL (e.g., #/learnbuddy/boulder/home, #/learnbuddy/swim/lessons)
+      const buddyMatch = hash.match(/^#\/learnbuddy\/(boulder|swim|run|gym|cook|yoga|lifeskills|cybersecurity|piano|english)(\/.*)?$/i);
       if (buddyMatch) {
         const buddyId = buddyMatch[1].toLowerCase();
         const path = buddyMatch[2] || '/home';
@@ -129,47 +160,26 @@ function AppContent() {
         return;
       }
       
-      // Legacy support for old URLs
-      const oldBuddyMatch = hash.match(/^#\/(boulder|swim|run|gym|cook|yoga|lifeskills|cybersecurity|piano|english)buddy$/i);
-      if (oldBuddyMatch) {
-        const buddyId = oldBuddyMatch[1].toLowerCase();
-        if (allBuddies[buddyId] && buddyId !== activeBuddy) {
-          switchBuddy(buddyId);
+      // Legacy support for old URLs (without /learnbuddy prefix) - redirect
+      if (hash.startsWith('#/') && !hash.startsWith('#/blog') && !hash.startsWith('#/learnbuddy')) {
+        // Redirect old URLs to new format
+        const oldBuddyMatch = hash.match(/^#\/(boulder|swim|run|gym|cook|yoga|lifeskills|cybersecurity|piano|english)/i);
+        if (oldBuddyMatch) {
+          const buddyId = oldBuddyMatch[1].toLowerCase();
+          const restPath = hash.substring(`#/${buddyId}`.length);
+          window.location.hash = `#/learnbuddy/${buddyId}${restPath || '/home'}`;
+          return;
         }
-        setCurrentLesson(null);
-        setCurrentPage('home');
+        // Other legacy routes
+        if (hash === '#/imprint' || hash === '#/settings') {
+          // These stay as is
+          setCurrentLesson(null);
+          setCurrentPage(hash.replace('#/', ''));
+          return;
+        }
+        // Default redirect to learnbuddy
+        window.location.hash = `#/learnbuddy/${activeBuddy}/home`;
         return;
-      }
-
-      const lessonMatch = hash.match(/^#\/lessons\/(m\d+_\d+_l\d+)$/);
-
-      if (lessonMatch) {
-        const lessonId = lessonMatch[1];
-        const lesson = getLessonById(lessonId);
-        if (lesson) {
-          setCurrentLesson(lesson);
-          setCurrentPage('lektionen');
-        }
-      } else if (hash === '#/lektionen') {
-        setCurrentLesson(null);
-        setCurrentPage('lektionen');
-      } else if (hash === '#/plan') {
-        setCurrentLesson(null);
-        setCurrentPage('plan');
-      } else if (hash.startsWith('#/custom-')) {
-        // Handle custom buddy tabs
-        const tabId = hash.replace('#/custom-', '');
-        setCurrentLesson(null);
-        setCurrentPage(`custom-${tabId}`);
-      } else if (hash === '#/imprint') {
-        setCurrentLesson(null);
-        setCurrentPage('imprint');
-      } else if (hash === '#/settings') {
-        setCurrentLesson(null);
-        setCurrentPage('settings');
-      } else {
-        setCurrentLesson(null);
-        setCurrentPage('home');
       }
     };
 
@@ -182,15 +192,15 @@ function AppContent() {
   // Update URL hash when state changes
   const handleSetCurrentPage = (page) => {
     if (page.startsWith('custom-')) {
-      window.location.hash = `#/${activeBuddy}/${page}`;
+      window.location.hash = `#/learnbuddy/${activeBuddy}/${page}`;
     } else if (page === 'home') {
-      window.location.hash = `#/${activeBuddy}/home`;
+      window.location.hash = `#/learnbuddy/${activeBuddy}/home`;
     } else if (page === 'lektionen') {
-      window.location.hash = `#/${activeBuddy}/lessons`;
+      window.location.hash = `#/learnbuddy/${activeBuddy}/lessons`;
     } else if (page === 'plan') {
-      window.location.hash = `#/${activeBuddy}/plan`;
+      window.location.hash = `#/learnbuddy/${activeBuddy}/plan`;
     } else {
-      window.location.hash = `#/${activeBuddy}/${page}`;
+      window.location.hash = `#/learnbuddy/${activeBuddy}/${page}`;
     }
     setCurrentPage(page);
     setCurrentLesson(null);
@@ -198,9 +208,9 @@ function AppContent() {
 
   const handleSetCurrentLesson = (lesson) => {
     if (lesson) {
-      window.location.hash = `#/${activeBuddy}/lessons/${lesson.id}`;
+      window.location.hash = `#/learnbuddy/${activeBuddy}/lessons/${lesson.id}`;
     } else {
-      window.location.hash = `#/${activeBuddy}/lessons`;
+      window.location.hash = `#/learnbuddy/${activeBuddy}/lessons`;
     }
     setCurrentLesson(lesson);
   };
@@ -302,8 +312,41 @@ function AppContent() {
     );
   };
 
+  // Handle blog navigation
+  const handleViewChange = (view) => {
+    if (view === 'blog') {
+      window.location.hash = '#/blog';
+      setAppView('blog');
+    } else {
+      window.location.hash = `#/learnbuddy/${activeBuddy}/home`;
+      setAppView('learnbuddy');
+    }
+  };
+
+  const handlePostClick = (postId) => {
+    window.location.hash = `#/blog/post/${postId}`;
+    const post = getPostById(postId);
+    if (post) {
+      setCurrentPost(post);
+    }
+  };
+
+  const handleBackToBlog = () => {
+    window.location.hash = '#/blog';
+    setCurrentPost(null);
+  };
+
   // Determine what to render
   const renderContent = () => {
+    // Blog View
+    if (appView === 'blog') {
+      if (currentPost) {
+        return <PostDetail post={currentPost} onBack={handleBackToBlog} />;
+      }
+      return <BlogPage onPostClick={handlePostClick} onBackToLearnBuddy={() => handleViewChange('learnbuddy')} />;
+    }
+
+    // LearnBuddy View
     // Show workout executor overlay if active (boulder-specific)
     if (showWorkoutExecutor && executingWorkout) {
       return (
@@ -399,12 +442,14 @@ function AppContent() {
   };
 
   return (
-    <div className="min-h-screen bg-stone-50 dark:bg-stone-900 pb-20">
-      {/* Global Header - Always visible */}
-      <GlobalHeader />
+    <div className="min-h-screen bg-stone-50 dark:bg-stone-900">
+      {/* LearnBuddy Header - Only in LearnBuddy view */}
+      {appView === 'learnbuddy' && (
+        <GlobalHeader currentView={appView} onViewChange={handleViewChange} />
+      )}
       
-      {/* Main Content with padding for header */}
-      <div className="pt-16">
+      {/* Main Content */}
+      <div className={appView === 'learnbuddy' ? 'pt-16 pb-20' : ''}>
         {renderContent()}
       </div>
       
@@ -416,10 +461,13 @@ function AppContent() {
         </div>
       )}
       
-      <BottomNavigation
-        currentPage={currentPage}
-        setCurrentPage={handleSetCurrentPage}
-      />
+      {/* Bottom Navigation - Only show in LearnBuddy view */}
+      {appView === 'learnbuddy' && (
+        <BottomNavigation
+          currentPage={currentPage}
+          setCurrentPage={handleSetCurrentPage}
+        />
+      )}
     </div>
   );
 }
