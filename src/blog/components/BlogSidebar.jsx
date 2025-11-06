@@ -4,6 +4,7 @@ import { Mail, Github, Linkedin, FileText, BookOpen, Sun, Moon, User, FolderOpen
 import { getAllCategories } from '../utils/blogUtils';
 import { useTheme } from '../../learnbuddy/context/ThemeContext';
 import { generateRSSFeed } from '../utils/rssUtils';
+import { trackSocialClick, trackCoffeeClick, trackRSSClick, trackCategoryClick } from './Analytics';
 
 // Custom Discord Icon Component
 const DiscordIcon = ({ size = 18 }) => (
@@ -230,7 +231,8 @@ export default function BlogSidebar({
           href="https://www.buymeacoffee.com/tarikazzouzi"
           target="_blank"
           rel="noopener noreferrer"
-          className="w-full bg-amber-500 hover:bg-amber-600 text-white rounded-lg shadow-md p-2.5 hover:shadow-lg hover:scale-[1.02] transition-all flex items-center justify-center gap-2 font-semibold text-sm"
+          onClick={() => trackCoffeeClick()}
+          className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white rounded-lg shadow-md p-2.5 hover:shadow-lg hover:scale-[1.02] transition-all flex items-center justify-center gap-2 font-semibold text-sm"
         >
           <Coffee size={16} />
           <span>Buy Me a Coffee</span>
@@ -239,6 +241,7 @@ export default function BlogSidebar({
         {/* RSS Feed Button */}
         <button
           onClick={() => {
+            trackRSSClick();
             const rssFeed = generateRSSFeed();
             const blob = new Blob([rssFeed], { type: 'application/rss+xml' });
             const url = URL.createObjectURL(blob);
@@ -279,6 +282,7 @@ export default function BlogSidebar({
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackSocialClick(link.label, link.url)}
                 className={`flex items-center justify-center p-2 rounded-lg bg-border/50 text-muted transition-all ${link.color}`}
                 title={link.label}
               >

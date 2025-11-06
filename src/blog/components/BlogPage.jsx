@@ -9,6 +9,7 @@ import ParticleBackground from './ParticleBackground';
 import { getAllPosts, getPostsByCategory, getAllCategories } from '../utils/blogUtils';
 import { generateBlogStructuredData, injectStructuredData } from '../utils/seoUtils';
 import SearchBar from './SearchBar';
+import { trackCategoryClick, trackSearch } from './Analytics';
 
 export default function BlogPage({ onPostClick, onBackToLearnBuddy }) {
   const [searchQuery, setSearchQuery] = useState('');
@@ -97,6 +98,9 @@ export default function BlogPage({ onPostClick, onBackToLearnBuddy }) {
   };
 
   const handleCategorySelect = (category) => {
+    if (category) {
+      trackCategoryClick(category);
+    }
     setSelectedCategory(category);
     setSelectedTab('posts'); // Always switch to posts view when category is selected (including null for "All Posts")
   };

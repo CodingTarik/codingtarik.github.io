@@ -3,6 +3,7 @@ import { Search as SearchIcon, Filter, X } from 'lucide-react';
 import SearchBar from './SearchBar';
 import PostCard from './PostCard';
 import { searchPostsAdvanced, getAllCategories } from '../utils/blogUtils';
+import { trackSearch, trackCategoryClick } from './Analytics';
 
 export default function SearchPage({ onPostClick }) {
   const [searchQuery, setSearchQuery] = useState('');
@@ -34,6 +35,9 @@ export default function SearchPage({ onPostClick }) {
       const results = searchPostsAdvanced(query);
       setSearchResults(results);
       setIsSearching(false);
+      
+      // Track search with results count
+      trackSearch(query, results.length);
       
       // Update URL
       window.location.hash = `#/blog/search?q=${encodeURIComponent(query)}`;
@@ -100,7 +104,11 @@ export default function SearchPage({ onPostClick }) {
               return (
                 <button
                   key={category}
-                  onClick={() => setSelectedCategory(selectedCategory === category ? null : category)}
+                  onClick={() => {
+                    const newCategory = selectedCategory === category ? null : category;
+                    if (newCategory) trackCategoryClick(newCategory);
+                    setSelectedCategory(newCategory);
+                  }}
                   className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
                     selectedCategory === category
                       ? 'bg-primary text-white'

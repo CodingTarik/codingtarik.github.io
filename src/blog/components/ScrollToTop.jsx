@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowUp } from 'lucide-react';
+import { trackScrollToTop } from './Analytics';
 
 export default function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
@@ -20,6 +21,7 @@ export default function ScrollToTop() {
   }, []);
 
   const scrollToTop = () => {
+    trackScrollToTop();
     window.scrollTo({
       top: 0,
       behavior: 'smooth'

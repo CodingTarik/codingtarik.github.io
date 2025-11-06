@@ -6,6 +6,7 @@ import { formatDate, calculateReadingTime } from '../utils/blogUtils';
 import { generateBlogPostStructuredData, injectStructuredData } from '../utils/seoUtils';
 import ReadingProgress from './ReadingProgress';
 import ViewCounter from './ViewCounter';
+import { trackPostView, trackPostShare } from './Analytics';
 
 export default function PostDetail({ post, onBack, onPostClick }) {
   const readingTime = calculateReadingTime(post.content);
@@ -18,6 +19,9 @@ export default function PostDetail({ post, onBack, onPostClick }) {
       // Inject structured data for search engines
       const structuredData = generateBlogPostStructuredData(post);
       injectStructuredData(structuredData);
+      
+      // Track post view
+      trackPostView(post.id, post.title, post.categories || []);
     }
     return () => {
       document.title = 'LearnBuddy';
@@ -90,6 +94,9 @@ export default function PostDetail({ post, onBack, onPostClick }) {
   }, [post]);
 
   const handleShare = async () => {
+    // Track share attempt
+    trackPostShare(post.id, post.title, 'native-share');
+    
     if (navigator.share) {
       try {
         await navigator.share({

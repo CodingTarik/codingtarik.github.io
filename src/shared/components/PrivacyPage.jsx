@@ -43,7 +43,34 @@ export default function PrivacyPage() {
             Email: your.email@example.com
           </p>
 
-          <h2>3. Data Collection</h2>
+          <h2>3. Analytics</h2>
+          <p>
+            This website uses <strong>Umami Analytics</strong>, a privacy-friendly web analytics tool. 
+            Umami is GDPR, CCPA and cookie law compliant and does not use cookies or collect any personal data.
+          </p>
+          <p>
+            The following anonymous data is collected:
+          </p>
+          <ul>
+            <li>Page URL</li>
+            <li>HTTP Referer (source of traffic)</li>
+            <li>Browser type and version</li>
+            <li>Device type (desktop, mobile, tablet)</li>
+            <li>Operating system</li>
+            <li>Country (based on IP address, but IP is not stored)</li>
+          </ul>
+          <p>
+            <strong>No personal data is collected.</strong> Your IP address is not stored. No cookies are used. 
+            All data is aggregated and anonymous. You can view our public analytics dashboard at any time.
+          </p>
+          <p>
+            For more information about Umami's privacy practices, visit: 
+            <a href="https://umami.is/docs/privacy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+              https://umami.is/docs/privacy
+            </a>
+          </p>
+
+          <h2>4. Data Collection</h2>
           <p>
             This website automatically collects and stores information in so-called server log files, 
             which your browser automatically transmits to us. These are:
@@ -57,13 +84,13 @@ export default function PrivacyPage() {
             <li>IP address</li>
           </ul>
 
-          <h2>4. Local Storage</h2>
+          <h2>5. Local Storage</h2>
           <p>
             This website uses Local Storage and Session Storage to store user settings 
             and preferences. This data remains on your device and is not transmitted to servers.
           </p>
 
-          <h2>5. Cookies</h2>
+          <h2>6. Cookies</h2>
           <p>
             This website uses minimally necessary cookies for functionality. You can adjust 
             the cookie settings at any time in the footer.

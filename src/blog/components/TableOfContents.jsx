@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { List, ChevronRight, ChevronDown } from 'lucide-react';
+import { trackTOCClick } from './Analytics';
 
 export default function TableOfContents({ content }) {
   const [headings, setHeadings] = useState([]);
