@@ -538,6 +538,30 @@ export default function CVPage() {
               <Hobby icon="📚" title={language === 'en' ? 'Reading' : 'Lesen'} subtitle={language === 'en' ? 'Learning' : 'Lernen'} />
             </Section>
 
+            {/* CV Info Box - Print Order 8 - Only visible in print */}
+            <div className="hidden print:block print:order-8 mt-6 p-4 bg-gradient-to-r from-blue-50 to-sky-50 border-l-4 border-blue-500 rounded-lg">
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0 mt-1">
+                  <Globe className="w-5 h-5 text-blue-600" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-sm font-semibold text-slate-900 mb-1">
+                    {language === 'en' 
+                      ? 'This CV was created with a custom web application' 
+                      : 'Dieser Lebenslauf wurde mit einer selbst entwickelten Webanwendung erstellt'}
+                  </h3>
+                  <p className="text-xs text-slate-700 leading-relaxed">
+                    {language === 'en'
+                      ? 'This CV is also available online in both German and English at:'
+                      : 'Dieser Lebenslauf ist auch online sowohl auf Deutsch als auch auf Englisch verfügbar unter:'}
+                  </p>
+                  <p className="text-xs font-mono text-blue-700 mt-1 font-semibold">
+                    codingtarik.github.io/#/cv
+                  </p>
+                </div>
+              </div>
+            </div>
+
             {/* Advanced Mode Content */}
             {advancedMode && (
               <>
