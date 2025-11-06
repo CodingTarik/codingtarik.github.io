@@ -5,6 +5,7 @@ import AnimatedPostCard from './AnimatedPostCard';
 import BlogSidebar from './BlogSidebar';
 import CategoriesPage from './CategoriesPage';
 import ProjectsPage from './ProjectsPage';
+import ParticleBackground from './ParticleBackground';
 import { getAllPosts, getPostsByCategory, getAllCategories } from '../utils/blogUtils';
 import { generateBlogStructuredData, injectStructuredData } from '../utils/seoUtils';
 import SearchBar from './SearchBar';
@@ -101,7 +102,12 @@ export default function BlogPage({ onPostClick, onBackToLearnBuddy }) {
   };
 
   return (
-    <div className="flex">
+    <div className="flex relative">
+      {/* Particle Background */}
+      <div className="fixed inset-0 z-0">
+        <ParticleBackground />
+      </div>
+
       {/* Left Sidebar */}
       <BlogSidebar
         onBackToLearnBuddy={onBackToLearnBuddy}
@@ -114,7 +120,7 @@ export default function BlogPage({ onPostClick, onBackToLearnBuddy }) {
       />
 
       {/* Main Content Area */}
-      <div className="lg:ml-80 flex-1 p-4 md:p-8">
+      <div className="lg:ml-80 flex-1 p-4 md:p-8 relative z-10">
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsSidebarOpen(true)}
