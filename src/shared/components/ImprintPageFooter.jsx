@@ -11,7 +11,7 @@ export default function ImprintPageFooter() {
           className="flex items-center gap-2 text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 mb-6 transition-colors"
         >
           <ArrowLeft size={20} />
-          <span>Zurück</span>
+          <span>Back</span>
         </button>
 
         {/* Header */}

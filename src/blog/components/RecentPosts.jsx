@@ -13,7 +13,7 @@ export default function RecentPosts({ onPostClick, currentPostId }) {
       <div className="bg-white dark:bg-stone-800 rounded-lg shadow-sm border border-stone-200 dark:border-stone-700 p-4">
         <h3 className="text-sm font-semibold text-stone-600 dark:text-stone-400 mb-3 flex items-center gap-2 uppercase tracking-wide">
           <Calendar size={14} />
-          <span>Weiterlesen</span>
+          <span>Recent Posts</span>
         </h3>
         
         <div className="space-y-3">
@@ -52,7 +52,7 @@ export default function RecentPosts({ onPostClick, currentPostId }) {
         
         {recentPosts.length === 0 && (
           <p className="text-sm text-stone-500 dark:text-stone-400 text-center py-4">
-            Keine weiteren Posts vorhanden
+            No more posts available
           </p>
         )}
       </div>

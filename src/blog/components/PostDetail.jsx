@@ -112,7 +112,7 @@ export default function PostDetail({ post, onBack, onPostClick }) {
           className="flex items-center gap-2 text-stone-600 dark:text-stone-400 hover:text-purple-600 dark:hover:text-purple-400 mb-6 transition-colors"
         >
           <ArrowLeft size={20} />
-          <span>Zurück zur Übersicht</span>
+          <span>Back to overview</span>
         </button>
 
         {/* Post Header */}
@@ -282,7 +282,7 @@ export default function PostDetail({ post, onBack, onPostClick }) {
             className="flex items-center gap-2 text-purple-600 dark:text-purple-400 hover:underline font-medium"
           >
             <ArrowLeft size={20} />
-            <span>Zurück zur Übersicht</span>
+            <span>Back to overview</span>
           </button>
         </footer>
       </article>

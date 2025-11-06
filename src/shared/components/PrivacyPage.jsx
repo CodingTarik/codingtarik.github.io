@@ -11,7 +11,7 @@ export default function PrivacyPage() {
           className="flex items-center gap-2 text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 mb-6 transition-colors"
         >
           <ArrowLeft size={20} />
-          <span>Zurück</span>
+          <span>Back</span>
         </button>
 
         {/* Header */}
@@ -19,11 +19,11 @@ export default function PrivacyPage() {
           <div className="flex items-center gap-3 mb-4">
             <Shield size={32} className="text-stone-900 dark:text-stone-100" />
             <h1 className="text-3xl md:text-4xl font-bold text-stone-900 dark:text-stone-100">
-              Datenschutzerklärung
+              Privacy Policy
             </h1>
           </div>
           <p className="text-stone-600 dark:text-stone-400">
-            Zuletzt aktualisiert: {new Date().toLocaleDateString('de-DE')}
+            Last updated: {new Date().toLocaleDateString('en-US')}
           </p>
         </div>
 

@@ -18,24 +18,24 @@ export default function Footer() {
               className="flex items-center gap-1.5 text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 transition-colors"
             >
               <Shield size={14} />
-              <span>Datenschutz</span>
+              <span>Privacy</span>
             </a>
             <a
               href="#/imprint"
               className="flex items-center gap-1.5 text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 transition-colors"
             >
               <FileText size={14} />
-              <span>Impressum</span>
+              <span>Imprint</span>
             </a>
             <button
               onClick={() => {
                 // TODO: Implement Cookie Settings Modal
-                alert('Cookie-Einstellungen werden bald verfügbar sein!');
+                alert('Cookie settings will be available soon!');
               }}
               className="flex items-center gap-1.5 text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 transition-colors"
             >
               <Cookie size={14} />
-              <span>Cookie-Einstellungen</span>
+              <span>Cookie Settings</span>
             </button>
           </div>
 

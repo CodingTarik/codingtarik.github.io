@@ -30,7 +30,7 @@ export default function BlogSidebar({
 
   const tabs = [
     { id: 'posts', label: 'Posts', icon: FileText },
-    { id: 'search', label: 'Suche', icon: Search },
+    { id: 'search', label: 'Search', icon: Search },
     { id: 'categories', label: 'Categories', icon: FolderOpen },
     { id: 'projects', label: 'Projects', icon: Code },
     { id: 'cv', label: 'CV', icon: User }

@@ -57,7 +57,7 @@ export default function PostCard({ post, onClick }) {
           </div>
           <div className="flex items-center gap-1">
             <Clock size={14} />
-            <span>{readingTime} Min. Lesezeit</span>
+            <span>{readingTime} min read</span>
           </div>
           {post.author && (
             <div className="flex items-center gap-1">

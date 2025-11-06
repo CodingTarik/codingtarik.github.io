@@ -62,10 +62,10 @@ export default function SearchPage({ onPostClick }) {
         <div className="mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-stone-900 dark:text-stone-100 mb-4 flex items-center gap-3">
             <SearchIcon size={32} />
-            <span>Suche</span>
+            <span>Search</span>
           </h1>
           <p className="text-stone-600 dark:text-stone-400">
-            Durchsuche alle Blogbeiträge nach Titel, Beschreibung und Inhalt
+            Search all blog posts by title, description and content
           </p>
         </div>
 
@@ -89,7 +89,7 @@ export default function SearchPage({ onPostClick }) {
                   : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-700'
               }`}
             >
-              Alle ({searchResults.length})
+              All ({searchResults.length})
             </button>
             {categories.map(category => {
               const count = searchResults.filter(p => 
@@ -119,7 +119,7 @@ export default function SearchPage({ onPostClick }) {
         {isSearching ? (
           <div className="text-center py-12">
             <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-stone-900 dark:border-stone-100"></div>
-            <p className="mt-4 text-stone-600 dark:text-stone-400">Suche...</p>
+            <p className="mt-4 text-stone-600 dark:text-stone-400">Searching...</p>
           </div>
         ) : searchQuery ? (
           <>
@@ -131,14 +131,14 @@ export default function SearchPage({ onPostClick }) {
                     <span className="font-semibold text-stone-900 dark:text-stone-100">
                       {filteredResults.length}
                     </span>
-                    {' '}Ergebnis{filteredResults.length !== 1 ? 'se' : ''} für{' '}
+                    {' '}result{filteredResults.length !== 1 ? 's' : ''} for{' '}
                     <span className="font-semibold text-stone-900 dark:text-stone-100">
                       "{searchQuery}"
                     </span>
                   </>
                 ) : (
                   <>
-                    Keine Ergebnisse für{' '}
+                    No results for{' '}
                     <span className="font-semibold text-stone-900 dark:text-stone-100">
                       "{searchQuery}"
                     </span>
@@ -162,16 +162,16 @@ export default function SearchPage({ onPostClick }) {
               <div className="bg-white dark:bg-stone-800 rounded-lg shadow-sm border border-stone-200 dark:border-stone-700 p-12 text-center">
                 <SearchIcon size={48} className="mx-auto mb-4 text-stone-400" />
                 <h3 className="text-xl font-bold text-stone-900 dark:text-stone-100 mb-2">
-                  Keine Ergebnisse gefunden
+                  No results found
                 </h3>
                 <p className="text-stone-600 dark:text-stone-400 mb-4">
-                  Versuche es mit anderen Suchbegriffen oder entferne Filter.
+                  Try different keywords or remove filters.
                 </p>
                 <button
                   onClick={() => handleSearch('')}
                   className="text-purple-600 dark:text-purple-400 hover:underline font-medium"
                 >
-                  Suche zurücksetzen
+                  Reset search
                 </button>
               </div>
             )}
@@ -180,10 +180,10 @@ export default function SearchPage({ onPostClick }) {
           <div className="bg-white dark:bg-stone-800 rounded-lg shadow-sm border border-stone-200 dark:border-stone-700 p-12 text-center">
             <SearchIcon size={64} className="mx-auto mb-4 text-stone-300 dark:text-stone-600" />
             <h3 className="text-xl font-bold text-stone-900 dark:text-stone-100 mb-2">
-              Beginne deine Suche
+              Start your search
             </h3>
             <p className="text-stone-600 dark:text-stone-400">
-              Gib einen Suchbegriff ein, um Blogbeiträge zu finden
+              Enter a search term to find blog posts
             </p>
           </div>
         )}

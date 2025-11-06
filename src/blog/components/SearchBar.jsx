@@ -25,7 +25,7 @@ export default function SearchBar({ onSearch, initialQuery = '' }) {
         />
         <input
           type="text"
-          placeholder="Suche in Posts..."
+          placeholder="Search posts..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           className="w-full pl-10 pr-10 py-2 bg-white dark:bg-stone-800 border border-stone-300 dark:border-stone-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900 dark:focus:ring-stone-100 text-sm text-stone-900 dark:text-stone-100 placeholder-stone-500"
