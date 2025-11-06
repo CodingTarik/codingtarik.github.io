@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mountain, BookOpen, Target, TrendingUp, Zap, Globe, Sun, Moon } from 'lucide-react';
+import { Mountain, BookOpen, Target, TrendingUp, Zap, Globe, Sun, Moon, Heart, Code, Coffee } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
 
@@ -161,6 +161,60 @@ function HomePage({ onStartLesson, onStartWarmup }) {
             <div className="text-3xl mb-2">🎉</div>
             <div className="text-sm text-stone-600">Spaß haben</div>
           </div>
+        </div>
+      </div>
+
+      {/* Open Source & Support Banner */}
+      <div className="relative overflow-hidden bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 rounded-2xl shadow-xl p-6 mt-12">
+        {/* Animated background pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-32 h-32 bg-white rounded-full -translate-x-1/2 -translate-y-1/2 animate-pulse"></div>
+          <div className="absolute bottom-0 right-0 w-40 h-40 bg-white rounded-full translate-x-1/2 translate-y-1/2 animate-pulse" style={{ animationDelay: '1s' }}></div>
+        </div>
+
+        <div className="relative z-10">
+            <div className="flex items-center justify-center gap-2 mb-3">
+              <Heart className="text-white animate-pulse" size={24} />
+              <Code className="text-white" size={24} />
+              <span className="text-white text-2xl font-bold">100% {language === 'de' ? 'Kostenlos' : 'Free'}</span>
+            </div>
+            
+            <p className="text-white text-center text-sm mb-4 leading-relaxed">
+              {language === 'de' 
+                ? '🎉 Diese App ist komplett kostenlos, werbefrei und Open Source! Die Entwicklung, Wartung und Bereitstellung in den App Stores kostet jedoch Zeit und Geld.'
+                : '🎉 This app is completely free, ad-free, and open source! However, development, maintenance, and distribution in app stores cost time and money.'
+              }
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+              <a
+                href="https://buymeacoffee.com/boulderbuddy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group bg-white hover:bg-yellow-50 text-stone-800 font-bold py-3 px-6 rounded-full shadow-lg transition-all transform hover:scale-105 flex items-center gap-2"
+              >
+                <Coffee size={20} className="text-amber-600 group-hover:animate-bounce" />
+                <span>{language === 'de' ? 'Kauf mir einen Kaffee' : 'Buy me a coffee'}</span>
+                <Heart size={16} className="text-pink-500" />
+              </a>
+              
+              <a
+                href="https://github.com/yourusername/boulderbuddy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-stone-800 hover:bg-stone-900 text-white font-semibold py-3 px-6 rounded-full shadow-lg transition-all transform hover:scale-105 flex items-center gap-2"
+              >
+                <Code size={20} />
+                <span>{language === 'de' ? 'Auf GitHub ansehen' : 'View on GitHub'}</span>
+              </a>
+            </div>
+
+            <p className="text-white/90 text-center text-xs mt-4 italic">
+              {language === 'de' 
+                ? '✨ Jede Unterstützung hilft, diese App weiter zu verbessern und kostenlos zu halten!'
+                : '✨ Every contribution helps keep this app improving and free for everyone!'
+              }
+            </p>
         </div>
       </div>
     </div>

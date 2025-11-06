@@ -8,6 +8,7 @@ import {
   BrainCircuit, HeartPulse, ShieldCheck, Leaf, PersonStanding, MoveUp, UserCheck,
   Scroll, Scale
 } from 'lucide-react';
+import { InteractiveWelcome } from './InteractiveWelcome';
 
 function LessonContent({ content }) {
   return (
@@ -79,6 +80,8 @@ function LessonContent({ content }) {
             UserCheck: { component: UserCheck },
             Scroll: { component: Scroll },
             Scale: { component: Scale },
+            // Interactive Components
+            InteractiveWelcome: { component: InteractiveWelcome },
           },
         }}
       >

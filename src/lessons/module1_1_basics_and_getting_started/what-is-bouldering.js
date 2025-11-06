@@ -1,11 +1,15 @@
 
-import { Shell, VenetianMask, BrainCircuit, HeartPulse, Users, Zap, Leaf, ShieldCheck, Scroll, Scale } from 'lucide-react';
+import { Shell, VenetianMask, BrainCircuit, HeartPulse, Users, Zap, Leaf, ShieldCheck, Scroll, Scale, Mountain, Target, Sparkles } from 'lucide-react';
+import { useState } from 'react';
+import { InteractiveWelcome } from '../../components/InteractiveWelcome';
 
 export const whatIsBouldering = {
   de: {
     title: "Willkommen in der Welt des Boulderns",
     description: "Tauche tief ein in die Welt des Boulderns: ein Puzzle, ein Workout, eine Gemeinschaft und ein Weg zur Selbstentdeckung.",
     content: `
+<InteractiveWelcome language="de" />
+
 ### Hey, wie schön, dass du hier bist!
 
 Den ersten und wichtigsten Schritt hast du bereits gemacht: Du bist neugierig. Willkommen in einer der faszinierendsten Sportarten der Welt, die so viel mehr ist als nur das Klettern an einer Wand. Es ist eine Lebenseinstellung.
@@ -114,6 +118,8 @@ Der erste Schritt in eine Halle kann einschüchternd wirken, aber keine Sorge, e
     title: "Welcome to the World of Bouldering",
     description: "Dive deep into the world of bouldering: a puzzle, a workout, a community, and a path to self-discovery.",
     content: `
+<InteractiveWelcome language="en" />
+
 ### Hey, so glad you're here!
 
 You've already taken the first and most important step: you're curious. Welcome to one of the most fascinating sports in the world, which is so much more than just climbing a wall. It's a mindset.

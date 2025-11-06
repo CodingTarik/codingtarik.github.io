@@ -220,9 +220,11 @@ function AppContent() {
       case 'plan':
         return (
           <TrainingPlanPage
-            tasks={savedTasks}
-            onRemoveTask={removeTask}
-            onToggleChecklistItem={toggleChecklistItem}
+            savedTasks={savedTasks}
+            onUpdateTask={(taskId, updatedTask) => {
+              setSavedTasks(savedTasks.map(task => task.id === taskId ? updatedTask : task));
+            }}
+            onDeleteTask={removeTask}
           />
         );
       
