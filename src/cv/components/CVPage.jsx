@@ -194,7 +194,7 @@ export default function CVPage() {
           animate={{ opacity: 1, y: 0 }}
           className="cv-header bg-white dark:bg-slate-800 rounded-xl shadow-lg p-8 mb-6"
         >
-          <div className="flex flex-row gap-6 items-center print:p-4 print:pt-6 print:pb-8">
+          <div className="flex flex-row gap-6 items-start print:p-4 print:pt-6 print:pb-6">
             {/* Profile Picture */}
             <div className="flex-shrink-0">
               <img 
@@ -206,80 +206,80 @@ export default function CVPage() {
             </div>
 
             {/* Header Info */}
-            <div className="flex-1">
-              <h1 className="text-4xl md:text-5xl print:text-3xl font-bold text-slate-900 dark:text-white print:text-white mb-2 print:mb-1">
+            <div className="flex-1 min-w-0">
+              <h1 className="text-4xl md:text-5xl print:text-2xl font-bold text-slate-900 dark:text-white print:text-white mb-1 print:mb-0.5">
                 Tarik Azzouzi
               </h1>
-              <p className="text-xl print:text-lg text-slate-600 dark:text-slate-300 print:text-blue-50 mb-4 print:mb-2">
+              <p className="text-xl print:text-base text-slate-600 dark:text-slate-300 print:text-blue-100 mb-3 print:mb-2">
                 {language === 'en' ? 'Full-Stack Developer & AI Engineer' : 'Full-Stack Entwickler & KI-Ingenieur'}
               </p>
               
-              <div className="flex flex-wrap gap-3 print:gap-2 text-sm print:text-xs text-slate-600 dark:text-slate-400 print:text-blue-100">
-                {/* Show personal data only when printing with application data */}
-                {printData.includePersonalData && (
-                  <>
-                    <div className="hidden print:flex items-center gap-1">
-                      <Mail size={13} />
-                      <span>{printData.email}</span>
+              {/* Contact Info Grid - Only for print with personal data */}
+              {printData.includePersonalData && (
+                <div className="hidden print:grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-blue-100 mb-2">
+                  <div className="flex items-center gap-1.5">
+                    <Mail size={12} className="flex-shrink-0" />
+                    <span className="truncate">{printData.email}</span>
+                  </div>
+                  {printData.phone && (
+                    <div className="flex items-center gap-1.5">
+                      <Phone size={12} className="flex-shrink-0" />
+                      <span>{printData.phone}</span>
                     </div>
-                    {printData.phone && (
-                      <div className="hidden print:flex items-center gap-1">
-                        <Phone size={13} />
-                        <span>{printData.phone}</span>
-                      </div>
-                    )}
-                    {printData.address && (
-                      <div className="hidden print:flex items-center gap-1">
-                        <MapPin size={13} />
-                        <span>{printData.address}</span>
-                      </div>
-                    )}
-                    {printData.birthdate && (
-                      <div className="hidden print:flex items-center gap-1">
-                        <Calendar size={13} />
-                        <span>{printData.birthdate}</span>
-                      </div>
-                    )}
-                    {printData.birthplace && (
-                      <div className="hidden print:flex items-center gap-1">
-                        <MapPin size={13} />
-                        <span>{language === 'en' ? 'Born in' : 'Geboren in'} {printData.birthplace}</span>
-                      </div>
-                    )}
-                    {printData.nationality && (
-                      <div className="hidden print:flex items-center gap-1">
-                        <Globe size={13} />
-                        <span>{printData.nationality}</span>
-                      </div>
-                    )}
-                  </>
-                )}
-                
-                {/* Links - always visible */}
+                  )}
+                  {printData.address && (
+                    <div className="flex items-center gap-1.5">
+                      <MapPin size={12} className="flex-shrink-0" />
+                      <span className="truncate">{printData.address}</span>
+                    </div>
+                  )}
+                  {printData.birthdate && (
+                    <div className="flex items-center gap-1.5">
+                      <Calendar size={12} className="flex-shrink-0" />
+                      <span>{printData.birthdate}</span>
+                    </div>
+                  )}
+                  {printData.birthplace && (
+                    <div className="flex items-center gap-1.5">
+                      <MapPin size={12} className="flex-shrink-0" />
+                      <span className="truncate">{language === 'en' ? 'Born:' : 'Geb.:'} {printData.birthplace}</span>
+                    </div>
+                  )}
+                  {printData.nationality && (
+                    <div className="flex items-center gap-1.5">
+                      <Globe size={12} className="flex-shrink-0" />
+                      <span>{printData.nationality}</span>
+                    </div>
+                  )}
+                </div>
+              )}
+              
+              {/* Links - Compact Grid Layout */}
+              <div className="grid grid-cols-2 print:grid-cols-2 gap-x-4 gap-y-1.5 print:gap-y-1 text-sm print:text-xs text-slate-600 dark:text-slate-400 print:text-blue-100">
                 <div className="flex items-center gap-1.5">
-                  <Globe size={15} className="print:w-[13px] print:h-[13px]" />
-                  <a href="https://codingtarik.github.io" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 print:text-blue-100 transition-colors">
+                  <Globe size={14} className="print:w-[12px] print:h-[12px] flex-shrink-0" />
+                  <a href="https://codingtarik.github.io" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 print:text-blue-100 transition-colors truncate">
                     codingtarik.github.io
                   </a>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <Github size={15} className="print:w-[13px] print:h-[13px]" />
-                  <a href="https://github.com/codingtarik" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 print:text-blue-100 transition-colors">
+                  <Github size={14} className="print:w-[12px] print:h-[12px] flex-shrink-0" />
+                  <a href="https://github.com/codingtarik" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 print:text-blue-100 transition-colors truncate">
                     github.com/codingtarik
                   </a>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <Linkedin size={15} className="print:w-[13px] print:h-[13px]" />
-                  <a href="https://www.linkedin.com/in/tarik-azzouzi/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 print:text-blue-100 transition-colors">
+                  <Linkedin size={14} className="print:w-[12px] print:h-[12px] flex-shrink-0" />
+                  <a href="https://www.linkedin.com/in/tarik-azzouzi/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 print:text-blue-100 transition-colors truncate">
                     linkedin.com/in/tarik-azzouzi
                   </a>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <svg className="w-[15px] h-[15px] print:w-[13px] print:h-[13px]" viewBox="0 0 24 24" fill="currentColor">
+                  <svg className="w-[14px] h-[14px] print:w-[12px] print:h-[12px] flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M11.996 0C5.372 0 0 5.372 0 12s5.372 12 11.996 12C18.628 24 24 18.628 24 12S18.628 0 11.996 0zm6.056 17.544c-.214.276-.492.416-.834.416-.12 0-.24-.024-.36-.072l-4.8-2.4c-.24-.12-.408-.336-.408-.6V7.2c0-.432.336-.768.768-.768s.768.336.768.768v6.96l4.416 2.208c.384.192.528.648.336 1.032z"/>
                   </svg>
-                  <a href="https://app.hackthebox.com/profile/477139" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 print:text-blue-100 transition-colors">
-                    hackthebox.com/profile/477139
+                  <a href="https://app.hackthebox.com/profile/477139" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 print:text-blue-100 transition-colors truncate">
+                    hackthebox.com/477139
                   </a>
                 </div>
               </div>
