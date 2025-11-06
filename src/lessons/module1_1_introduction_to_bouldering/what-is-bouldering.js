@@ -48,6 +48,14 @@ Bouldern hat eine einzigartige Kultur, die auf Zusammenarbeit und persönlichem 
 *   **Fortschritt ist persönlich:** Es geht nicht darum, besser zu sein als andere, sondern darum, heute besser zu sein als gestern. Jeder Körper ist anders, daher ist auch jede Lösung individuell.
 *   **Die Kunst des Scheiterns:** Du wirst öfter fallen als stehen. Bouldern lehrt dich, Scheitern nicht als Niederlage, sondern als wichtigen Teil des Lernprozesses zu sehen. Jeder Fall ist eine Information für den nächsten Versuch.
 
+<div className="flex items-start gap-4 p-4 my-6 bg-stone-100 dark:bg-stone-800 rounded-lg border border-stone-200 dark:border-stone-700">
+    <Users size={48} className="text-purple-500 flex-shrink-0 mt-1" />
+    <div>
+        <h4 className="font-bold text-stone-800 dark:text-stone-200">Eine globale Community</h4>
+        <p className="text-sm text-stone-600 dark:text-stone-400">Vom ersten Tag an bist du Teil einer weltweiten Gemeinschaft. Ob in der Halle, am Fels oder online (auf Instagram, YouTube oder Reddit), du wirst feststellen, dass Bouldernde eine offene, hilfsbereite und vielfältige Gruppe sind, die ihre Leidenschaft gerne teilt.</p>
+    </div>
+</div>
+
 ### Die gesundheitlichen Vorteile (Körper & Geist)
 
 Bouldern ist Meditation in Bewegung und eines der umfassendsten Workouts überhaupt.
@@ -156,6 +164,14 @@ Bouldering has a unique culture based on collaboration and personal progress.
 *   **Collaborative Problem-Solving:** Instead of competing against each other, climbers often work together to crack a boulder. They share "beta" (solutions), cheer each other on, and celebrate each other's successes.
 *   **Progress is Personal:** It's not about being better than others, but about being better today than you were yesterday. Every body is different, so every solution is individual.
 *   **The Art of Failure:** You will fall more than you will send. Bouldering teaches you to see failure not as a defeat, but as a vital part of the learning process. Every fall is information for the next attempt.
+
+<div className="flex items-start gap-4 p-4 my-6 bg-stone-100 dark:bg-stone-800 rounded-lg border border-stone-200 dark:border-stone-700">
+    <Users size={48} className="text-purple-500 flex-shrink-0 mt-1" />
+    <div>
+        <h4 className="font-bold text-stone-800 dark:text-stone-200">A Global Community</h4>
+        <p className="text-sm text-stone-600 dark:text-stone-400">From day one, you are part of a worldwide community. Whether in the gym, at the crag, or online (on Instagram, YouTube, or Reddit), you'll find that boulderers are an open, helpful, and diverse group happy to share their passion.</p>
+    </div>
+</div>
 
 ### The Health Benefits (Body & Mind)
 

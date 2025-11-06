@@ -9,13 +9,17 @@ export const getLessonById = (id) => {
 // Translations for a few static strings or category titles that are not part of the lesson files.
 export const categoryTranslations = {
   module1_1: {
-    de: "Grundlagen & Einstieg",
-    en: "Basics & Getting Started"
+    de: "MODUL 1.1: EINFÜHRUNG INS BOULDERN",
+    en: "MODULE 1.1: INTRODUCTION TO BOULDERING",
   },
   module1_2: {
-    de: "Fundamentale Bewegungsprinzipien",
-    en: "Fundamental Movement Principles"
-  }
+    de: "MODUL 1.2: FUNDAMENTALE BEWEGUNGSPRINZIPIEN",
+    en: "MODULE 1.2: FUNDAMENTAL MOVEMENT PRINCIPLES",
+  },
+  module1_3: {
+    de: "MODUL 1.3: SICHERHEIT",
+    en: "MODULE 1.3: SAFETY",
+  },
 };
 
 /**

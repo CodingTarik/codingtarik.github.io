@@ -6,7 +6,15 @@ import {
   Shield, Users, ArrowDown, Grip, Palette, Waypoints, Map, GitBranch, Eye,
   // New Icons from expanded lesson
   BrainCircuit, HeartPulse, ShieldCheck, Leaf, PersonStanding, MoveUp, UserCheck,
-  Scroll, Scale
+  Scroll, Scale,
+  // Icons for Halle vs. Outdoor
+  History, Trees, Compass,
+  // Icons for Community
+  MessagesSquare, Trophy,
+  // Icons from Safety Lesson
+  Brush, Wind, HelpCircle, Baby, Flame, PackageX, LocateFixed,
+  // Icons for Community Lesson Part 2
+  Share2, Youtube, Instagram, Lightbulb
 } from 'lucide-react';
 import { InteractiveWelcome } from './InteractiveWelcome';
 
@@ -48,6 +56,14 @@ function LessonContent({ content }) {
                 className: 'font-bold text-stone-900 dark:text-stone-100',
               },
             },
+            a: {
+              component: 'a',
+              props: {
+                className: 'text-teal-500 hover:underline',
+                target: '_blank',
+                rel: 'noopener noreferrer'
+              }
+            },
             ul: {
               component: 'ul',
               props: {
@@ -80,6 +96,22 @@ function LessonContent({ content }) {
             UserCheck: { component: UserCheck },
             Scroll: { component: Scroll },
             Scale: { component: Scale },
+            History: { component: History },
+            Trees: { component: Trees },
+            Compass: { component: Compass },
+            MessagesSquare: { component: MessagesSquare },
+            Trophy: { component: Trophy },
+            Brush: { component: Brush },
+            Wind: { component: Wind },
+            HelpCircle: { component: HelpCircle },
+            Baby: { component: Baby },
+            Flame: { component: Flame },
+            PackageX: { component: PackageX },
+            LocateFixed: { component: LocateFixed },
+            Share2: { component: Share2 },
+            Youtube: { component: Youtube },
+            Instagram: { component: Instagram },
+            Lightbulb: { component: Lightbulb },
             // Interactive Components
             InteractiveWelcome: { component: InteractiveWelcome },
           },
