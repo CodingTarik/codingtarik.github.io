@@ -12,6 +12,11 @@ function LessonDetailPage({ lesson, onBack, onSaveTask, onGoToNextLesson }) {
   const categoryTitle = categoryTranslations[lesson.category]?.[language] || categoryTranslations[lesson.category]?.en;
   const [isComplete, setIsComplete] = useState(false);
 
+  // Scroll to top when lesson changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [lesson.id]);
+
   useEffect(() => {
     setIsComplete(isLessonComplete(lesson.id));
   }, [lesson.id]);
@@ -39,31 +44,8 @@ function LessonDetailPage({ lesson, onBack, onSaveTask, onGoToNextLesson }) {
 
       {/* Lesson Header */}
       <div className="bg-white dark:bg-stone-800 rounded-lg shadow-md p-6 mb-6">
-        <div className="flex items-start justify-between gap-4 mb-4">
-          <div className="flex items-start gap-4">
-            {/* Icon removed */}
-            <div>
-              <div className="text-sm text-stone-500 dark:text-stone-400 mb-1">{categoryTitle}</div>
-              <h1 className="text-2xl font-bold text-stone-800 dark:text-stone-100">{translatedLesson.title}</h1>
-            </div>
-          </div>
-          
-          {/* Complete Button */}
-          <button
-            onClick={toggleComplete}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all ${
-              isComplete
-                ? 'bg-green-500 hover:bg-green-600 text-white'
-                : 'bg-stone-200 dark:bg-stone-700 hover:bg-stone-300 dark:hover:bg-stone-600 text-stone-800 dark:text-stone-100'
-            }`}
-          >
-            <CheckCircle size={20} />
-            {isComplete 
-              ? (language === 'de' ? 'Abgeschlossen' : 'Completed')
-              : (language === 'de' ? 'Als gelesen markieren' : 'Mark as read')
-            }
-          </button>
-        </div>
+        <div className="text-sm text-stone-500 dark:text-stone-400 mb-1">{categoryTitle}</div>
+        <h1 className="text-2xl font-bold text-stone-800 dark:text-stone-100">{translatedLesson.title}</h1>
       </div>
 
       {/* Lesson Content */}
@@ -110,9 +92,27 @@ function LessonDetailPage({ lesson, onBack, onSaveTask, onGoToNextLesson }) {
       {/* Quiz Section */}
       {translatedLesson.quiz && <Quiz questions={translatedLesson.quiz} />}
 
+      {/* Mark as Complete Button */}
+      <div className="mt-8">
+        <button
+          onClick={toggleComplete}
+          className={`w-full flex items-center justify-center gap-2 px-6 py-4 rounded-lg font-bold text-lg shadow-md transition-all transform hover:scale-[1.02] ${
+            isComplete
+              ? 'bg-green-500 hover:bg-green-600 text-white'
+              : 'bg-stone-200 dark:bg-stone-700 hover:bg-stone-300 dark:hover:bg-stone-600 text-stone-800 dark:text-stone-100'
+          }`}
+        >
+          <CheckCircle size={24} />
+          {isComplete 
+            ? (language === 'de' ? '✓ Lektion abgeschlossen' : '✓ Lesson completed')
+            : (language === 'de' ? 'Als gelesen markieren' : 'Mark as read')
+          }
+        </button>
+      </div>
+
       {/* Go to Next Lesson Button */}
       {onGoToNextLesson && (
-        <div className="mt-8 text-center">
+        <div className="mt-4 text-center">
           <button
             onClick={onGoToNextLesson}
             className="w-full md:w-auto bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-lg shadow-md transition-all transform hover:scale-105 flex items-center justify-center gap-2"
