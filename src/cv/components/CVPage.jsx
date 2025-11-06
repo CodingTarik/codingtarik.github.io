@@ -200,7 +200,7 @@ export default function CVPage() {
               <img 
                 src="/src/cv/pictures/cv_profile_picture.jpeg" 
                 alt="Tarik Azzouzi" 
-                className="w-32 h-32 print:w-32 print:h-40 rounded-full print:rounded-lg object-cover border-4 border-blue-500 print:border-0 shadow-lg print:shadow-xl"
+                className="w-32 h-32 print:w-48 print:h-56 rounded-full print:rounded-lg object-cover border-4 border-blue-500 print:border-0 shadow-lg print:shadow-xl"
                 style={{ objectPosition: '50% 35%' }}
               />
             </div>
@@ -230,25 +230,33 @@ export default function CVPage() {
                   {printData.address && (
                     <div className="flex items-center gap-1.5">
                       <MapPin size={12} className="flex-shrink-0" />
-                      <span className="truncate">{printData.address}</span>
+                      <span className="truncate">
+                        <span className="font-medium">{language === 'en' ? 'Address:' : 'Adresse:'}</span> {printData.address}
+                      </span>
                     </div>
                   )}
                   {printData.birthdate && (
                     <div className="flex items-center gap-1.5">
                       <Calendar size={12} className="flex-shrink-0" />
-                      <span>{printData.birthdate}</span>
+                      <span>
+                        <span className="font-medium">{language === 'en' ? 'Born:' : 'Geb.:'}</span> {printData.birthdate}
+                      </span>
                     </div>
                   )}
                   {printData.birthplace && (
                     <div className="flex items-center gap-1.5">
                       <MapPin size={12} className="flex-shrink-0" />
-                      <span className="truncate">{language === 'en' ? 'Born:' : 'Geb.:'} {printData.birthplace}</span>
+                      <span className="truncate">
+                        <span className="font-medium">{language === 'en' ? 'Birthplace:' : 'Geburtsort:'}</span> {printData.birthplace}
+                      </span>
                     </div>
                   )}
                   {printData.nationality && (
                     <div className="flex items-center gap-1.5">
                       <Globe size={12} className="flex-shrink-0" />
-                      <span>{printData.nationality}</span>
+                      <span>
+                        <span className="font-medium">{language === 'en' ? 'Nationality:' : 'Staatsangehörigkeit:'}</span> {printData.nationality}
+                      </span>
                     </div>
                   )}
                 </div>
@@ -276,10 +284,11 @@ export default function CVPage() {
                 </div>
                 <div className="flex items-center gap-1.5">
                   <svg className="w-[14px] h-[14px] print:w-[12px] print:h-[12px] flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M11.996 0C5.372 0 0 5.372 0 12s5.372 12 11.996 12C18.628 24 24 18.628 24 12S18.628 0 11.996 0zm6.056 17.544c-.214.276-.492.416-.834.416-.12 0-.24-.024-.36-.072l-4.8-2.4c-.24-.12-.408-.336-.408-.6V7.2c0-.432.336-.768.768-.768s.768.336.768.768v6.96l4.416 2.208c.384.192.528.648.336 1.032z"/>
+                    <path d="M11.996 0a1.119 1.119 0 0 0-.057.002a1.09 1.09 0 0 0-.31.057L1.111 5.095A1.119 1.119 0 0 0 .5 6.125v11.75a1.119 1.119 0 0 0 .611 1.03l10.518 5.036c.05.022.102.04.155.054a1.119 1.119 0 0 0 .432 0a1.118 1.118 0 0 0 .155-.054l10.518-5.035a1.119 1.119 0 0 0 .611-1.03V6.125a1.119 1.119 0 0 0-.611-1.03L12.371.059A1.118 1.118 0 0 0 11.996 0zm.002 2.366L19.623 6.5l-2.89 1.386-7.625-3.634zM5.117 5.252l7.625 3.634v7.864l-7.625-3.652zm10.266 0v7.846l-1.14.546V8.138zM2.875 7.25v9.5l6.238 2.986v-9.5zm18.75 0l-6.238 2.986v5.014l2.39-1.145a1.119 1.119 0 0 0 .611-1.03V11.5a1.119 1.119 0 0 0-2.238 0v.75l-.763.365V8.138l6.238-2.986z"/>
                   </svg>
                   <a href="https://app.hackthebox.com/profile/477139" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 print:text-blue-100 transition-colors truncate">
-                    hackthebox.com/477139
+                    <span className="print:hidden">hackthebox.com/477139</span>
+                    <span className="hidden print:inline">HTB: 477139</span>
                   </a>
                 </div>
               </div>
@@ -990,8 +999,8 @@ export default function CVPage() {
           
           /* Professional profile picture - compact rectangular without border */
           .cv-print-container .cv-header img {
-            width: 100px !important;
-            height: 130px !important;
+            width: 135px !important;
+            height: 175px !important;
             border-radius: 0.5rem !important;
             border: none !important;
             box-shadow: 0 8px 16px rgba(0,0,0,0.25) !important;
