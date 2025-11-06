@@ -187,40 +187,40 @@ export default function CVPage() {
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="cv-header bg-white dark:bg-slate-800 rounded-xl print:rounded-none shadow-lg print:shadow-none p-8 mb-6 print:mb-2"
+          className="cv-header bg-white dark:bg-slate-800 rounded-xl print:rounded-none shadow-lg print:shadow-none p-8 mb-6 print:mb-2 print:p-4"
         >
-          <div className="flex flex-col md:flex-row gap-6 items-start">
+          <div className="flex flex-row gap-6 items-center">
             {/* Profile Picture */}
             <div className="flex-shrink-0">
               <img 
                 src="/src/cv/pictures/cv_profile_picture.jpeg" 
                 alt="Tarik Azzouzi" 
-                className="w-32 h-32 rounded-full object-cover border-4 border-blue-500 shadow-lg"
+                className="w-32 h-32 print:w-24 print:h-24 rounded-full object-cover border-4 border-blue-500 shadow-lg"
               />
             </div>
 
             {/* Header Info */}
             <div className="flex-1">
-              <h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-2">
+              <h1 className="text-4xl md:text-5xl print:text-3xl font-bold text-slate-900 dark:text-white mb-2 print:mb-1">
                 Tarik Azzouzi
               </h1>
-              <p className="text-xl text-slate-600 dark:text-slate-300 mb-4">
+              <p className="text-xl print:text-lg text-slate-600 dark:text-slate-300 mb-4 print:mb-2">
                 {language === 'en' ? 'Full-Stack Developer & AI Engineer' : 'Full-Stack Entwickler & KI-Ingenieur'}
               </p>
               
-              <div className="flex flex-wrap gap-4 text-sm text-slate-600 dark:text-slate-400">
-                <div className="flex items-center gap-2">
-                  <Mail size={16} />
+              <div className="flex flex-wrap gap-4 print:gap-2 text-sm print:text-xs text-slate-600 dark:text-slate-400">
+                <div className="flex items-center gap-2 print:gap-1">
+                  <Mail size={16} className="print:hidden" />
                   <a href="mailto:BlogCodingTarik@web.de" className="hover:text-blue-500">
                     BlogCodingTarik@web.de
                   </a>
                 </div>
-                <div className="flex items-center gap-2">
-                  <MapPin size={16} />
+                <div className="flex items-center gap-2 print:gap-1">
+                  <MapPin size={16} className="print:hidden" />
                   <span>Darmstadt, Germany</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Globe size={16} />
+                <div className="flex items-center gap-2 print:gap-1">
+                  <Globe size={16} className="print:hidden" />
                   <a href="https://codingtarik.github.io" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500">
                     codingtarik.github.io
                   </a>
@@ -230,49 +230,22 @@ export default function CVPage() {
           </div>
         </motion.div>
 
+        {/* Professional Summary - Only for Print */}
+        <div className="hidden print:block">
+          <Section title={language === 'en' ? 'Professional Summary' : 'Professionelle Zusammenfassung'} icon={<Briefcase />}>
+            <p className="text-sm leading-tight">
+              {language === 'en' 
+                ? 'Full-Stack Developer & AI Engineer specializing in RAG platforms, AI agents, and secure implementations. Master\'s student at TU Darmstadt. Active TUD.dll Hacking Team member.'
+                : 'Full-Stack Entwickler & KI-Ingenieur mit Spezialisierung auf RAG-Plattformen, KI-Agenten und sichere Implementierungen. Masterstudent an der TU Darmstadt. Aktives TUD.dll Hacking Team Mitglied.'}
+            </p>
+          </Section>
+        </div>
+
         {/* Two Column Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 print:gap-2 print-two-column">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 print:gap-2 print:grid-cols-1">
           {/* Left Column */}
-          <div className="lg:col-span-2 space-y-6 print:space-y-2">
-            {/* Key Achievements */}
-            <Section title={t.achievements} icon={<Award />}>
-              <Achievement
-                title={language === 'en' ? 'Design and Implementation of a Modular Plugin Framework for RAG using Model Context Protocol' : 'Design und Implementierung eines modularen Plugin-Frameworks für RAG mit Model Context Protocol'}
-                period="2025"
-                subtitle={language === 'en' ? 'Master Thesis (ongoing)' : 'Masterarbeit (laufend)'}
-                description={language === 'en' 
-                  ? 'Developing a robust and extensible ecosystem for RAG systems with dual-layer extensibility and multi-level plugin configuration. Expected submission: November 3, 2025.'
-                  : 'Entwicklung eines robusten und erweiterbaren Ökosystems für RAG-Systeme mit zweischichtiger Erweiterbarkeit und mehrstufiger Plugin-Konfiguration. Erwartete Abgabe: 3. November 2025.'}
-              />
-              
-              <Achievement
-                title={language === 'en' ? 'Secure Hybrid RAG Applications in Enterprises' : 'Sichere Hybrid-RAG-Anwendungen in Unternehmen'}
-                period="2024"
-                subtitle={language === 'en' ? 'Bachelor Thesis - Grade: 1.0' : 'Bachelorarbeit - Note: 1.0'}
-                description={language === 'en'
-                  ? 'Analyzed security vulnerabilities in RAG systems and developed practical solutions for secure and scalable enterprise implementations.'
-                  : 'Analyse von Sicherheitslücken in RAG-Systemen und Entwicklung praktischer Lösungen für sichere und skalierbare Unternehmensimplementierungen.'}
-              />
-
-              <Achievement
-                title={language === 'en' ? 'Animal Manager for Tikki Hywood Foundation' : 'Tierverwaltungssystem für Tikki Hywood Foundation'}
-                period="2022 - 2023"
-                subtitle={language === 'en' ? 'Volunteer Developer' : 'Ehrenamtlicher Entwickler'}
-                description={language === 'en'
-                  ? 'Built a custom animal management system for pangolin conservation with centralized data synchronization across multiple devices.'
-                  : 'Entwicklung eines maßgeschneiderten Tierverwaltungssystems für Schuppentierschutz mit zentralisierter Datensynchronisation über mehrere Geräte.'}
-              />
-
-              <Achievement
-                title="TUD.dll Hacking Team Member"
-                period="2021 - 2025"
-                description={language === 'en'
-                  ? 'Active member of TU Darmstadt\'s competitive cybersecurity team, participating in numerous CTF competitions across various security domains.'
-                  : 'Aktives Mitglied des Cybersecurity-Wettbewerbsteams der TU Darmstadt, Teilnahme an zahlreichen CTF-Wettbewerben in verschiedenen Sicherheitsbereichen.'}
-              />
-            </Section>
-
-            {/* Professional Experience */}
+          <div className="lg:col-span-2 space-y-6 print:space-y-2 print:order-1">
+            {/* Professional Experience - Print Order 1 */}
             <Section title={t.experience} icon={<Briefcase />}>
               <Experience
                 title="Full-Stack Developer"
@@ -303,84 +276,125 @@ export default function CVPage() {
                   ? 'Authored educational programming articles and tutorials for German-speaking beginners, translating complex technical concepts into accessible content.'
                   : 'Verfasste Bildungsartikel und Tutorials zum Programmieren für deutschsprachige Anfänger, übersetzte komplexe technische Konzepte in zugängliche Inhalte.'}
               />
+
+              <Experience
+                title={language === 'en' ? 'Internship - IT Department' : 'Praktikum - IT-Abteilung'}
+                company="DoIT Solutions GmbH, Gelnhausen"
+                period="2017"
+                description={language === 'en'
+                  ? 'Completed four-day immersive program focused on career and study orientation. Gained foundational insights into enterprise IT operations and software development lifecycle.'
+                  : 'Abschluss eines viertägigen Programms zur Berufs- und Studienorientierung. Grundlegende Einblicke in IT-Betrieb und Software-Entwicklungszyklus.'}
+                skills={['Active Directory', 'Windows Server', 'PowerShell']}
+              />
             </Section>
 
-            {/* Education */}
+            {/* Education - Print Order 2 */}
             <Section title={t.education} icon={<GraduationCap />}>
               <Education
-                degree="Master of Science in Computer Science"
-                institution="Technical University of Darmstadt (TU Darmstadt)"
-                period={`2025 - ${language === 'en' ? 'Sept 2026 (expected)' : 'Sept 2026 (voraussichtlich)'}`}
+                degree="M.Sc. Computer Science"
+                institution="TU Darmstadt"
+                period={`2025 - ${language === 'en' ? 'Sept 2026' : 'Sept 2026'}`}
                 description={language === 'en'
-                  ? 'Focus on software engineering, artificial intelligence, and cybersecurity. Master Thesis on modular plugin frameworks for RAG systems. Full-time availability for internships from next semester due to approved credit transfers.'
-                  : 'Schwerpunkt auf Software Engineering, künstliche Intelligenz und Cybersecurity. Masterarbeit über modulare Plugin-Frameworks für RAG-Systeme. Vollzeit-Verfügbarkeit für Praktika ab nächstem Semester durch anerkannte Leistungen.'}
+                  ? 'Focus: Software Engineering, AI, Cybersecurity. Thesis: Modular Plugin Frameworks for RAG.'
+                  : 'Schwerpunkt: Software Engineering, KI, Cybersecurity. Thesis: Modulare Plugin-Frameworks für RAG.'}
               />
 
               <Education
-                degree={language === 'en' ? 'Erasmus+ Exchange Student' : 'Erasmus+ Austauschstudent'}
-                institution="University of Latvia, Riga, Latvia"
+                degree={language === 'en' ? 'Erasmus+ Exchange' : 'Erasmus+ Austausch'}
+                institution="University of Latvia"
                 period="Sept 2025 - Jan 2026"
-                description={language === 'en' ? 'International exchange semester focusing on advanced computer science topics.' : 'Internationales Austauschsemester mit Fokus auf fortgeschrittene Informatikthemen.'}
               />
 
               <Education
-                degree="Bachelor of Science in Computer Science"
-                institution="Technical University of Darmstadt (TU Darmstadt)"
-                period="2021 - 2025"
-                grade={language === 'en' ? 'Overall Grade: 1.3 (excellent)' : 'Gesamtnote: 1.3 (sehr gut)'}
+                degree={language === 'en' ? 'Open University Student' : 'Gaststudent'}
+                institution={language === 'en' ? 'University of Helsinki & Metropolia, Finland' : 'Universität Helsinki & Metropolia, Finnland'}
+                period="Jan 2024 - Oct 2025"
                 description={language === 'en'
-                  ? 'Bachelor Thesis: "Secure Hybrid RAG Applications in Enterprises" - Grade: 1.0. Member of TUD.dll Hacking Team.'
-                  : 'Bachelorarbeit: "Sichere Hybrid-RAG-Anwendungen in Unternehmen" - Note: 1.0. Mitglied des TUD.dll Hacking Teams.'}
+                  ? 'Completed advanced CS courses: software engineering, system engineering, web development.'
+                  : 'Abschluss fortgeschrittener Informatik-Kurse: Software Engineering, System Engineering, Webentwicklung.'}
               />
 
               <Education
-                degree="Abitur (High School Diploma)"
+                degree="B.Sc. Computer Science"
+                institution="TU Darmstadt"
+                period="2021 - 2025"
+                grade={language === 'en' ? 'Grade: 1.3' : 'Note: 1.3'}
+                description={language === 'en'
+                  ? 'Thesis: "Secure Hybrid RAG Applications" - Grade: 1.0'
+                  : 'Thesis: "Sichere Hybrid-RAG-Anwendungen" - Note: 1.0'}
+              />
+
+              <Education
+                degree="Abitur"
                 institution="Berufliches Gymnasium Gelnhausen"
                 period="2018 - 2021"
-                grade={language === 'en' ? 'Final Grade: 1.0 (excellent)' : 'Abschlussnote: 1.0 (sehr gut)'}
-                description={language === 'en' ? 'Focus: Practical Computer Science' : 'Schwerpunkt: Praktische Informatik'}
+                grade={language === 'en' ? 'Grade: 1.0' : 'Note: 1.0'}
+              />
+
+              <Education
+                degree={language === 'en' ? 'Realschulabschluss (Secondary School Certificate)' : 'Realschulabschluss'}
+                institution="Kreisrealschule Gelnhausen"
+                period="2012 - 2018"
+                grade={language === 'en' ? 'Grade: 1.1' : 'Note: 1.1'}
+              />
+            </Section>
+
+            {/* Key Achievements - Print Order 3 */}
+            <Section title={t.achievements} icon={<Award />} className="print:order-3">
+              <Achievement
+                title={language === 'en' ? 'Modular Plugin Framework for RAG' : 'Modulares Plugin-Framework für RAG'}
+                period="2025"
+                subtitle={language === 'en' ? 'Master Thesis' : 'Masterarbeit'}
+                description={language === 'en' 
+                  ? 'Developing extensible ecosystem for RAG systems with dual-layer extensibility and multi-level configuration.'
+                  : 'Entwicklung eines erweiterbaren Ökosystems für RAG-Systeme mit zweischichtiger Erweiterbarkeit.'}
+              />
+              
+              <Achievement
+                title={language === 'en' ? 'Secure Hybrid RAG Applications' : 'Sichere Hybrid-RAG-Anwendungen'}
+                period="2024"
+                subtitle={language === 'en' ? 'Bachelor Thesis - Grade: 1.0' : 'Bachelorarbeit - Note: 1.0'}
+                description={language === 'en'
+                  ? 'Analyzed security vulnerabilities in RAG systems and developed practical solutions for enterprise implementations.'
+                  : 'Analyse von Sicherheitslücken in RAG-Systemen und Entwicklung praktischer Lösungen.'}
+              />
+
+              <Achievement
+                title={language === 'en' ? 'Animal Manager - Tikki Hywood Foundation' : 'Tierverwaltung - Tikki Hywood Foundation'}
+                period="2022 - 2023"
+                subtitle={language === 'en' ? 'Volunteer Developer' : 'Ehrenamtlicher Entwickler'}
+                description={language === 'en'
+                  ? 'Built custom animal management system for pangolin conservation with centralized data synchronization.'
+                  : 'Entwicklung eines Tierverwaltungssystems für Schuppentierschutz mit zentralisierter Datensynchronisation.'}
+              />
+
+              <Achievement
+                title="TUD.dll Hacking Team"
+                period="2021 - 2025"
+                description={language === 'en'
+                  ? 'Active member of TU Darmstadt\'s cybersecurity team, participating in CTF competitions.'
+                  : 'Aktives Mitglied des Cybersecurity-Teams der TU Darmstadt, Teilnahme an CTF-Wettbewerben.'}
               />
             </Section>
           </div>
 
           {/* Right Column */}
-          <div className="space-y-6 print:space-y-2">
-            {/* Languages */}
-            <Section title={t.languages} icon={<Languages />} compact>
-              <LanguageSkill language={language === 'en' ? 'German' : 'Deutsch'} level={t.native} />
-              <LanguageSkill language={language === 'en' ? 'English' : 'Englisch'} level={`${t.fluent} (C1)`} />
-            </Section>
-
-            {/* Technical Skills */}
-            <Section title={t.skills} icon={<Code />} compact>
-              <SkillCategory 
-                title={language === 'en' ? 'Programming' : 'Programmierung'} 
-                skills={['C#', 'Python', 'JavaScript', 'TypeScript', 'Java']} 
-              />
-              <SkillCategory 
-                title="Frameworks" 
-                skills={['Vue.js', 'React', 'Node.js', 'Express', 'LangChain']} 
-              />
-              <SkillCategory 
-                title={language === 'en' ? 'AI & Data' : 'KI & Daten'} 
-                skills={['RAG Systems', 'scikit-learn', 'LLMs', 'AI Agents']} 
-              />
-              <SkillCategory 
-                title="DevOps & Cloud" 
-                skills={['Docker', 'GCP', 'Git', 'Linux', 'Bash']} 
-              />
-              <SkillCategory 
-                title="Cybersecurity" 
-                skills={['Kali Linux', 'Metasploit', 'Burp Suite', 'Snort', 'Wireshark', 'OWASP']} 
-              />
-            </Section>
-
-            {/* Certificates */}
-            <Section title={t.certificates} icon={<Award />} compact>
+          <div className="space-y-6 print:space-y-2 print:order-2">
+            {/* Certificates - Print Order 4 */}
+            <Section title={t.certificates} icon={<Award />} compact className="print:order-4">
               <Certificate
                 title="Deutschlandstipendium"
                 issuer={language === 'en' ? 'Germany Scholarship - Twice Awarded' : 'Deutschland-Stipendium - 2x vergeben'}
                 year="2021, 2023"
+              />
+
+              <Certificate
+                title={language === 'en' ? 'Digital School Transformation Achievement' : 'Digitale Schultransformation Auszeichnung'}
+                issuer={language === 'en' ? 'Berufliche Schulen Gelnhausen' : 'Berufliche Schulen Gelnhausen'}
+                year="2019"
+                description={language === 'en'
+                  ? 'Special recognition for exceptional contribution to installation of new computer systems as part of Germany\'s Digital Pact initiative.'
+                  : 'Besondere Anerkennung für außergewöhnlichen Beitrag zur Installation neuer Computersysteme im Rahmen des DigitalPakts.'}
               />
               
               <Certificate
@@ -419,8 +433,38 @@ export default function CVPage() {
               )}
             </Section>
 
-            {/* Hobbies */}
-            <Section title={t.hobbies} icon={<Heart />} compact>
+            {/* Technical Skills - Print Order 5 */}
+            <Section title={t.skills} icon={<Code />} compact className="print:order-5">
+              <SkillCategory 
+                title={language === 'en' ? 'Programming' : 'Programmierung'} 
+                skills={['C#', 'Python', 'JavaScript', 'TypeScript', 'Java']} 
+              />
+              <SkillCategory 
+                title="Frameworks" 
+                skills={['Vue.js', 'React', 'Node.js', 'Express', 'LangChain']} 
+              />
+              <SkillCategory 
+                title={language === 'en' ? 'AI & Data' : 'KI & Daten'} 
+                skills={['RAG Systems', 'scikit-learn', 'LLMs', 'AI Agents']} 
+              />
+              <SkillCategory 
+                title="DevOps & Cloud" 
+                skills={['Docker', 'GCP', 'Git', 'Linux', 'Bash']} 
+              />
+              <SkillCategory 
+                title="Cybersecurity" 
+                skills={['Kali Linux', 'Metasploit', 'Burp Suite', 'Snort', 'Wireshark', 'OWASP']} 
+              />
+            </Section>
+
+            {/* Languages - Print Order 6 */}
+            <Section title={t.languages} icon={<Languages />} compact className="print:order-6">
+              <LanguageSkill language={language === 'en' ? 'German' : 'Deutsch'} level={t.native} />
+              <LanguageSkill language={language === 'en' ? 'English' : 'Englisch'} level={`${t.fluent} (C1)`} />
+            </Section>
+
+            {/* Hobbies - Print Order 7 */}
+            <Section title={t.hobbies} icon={<Heart />} compact className="print:order-7">
               <Hobby icon="🎹" title={language === 'en' ? 'Piano' : 'Klavier'} subtitle={language === 'en' ? 'Music' : 'Musik'} />
               <Hobby icon="🤾" title="Handball" subtitle={language === 'en' ? 'Sports' : 'Sport'} />
               <Hobby icon="💻" title={language === 'en' ? 'Programming' : 'Programmieren'} subtitle={language === 'en' ? 'Passion' : 'Leidenschaft'} />
@@ -589,7 +633,7 @@ export default function CVPage() {
       {/* Print Styles */}
       <style>{`
         @media print {
-          /* Page Setup - minimal margins */
+          /* Page Setup - no margins */
           @page {
             size: A4;
             margin: 0;
@@ -612,37 +656,164 @@ export default function CVPage() {
             display: none !important;
           }
 
-          /* Reset body */
-          html, body {
+          /* Reset body - ensure background extends to all pages */
+          html {
+            margin: 0 !important;
+            padding: 0 !important;
+            height: 100% !important;
+          }
+          
+          body {
             margin: 0 !important;
             padding: 0 !important;
             width: 100% !important;
-            height: auto !important;
-            overflow: visible !important;
+            height: 100% !important;
+          }
+          
+          /* Main container background */
+          body > div {
+            background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 50%, #f8fafc 100%) !important;
+            min-height: 100vh !important;
           }
 
           /* CV Container - keep all styles */
           .cv-print-container {
             max-width: 100% !important;
             margin: 0 !important;
-            padding: 0 !important;
+            padding: 0.5rem 1rem !important;
+            background: transparent !important;
           }
 
-          /* Keep all backgrounds, shadows, and rounded corners */
-          .cv-print-container * {
-            /* Don't override anything - keep web styles */
-          }
-
-          /* Ensure page breaks work */
+          /* Allow sections to break across pages, but keep header with first item */
           section {
+            page-break-inside: auto;
+            break-inside: auto;
+          }
+          
+          /* Keep section header with at least first item */
+          section > h2 {
+            page-break-after: avoid;
+            break-after: avoid;
+          }
+          
+          /* Prevent individual items from breaking */
+          .cv-print-container section > div > div {
             page-break-inside: avoid;
             break-inside: avoid;
           }
 
-          /* Keep grid layout */
-          .print-two-column {
-            display: grid !important;
-            grid-template-columns: 2fr 1fr !important;
+          /* Single column layout for print */
+          .print\\:grid-cols-1 {
+            grid-template-columns: 1fr !important;
+          }
+          
+          /* Order sections for print */
+          .print\\:order-1 {
+            order: 1 !important;
+          }
+          
+          .print\\:order-2 {
+            order: 2 !important;
+          }
+          
+          /* Very compact spacing for print */
+          .cv-print-container .space-y-6 > * + * {
+            margin-top: 0.4rem !important;
+          }
+          
+          .cv-print-container .space-y-4 > * + * {
+            margin-top: 0.3rem !important;
+          }
+          
+          .cv-print-container .space-y-3 > * + * {
+            margin-top: 0.25rem !important;
+          }
+          
+          .cv-print-container .space-y-2 > * + * {
+            margin-top: 0.2rem !important;
+          }
+          
+          /* Reduce section padding significantly */
+          .cv-print-container section {
+            padding: 0.6rem !important;
+            margin-bottom: 0.4rem !important;
+            border-radius: 0.5rem !important;
+          }
+          
+          /* Compact header */
+          .cv-print-container .cv-header {
+            padding: 0.75rem !important;
+            margin-bottom: 0.4rem !important;
+            border-radius: 0.5rem !important;
+          }
+          
+          /* Compact text sizes */
+          .cv-print-container h1 {
+            font-size: 1.75rem !important;
+            margin-bottom: 0.25rem !important;
+          }
+          
+          .cv-print-container h2 {
+            font-size: 1.1rem !important;
+            margin-bottom: 0.3rem !important;
+          }
+          
+          .cv-print-container h3 {
+            font-size: 0.9rem !important;
+            margin-bottom: 0.15rem !important;
+          }
+          
+          .cv-print-container h4 {
+            font-size: 0.8rem !important;
+          }
+          
+          .cv-print-container p,
+          .cv-print-container span,
+          .cv-print-container div {
+            font-size: 0.8rem !important;
+            line-height: 1.3 !important;
+          }
+          
+          /* Very compact skill tags */
+          .cv-print-container [class*="px-2"] {
+            padding-left: 0.3rem !important;
+            padding-right: 0.3rem !important;
+          }
+          
+          .cv-print-container [class*="py-1"] {
+            padding-top: 0.15rem !important;
+            padding-bottom: 0.15rem !important;
+          }
+          
+          /* Compact borders with rounded corners */
+          .cv-print-container [class*="border-l-4"],
+          .cv-print-container [class*="border-blue"],
+          .cv-print-container [class*="border-green"],
+          .cv-print-container [class*="border-purple"] {
+            padding: 0.4rem 0.5rem !important;
+            margin-bottom: 0.3rem !important;
+            border-radius: 0.375rem !important;
+          }
+          
+          /* Compact profile picture */
+          .cv-print-container .cv-header img {
+            width: 90px !important;
+            height: 90px !important;
+          }
+          
+          /* Reduce gap in grid */
+          .cv-print-container .print\\:gap-2 {
+            gap: 0.3rem !important;
+          }
+          
+          /* Compact hobby items */
+          .cv-print-container [class*="flex items-center gap"] {
+            gap: 0.4rem !important;
+          }
+          
+          /* Smaller icons/emojis */
+          .cv-print-container .text-2xl {
+            font-size: 1rem !important;
           }
         }
       `}</style>
@@ -651,9 +822,9 @@ export default function CVPage() {
 }
 
 // Helper Components
-function Section({ title, icon, children, compact = false }) {
+function Section({ title, icon, children, compact = false, className = '' }) {
   return (
-    <section className={`page-break-avoid bg-white dark:bg-slate-800 rounded-xl print:rounded-none shadow-lg print:shadow-none p-6 print:p-2 ${compact ? 'compact-section' : ''}`}>
+    <section className={`page-break-avoid bg-white dark:bg-slate-800 rounded-xl print:rounded-none shadow-lg print:shadow-none p-6 print:p-2 ${compact ? 'compact-section' : ''} ${className}`}>
       <h2 className="text-2xl print:text-base font-bold text-slate-900 dark:text-white mb-4 print:mb-1 flex items-center gap-2">
         <span className="text-blue-500 print:hidden">{icon}</span>
         {title}
