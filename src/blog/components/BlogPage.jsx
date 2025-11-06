@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Search, Menu, X, Tag, Filter } from 'lucide-react';
-import PostCard from './PostCard';
+import { Search, Menu, X, Tag, Filter, Sparkles } from 'lucide-react';
+import { motion } from 'framer-motion';
+import AnimatedPostCard from './AnimatedPostCard';
 import BlogSidebar from './BlogSidebar';
 import CategoriesPage from './CategoriesPage';
 import ProjectsPage from './ProjectsPage';
@@ -123,17 +124,48 @@ export default function BlogPage({ onPostClick, onBackToLearnBuddy }) {
         </button>
 
         <div className="max-w-4xl mx-auto">
+          {/* Hero Section */}
+          {selectedTab === 'posts' && !searchQuery && !selectedCategory && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="mb-12 text-center"
+            >
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-full mb-6"
+              >
+                <Sparkles size={16} className="text-primary" />
+                <span className="text-sm font-medium text-primary">Welcome to my Blog</span>
+              </motion.div>
+              <h1 className="text-4xl md:text-6xl font-extrabold mb-4 bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">
+                Thoughts & Code
+              </h1>
+              <p className="text-lg text-muted max-w-2xl mx-auto">
+                Exploring software development, cybersecurity, and everything in between
+              </p>
+            </motion.div>
+          )}
+          
           {/* Search Bar and Category Filter */}
           {selectedTab === 'posts' && (
             <div className="mb-6">
               {/* Search Bar */}
-              <div className="mb-4">
+              <motion.div 
+                className="mb-4"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3 }}
+              >
                 <SearchBar
                   onSearch={(query) => {
                     window.location.hash = `#/blog/search?q=${encodeURIComponent(query)}`;
                   }}
                 />
-              </div>
+              </motion.div>
 
               {/* Category Filter Section */}
               <div className="flex flex-wrap items-center gap-2 mb-4">
@@ -187,15 +219,21 @@ export default function BlogPage({ onPostClick, onBackToLearnBuddy }) {
           {selectedTab === 'posts' && (
             <>
               {filteredPosts.length > 0 ? (
-                <div className="grid grid-cols-1 gap-6">
-                  {filteredPosts.map(post => (
-                    <PostCard
+                <motion.div 
+                  className="grid grid-cols-1 gap-6"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  {filteredPosts.map((post, index) => (
+                    <AnimatedPostCard
                       key={post.id}
                       post={post}
                       onClick={() => onPostClick(post.id)}
+                      index={index}
                     />
                   ))}
-                </div>
+                </motion.div>
               ) : (
                 <div className="bg-card rounded-lg border border-border p-12 text-center">
                   <Filter size={48} className="mx-auto mb-4 text-muted" />

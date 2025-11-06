@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react';
 import Markdown from 'markdown-to-jsx';
+import { motion } from 'framer-motion';
 import { Calendar, Clock, Tag, ArrowLeft, Share2 } from 'lucide-react';
 import { formatDate, calculateReadingTime } from '../utils/blogUtils';
 import { generateBlogPostStructuredData, injectStructuredData } from '../utils/seoUtils';
+import ReadingProgress from './ReadingProgress';
+import ViewCounter from './ViewCounter';
 
 export default function PostDetail({ post, onBack, onPostClick }) {
   const readingTime = calculateReadingTime(post.content);
@@ -106,36 +109,55 @@ export default function PostDetail({ post, onBack, onPostClick }) {
 
   return (
       <article className="w-full">
+        {/* Reading Progress Bar */}
+        <ReadingProgress />
+        
         {/* Back Button */}
-        <button
+        <motion.button
           onClick={onBack}
           className="flex items-center gap-2 text-muted hover:text-primary mb-6 transition-colors font-medium"
+          whileHover={{ x: -5 }}
+          transition={{ type: "spring", stiffness: 300 }}
         >
           <ArrowLeft size={20} />
           <span>Back to overview</span>
-        </button>
+        </motion.button>
 
         {/* Post Header */}
-        <header className="mb-6 md:mb-8">
+        <motion.header 
+          className="mb-6 md:mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
           {/* Categories */}
           {post.categories && post.categories.length > 0 && (
             <div className="flex flex-wrap gap-2 mb-4">
-              {post.categories.map(category => (
-                <span
+              {post.categories.map((category, index) => (
+                <motion.span
                   key={category}
-                  className="inline-flex items-center gap-1.5 px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-bold"
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: index * 0.1 }}
+                  whileHover={{ scale: 1.1 }}
+                  className="inline-flex items-center gap-1.5 px-3 py-1 bg-gradient-to-r from-primary/10 to-secondary/10 text-primary border border-primary/20 rounded-full text-xs font-bold backdrop-blur-sm"
                 >
                   <Tag size={12} />
                   {category}
-                </span>
+                </motion.span>
               ))}
             </div>
           )}
 
-          {/* Title */}
-          <h1 className="text-3xl md:text-5xl font-extrabold text-text mb-4 tracking-tight">
+          {/* Title with Gradient */}
+          <motion.h1 
+            className="text-3xl md:text-5xl font-extrabold mb-4 tracking-tight bg-gradient-to-r from-text via-primary to-text bg-clip-text text-transparent"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+          >
             {post.title}
-          </h1>
+          </motion.h1>
 
           {/* Description */}
           {post.description && (
@@ -145,30 +167,50 @@ export default function PostDetail({ post, onBack, onPostClick }) {
           )}
 
           {/* Meta Information */}
-          <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted pt-6 border-t border-border">
-            <div className="flex items-center gap-1.5">
-              <Calendar size={14} />
+          <motion.div 
+            className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted pt-6 border-t border-border"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+          >
+            <motion.div 
+              className="flex items-center gap-1.5"
+              whileHover={{ scale: 1.05 }}
+            >
+              <Calendar size={14} className="text-primary" />
               <span>{formatDate(post.date)}</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <Clock size={14} />
+            </motion.div>
+            <motion.div 
+              className="flex items-center gap-1.5"
+              whileHover={{ scale: 1.05 }}
+            >
+              <Clock size={14} className="text-secondary" />
               <span>{readingTime} min read</span>
-            </div>
+            </motion.div>
             {post.author && (
-              <div className="flex items-center gap-1.5">
+              <motion.div 
+                className="flex items-center gap-1.5"
+                whileHover={{ scale: 1.05 }}
+              >
                 <span>by {post.author}</span>
-              </div>
+              </motion.div>
             )}
+            
+            {/* View Counter */}
+            <ViewCounter postId={post.id} />
+            
             <div className="flex-grow"></div>
-            <button 
+            <motion.button 
               onClick={handleShare}
-              className="flex items-center gap-1.5 hover:text-primary transition-colors"
+              className="flex items-center gap-1.5 hover:text-primary transition-colors px-3 py-1.5 rounded-lg hover:bg-primary/10"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
               <Share2 size={14} />
               <span>Share</span>
-            </button>
-          </div>
-        </header>
+            </motion.button>
+          </motion.div>
+        </motion.header>
 
         {/* Thumbnail */}
         {post.thumbnail && (

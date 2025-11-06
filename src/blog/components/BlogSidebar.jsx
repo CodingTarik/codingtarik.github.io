@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Github, Linkedin, FileText, BookOpen, Sun, Moon, User, FolderOpen, Code, Shield, Coffee, Box, Target, X, Rss, Search } from 'lucide-react';
 import { getAllCategories } from '../utils/blogUtils';
 import { useTheme } from '../../learnbuddy/context/ThemeContext';
@@ -78,19 +79,28 @@ export default function BlogSidebar({
   return (
     <>
       {/* Mobile Overlay */}
-      {isOpen && (
-        <div 
-          className="fixed inset-0 bg-black/60 z-40 lg:hidden"
-          onClick={onClose}
-        />
-      )}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
+            onClick={onClose}
+          />
+        )}
+      </AnimatePresence>
 
       {/* Sidebar */}
-      <div className={`
-        fixed left-0 top-0 bottom-0 w-80 bg-background border-r border-border flex flex-col z-50
-        transition-transform duration-300 ease-in-out
-        ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
-      `}>
+      <motion.div 
+        initial={false}
+        animate={{ x: 0 }}
+        className={`
+          fixed left-0 top-0 bottom-0 w-80 bg-background/95 backdrop-blur-xl border-r border-border flex flex-col z-50
+          transition-transform duration-300 ease-in-out
+          ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+        `}
+      >
         {/* Mobile Close Button */}
         <button
           onClick={onClose}
@@ -100,43 +110,95 @@ export default function BlogSidebar({
         </button>
 
         {/* Header - Profile */}
-        <div className="p-6 border-b border-border text-center">
-        {/* Profile Photo Placeholder */}
-        <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-border to-gray-200 dark:to-gray-800 flex items-center justify-center ring-4 ring-background">
-          <User size={40} className="text-muted" />
-        </div>
+        <motion.div 
+          className="p-6 border-b border-border text-center"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+        {/* Profile Photo Placeholder with Gradient Border */}
+        <motion.div 
+          className="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-primary via-secondary to-primary flex items-center justify-center p-1"
+          whileHover={{ scale: 1.05, rotate: 5 }}
+          transition={{ type: "spring", stiffness: 300 }}
+        >
+          <div className="w-full h-full rounded-full bg-background flex items-center justify-center">
+            <User size={40} className="text-primary" />
+          </div>
+        </motion.div>
         
-        <h2 className="text-xl font-bold text-text">Tarik Azzouzi</h2>
-        <a 
+        <motion.h2 
+          className="text-xl font-bold bg-gradient-to-r from-text to-primary bg-clip-text text-transparent"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+        >
+          Tarik Azzouzi
+        </motion.h2>
+        <motion.a 
           href="https://github.com/CodingTarik" 
           target="_blank" 
           rel="noopener noreferrer"
-          className="text-sm text-muted hover:text-primary transition-colors"
+          className="text-sm text-muted hover:text-primary transition-colors inline-block"
+          whileHover={{ scale: 1.05 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
         >
           @CodingTarik
-        </a>
-        </div>
+        </motion.a>
+        </motion.div>
 
       {/* Navigation Tabs */}
       <nav className="border-b border-border">
-        {tabs.map(tab => {
+        {tabs.map((tab, index) => {
           const Icon = tab.icon;
           return (
-            <button
+            <motion.button
               key={tab.id}
               onClick={() => {
                 onTabChange(tab.id);
                 onClose(); // Close mobile sidebar
               }}
-              className={`w-full px-6 py-3 text-left font-medium transition-all flex items-center gap-3 group ${
+              className={`w-full px-6 py-3 text-left font-medium transition-all flex items-center gap-3 group relative overflow-hidden ${
                 selectedTab === tab.id
-                  ? 'bg-border/50 text-primary border-l-4 border-primary'
-                  : 'text-muted hover:bg-border/30 hover:text-text'
+                  ? 'text-primary'
+                  : 'text-muted hover:text-text'
               }`}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.5 + index * 0.05 }}
+              whileHover={{ x: 5 }}
             >
-              {Icon && <Icon size={18} className="group-hover:text-primary transition-colors" />}
-              <span>{tab.label}</span>
-            </button>
+              {/* Active Indicator */}
+              {selectedTab === tab.id && (
+                <motion.div
+                  className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-primary to-secondary"
+                  layoutId="activeTab"
+                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                />
+              )}
+              
+              {/* Hover Background */}
+              <motion.div
+                className="absolute inset-0 bg-primary/5"
+                initial={{ opacity: 0 }}
+                whileHover={{ opacity: 1 }}
+                transition={{ duration: 0.2 }}
+              />
+              
+              <div className="relative z-10 flex items-center gap-3">
+                {Icon && (
+                  <motion.div
+                    whileHover={{ rotate: 10, scale: 1.1 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    <Icon size={18} className="group-hover:text-primary transition-colors" />
+                  </motion.div>
+                )}
+                <span>{tab.label}</span>
+              </div>
+            </motion.button>
           );
         })}
       </nav>
@@ -222,7 +284,7 @@ export default function BlogSidebar({
           })}
         </div>
       </div>
-      </div>
+      </motion.div>
     </>
   );
 }
