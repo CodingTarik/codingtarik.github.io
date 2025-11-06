@@ -61,7 +61,7 @@ export const englishBuddyConfig = {
       id: 'reading',
       name: { en: 'Reading', de: 'Lesen' },
       icon: BookOpen,
-      component: 'ReadingComprehension'
+      component: 'ReadingLibrary'
     }
   ]
 };

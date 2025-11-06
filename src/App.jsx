@@ -24,6 +24,7 @@ import WorkoutExecutor from './buddies/boulder/components/WorkoutExecutor';
 
 // English-specific components
 import GrammarLevels from './buddies/english/components/GrammarLevels';
+import ReadingLibrary from './buddies/english/components/ReadingLibrary';
 
 function AppContent() {
   const { activeBuddy, currentBuddyConfig, allBuddies, switchBuddy } = useBuddy();
@@ -260,8 +261,8 @@ function AppContent() {
       }
     } else if (activeBuddy === 'english') {
       // English components
-      if (tabId === 'grammar') {
-        return <GrammarLevels />;
+      if (tabId === 'reading') {
+        return <ReadingLibrary />;
       }
       // Other English tabs coming soon
       return (
