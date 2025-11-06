@@ -37,6 +37,8 @@ import TableOfContents from './blog/components/TableOfContents';
 import ScrollToTop from './blog/components/ScrollToTop';
 import SearchPage from './blog/components/SearchPage';
 import SearchBar from './blog/components/SearchBar';
+import CategoriesPage from './blog/components/CategoriesPage';
+import ProjectsPage from './blog/components/ProjectsPage';
 import { getPostById } from './blog/utils/blogUtils';
 
 // CV Component
@@ -143,6 +145,18 @@ function AppContent() {
         
         // Check if viewing search page
         if (hash.startsWith('#/blog/search')) {
+          setCurrentPost(null);
+          return;
+        }
+        
+        // Check if viewing categories page
+        if (hash === '#/blog/categories') {
+          setCurrentPost(null);
+          return;
+        }
+        
+        // Check if viewing projects page
+        if (hash === '#/blog/projects') {
           setCurrentPost(null);
           return;
         }
@@ -396,12 +410,17 @@ function AppContent() {
       // Check for search page
       if (window.location.hash.startsWith('#/blog/search')) {
         return (
-          <div className="min-h-screen bg-stone-50 dark:bg-stone-900 flex">
+          <div className="min-h-screen flex">
             {/* Left Sidebar */}
             <BlogSidebar
               onBackToLearnBuddy={() => handleViewChange('learnbuddy')}
-              selectedTab="posts"
-              onTabChange={() => {}}
+              selectedTab="search"
+              onTabChange={(tab) => {
+                if (tab === 'posts') window.location.hash = '#/blog';
+                else if (tab === 'categories') window.location.hash = '#/blog/categories';
+                else if (tab === 'projects') window.location.hash = '#/blog/projects';
+                else if (tab === 'cv') window.location.hash = '#/cv';
+              }}
               onCategorySelect={() => {}}
               selectedCategory={null}
               isOpen={false}
@@ -416,15 +435,90 @@ function AppContent() {
         );
       }
       
+      // Check for categories page
+      if (window.location.hash === '#/blog/categories') {
+        return (
+          <div className="min-h-screen flex">
+            {/* Left Sidebar */}
+            <BlogSidebar
+              onBackToLearnBuddy={() => handleViewChange('learnbuddy')}
+              selectedTab="categories"
+              onTabChange={(tab) => {
+                if (tab === 'posts') window.location.hash = '#/blog';
+                else if (tab === 'categories') window.location.hash = '#/blog/categories';
+                else if (tab === 'projects') window.location.hash = '#/blog/projects';
+                else if (tab === 'cv') window.location.hash = '#/cv';
+              }}
+              onCategorySelect={(category) => {
+                if (category === null) {
+                  window.location.hash = '#/blog';
+                } else {
+                  window.location.hash = `#/blog?category=${encodeURIComponent(category)}`;
+                }
+              }}
+              selectedCategory={null}
+              isOpen={false}
+              onClose={() => {}}
+            />
+            
+            {/* Categories Page */}
+            <div className="lg:ml-80 flex-1">
+              <CategoriesPage 
+                onCategorySelect={(category) => {
+                  if (category === null) {
+                    window.location.hash = '#/blog';
+                  } else {
+                    window.location.hash = `#/blog?category=${encodeURIComponent(category)}`;
+                  }
+                }}
+              />
+            </div>
+          </div>
+        );
+      }
+      
+      // Check for projects page
+      if (window.location.hash === '#/blog/projects') {
+        return (
+          <div className="min-h-screen flex">
+            {/* Left Sidebar */}
+            <BlogSidebar
+              onBackToLearnBuddy={() => handleViewChange('learnbuddy')}
+              selectedTab="projects"
+              onTabChange={(tab) => {
+                if (tab === 'posts') window.location.hash = '#/blog';
+                else if (tab === 'categories') window.location.hash = '#/blog/categories';
+                else if (tab === 'projects') window.location.hash = '#/blog/projects';
+                else if (tab === 'cv') window.location.hash = '#/cv';
+              }}
+              onCategorySelect={() => {}}
+              selectedCategory={null}
+              isOpen={false}
+              onClose={() => {}}
+            />
+            
+            {/* Projects Page */}
+            <div className="lg:ml-80 flex-1">
+              <ProjectsPage />
+            </div>
+          </div>
+        );
+      }
+      
       if (currentPost) {
         // Blog Post Detail with Sidebar, Search and Recent Posts
         return (
-          <div className="min-h-screen bg-stone-50 dark:bg-stone-900 flex">
+          <div className="min-h-screen flex">
             {/* Left Sidebar */}
             <BlogSidebar
               onBackToLearnBuddy={() => handleViewChange('learnbuddy')}
               selectedTab="posts"
-              onTabChange={() => {}}
+              onTabChange={(tab) => {
+                if (tab === 'posts') window.location.hash = '#/blog';
+                else if (tab === 'categories') window.location.hash = '#/blog/categories';
+                else if (tab === 'projects') window.location.hash = '#/blog/projects';
+                else if (tab === 'cv') window.location.hash = '#/cv';
+              }}
               onCategorySelect={() => {}}
               selectedCategory={null}
               isOpen={false}
