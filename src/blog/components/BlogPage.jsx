@@ -76,9 +76,21 @@ export default function BlogPage({ onPostClick, onBackToLearnBuddy }) {
 
   const handleTabChange = (tabId) => {
     setSelectedTab(tabId);
+    setIsSidebarOpen(false); // Close mobile sidebar
+    
+    // Navigate to appropriate route
     if (tabId === 'posts') {
+      window.location.hash = '#/blog';
       setSelectedCategory(null);
       setSearchQuery('');
+    } else if (tabId === 'search') {
+      window.location.hash = '#/blog/search';
+    } else if (tabId === 'categories') {
+      window.location.hash = '#/blog/categories';
+    } else if (tabId === 'projects') {
+      window.location.hash = '#/blog/projects';
+    } else if (tabId === 'cv') {
+      window.location.hash = '#/cv';
     }
   };
 

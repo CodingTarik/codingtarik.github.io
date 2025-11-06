@@ -56,7 +56,7 @@ export default function SearchPage({ onPostClick }) {
   const categories = getAllCategories();
 
   return (
-    <div className="min-h-screen py-8">
+    <div className="min-h-screen py-8 bg-background">
       <div className="max-w-4xl mx-auto px-4 md:px-8">
         {/* Header */}
         <div className="mb-8 text-center">

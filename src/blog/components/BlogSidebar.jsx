@@ -125,11 +125,8 @@ export default function BlogSidebar({
             <button
               key={tab.id}
               onClick={() => {
-                if (tab.id === 'search') {
-                  window.location.hash = '#/blog/search';
-                } else {
-                  onTabChange(tab.id);
-                }
+                onTabChange(tab.id);
+                onClose(); // Close mobile sidebar
               }}
               className={`w-full px-6 py-3 text-left font-medium transition-all flex items-center gap-3 group ${
                 selectedTab === tab.id
@@ -145,18 +142,18 @@ export default function BlogSidebar({
       </nav>
 
       {/* Main Content Area - Empty, content shows on the right */}
-      <div className="flex-grow overflow-y-auto p-6 scrollbar-thin">
+      <div className="flex-grow overflow-y-auto scrollbar-thin">
         
       </div>
 
       {/* Footer Buttons */}
-      <div className="p-6 border-t border-border space-y-3">
+      <div className="p-4 space-y-2.5">
         {/* Go to LearnBuddy Button */}
         <button
           onClick={onBackToLearnBuddy}
-          className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-lg shadow-md p-3 hover:shadow-lg hover:scale-[1.02] transition-all flex items-center justify-center gap-2 font-semibold"
+          className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-lg shadow-md p-2.5 hover:shadow-lg hover:scale-[1.02] transition-all flex items-center justify-center gap-2 font-semibold text-sm"
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M19 12H5M12 19l-7-7 7-7"/>
           </svg>
           <span>Go to LearnBuddy</span>
@@ -167,9 +164,9 @@ export default function BlogSidebar({
           href="https://www.buymeacoffee.com/tarikazzouzi"
           target="_blank"
           rel="noopener noreferrer"
-          className="w-full bg-amber-500 hover:bg-amber-600 text-white rounded-lg shadow-md p-3 hover:shadow-lg hover:scale-[1.02] transition-all flex items-center justify-center gap-2 font-semibold"
+          className="w-full bg-amber-500 hover:bg-amber-600 text-white rounded-lg shadow-md p-2.5 hover:shadow-lg hover:scale-[1.02] transition-all flex items-center justify-center gap-2 font-semibold text-sm"
         >
-          <Coffee size={18} />
+          <Coffee size={16} />
           <span>Buy Me a Coffee</span>
         </a>
 
@@ -180,36 +177,35 @@ export default function BlogSidebar({
             const blob = new Blob([rssFeed], { type: 'application/rss+xml' });
             const url = URL.createObjectURL(blob);
             window.open(url, '_blank');
-            // Clean up after a delay
             setTimeout(() => URL.revokeObjectURL(url), 100);
           }}
-          className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-orange-100 dark:bg-orange-900/30 hover:bg-orange-200 dark:hover:bg-orange-900/50 transition-all text-sm font-medium text-orange-700 dark:text-orange-300"
+          className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-orange-100 dark:bg-orange-900/30 hover:bg-orange-200 dark:hover:bg-orange-900/50 transition-all text-xs font-medium text-orange-700 dark:text-orange-300"
         >
-          <Rss size={16} />
+          <Rss size={14} />
           <span>RSS Feed</span>
         </button>
 
         {/* Theme Toggle */}
         <button
           onClick={toggleTheme}
-          className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-border/50 hover:bg-border transition-all text-sm font-medium text-text"
+          className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-border/50 hover:bg-border transition-all text-xs font-medium text-text"
         >
           {isDark ? (
             <>
-              <Sun size={16} className="text-amber-500" />
+              <Sun size={14} className="text-amber-500" />
               <span>Light Mode</span>
             </>
           ) : (
             <>
-              <Moon size={16} className="text-muted" />
+              <Moon size={14} className="text-muted" />
               <span>Dark Mode</span>
             </>
           )}
         </button>
 
         {/* Social Media Links */}
-        <div className="grid grid-cols-3 gap-2 pt-2">
-          {socialLinks.map(link => {
+        <div className="grid grid-cols-3 gap-2">
+          {socialLinks.slice(0, 6).map(link => {
             const Icon = link.icon;
             return (
               <a
@@ -220,7 +216,7 @@ export default function BlogSidebar({
                 className={`flex items-center justify-center p-2 rounded-lg bg-border/50 text-muted transition-all ${link.color}`}
                 title={link.label}
               >
-                <Icon size={18} />
+                <Icon size={16} />
               </a>
             );
           })}

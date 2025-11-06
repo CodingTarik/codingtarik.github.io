@@ -417,6 +417,7 @@ function AppContent() {
               selectedTab="search"
               onTabChange={(tab) => {
                 if (tab === 'posts') window.location.hash = '#/blog';
+                else if (tab === 'search') window.location.hash = '#/blog/search';
                 else if (tab === 'categories') window.location.hash = '#/blog/categories';
                 else if (tab === 'projects') window.location.hash = '#/blog/projects';
                 else if (tab === 'cv') window.location.hash = '#/cv';
@@ -445,6 +446,7 @@ function AppContent() {
               selectedTab="categories"
               onTabChange={(tab) => {
                 if (tab === 'posts') window.location.hash = '#/blog';
+                else if (tab === 'search') window.location.hash = '#/blog/search';
                 else if (tab === 'categories') window.location.hash = '#/blog/categories';
                 else if (tab === 'projects') window.location.hash = '#/blog/projects';
                 else if (tab === 'cv') window.location.hash = '#/cv';
@@ -487,6 +489,7 @@ function AppContent() {
               selectedTab="projects"
               onTabChange={(tab) => {
                 if (tab === 'posts') window.location.hash = '#/blog';
+                else if (tab === 'search') window.location.hash = '#/blog/search';
                 else if (tab === 'categories') window.location.hash = '#/blog/categories';
                 else if (tab === 'projects') window.location.hash = '#/blog/projects';
                 else if (tab === 'cv') window.location.hash = '#/cv';
@@ -515,6 +518,7 @@ function AppContent() {
               selectedTab="posts"
               onTabChange={(tab) => {
                 if (tab === 'posts') window.location.hash = '#/blog';
+                else if (tab === 'search') window.location.hash = '#/blog/search';
                 else if (tab === 'categories') window.location.hash = '#/blog/categories';
                 else if (tab === 'projects') window.location.hash = '#/blog/projects';
                 else if (tab === 'cv') window.location.hash = '#/cv';
@@ -573,6 +577,8 @@ function AppContent() {
           </div>
         );
       }
+      
+      // Default Blog Page (Posts overview) - only if no other blog route matched
       return <BlogPage onPostClick={handlePostClick} onBackToLearnBuddy={() => handleViewChange('learnbuddy')} />;
     }
 
