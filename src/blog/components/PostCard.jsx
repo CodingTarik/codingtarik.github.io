@@ -61,7 +61,7 @@ export default function PostCard({ post, onClick }) {
           </div>
           {post.author && (
             <div className="flex items-center gap-1">
-              <span>von {post.author}</span>
+              <span>by {post.author}</span>
             </div>
           )}
         </div>
