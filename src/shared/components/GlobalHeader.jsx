@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Sun, Moon, ChevronDown, Check, Star, Grid3x3, Info } from 'lucide-react';
+import { Sun, Moon, ChevronDown, Check, Star, Grid3x3, Info, Settings } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import { useTheme } from '../../context/ThemeContext';
 import { useBuddy } from '../../context/BuddyContext';
@@ -185,6 +185,15 @@ function GlobalHeader() {
 
           {/* Right: Controls */}
           <div className="flex gap-2 items-center">
+            {/* Settings Link */}
+            <a
+              href="#/settings"
+              className="p-2 rounded-lg hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
+              title={language === 'en' ? 'Settings' : 'Einstellungen'}
+            >
+              <Settings size={18} className="text-stone-600 dark:text-stone-400" />
+            </a>
+
             {/* Imprint Link */}
             <a
               href="#/imprint"

@@ -3,15 +3,20 @@ import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/Page/TextLayer.css';
 import { 
   X, ChevronLeft, ChevronRight, BookMarked, Languages, 
-  Save, Trash2, ZoomIn, ZoomOut, ArrowLeft 
+  Save, Trash2, ZoomIn, ZoomOut, ArrowLeft, AlertCircle, Copy 
 } from 'lucide-react';
 import { useLanguage } from '../../../context/LanguageContext';
+import { useSettings } from '../../../context/SettingsContext';
+import { translateWithChatGPT } from '../../../utils/chatgpt';
 
 // Set up PDF.js worker to use local file from public folder
 pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
 
 function PDFReader({ book, onClose, onUpdate }) {
   const { language } = useLanguage();
+  const { globalSettings, getBuddySettings } = useSettings();
+  const englishSettings = getBuddySettings('english');
+  
   const [numPages, setNumPages] = useState(null);
   const [scale, setScale] = useState(1.2);
   const [selectedText, setSelectedText] = useState('');
@@ -20,7 +25,9 @@ function PDFReader({ book, onClose, onUpdate }) {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [translatedText, setTranslatedText] = useState('');
   const [isTranslating, setIsTranslating] = useState(false);
+  const [translationError, setTranslationError] = useState('');
   const [currentPage, setCurrentPage] = useState(book.currentPage || 1);
+  const [copyFeedback, setCopyFeedback] = useState('');
   
   const containerRef = useRef(null);
   const pageRefs = useRef({});
@@ -169,6 +176,7 @@ function PDFReader({ book, onClose, onUpdate }) {
       } else {
         setShowTranslateButton(false);
         setTranslatedText('');
+        setTranslationError('');
       }
     };
 
@@ -178,23 +186,45 @@ function PDFReader({ book, onClose, onUpdate }) {
 
   const translateText = async () => {
     setIsTranslating(true);
+    setTranslationError('');
     
-    // Simple translation simulation (in real app, use Google Translate API or similar)
-    setTimeout(() => {
-      setTranslatedText(language === 'de' 
-        ? `Übersetzung: [${selectedText}]` 
-        : `Translation: [${selectedText}]`
+    // Check if API key is configured
+    if (!globalSettings.chatGptApiKey) {
+      setTranslationError(language === 'de' 
+        ? 'Bitte konfiguriere deinen ChatGPT API Key in den Einstellungen' 
+        : 'Please configure your ChatGPT API Key in settings'
       );
       setIsTranslating(false);
-    }, 500);
+      return;
+    }
+
+    // Get user's native language from settings
+    const nativeLanguage = englishSettings.nativeLanguage || 'de';
+    const detailLevel = englishSettings.translationDetail || 'normal';
+
+    try {
+      const result = await translateWithChatGPT(
+        selectedText,
+        nativeLanguage,
+        globalSettings.chatGptApiKey,
+        detailLevel
+      );
+      
+      setTranslatedText(result.translation);
+    } catch (error) {
+      console.error('Translation error:', error);
+      setTranslationError(error.message);
+    } finally {
+      setIsTranslating(false);
+    }
   };
 
-  const saveSelection = () => {
+  const saveSelection = (withTranslation = true) => {
     const isWord = selectedText.split(' ').length === 1;
     const newItem = {
       id: Date.now(),
       text: selectedText,
-      translation: translatedText,
+      translation: withTranslation ? translatedText : '',
       page: currentPage,
       timestamp: new Date().toISOString(),
       type: isWord ? 'word' : 'sentence'
@@ -215,6 +245,7 @@ function PDFReader({ book, onClose, onUpdate }) {
     setShowTranslateButton(false);
     setSelectedText('');
     setTranslatedText('');
+    setTranslationError('');
   };
 
   const deleteItem = (itemId, type) => {
@@ -251,15 +282,65 @@ function PDFReader({ book, onClose, onUpdate }) {
     setScale(prevScale => Math.min(Math.max(0.5, prevScale + delta), 2.5));
   };
 
+  const copyAllToClipboard = (withTranslations = true) => {
+    const allItems = [
+      ...book.savedWords.map(w => ({ ...w, type: 'word' })),
+      ...book.savedSentences.map(s => ({ ...s, type: 'sentence' }))
+    ].sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+
+    let text = '';
+    allItems.forEach((item, index) => {
+      if (index > 0) text += '\n\n';
+      text += item.text;
+      if (withTranslations && item.translation) {
+        text += `\n${item.translation}`;
+      }
+    });
+
+    navigator.clipboard.writeText(text).then(() => {
+      setCopyFeedback(language === 'de' ? 'In Zwischenablage kopiert! ✓' : 'Copied to clipboard! ✓');
+      setTimeout(() => setCopyFeedback(''), 3000);
+    }).catch(err => {
+      console.error('Failed to copy:', err);
+      setCopyFeedback(language === 'de' ? 'Fehler beim Kopieren' : 'Failed to copy');
+      setTimeout(() => setCopyFeedback(''), 3000);
+    });
+  };
+
   return (
     <div className="fixed inset-0 bg-stone-900 z-50 flex">
       {/* Sidebar */}
       <div className={`${sidebarOpen ? 'w-80' : 'w-0'} bg-white dark:bg-stone-800 border-r border-stone-200 dark:border-stone-700 transition-all duration-300 overflow-hidden flex flex-col`}>
         <div className="p-4 border-b border-stone-200 dark:border-stone-700">
-          <h2 className="font-bold text-lg text-stone-800 dark:text-stone-200 flex items-center gap-2">
+          <h2 className="font-bold text-lg text-stone-800 dark:text-stone-200 flex items-center gap-2 mb-3">
             <BookMarked className="text-rose-500" />
             {language === 'de' ? 'Gespeichert' : 'Saved'}
           </h2>
+          
+          {/* Copy All Buttons */}
+          {(book.savedWords.length > 0 || book.savedSentences.length > 0) && (
+            <div className="flex flex-col gap-2 mt-3">
+              {copyFeedback && (
+                <div className="bg-green-100 dark:bg-green-900/30 border border-green-500 text-green-700 dark:text-green-300 px-3 py-2 rounded-lg text-sm font-semibold text-center animate-bounce">
+                  {copyFeedback}
+                </div>
+              )}
+              <button
+                onClick={() => copyAllToClipboard(true)}
+                className="flex items-center justify-center gap-2 px-3 py-2 bg-rose-500 hover:bg-rose-600 text-white rounded-lg transition-colors text-sm font-semibold"
+              >
+                <Copy size={16} />
+                {language === 'de' ? 'Alle mit Übersetzung' : 'With translation'}
+              </button>
+              <button
+                onClick={() => copyAllToClipboard(false)}
+                className="flex items-center justify-center gap-2 px-3 py-2 bg-stone-500 hover:bg-stone-600 text-white rounded-lg transition-colors text-sm font-semibold"
+              >
+                <Copy size={16} />
+                {language === 'de' ? 'Nur Originale' : 'Originals only'}
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
@@ -372,8 +453,13 @@ function PDFReader({ book, onClose, onUpdate }) {
         <div className="bg-stone-900 border-b border-stone-700 p-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <button
-              onClick={onClose}
-              className="text-white hover:text-rose-500 transition-colors"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onClose();
+              }}
+              className="text-white hover:text-rose-500 transition-colors p-2 rounded-lg hover:bg-stone-800"
+              type="button"
             >
               <ArrowLeft size={24} />
             </button>
@@ -424,9 +510,14 @@ function PDFReader({ book, onClose, onUpdate }) {
             </button>
 
             <button
-              onClick={onClose}
-              className="text-white hover:text-rose-500 transition-colors p-2"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onClose();
+              }}
+              className="text-white hover:text-rose-500 transition-colors p-2 rounded-lg hover:bg-stone-800"
               title={language === 'de' ? 'Schließen' : 'Close'}
+              type="button"
             >
               <X size={24} />
             </button>
@@ -490,35 +581,69 @@ function PDFReader({ book, onClose, onUpdate }) {
           style={{
             left: `${buttonPosition.x}px`,
             top: `${buttonPosition.y}px`,
-            transform: 'translate(-50%, -100%)'
+            transform: 'translate(-50%, calc(-100% - 12px))'
           }}
         >
-          <div className="bg-rose-500 text-white rounded-lg shadow-lg p-2 flex items-center gap-2">
-            {!translatedText ? (
+          <div className="bg-white dark:bg-stone-800 rounded-xl shadow-2xl border-2 border-rose-500 p-3 flex flex-col gap-2 max-w-md min-w-[280px]">
+            {!translatedText && !translationError ? (
               <>
-                <button
-                  onClick={translateText}
-                  disabled={isTranslating}
-                  className="px-3 py-1 hover:bg-rose-600 rounded transition-colors text-sm font-semibold flex items-center gap-1"
+                <div className="flex gap-2">
+                  <button
+                    onClick={translateText}
+                    disabled={isTranslating}
+                    className="flex-1 px-4 py-2.5 bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white rounded-lg transition-all text-sm font-semibold flex items-center justify-center gap-2 shadow-md hover:shadow-lg transform hover:scale-105"
+                  >
+                    <Languages size={18} />
+                    {isTranslating 
+                      ? (language === 'de' ? 'Übersetze...' : 'Translating...') 
+                      : (language === 'de' ? 'Übersetzen' : 'Translate')
+                    }
+                  </button>
+                  <button
+                    onClick={() => saveSelection(false)}
+                    className="flex-1 px-4 py-2.5 bg-gradient-to-r from-stone-500 to-stone-600 hover:from-stone-600 hover:to-stone-700 text-white rounded-lg transition-all text-sm font-semibold flex items-center justify-center gap-2 shadow-md hover:shadow-lg transform hover:scale-105"
+                  >
+                    <Save size={18} />
+                    {language === 'de' ? 'Speichern' : 'Save'}
+                  </button>
+                </div>
+                <div className="text-xs text-center text-stone-500 dark:text-stone-400 px-2">
+                  {language === 'de' ? 'oder einfach speichern →' : 'or just save →'}
+                </div>
+              </>
+            ) : translationError ? (
+              <>
+                <div className="bg-red-100 dark:bg-red-900/30 border border-red-500 px-4 py-3 rounded-lg flex items-start gap-2 text-sm">
+                  <AlertCircle size={18} className="flex-shrink-0 mt-0.5 text-red-600 dark:text-red-400" />
+                  <div className="flex-1">
+                    <div className="font-semibold mb-1 text-red-800 dark:text-red-300">
+                      {language === 'de' ? 'Fehler' : 'Error'}
+                    </div>
+                    <div className="text-xs text-red-700 dark:text-red-400">{translationError}</div>
+                  </div>
+                </div>
+                <a
+                  href="#/settings"
+                  className="px-4 py-2.5 bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white rounded-lg transition-all text-sm font-semibold text-center shadow-md"
+                  onClick={() => {
+                    window.getSelection().removeAllRanges();
+                    setShowTranslateButton(false);
+                  }}
                 >
-                  <Languages size={16} />
-                  {isTranslating 
-                    ? (language === 'de' ? 'Übersetze...' : 'Translating...') 
-                    : (language === 'de' ? 'Übersetzen' : 'Translate')
-                  }
-                </button>
+                  {language === 'de' ? '⚙️ Zu Einstellungen' : '⚙️ Go to Settings'}
+                </a>
               </>
             ) : (
               <>
-                <div className="px-3 py-1 text-sm">
+                <div className="px-4 py-3 text-sm bg-stone-50 dark:bg-stone-700 text-stone-800 dark:text-stone-200 rounded-lg max-h-48 overflow-y-auto border border-stone-200 dark:border-stone-600 leading-relaxed">
                   {translatedText}
                 </div>
                 <button
-                  onClick={saveSelection}
-                  className="px-3 py-1 bg-green-500 hover:bg-green-600 rounded transition-colors text-sm font-semibold flex items-center gap-1"
+                  onClick={() => saveSelection(true)}
+                  className="px-4 py-2.5 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white rounded-lg transition-all text-sm font-semibold flex items-center justify-center gap-2 shadow-md hover:shadow-lg transform hover:scale-105"
                 >
-                  <Save size={16} />
-                  {language === 'de' ? 'Speichern' : 'Save'}
+                  <Save size={18} />
+                  {language === 'de' ? 'Mit Übersetzung speichern' : 'Save with translation'}
                 </button>
               </>
             )}

@@ -5,6 +5,7 @@ import { Check } from 'lucide-react';
 import { LanguageProvider } from './context/LanguageContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { BuddyProvider, useBuddy } from './context/BuddyContext';
+import { SettingsProvider } from './context/SettingsContext';
 import { useLanguage } from './context/LanguageContext';
 
 // Shared Components
@@ -16,6 +17,7 @@ import LessonsPage from './shared/components/LessonsPage';
 import LessonDetailPage from './shared/components/LessonDetailPage';
 import PlanPage from './shared/components/PlanPage';
 import ImprintPage from './shared/components/ImprintPage';
+import SettingsPage from './shared/components/SettingsPage';
 
 // Boulder-specific components
 import TrainingPage from './buddies/boulder/components/TrainingPage';
@@ -162,6 +164,9 @@ function AppContent() {
       } else if (hash === '#/imprint') {
         setCurrentLesson(null);
         setCurrentPage('imprint');
+      } else if (hash === '#/settings') {
+        setCurrentLesson(null);
+        setCurrentPage('settings');
       } else {
         setCurrentLesson(null);
         setCurrentPage('home');
@@ -380,6 +385,9 @@ function AppContent() {
       case 'imprint':
         return <ImprintPage />;
       
+      case 'settings':
+        return <SettingsPage />;
+      
       default:
         // Check if it's a custom tab
         if (currentPage.startsWith('custom-')) {
@@ -420,9 +428,11 @@ function App() {
   return (
     <ThemeProvider>
       <LanguageProvider>
-        <BuddyProvider>
-          <AppContent />
-        </BuddyProvider>
+        <SettingsProvider>
+          <BuddyProvider>
+            <AppContent />
+          </BuddyProvider>
+        </SettingsProvider>
       </LanguageProvider>
     </ThemeProvider>
   );

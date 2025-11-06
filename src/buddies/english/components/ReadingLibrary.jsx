@@ -15,11 +15,18 @@ function ReadingLibrary() {
     const loadData = async () => {
       await initDB();
       
-      // Clean up old localStorage data (with PDF data) if it exists
+      // Clean up old localStorage data
       const oldData = localStorage.getItem('englishBuddyBooks');
       if (oldData) {
         console.log('Cleaning up old localStorage data...');
         localStorage.removeItem('englishBuddyBooks');
+      }
+      
+      // Clean up old open book tracking
+      const oldOpenBook = localStorage.getItem('englishBuddyOpenBook');
+      if (oldOpenBook) {
+        console.log('Cleaning up old open book tracking...');
+        localStorage.removeItem('englishBuddyOpenBook');
       }
       
       // Load book metadata from localStorage (without PDF data)
@@ -28,19 +35,9 @@ function ReadingLibrary() {
         setBooks(JSON.parse(savedBooks));
       }
       
-      // Load currently open book
-      const openBookId = localStorage.getItem('englishBuddyOpenBook');
-      if (openBookId && savedBooks) {
-        const parsedBooks = JSON.parse(savedBooks);
-        const bookMeta = parsedBooks.find(b => b.id === parseInt(openBookId));
-        if (bookMeta) {
-          // Load PDF data from IndexedDB
-          const pdfData = await getPDF(bookMeta.id);
-          if (pdfData) {
-            setSelectedBook({ ...bookMeta, pdfData });
-          }
-        }
-      }
+      // REMOVED: Auto-loading of last open book
+      // This was causing the PDF to reopen after closing when navigating between tabs
+      // Users now need to explicitly click "Read" to open a book
     };
     
     loadData();
@@ -54,15 +51,6 @@ function ReadingLibrary() {
       localStorage.setItem('englishBuddyBooksMetadata', JSON.stringify(booksMetadata));
     }
   }, [books]);
-  
-  // Save currently open book to localStorage
-  useEffect(() => {
-    if (selectedBook) {
-      localStorage.setItem('englishBuddyOpenBook', selectedBook.id.toString());
-    } else {
-      localStorage.removeItem('englishBuddyOpenBook');
-    }
-  }, [selectedBook]);
 
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
@@ -266,15 +254,25 @@ function ReadingLibrary() {
                 {/* Actions */}
                 <div className="flex gap-2">
                   <button
-                    onClick={() => openBook(book)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      openBook(book);
+                    }}
                     className="flex-1 bg-rose-500 hover:bg-rose-600 text-white font-bold py-2 px-4 rounded-lg transition-all flex items-center justify-center gap-2"
+                    type="button"
                   >
                     <Eye size={16} />
                     {language === 'de' ? 'Lesen' : 'Read'}
                   </button>
                   <button
-                    onClick={() => deleteBook(book.id)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      deleteBook(book.id);
+                    }}
                     className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg transition-all"
+                    type="button"
                   >
                     <Trash2 size={16} />
                   </button>
