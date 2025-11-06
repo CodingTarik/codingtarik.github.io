@@ -22,8 +22,8 @@ import TrainingPage from './buddies/boulder/components/TrainingPage';
 import SessionLogger from './buddies/boulder/components/SessionLogger';
 import WorkoutExecutor from './buddies/boulder/components/WorkoutExecutor';
 
-// Data - will be loaded dynamically based on active buddy
-import { lessons as boulderLessons, getLessonById as getBoulderLessonById, getNextLesson as getBoulderNextLesson } from './buddies/boulder/data/lessons';
+// English-specific components
+import GrammarLevels from './buddies/english/components/GrammarLevels';
 
 function AppContent() {
   const { activeBuddy, currentBuddyConfig, allBuddies, switchBuddy } = useBuddy();
@@ -41,19 +41,25 @@ function AppContent() {
   const [savedPlanItems, setSavedPlanItems] = useState([]);
   const [showSaveConfirmation, setShowSaveConfirmation] = useState(false);
 
-  // Get buddy-specific lessons (for now, only boulder has lessons)
+  // Get buddy-specific lessons - use config if available
   const getLessons = () => {
-    if (activeBuddy === 'boulder') return boulderLessons;
-    return []; // Other buddies don't have lessons yet
+    if (currentBuddyConfig.lessons && currentBuddyConfig.lessons.data) {
+      return currentBuddyConfig.lessons.data;
+    }
+    return [];
   };
 
   const getLessonById = (id) => {
-    if (activeBuddy === 'boulder') return getBoulderLessonById(id);
+    if (currentBuddyConfig.lessons && currentBuddyConfig.lessons.getLessonById) {
+      return currentBuddyConfig.lessons.getLessonById(id);
+    }
     return null;
   };
 
   const getNextLesson = (id) => {
-    if (activeBuddy === 'boulder') return getBoulderNextLesson(id);
+    if (currentBuddyConfig.lessons && currentBuddyConfig.lessons.getNextLesson) {
+      return currentBuddyConfig.lessons.getNextLesson(id);
+    }
     return null;
   };
 
@@ -252,9 +258,42 @@ function AppContent() {
       } else if (tabId === 'sessions') {
         return <SessionLogger />;
       }
+    } else if (activeBuddy === 'english') {
+      // English components
+      if (tabId === 'grammar') {
+        return <GrammarLevels />;
+      }
+      // Other English tabs coming soon
+      return (
+        <div className="max-w-2xl mx-auto px-4 py-8 mt-8">
+          <div className="bg-white dark:bg-stone-800 rounded-lg shadow-md p-12 text-center">
+            <h2 className="text-2xl font-bold text-stone-800 dark:text-stone-100 mb-4">
+              {language === 'en' ? 'Coming Soon!' : 'Bald verfügbar!'}
+            </h2>
+            <p className="text-stone-600 dark:text-stone-400">
+              {language === 'en'
+                ? 'This feature is currently being developed. Stay tuned!'
+                : 'Dieses Feature wird gerade entwickelt. Bleib dran!'}
+            </p>
+          </div>
+        </div>
+      );
     }
-    // Add other buddy custom tabs here as they're implemented
-    return <div className="p-8 text-center text-stone-600 dark:text-stone-400">Coming soon!</div>;
+    // Default for other buddies
+    return (
+      <div className="max-w-2xl mx-auto px-4 py-8 mt-8">
+        <div className="bg-white dark:bg-stone-800 rounded-lg shadow-md p-12 text-center">
+          <h2 className="text-2xl font-bold text-stone-800 dark:text-stone-100 mb-4">
+            {language === 'en' ? 'Coming Soon!' : 'Bald verfügbar!'}
+          </h2>
+          <p className="text-stone-600 dark:text-stone-400">
+            {language === 'en'
+              ? 'This feature is currently being developed. Stay tuned!'
+              : 'Dieses Feature wird gerade entwickelt. Bleib dran!'}
+          </p>
+        </div>
+      </div>
+    );
   };
 
   // Determine what to render

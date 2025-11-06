@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { BookOpen, CheckCircle2, Circle, Award } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
-import { lessons as lessonData } from '../../buddies/boulder/data/lessons';
-import { categoryTranslations, getTranslatedLesson } from '../../buddies/boulder/data/lessonTranslations';
 import { loadLessonProgress, getLessonProgressStats, markLessonComplete, markLessonIncomplete } from '../../utils/sessionStorage';
 import { playCompletionSound } from '../../utils/sounds';
 
-function LessonsPage({ onSelectLesson }) {
+function LessonsPage({ lessons, onSelectLesson }) {
   const { language, t } = useLanguage();
   const [progress, setProgress] = useState({});
   
-  const allLessons = lessonData.flatMap(category => category.lessons);
+  // Group lessons by category
+  const lessonsByCategory = lessons.reduce((acc, lesson) => {
+    if (!acc[lesson.category]) {
+      acc[lesson.category] = [];
+    }
+    acc[lesson.category].push(lesson);
+    return acc;
+  }, {});
+  
+  const allLessons = lessons;
 
   // Load initial progress on component mount
   useEffect(() => {
@@ -79,24 +86,28 @@ function LessonsPage({ onSelectLesson }) {
         )}
       </div>
       
-      {lessonData.map(category => {
-        const categoryCompleted = category.lessons.filter(l => progress[l.id]?.completed).length;
-        const categoryTitle = categoryTranslations[category.id]?.[language] || categoryTranslations[category.id]?.en;
+      {Object.entries(lessonsByCategory).map(([categoryId, categoryLessons]) => {
+        const categoryCompleted = categoryLessons.filter(l => progress[l.id]?.completed).length;
+        
+        // Get category title from first lesson
+        const categoryTitle = categoryLessons[0]?.categoryTitle?.[language] 
+          || categoryLessons[0]?.categoryTitle?.en 
+          || categoryId;
 
         return (
-          <div key={category.id} className="mb-8">
+          <div key={categoryId} className="mb-8">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-bold text-stone-700 dark:text-stone-300 border-b-2 border-teal-500 pb-2">
                 {categoryTitle}
               </h2>
               <span className="text-sm text-stone-600 dark:text-stone-400 font-semibold">
-                {categoryCompleted}/{category.lessons.length}
+                {categoryCompleted}/{categoryLessons.length}
               </span>
             </div>
             <div className="space-y-3">
-              {category.lessons.map(lesson => {
+              {categoryLessons.map(lesson => {
                 const isComplete = progress[lesson.id]?.completed || false;
-                const translatedLesson = getTranslatedLesson(lesson, language);
+                const lessonTitle = lesson.title?.[language] || lesson.title?.en || lesson.title;
                 
                 return (
                   <div
@@ -106,7 +117,7 @@ function LessonsPage({ onSelectLesson }) {
                     }`}
                   >
                     <button
-                      onClick={() => onSelectLesson({ ...lesson, category: category.id })}
+                      onClick={() => onSelectLesson(lesson)}
                       className="w-full p-4 hover:shadow-lg transition-all text-left hover:bg-stone-50 dark:hover:bg-stone-700 hover:scale-[1.02] rounded-lg"
                     >
                       <div className="flex items-start gap-3">
@@ -117,9 +128,13 @@ function LessonsPage({ onSelectLesson }) {
                               ? 'text-stone-600 dark:text-stone-400 line-through' 
                               : 'text-stone-800 dark:text-stone-100'
                           }`}>
-                            {translatedLesson.title}
+                            {lessonTitle}
                           </h3>
-                          <p className="text-sm text-stone-600 dark:text-stone-400">{translatedLesson.description}</p>
+                          {lesson.description && (
+                            <p className="text-sm text-stone-600 dark:text-stone-400">
+                              {lesson.description?.[language] || lesson.description?.en || lesson.description}
+                            </p>
+                          )}
                         </div>
                         
                         {/* Checkbox */}

@@ -2,10 +2,16 @@
 import { Shield, Users, ArrowDown, UserCheck, PersonStanding, MoveUp, Brush, Wind, HelpCircle, Baby, Flame, Sparkles, Footprints, Eye, PackageX, LocateFixed, CircleDot } from 'lucide-react';
 
 export const safetyAndEtiquette = {
-  de: {
-    title: "Sicherheit & Etikette: Die ungeschriebenen Gesetze",
-    description: "Lerne die goldenen Regeln der Sicherheit und des Miteinanders, um Bouldern zu einer großartigen Erfahrung für alle zu machen.",
-    content: `
+  title: {
+    de: "Sicherheit & Etikette: Die ungeschriebenen Gesetze",
+    en: "Safety & Etiquette: The Unwritten Laws"
+  },
+  description: {
+    de: "Lerne die goldenen Regeln der Sicherheit und des Miteinanders, um Bouldern zu einer großartigen Erfahrung für alle zu machen.",
+    en: "Learn the golden rules of safety and etiquette to make bouldering a great experience for everyone."
+  },
+  content: {
+    de: `
 ### Deine Sicherheit ist Priorität #1
 
 Bouldern ist ein sicherer Sport, solange du die wichtigste Fähigkeit beherrschst: **das richtige Fallen**. Bevor du lernst zu klettern, lerne zu fallen. Dein Körper wird es dir danken.
@@ -86,35 +92,7 @@ Eine gute Atmosphäre entsteht durch gegenseitigen Respekt. Hier sind die ungesc
   <div className="flex items-start gap-4 p-3 bg-white dark:bg-stone-800 rounded-lg shadow-sm"><Sparkles className="text-teal-500 mt-1 flex-shrink-0" size={24} /><div><strong className="text-stone-800 dark:text-stone-200">Schuhe aus:</strong> Trage deine Kletterschuhe nur auf den Matten. Ziehe sie aus, wenn du auf die Toilette gehst oder die Halle verlässt.</div></div>
 </div>
     `,
-    task: {
-      title: "Praktische Sicherheitsübung: Dein erster kontrollierter Fall",
-      description: "Bevor du deinen ersten richtigen Boulder kletterst, solltest du dich mit dem Gefühl des Fallens vertraut machen. Das baut Vertrauen in dich und die Matten auf.",
-      checklist: [
-        { text: "Klettere nur die ersten 2-3 Griffe einer leichten Route, sodass deine Füße knapp über der Matte schweben.", checked: false },
-        { text: "Atme tief aus, lass bewusst los und konzentriere dich auf die 3-Stufen-Landung: Füße, Knie beugen, abrollen.", checked: false },
-        { text: "Stelle sicher, dass deine Arme vor dir bleiben und du nicht versuchst, dich abzustützen.", checked: false },
-        { text: "Wiederhole das 3-4 Mal von einer leicht erhöhten Position, bis es sich natürlich anfühlt.", checked: false },
-      ]
-    },
-    quiz: [
-      {
-        question: "Was sind die 3 Schritte für eine sichere Landung?",
-        answer: "1. Auf beiden Füßen landen. 2. In die Hocke gehen und sofort abrollen. 3. Arme vor dem Körper halten und sich nicht abstützen."
-      },
-      {
-        question: "Was ist die 'Sturzzone' und warum ist sie heilig?",
-        answer: "Es ist der Bereich direkt unter einem Kletterer, in den er fallen könnte. Man darf sich dort niemals aufhalten, um Kollisionen zu vermeiden."
-      },
-      {
-        question: "Wann solltest du jemandem 'Beta' (Tipps) geben?",
-        answer: "Nur, wenn die Person dich ausdrücklich danach fragt. Ansonsten nimmst du ihr den Spaß am selbstständigen Lösen des Problems."
-      }
-    ]
-  },
-  en: {
-    title: "Safety & Etiquette: The Unwritten Laws",
-    description: "Learn the golden rules of safety and etiquette to make bouldering a great experience for everyone.",
-    content: `
+    en: `
 ### Your Safety is Priority #1
 
 Bouldering is a safe sport as long as you master the most important skill: **how to fall correctly**. Before you learn to climb, learn to fall. Your body will thank you.
@@ -194,8 +172,20 @@ A great atmosphere is built on mutual respect. Here are the unwritten laws every
   <div className="flex items-start gap-4 p-3 bg-white dark:bg-stone-800 rounded-lg shadow-sm"><Baby className="text-orange-500 mt-1 flex-shrink-0" size={24} /><div><strong className="text-stone-800 dark:text-stone-200">Watch out for kids:</strong> Children are often unpredictable and don't recognize danger zones. Be especially vigilant when they are around.</div></div>
   <div className="flex items-start gap-4 p-3 bg-white dark:bg-stone-800 rounded-lg shadow-sm"><Sparkles className="text-teal-500 mt-1 flex-shrink-0" size={24} /><div><strong className="text-stone-800 dark:text-stone-200">Shoes off:</strong> Wear your climbing shoes only on the mats. Take them off when you go to the restroom or leave the gym.</div></div>
 </div>
-    `,
-    task: {
+    `
+  },
+  task: {
+    de: {
+      title: "Praktische Sicherheitsübung: Dein erster kontrollierter Fall",
+      description: "Bevor du deinen ersten richtigen Boulder kletterst, solltest du dich mit dem Gefühl des Fallens vertraut machen. Das baut Vertrauen in dich und die Matten auf.",
+      checklist: [
+        { text: "Klettere nur die ersten 2-3 Griffe einer leichten Route, sodass deine Füße knapp über der Matte schweben.", checked: false },
+        { text: "Atme tief aus, lass bewusst los und konzentriere dich auf die 3-Stufen-Landung: Füße, Knie beugen, abrollen.", checked: false },
+        { text: "Stelle sicher, dass deine Arme vor dir bleiben und du nicht versuchst, dich abzustützen.", checked: false },
+        { text: "Wiederhole das 3-4 Mal von einer leicht erhöhten Position, bis es sich natürlich anfühlt.", checked: false },
+      ]
+    },
+    en: {
       title: "Practical Safety Drill: Your First Controlled Fall",
       description: "Before you climb your first real boulder, you should get comfortable with the feeling of falling. This builds trust in yourself and the mats.",
       checklist: [
@@ -204,8 +194,24 @@ A great atmosphere is built on mutual respect. Here are the unwritten laws every
         { text: "Make sure your arms stay in front of you and you don't try to catch yourself.", checked: false },
         { text: "Repeat this 3-4 times from a slightly elevated position until it feels natural.", checked: false },
       ]
-    },
-    quiz: [
+    }
+  },
+  quiz: {
+    de: [
+      {
+        question: "Was sind die 3 Schritte für eine sichere Landung?",
+        answer: "1. Auf beiden Füßen landen. 2. In die Hocke gehen und sofort abrollen. 3. Arme vor dem Körper halten und sich nicht abstützen."
+      },
+      {
+        question: "Was ist die 'Sturzzone' und warum ist sie heilig?",
+        answer: "Es ist der Bereich direkt unter einem Kletterer, in den er fallen könnte. Man darf sich dort niemals aufhalten, um Kollisionen zu vermeiden."
+      },
+      {
+        question: "Wann solltest du jemandem 'Beta' (Tipps) geben?",
+        answer: "Nur, wenn die Person dich ausdrücklich danach fragt. Ansonsten nimmst du ihr den Spaß am selbstständigen Lösen des Problems."
+      }
+    ],
+    en: [
       {
         question: "What are the 3 steps for a safe landing?",
         answer: "1. Land on both feet. 2. Go into a squat and immediately roll back. 3. Keep your arms in front of your body and don't catch yourself."

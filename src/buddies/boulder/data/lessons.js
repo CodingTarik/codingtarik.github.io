@@ -10,52 +10,66 @@ import { theBoulderingCommunity } from '../lessons/module1_1_introduction_to_bou
 // Module 1.3: SAFETY
 import { safetyAndEtiquette } from '../lessons/module1_3_safety/safety-and-etiquette.js';
 
+// Category titles for each module
+const categories = {
+  module1_1: {
+    en: 'MODULE 1.1: INTRODUCTION TO BOULDERING',
+    de: 'MODUL 1.1: EINFÜHRUNG INS BOULDERN'
+  },
+  module1_2: {
+    en: 'MODULE 1.2: FUNDAMENTAL MOVEMENT PRINCIPLES',
+    de: 'MODUL 1.2: FUNDAMENTALE BEWEGUNGSPRINZIPIEN'
+  },
+  module1_3: {
+    en: 'MODULE 1.3: SAFETY',
+    de: 'MODUL 1.3: SICHERHEIT'
+  }
+};
 
-// The main export is an array of categories (modules).
-// The 'id' for each lesson is dynamically generated from the object key.
+// All lessons in a flat array with IDs and categories
 export const lessons = [
+  // Module 1.1: INTRODUCTION TO BOULDERING
   {
-    id: 'module1_1',
-    lessons: [
-      whatIsBouldering,
-      gymVsOutdoor,
-      theBoulderingCommunity,
-    ].map((lesson, index) => ({ ...lesson, id: `m1_1_l${index + 1}` }))
+    id: 'm1_1_l1',
+    category: 'module1_1',
+    categoryTitle: categories.module1_1,
+    ...whatIsBouldering
   },
   {
-    id: 'module1_2',
-    lessons: [
-        // This module is currently empty and will be filled later
-    ].map((lesson, index) => ({ ...lesson, id: `m1_2_l${index + 1}` }))
+    id: 'm1_1_l2',
+    category: 'module1_1',
+    categoryTitle: categories.module1_1,
+    ...gymVsOutdoor
   },
   {
-    id: 'module1_3',
-    lessons: [
-      safetyAndEtiquette,
-    ].map((lesson, index) => ({ ...lesson, id: `m1_3_l${index + 1}` }))
+    id: 'm1_1_l3',
+    category: 'module1_1',
+    categoryTitle: categories.module1_1,
+    ...theBoulderingCommunity
   },
+  
+  // Module 1.2: FUNDAMENTAL MOVEMENT PRINCIPLES (empty for now)
+  
+  // Module 1.3: SAFETY
+  {
+    id: 'm1_3_l1',
+    category: 'module1_3',
+    categoryTitle: categories.module1_3,
+    ...safetyAndEtiquette
+  }
 ];
 
-// Helper function to get all lessons in a flat array, with category info added.
-export const getAllLessons = () => {
-  return lessons.flatMap(category =>
-    category.lessons.map(lesson => ({
-      ...lesson,
-      category: category.id
-    }))
-  );
-};
+// Helper function to get lesson by ID
+export function getLessonById(id) {
+  return lessons.find(lesson => lesson.id === id) || null;
+}
 
-export const getLessonById = (id) => {
-  return getAllLessons().find(lesson => lesson.id === id);
-};
-
-export const getNextLesson = (currentLessonId) => {
-  const allLessons = getAllLessons();
-  const currentIndex = allLessons.findIndex(lesson => lesson.id === currentLessonId);
-  if (currentIndex === -1 || currentIndex === allLessons.length - 1) {
+// Helper function to get next lesson
+export function getNextLesson(currentLessonId) {
+  const currentIndex = lessons.findIndex(lesson => lesson.id === currentLessonId);
+  if (currentIndex === -1 || currentIndex === lessons.length - 1) {
     return null; // No next lesson
   }
-  return allLessons[currentIndex + 1];
-};
+  return lessons[currentIndex + 1];
+}
 

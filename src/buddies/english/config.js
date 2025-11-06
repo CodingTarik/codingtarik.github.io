@@ -1,5 +1,6 @@
-import { Languages, BookText, Headphones } from 'lucide-react';
+import { Languages, BookText, Headphones, MessageCircle, PenTool, BookOpen, GraduationCap } from 'lucide-react';
 import EnglishHomePage from './components/EnglishHomePage';
+import { lessons, getLessonById, getNextLesson } from './data/lessons';
 
 export const englishBuddyConfig = {
   id: 'english',
@@ -15,15 +16,29 @@ export const englishBuddyConfig = {
     background: 'rose'
   },
   homePage: EnglishHomePage,
+  
   lessons: {
-    data: [],
-    getLessonById: () => null,
-    getNextLesson: () => null
+    data: lessons,
+    getLessonById: getLessonById,
+    getNextLesson: getNextLesson
   },
   
-  sharedTabs: ['home', 'lessons', 'plan'],
+  // Rename Lessons tab to Grammar
+  lessonsTabName: {
+    en: 'Grammar',
+    de: 'Grammatik'
+  },
+  
+  // Hide the plan tab for EnglishBuddy
+  hidePlanTab: true,
   
   customTabs: [
+    {
+      id: 'grammar',
+      name: { en: 'Grammar', de: 'Grammatik' },
+      icon: GraduationCap,
+      component: 'GrammarLevels' // A1, A2, B1, B2, C1, C2
+    },
     {
       id: 'vocabulary',
       name: { en: 'Vocabulary', de: 'Vokabeln' },
@@ -31,34 +46,28 @@ export const englishBuddyConfig = {
       component: 'VocabularyTrainer'
     },
     {
+      id: 'speaking',
+      name: { en: 'Speaking', de: 'Sprechen' },
+      icon: MessageCircle,
+      component: 'SpeakingPractice'
+    },
+    {
       id: 'listening',
       name: { en: 'Listening', de: 'Hörverständnis' },
       icon: Headphones,
       component: 'ListeningPractice'
-    }
-  ],
-  
-  planItemType: {
-    type: 'english_practice',
-    fields: {
-      topicName: 'string',
-      vocabulary: 'array',
-      exercises: 'array',
-      notes: 'string'
-    }
-  },
-  
-  planTranslations: {
-    en: {
-      title: 'My Learning Plan',
-      emptyMessage: 'Save lessons and vocabulary to build your English skills!',
-      emptyTip: '💡 Tip: Practice daily for best results.'
     },
-    de: {
-      title: 'Mein Lernplan',
-      emptyMessage: 'Speichere Lektionen und Vokabeln zum Aufbau deiner Englisch-Kenntnisse!',
-      emptyTip: '💡 Tipp: Tägliches Üben bringt die besten Ergebnisse.'
+    {
+      id: 'writing',
+      name: { en: 'Writing', de: 'Schreiben' },
+      icon: PenTool,
+      component: 'WritingExercises'
+    },
+    {
+      id: 'reading',
+      name: { en: 'Reading', de: 'Lesen' },
+      icon: BookOpen,
+      component: 'ReadingComprehension'
     }
-  }
+  ]
 };
-

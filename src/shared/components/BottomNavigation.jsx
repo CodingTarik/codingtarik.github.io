@@ -13,18 +13,26 @@ function BottomNavigation({ currentPage, setCurrentPage }) {
       id: 'home', 
       icon: Home, 
       label: language === 'en' ? 'Home' : 'Home' 
-    },
-    { 
+    }
+  ];
+
+  // Add Lessons tab if buddy has lessons or doesn't explicitly hide it
+  if (!currentBuddyConfig.hideLessonsTab) {
+    navItems.push({ 
       id: 'lektionen', 
       icon: BookOpen, 
-      label: language === 'en' ? 'Lessons' : 'Lektionen' 
-    },
-    { 
+      label: currentBuddyConfig.lessonsTabName?.[language] || (language === 'en' ? 'Lessons' : 'Lektionen')
+    });
+  }
+
+  // Add Plan tab unless buddy explicitly hides it
+  if (!currentBuddyConfig.hidePlanTab) {
+    navItems.push({ 
       id: 'plan', 
       icon: ListTodo, 
       label: language === 'en' ? 'Plan' : 'Plan' 
-    },
-  ];
+    });
+  }
 
   // Add buddy-specific custom tabs
   if (currentBuddyConfig.customTabs) {

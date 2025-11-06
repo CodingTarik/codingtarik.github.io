@@ -2,10 +2,16 @@
 import { Mountain, Trees, Globe, Users, History, Brain, Compass } from 'lucide-react';
 
 export const gymVsOutdoor = {
-  de: {
-    title: "Halle vs. Fels: Zwei Welten, eine Leidenschaft",
-    description: "Tauche tief ein in die Geschichte, Kultur und Praxis des Boulderns in der Halle und am echten Fels.",
-    content: `
+  title: {
+    de: "Halle vs. Fels: Zwei Welten, eine Leidenschaft",
+    en: "Gym vs. Rock: Two Worlds, One Passion"
+  },
+  description: {
+    de: "Tauche tief ein in die Geschichte, Kultur und Praxis des Boulderns in der Halle und am echten Fels.",
+    en: "Dive deep into the history, culture, and practice of bouldering in the gym and on real rock."
+  },
+  content: {
+    de: `
 ### Die Zwei Seelen des Boulderns
 
 Jeder Boulderer lebt in zwei Welten: der pulsierenden, sozialen Atmosphäre der **Boulderhalle** und der rohen, abenteuerlichen Stille des **Felsens**. Beide sind essenziell, um den Sport in seiner ganzen Tiefe zu erleben. Sie sind keine Gegensätze, sondern Partner, die dich auf unterschiedliche Weise fordern und fördern.
@@ -92,35 +98,7 @@ Outdoor-Bouldern bedeutet mehr Eigenverantwortung. Deine Sicherheit und die dein
 ### Synergie: Wie beides dich besser macht
 Trainiere in der **Halle**, um stärker zu werden, spezifische Bewegungen zu lernen und deine Technik zu verfeinern. Gehe an den **Fels**, um diese Fähigkeiten anzuwenden, deine mentale Stärke zu testen und die wahre Essenz des Boulderns zu erleben.
     `,
-    task: {
-      title: "Aufgabe: Analysiere einen Outdoor-Boulder-Spot",
-      description: "Suche online nach einem bekannten Bouldergebiet in deiner Nähe oder einem, das dich interessiert (z.B. Fontainebleau, Magic Wood, Zillertal). Analysiere, was diesen Spot ausmacht.",
-      checklist: [
-        { text: "Welche Art von Gestein gibt es dort?", checked: false },
-        { text: "Was sind die berühmtesten Boulder in diesem Gebiet?", checked: false },
-        { text: "Welche Jahreszeit ist die beste, um dort zu bouldern?", checked: false },
-        { text: "Gibt es spezielle Verhaltensregeln oder Zugangsbeschränkungen für das Gebiet?", checked: false },
-      ]
-    },
-    quiz: [
-      {
-        question: "Was sind die zwei wichtigsten zusätzlichen Sicherheitsaspekte beim Outdoor-Bouldern?",
-        answer: "Ein Crashpad zur Landungssicherung und korrektes Spotting durch Kletterpartner."
-      },
-      {
-        question: "Was bedeutet 'Leave No Trace' (LNT)?",
-        answer: "Es bedeutet, die Natur so zu verlassen, wie man sie vorgefunden hat – ohne Müll, Beschädigungen oder unnötige Spuren zu hinterlassen."
-      },
-      {
-        question: "Nenne zwei Vorteile des Hallenboulderns gegenüber dem Felsklettern.",
-        answer: "Es ist wetterunabhängig, hat eine höhere Dichte an Routen auf kleinem Raum und bietet eine kontrollierte, sichere Lernumgebung."
-      }
-    ]
-  },
-  en: {
-    title: "Gym vs. Rock: Two Worlds, One Passion",
-    description: "Dive deep into the history, culture, and practice of bouldering in the gym and on real rock.",
-    content: `
+    en: `
 ### The Two Souls of Bouldering
 
 Every boulderer lives in two worlds: the vibrant, social atmosphere of the **bouldering gym** and the raw, adventurous silence of the **rock**. Both are essential to experiencing the sport in its full depth. They are not opposites, but partners that challenge and develop you in different ways.
@@ -206,8 +184,20 @@ Outdoor bouldering means more personal responsibility. Your safety and that of y
 
 ### Synergy: How Both Make You Better
 Train in the **gym** to get stronger, learn specific movements, and refine your technique. Go to the **rock** to apply these skills, test your mental strength, and experience the true essence of bouldering.
-    `,
-    task: {
+    `
+  },
+  task: {
+    de: {
+      title: "Aufgabe: Analysiere einen Outdoor-Boulder-Spot",
+      description: "Suche online nach einem bekannten Bouldergebiet in deiner Nähe oder einem, das dich interessiert (z.B. Fontainebleau, Magic Wood, Zillertal). Analysiere, was diesen Spot ausmacht.",
+      checklist: [
+        { text: "Welche Art von Gestein gibt es dort?", checked: false },
+        { text: "Was sind die berühmtesten Boulder in diesem Gebiet?", checked: false },
+        { text: "Welche Jahreszeit ist die beste, um dort zu bouldern?", checked: false },
+        { text: "Gibt es spezielle Verhaltensregeln oder Zugangsbeschränkungen für das Gebiet?", checked: false },
+      ]
+    },
+    en: {
       title: "Task: Analyze an Outdoor Bouldering Spot",
       description: "Search online for a famous bouldering area near you or one that interests you (e.g., Fontainebleau, Magic Wood, Zillertal). Analyze what makes this spot special.",
       checklist: [
@@ -216,8 +206,24 @@ Train in the **gym** to get stronger, learn specific movements, and refine your 
         { text: "What is the best season to boulder there?", checked: false },
         { text: "Are there any special rules of conduct or access restrictions for the area?", checked: false },
       ]
-    },
-    quiz: [
+    }
+  },
+  quiz: {
+    de: [
+      {
+        question: "Was sind die zwei wichtigsten zusätzlichen Sicherheitsaspekte beim Outdoor-Bouldern?",
+        answer: "Ein Crashpad zur Landungssicherung und korrektes Spotting durch Kletterpartner."
+      },
+      {
+        question: "Was bedeutet 'Leave No Trace' (LNT)?",
+        answer: "Es bedeutet, die Natur so zu verlassen, wie man sie vorgefunden hat – ohne Müll, Beschädigungen oder unnötige Spuren zu hinterlassen."
+      },
+      {
+        question: "Nenne zwei Vorteile des Hallenboulderns gegenüber dem Felsklettern.",
+        answer: "Es ist wetterunabhängig, hat eine höhere Dichte an Routen auf kleinem Raum und bietet eine kontrollierte, sichere Lernumgebung."
+      }
+    ],
+    en: [
       {
         question: "What are the two most important additional safety aspects of outdoor bouldering?",
         answer: "A crash pad for landing safety and proper spotting by climbing partners."

@@ -1,11 +1,16 @@
-
 import { Users, MessagesSquare, Trophy, Heart, Share2, Youtube, Instagram, Link, BrainCircuit, Lightbulb } from 'lucide-react';
 
 export const theBoulderingCommunity = {
-  de: {
-    title: "Die Boulder-Community: Mehr als nur ein Sport",
-    description: "Tauche tief ein in die einzigartige Kultur des Boulderns, von der kollaborativen Atmosphäre in der Halle bis zu den globalen Online-Netzwerken.",
-    content: `
+  title: {
+    de: "Die Boulder-Community: Mehr als nur ein Sport",
+    en: "The Bouldering Community: More Than Just a Sport"
+  },
+  description: {
+    de: "Tauche tief ein in die einzigartige Kultur des Boulderns, von der kollaborativen Atmosphäre in der Halle bis zu den globalen Online-Netzwerken.",
+    en: "Dive deep into the unique culture of bouldering, from the collaborative atmosphere in the gym to global online networks."
+  },
+  content: {
+    de: `
 ### Du kletterst nie allein
 
 Vom ersten Moment an, in dem du eine Boulderhalle betrittst, bist du Teil einer weltweiten Gemeinschaft. Die Kultur ist geprägt von einer einzigartigen Mischung aus individueller Herausforderung und kollektiver Unterstützung. Der wahre Gegner ist nie der andere Kletterer, sondern immer der Boulder selbst. Das schweißt zusammen.
@@ -107,35 +112,7 @@ Wettkämpfe sind eine großartige Möglichkeit, die Community zu erleben. Viele 
 *   **Nimm an einem Kurs teil:** Ein Anfängerkurs ist der beste Weg, um Grundlagen zu lernen und gleichzeitig neue Leute kennenzulernen.
 *   **Besuche Events:** Halte Ausschau nach Events in deiner lokalen Halle.
     `,
-    task: {
-      title: "Aufgabe: Werde Teil der Online-Community",
-      description: "Tauche in die digitale Welt des Boulderns ein, um Inspiration zu finden und von anderen zu lernen.",
-      checklist: [
-        { text: "Folge 3 professionellen Boulder-Athleten auf Instagram oder YouTube.", checked: false },
-        { text: "Tritt dem r/bouldering Subreddit bei und lies dir die Top-Posts der Woche durch.", checked: false },
-        { text: "Suche auf YouTube nach einem Tutorial zu einer bestimmten Technik, die dich interessiert (z.B. 'Heel Hook Tutorial').", checked: false },
-        { text: "Finde heraus, ob deine lokale Boulderhalle einen Social-Media-Account hat und folge ihm für Neuigkeiten und Events.", checked: false },
-      ]
-    },
-    quiz: [
-      {
-        question: "Was beschreibt die Kultur in den meisten Boulderhallen am besten?",
-        answer: "Kollaborativ, unterstützend und nicht-kompetitiv. Der Fokus liegt auf persönlichem Fortschritt und gemeinsamem Spaß."
-      },
-      {
-        question: "Was ist 'Beta' und wie solltest du damit umgehen?",
-        answer: "'Beta' sind Tipps zur Lösung eines Boulders. Man sollte sie nur geben, wenn man danach gefragt wird."
-      },
-      {
-        question: "Nenne zwei Online-Plattformen, auf denen die Boulder-Community sehr aktiv ist.",
-        answer: "Instagram, YouTube und der Subreddit r/bouldering sind sehr populär."
-      }
-    ]
-  },
-  en: {
-    title: "The Bouldering Community: More Than Just a Sport",
-    description: "Dive deep into the unique culture of bouldering, from the collaborative atmosphere in the gym to global online networks.",
-    content: `
+    en: `
 ### You Never Climb Alone
 
 From the moment you step into a bouldering gym, you are part of a global community. The culture is characterized by a unique mix of individual challenge and collective support. The real opponent is never the other climber, but always the boulder itself. This creates a strong bond.
@@ -235,8 +212,20 @@ Wettkämpfe sind eine großartige Möglichkeit, die Community zu erleben. Viele 
 *   **Be open:** Talk to people and ask for tips if you're stuck.
 *   **Take a class:** A beginner's course is the best way to learn the basics and meet new people at the same time.
 *   **Visit events:** Keep an eye out for events at your local gym.
-    `,
-    task: {
+    `
+  },
+  task: {
+    de: {
+      title: "Aufgabe: Werde Teil der Online-Community",
+      description: "Tauche in die digitale Welt des Boulderns ein, um Inspiration zu finden und von anderen zu lernen.",
+      checklist: [
+        { text: "Folge 3 professionellen Boulder-Athleten auf Instagram oder YouTube.", checked: false },
+        { text: "Tritt dem r/bouldering Subreddit bei und lies dir die Top-Posts der Woche durch.", checked: false },
+        { text: "Suche auf YouTube nach einem Tutorial zu einer bestimmten Technik, die dich interessiert (z.B. 'Heel Hook Tutorial').", checked: false },
+        { text: "Finde heraus, ob deine lokale Boulderhalle einen Social-Media-Account hat und folge ihm für Neuigkeiten und Events.", checked: false },
+      ]
+    },
+    en: {
       title: "Task: Join the Online Community",
       description: "Dive into the digital world of bouldering to find inspiration and learn from others.",
       checklist: [
@@ -245,8 +234,24 @@ Wettkämpfe sind eine großartige Möglichkeit, die Community zu erleben. Viele 
         { text: "Search YouTube for a tutorial on a specific technique that interests you (e.g., 'Heel Hook Tutorial').", checked: false },
         { text: "Find out if your local bouldering gym has a social media account and follow it for news and events.", checked: false },
       ]
-    },
-    quiz: [
+    }
+  },
+  quiz: {
+    de: [
+      {
+        question: "Was beschreibt die Kultur in den meisten Boulderhallen am besten?",
+        answer: "Kollaborativ, unterstützend und nicht-kompetitiv. Der Fokus liegt auf persönlichem Fortschritt und gemeinsamem Spaß."
+      },
+      {
+        question: "Was ist 'Beta' und wie solltest du damit umgehen?",
+        answer: "'Beta' sind Tipps zur Lösung eines Boulders. Man sollte sie nur geben, wenn man danach gefragt wird."
+      },
+      {
+        question: "Nenne zwei Online-Plattformen, auf denen die Boulder-Community sehr aktiv ist.",
+        answer: "Instagram, YouTube und der Subreddit r/bouldering sind sehr populär."
+      }
+    ],
+    en: [
       {
         question: "What best describes the culture in most bouldering gyms?",
         answer: "Collaborative, supportive, and non-competitive. The focus is on personal progress and shared fun."

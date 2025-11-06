@@ -4,10 +4,16 @@ import { useState } from 'react';
 import { InteractiveWelcome } from '../../../../shared/components/InteractiveWelcome';
 
 export const whatIsBouldering = {
-  de: {
-    title: "Willkommen in der Welt des Boulderns",
-    description: "Tauche tief ein in die Welt des Boulderns: ein Puzzle, ein Workout, eine Gemeinschaft und ein Weg zur Selbstentdeckung.",
-    content: `
+  title: {
+    de: "Willkommen in der Welt des Boulderns",
+    en: "Welcome to the World of Bouldering"
+  },
+  description: {
+    de: "Tauche tief ein in die Welt des Boulderns: ein Puzzle, ein Workout, eine Gemeinschaft und ein Weg zur Selbstentdeckung.",
+    en: "Dive deep into the world of bouldering: a puzzle, a workout, a community, and a path to self-discovery."
+  },
+  content: {
+    de: `
 <InteractiveWelcome language="de" />
 
 ### Hey, wie schön, dass du hier bist!
@@ -97,35 +103,7 @@ Der erste Schritt in eine Halle kann einschüchternd wirken, aber keine Sorge, e
 
 **Die ersten Züge:** Suche die einfachsten Routen. Klettere ohne Druck, spiele herum und entdecke, wie sich die Bewegungen anfühlen. Es geht nicht darum, nach oben zu kommen, sondern darum, ein Gefühl für die Wand und deinen Körper zu entwickeln.
     `,
-    task: {
-      title: "Deine erste Mission: Werde zum Beobachter",
-      description: "Der schnellste Weg, Bouldern zu lernen, ist, zuzusehen. Nimm dir bei deinem ersten Hallenbesuch bewusst Zeit, die Kultur und die Bewegungen aufzusaugen.",
-      checklist: [
-        { text: "Finde einen gemütlichen Platz und beobachte 10 Minuten lang das Geschehen. Was fällt dir auf?", checked: false },
-        { text: "Achte darauf, wie erfahrene Kletterer vor einem Boulder stehen und die Griffe 'lesen', bevor sie einsteigen.", checked: false },
-        { text: "Höre auf die Gespräche. Du wirst schnell feststellen, wie hilfsbereit die Community ist und wie offen über 'Beta' (Lösungen) gesprochen wird.", checked: false },
-        { text: "Beobachte, wie unterschiedlich große Menschen dieselbe Route klettern. Du wirst sehen: Es gibt nicht den EINEN richtigen Weg!", checked: false },
-      ]
-    },
-    quiz: [
-      {
-        question: "Was ist der Hauptunterschied zwischen Bouldern und Seilklettern?",
-        answer: "Bouldern findet in geringer Höhe ohne Seil statt und ist auf kurze, intensive Probleme fokussiert. Seilklettern überwindet größere Höhen mit Seilsicherung."
-      },
-      {
-        question: "Welche drei Aspekte macht Bouldern zu einem einzigartigen Sport?",
-        answer: "Die Kombination aus Ganzkörper-Workout (physisch), mentalem Puzzle (kreativ) und einer starken Gemeinschaft (sozial)."
-      },
-      {
-        question: "Was bedeutet 'Beta' in der Boulder-Community?",
-        answer: "'Beta' ist die Information oder die Lösungssequenz für einen Boulder. Beta zu teilen ist ein üblicher und geschätzter Teil der Community."
-      }
-    ]
-  },
-  en: {
-    title: "Welcome to the World of Bouldering",
-    description: "Dive deep into the world of bouldering: a puzzle, a workout, a community, and a path to self-discovery.",
-    content: `
+    en: `
 <InteractiveWelcome language="en" />
 
 ### Hey, so glad you're here!
@@ -213,8 +191,20 @@ The first step into a gym can seem intimidating, but don't worry, it's easier th
 **The Gear:** Comfortable sportswear is all you need. You can rent climbing shoes at any gym.
 
 **The First Moves:** Look for the easiest routes. Climb without pressure, play around, and discover how the movements feel. It's not about getting to the top, but about developing a feel for the wall and your body.
-    `,
-    task: {
+    `
+  },
+  task: {
+    de: {
+      title: "Deine erste Mission: Werde zum Beobachter",
+      description: "Der schnellste Weg, Bouldern zu lernen, ist, zuzusehen. Nimm dir bei deinem ersten Hallenbesuch bewusst Zeit, die Kultur und die Bewegungen aufzusaugen.",
+      checklist: [
+        { text: "Finde einen gemütlichen Platz und beobachte 10 Minuten lang das Geschehen. Was fällt dir auf?", checked: false },
+        { text: "Achte darauf, wie erfahrene Kletterer vor einem Boulder stehen und die Griffe 'lesen', bevor sie einsteigen.", checked: false },
+        { text: "Höre auf die Gespräche. Du wirst schnell feststellen, wie hilfsbereit die Community ist und wie offen über 'Beta' (Lösungen) gesprochen wird.", checked: false },
+        { text: "Beobachte, wie unterschiedlich große Menschen dieselbe Route klettern. Du wirst sehen: Es gibt nicht den EINEN richtigen Weg!", checked: false },
+      ]
+    },
+    en: {
       title: "Your First Mission: Become an Observer",
       description: "The fastest way to learn bouldering is to watch. During your first visit to the gym, consciously take the time to absorb the culture and the movements.",
       checklist: [
@@ -223,8 +213,24 @@ The first step into a gym can seem intimidating, but don't worry, it's easier th
         { text: "Listen to the conversations. You'll quickly realize how supportive the community is and how openly they discuss 'beta' (solutions).", checked: false },
         { text: "Observe how people of different heights climb the same route. You'll see: there isn't just ONE right way!", checked: false },
       ]
-    },
-    quiz: [
+    }
+  },
+  quiz: {
+    de: [
+      {
+        question: "Was ist der Hauptunterschied zwischen Bouldern und Seilklettern?",
+        answer: "Bouldern findet in geringer Höhe ohne Seil statt und ist auf kurze, intensive Probleme fokussiert. Seilklettern überwindet größere Höhen mit Seilsicherung."
+      },
+      {
+        question: "Welche drei Aspekte macht Bouldern zu einem einzigartigen Sport?",
+        answer: "Die Kombination aus Ganzkörper-Workout (physisch), mentalem Puzzle (kreativ) und einer starken Gemeinschaft (sozial)."
+      },
+      {
+        question: "Was bedeutet 'Beta' in der Boulder-Community?",
+        answer: "'Beta' ist die Information oder die Lösungssequenz für einen Boulder. Beta zu teilen ist ein üblicher und geschätzter Teil der Community."
+      }
+    ],
+    en: [
       {
         question: "What is the main difference between bouldering and rope climbing?",
         answer: "Bouldering takes place at low heights without a rope and focuses on short, intense problems. Rope climbing covers greater heights with rope protection."
