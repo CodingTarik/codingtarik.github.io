@@ -44,6 +44,7 @@ import { getPostById } from './blog/utils/blogUtils';
 import CVPage from './cv/components/CVPage';
 
 // Shared Components
+import Footer from './shared/components/Footer';
 import PrivacyPage from './shared/components/PrivacyPage';
 import ImprintPageFooter from './shared/components/ImprintPageFooter';
 
@@ -715,6 +716,9 @@ function AppContent() {
           setCurrentPage={handleSetCurrentPage}
         />
       )}
+
+      {/* Footer - Show on Blog, CV, Privacy, Imprint pages, but NOT on LearnBuddy */}
+      {appView !== 'learnbuddy' && <Footer />}
     </div>
   );
 }

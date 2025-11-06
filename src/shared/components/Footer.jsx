@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Shield, FileText, Cookie } from 'lucide-react';
+import { Shield, FileText, Cookie, Settings } from 'lucide-react';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -8,7 +8,7 @@ export default function Footer() {
   const isBlogView = window.location.hash.startsWith('#/blog');
 
   return (
-    <footer className={`bg-light-background dark:bg-dark-background border-t border-light-border dark:border-dark-border mt-auto ${isBlogView ? 'lg:ml-80' : ''}`}>
+    <footer className={`bg-light-background dark:bg-dark-background border-t border-light-border dark:border-dark-border mt-auto relative z-50 ${isBlogView ? 'lg:ml-80' : ''}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           {/* Links */}
@@ -37,6 +37,13 @@ export default function Footer() {
               <Cookie size={14} />
               <span>Cookie Settings</span>
             </button>
+            <a
+              href="#/admin"
+              className="flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-light-primary dark:hover:text-dark-primary transition-colors font-medium"
+            >
+              <Settings size={14} />
+              <span>Admin</span>
+            </a>
           </div>
 
           {/* Copyright */}
