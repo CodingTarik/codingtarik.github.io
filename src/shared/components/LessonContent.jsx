@@ -18,7 +18,15 @@ import {
 } from 'lucide-react';
 import { InteractiveWelcome } from './InteractiveWelcome';
 
-function LessonContent({ content }) {
+// Grammar game components (dynamic import to avoid issues)
+let GrammarGame = null;
+try {
+  GrammarGame = require('../../buddies/english/components/grammar-games/GrammarGame').default;
+} catch (e) {
+  console.warn('GrammarGame component not available');
+}
+
+function LessonContent({ content, components = {} }) {
   return (
     <div className="prose prose-stone dark:prose-invert max-w-none">
       <Markdown
@@ -114,6 +122,16 @@ function LessonContent({ content }) {
             Lightbulb: { component: Lightbulb },
             // Interactive Components
             InteractiveWelcome: { component: InteractiveWelcome },
+            // Special handler for GamePlaceholder
+            GamePlaceholder: {
+              component: ({ id }) => {
+                if (components[id]) {
+                  return components[id];
+                }
+                return <div className="text-red-500 font-bold">Error: Game component with id "{id}" not found!</div>;
+              },
+            },
+            ...(GrammarGame ? { GrammarGame: { component: GrammarGame } } : {}),
           },
         }}
       >

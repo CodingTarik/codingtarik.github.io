@@ -1,5 +1,5 @@
 // Import A1 Grammar Lessons
-import { presentSimple } from '../lessons/a1_grammar/present-simple';
+import { presentSimple } from '../lessons/a1_grammar/present-simple.jsx';
 
 // Define lesson categories
 export const categories = {

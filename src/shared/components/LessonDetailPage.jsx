@@ -56,7 +56,27 @@ function LessonDetailPage({ lesson, onBack, onSaveTask, onGoToNextLesson }) {
 
       {/* Lesson Content */}
       <div className="bg-white dark:bg-stone-800 rounded-lg shadow-md p-6 mb-6">
-        <LessonContent content={content} />
+        <LessonContent 
+          content={content} 
+          components={lesson.components} 
+        />
+        
+        {/* Interactive Section (if exists) */}
+        {lesson.interactiveSection && (
+          <div className="mt-8">
+            <h2 className="text-2xl font-bold text-stone-800 dark:text-stone-100 mb-6">
+              🎮 {language === 'de' ? 'Interaktive Übungen: Lass uns spielen!' : 'Interactive Practice: Let\'s Play!'}
+            </h2>
+            <lesson.interactiveSection />
+          </div>
+        )}
+        
+        {/* Content after games (if exists) */}
+        {lesson.contentAfterGames && (
+          <div className="mt-8">
+            <LessonContent content={lesson.contentAfterGames} />
+          </div>
+        )}
       </div>
 
       {/* Practical Task */}
