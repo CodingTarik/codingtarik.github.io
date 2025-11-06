@@ -16,7 +16,6 @@ import HomePage from './learnbuddy/shared/components/HomePage';
 import LessonsPage from './learnbuddy/shared/components/LessonsPage';
 import LessonDetailPage from './learnbuddy/shared/components/LessonDetailPage';
 import PlanPage from './learnbuddy/shared/components/PlanPage';
-import ImprintPage from './learnbuddy/shared/components/ImprintPage';
 import SettingsPage from './learnbuddy/shared/components/SettingsPage';
 
 // Boulder-specific components
@@ -45,7 +44,6 @@ import { getPostById } from './blog/utils/blogUtils';
 import CVPage from './cv/components/CVPage';
 
 // Shared Components
-import Footer from './shared/components/Footer';
 import PrivacyPage from './shared/components/PrivacyPage';
 import ImprintPageFooter from './shared/components/ImprintPageFooter';
 
@@ -677,9 +675,6 @@ function AppContent() {
           </div>
         );
       
-      case 'imprint':
-        return <ImprintPage />;
-      
       case 'settings':
         return <SettingsPage />;
       
@@ -720,9 +715,6 @@ function AppContent() {
           setCurrentPage={handleSetCurrentPage}
         />
       )}
-
-      {/* Footer - Show on all pages */}
-      <Footer />
     </div>
   );
 }

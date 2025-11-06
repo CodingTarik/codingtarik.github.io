@@ -1,12 +1,13 @@
 import { useGitHub } from './useGitHub';
 import { Base64 } from 'js-base64';
+import adminConfig from '../config';
 
 export function useGitHubCommit() {
   const { token, user } = useGitHub();
 
-  const REPO_OWNER = 'CodingTarik';
-  const REPO_NAME = 'learn_bouldering';
-  const BRANCH = 'master';
+  const REPO_OWNER = adminConfig.github.owner;
+  const REPO_NAME = adminConfig.github.repo;
+  const BRANCH = adminConfig.github.branch;
 
   /**
    * Commit a file to GitHub

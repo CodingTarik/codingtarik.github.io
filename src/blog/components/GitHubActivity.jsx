@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Github, GitCommit, GitPullRequest, Star, GitFork, Activity, TrendingUp } from 'lucide-react';
+import blogConfig from '../config';
 
-export default function GitHubActivity({ username = 'CodingTarik' }) {
+export default function GitHubActivity({ username = blogConfig.author.github }) {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

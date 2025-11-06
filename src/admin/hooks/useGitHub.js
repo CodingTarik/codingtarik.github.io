@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
+import adminConfig from '../config';
 
 // Configuration
-const GITHUB_CLIENT_ID = import.meta.env.VITE_GITHUB_CLIENT_ID || '';
-const GITHUB_OAUTH_ENABLED = import.meta.env.VITE_GITHUB_OAUTH_ENABLED === 'true';
-const GITHUB_OAUTH_ENDPOINT = import.meta.env.VITE_GITHUB_OAUTH_ENDPOINT || '';
-const GITHUB_REDIRECT_URI = window.location.origin + '/#/admin/callback';
+const GITHUB_CLIENT_ID = adminConfig.github.clientId;
+const GITHUB_OAUTH_ENABLED = adminConfig.github.oauthEnabled;
+const GITHUB_OAUTH_ENDPOINT = adminConfig.github.oauthEndpoint;
+const GITHUB_REDIRECT_URI = adminConfig.github.redirectUri;
 
 export function useGitHub() {
   const [user, setUser] = useState(null);

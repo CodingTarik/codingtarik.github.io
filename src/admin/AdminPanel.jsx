@@ -13,6 +13,7 @@ import GitHubAuth from './components/GitHubAuth';
 import PostEditor from './components/PostEditor';
 import PostList from './components/PostList';
 import { useGitHub } from './hooks/useGitHub';
+import adminConfig from './config';
 
 export default function AdminPanel() {
   const [activeTab, setActiveTab] = useState('posts'); // 'posts', 'new', 'settings'
@@ -195,12 +196,12 @@ export default function AdminPanel() {
               <div className="bg-card rounded-xl border border-border p-8">
                 <h2 className="text-2xl font-bold text-text mb-4">Settings</h2>
                 <div className="space-y-4">
-                  <div>
-                    <h3 className="font-semibold text-text mb-2">GitHub Repository</h3>
-                    <p className="text-sm text-muted">
-                      Connected to: <span className="font-mono text-primary">CodingTarik/learn_bouldering</span>
-                    </p>
-                  </div>
+                <div>
+                  <h3 className="font-semibold text-text mb-2">GitHub Repository</h3>
+                  <p className="text-sm text-muted">
+                    Connected to: <span className="font-mono text-primary">{adminConfig.github.owner}/{adminConfig.github.repo}</span>
+                  </p>
+                </div>
                   <div>
                     <h3 className="font-semibold text-text mb-2">Auto-commit</h3>
                     <label className="flex items-center gap-2">

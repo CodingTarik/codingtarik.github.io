@@ -16,6 +16,7 @@ import {
 import PostPreview from './PostPreview';
 import { useGitHubCommit } from '../hooks/useGitHubCommit';
 import { generatePostId, generatePostTemplate } from '../utils/postUtils';
+import adminConfig from '../config';
 
 export default function PostEditor({ post, onSave, onCancel }) {
   const [showPreview, setShowPreview] = useState(false);
@@ -28,7 +29,7 @@ export default function PostEditor({ post, onSave, onCancel }) {
     title: post?.title || '',
     description: post?.description || '',
     content: post?.content || '',
-    author: post?.author || 'Tarik Azzouzi',
+    author: post?.author || adminConfig.posts.defaultAuthor,
     date: post?.date || new Date().toISOString().split('T')[0],
     categories: post?.categories?.join(', ') || '',
     thumbnail: post?.thumbnail || '',
@@ -93,8 +94,8 @@ export default function PostEditor({ post, onSave, onCancel }) {
 
       // Determine file path
       const fileName = `${formData.id}.js`;
-      const category = categories[0] || 'general';
-      const filePath = `src/blog/posts/${category}/${fileName}`;
+      const category = categories[0] || adminConfig.posts.defaultCategory;
+      const filePath = `${adminConfig.posts.basePath}/${category}/${fileName}`;
 
       // Commit to GitHub
       await commitPost(filePath, postContent, post ? 'Update' : 'Create');

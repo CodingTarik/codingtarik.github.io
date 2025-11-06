@@ -5,6 +5,7 @@ import { getAllCategories } from '../utils/blogUtils';
 import { useTheme } from '../../learnbuddy/context/ThemeContext';
 import { generateRSSFeed } from '../utils/rssUtils';
 import { trackSocialClick, trackCoffeeClick, trackRSSClick, trackCategoryClick } from './Analytics';
+import blogConfig from '../config';
 
 // Custom Discord Icon Component
 const DiscordIcon = ({ size = 18 }) => (
@@ -42,37 +43,37 @@ export default function BlogSidebar({
     {
       icon: Github,
       label: 'GitHub',
-      url: 'https://github.com/CodingTarik',
+      url: blogConfig.social.github,
       color: 'hover:text-text'
     },
     {
       icon: Linkedin,
       label: 'LinkedIn', 
-      url: 'https://www.linkedin.com/in/tarik-azzouzi/',
+      url: blogConfig.social.linkedin,
       color: 'hover:text-primary'
     },
     {
       icon: Box,
       label: 'HackTheBox',
-      url: 'https://app.hackthebox.com/profile/477139',
+      url: blogConfig.social.hackthebox,
       color: 'hover:text-green-600 dark:hover:text-green-400'
     },
     {
       icon: Target,
       label: 'TryHackMe',
-      url: 'https://tryhackme.com/p/CodingTarik',
+      url: blogConfig.social.tryhackme,
       color: 'hover:text-red-600 dark:hover:text-red-400'
     },
     {
       icon: DiscordIcon,
       label: 'Discord',
-      url: 'https://discord.gg/xggTvK2',
+      url: blogConfig.social.discord,
       color: 'hover:text-primary'
     },
     {
       icon: Mail,
       label: 'Email',
-      url: 'mailto:BlogCodingTarik@web.de',
+      url: blogConfig.social.email,
       color: 'hover:text-text'
     }
   ];
@@ -141,7 +142,7 @@ export default function BlogSidebar({
           Tarik Azzouzi
         </motion.h2>
         <motion.a 
-          href="https://github.com/CodingTarik" 
+          href={blogConfig.social.github}
           target="_blank" 
           rel="noopener noreferrer"
           className="text-sm text-muted hover:text-primary transition-colors inline-block"
@@ -150,7 +151,7 @@ export default function BlogSidebar({
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
         >
-          @CodingTarik
+          @{blogConfig.author.github}
         </motion.a>
         </motion.div>
 
@@ -228,7 +229,7 @@ export default function BlogSidebar({
 
         {/* Buy Me a Coffee */}
         <a
-          href="https://www.buymeacoffee.com/tarikazzouzi"
+          href={blogConfig.support.buyMeCoffee}
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => trackCoffeeClick()}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Heart, Code, Coffee } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
+import learnBuddyConfig from '../../config';
 
 function SupportBanner() {
   const { language } = useLanguage();
@@ -34,7 +35,7 @@ function SupportBanner() {
         
         <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
           <a
-            href="https://buymeacoffee.com/yourname"
+            href={learnBuddyConfig.support.buyMeCoffee}
             target="_blank"
             rel="noopener noreferrer"
             className="bg-white text-teal-600 hover:bg-teal-50 px-6 py-3 rounded-lg font-semibold shadow-lg transition-all transform hover:scale-105 flex items-center gap-2"
@@ -44,7 +45,7 @@ function SupportBanner() {
           </a>
           
           <a
-            href="https://github.com/yourname/learnbuddy"
+            href={learnBuddyConfig.support.github}
             target="_blank"
             rel="noopener noreferrer"
             className="bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-lg font-semibold backdrop-blur-sm transition-all transform hover:scale-105 flex items-center gap-2"
