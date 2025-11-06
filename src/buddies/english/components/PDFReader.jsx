@@ -25,6 +25,7 @@ function PDFReader({ book, onClose, onUpdate }) {
   const containerRef = useRef(null);
   const pageRefs = useRef({});
   const lastTouchDistance = useRef(null);
+  const [highlightedItemId, setHighlightedItemId] = useState(null);
 
   // Update book progress
   useEffect(() => {
@@ -228,7 +229,7 @@ function PDFReader({ book, onClose, onUpdate }) {
     }
   };
 
-  const jumpToPage = (page) => {
+  const jumpToPage = (page, itemId) => {
     const pageElement = pageRefs.current[page];
     if (pageElement && containerRef.current) {
       const container = containerRef.current;
@@ -237,6 +238,12 @@ function PDFReader({ book, onClose, onUpdate }) {
         top: pageTop - 20,
         behavior: 'smooth'
       });
+      
+      // Highlight the item briefly
+      setHighlightedItemId(itemId);
+      setTimeout(() => {
+        setHighlightedItemId(null);
+      }, 2000); // Clear after 2 seconds
     }
   };
 
@@ -266,8 +273,10 @@ function PDFReader({ book, onClose, onUpdate }) {
                 {book.savedWords.map(word => (
                   <div
                     key={word.id}
-                    className="bg-stone-50 dark:bg-stone-700 rounded-lg p-3 hover:shadow-md transition-all cursor-pointer group"
-                    onClick={() => jumpToPage(word.page)}
+                    className={`bg-stone-50 dark:bg-stone-700 rounded-lg p-3 hover:shadow-md transition-all cursor-pointer group ${
+                      highlightedItemId === word.id ? 'animate-highlight' : ''
+                    }`}
+                    onClick={() => jumpToPage(word.page, word.id)}
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex-1">
@@ -309,8 +318,10 @@ function PDFReader({ book, onClose, onUpdate }) {
                 {book.savedSentences.map(sentence => (
                   <div
                     key={sentence.id}
-                    className="bg-stone-50 dark:bg-stone-700 rounded-lg p-3 hover:shadow-md transition-all cursor-pointer group"
-                    onClick={() => jumpToPage(sentence.page)}
+                    className={`bg-stone-50 dark:bg-stone-700 rounded-lg p-3 hover:shadow-md transition-all cursor-pointer group ${
+                      highlightedItemId === sentence.id ? 'animate-highlight' : ''
+                    }`}
+                    onClick={() => jumpToPage(sentence.page, sentence.id)}
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex-1">
@@ -541,6 +552,32 @@ function PDFReader({ book, onClose, onUpdate }) {
 
         .pdf-page {
           position: relative !important;
+        }
+
+        @keyframes highlight {
+          0%, 100% {
+            background-color: transparent;
+          }
+          50% {
+            background-color: rgb(250, 204, 21);
+          }
+        }
+
+        .animate-highlight {
+          animation: highlight 2s ease-in-out;
+        }
+
+        .dark .animate-highlight {
+          animation: highlight-dark 2s ease-in-out;
+        }
+
+        @keyframes highlight-dark {
+          0%, 100% {
+            background-color: rgb(41, 37, 36);
+          }
+          50% {
+            background-color: rgb(161, 98, 7);
+          }
         }
       `}</style>
     </div>
