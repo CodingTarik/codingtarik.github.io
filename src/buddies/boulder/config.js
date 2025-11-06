@@ -1,4 +1,5 @@
 import { Mountain, Dumbbell, Calendar, Camera } from 'lucide-react';
+import BoulderHomePage from './components/BoulderHomePage';
 
 export const boulderBuddyConfig = {
   id: 'boulder',
@@ -13,6 +14,7 @@ export const boulderBuddyConfig = {
     accent: 'orange',
     background: 'stone'
   },
+  homePage: BoulderHomePage,
   
   // Shared tabs (always present)
   sharedTabs: ['home', 'lessons', 'plan'],
