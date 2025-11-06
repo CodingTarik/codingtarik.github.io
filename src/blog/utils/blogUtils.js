@@ -1,3 +1,5 @@
+import Fuse from 'fuse.js';
+
 // Import all blog posts
 const postModules = import.meta.glob('../posts/**/*.js', { eager: true });
 
@@ -19,94 +21,117 @@ export const getPostById = (id) => {
 }
 
 /**
- * Advanced semantic search in posts
- * Searches in: title, description, and content
- * Returns posts sorted by relevance
+ * Advanced fuzzy search using Fuse.js
+ * Searches in: title, description, content, categories, and author
+ * Returns posts sorted by relevance with match highlighting
  */
 export function searchPostsAdvanced(query) {
   if (!query || query.trim() === '') {
     return [];
   }
 
-  const lowerQuery = query.toLowerCase().trim();
-  const searchTerms = lowerQuery.split(' ').filter(term => term.length > 0);
-  
-  const posts = getAllPosts();
-  const scoredPosts = [];
+  const allPosts = getAllPosts();
 
-  posts.forEach(post => {
-    let score = 0;
-    const titleLower = post.title.toLowerCase();
-    const descriptionLower = (post.description || '').toLowerCase();
-    const contentLower = post.content.toLowerCase();
+  // Configure Fuse.js options
+  const fuseOptions = {
+    keys: [
+      { name: 'title', weight: 3.0 },
+      { name: 'description', weight: 2.0 },
+      { name: 'content', weight: 1.0 },
+      { name: 'categories', weight: 1.5 },
+      { name: 'author', weight: 0.5 }
+    ],
+    threshold: 0.4, // 0.0 = perfect match, 1.0 = match anything
+    includeScore: true,
+    includeMatches: true,
+    minMatchCharLength: 2,
+    ignoreLocation: true, // Search entire string
+    useExtendedSearch: true,
+    findAllMatches: true
+  };
 
-    searchTerms.forEach(term => {
-      // Title matches (highest weight)
-      if (titleLower.includes(term)) {
-        score += 10;
-        // Exact word match in title
-        const titleWords = titleLower.split(/\s+/);
-        if (titleWords.includes(term)) {
-          score += 5;
-        }
-      }
+  const fuse = new Fuse(allPosts, fuseOptions);
+  const results = fuse.search(query);
 
-      // Description matches (medium weight)
-      if (descriptionLower.includes(term)) {
-        score += 5;
-        // Exact word match in description
-        const descWords = descriptionLower.split(/\s+/);
-        if (descWords.includes(term)) {
-          score += 3;
-        }
-      }
+  // Return posts with match information
+  return results.map(result => ({
+    ...result.item,
+    searchScore: result.score,
+    matches: result.matches
+  }));
+};
 
-      // Content matches (lower weight but still valuable)
-      if (contentLower.includes(term)) {
-        score += 2;
-        // Count occurrences in content (max 10 bonus points)
-        const occurrences = (contentLower.match(new RegExp(term, 'g')) || []).length;
-        score += Math.min(occurrences * 0.5, 10);
-      }
+/**
+ * Get search suggestions based on partial query
+ */
+export function getSearchSuggestions(query, limit = 5) {
+  if (!query || query.trim().length < 2) {
+    return [];
+  }
 
-      // Category matches
-      if (post.categories) {
-        post.categories.forEach(cat => {
-          if (cat.toLowerCase().includes(term)) {
-            score += 8;
-          }
-        });
-      }
+  const allPosts = getAllPosts();
+  const suggestions = new Set();
 
-      // Author matches
-      if (post.author && post.author.toLowerCase().includes(term)) {
-        score += 3;
-      }
-    });
-
-    // Bonus for matching all search terms
-    const allTermsInTitle = searchTerms.every(term => titleLower.includes(term));
-    const allTermsInDescription = searchTerms.every(term => descriptionLower.includes(term));
+  // Get title suggestions
+  allPosts.forEach(post => {
+    const title = post.title.toLowerCase();
+    const queryLower = query.toLowerCase();
     
-    if (allTermsInTitle) score += 20;
-    if (allTermsInDescription) score += 10;
+    if (title.includes(queryLower)) {
+      suggestions.add(post.title);
+    }
 
-    // Only include posts with a score
-    if (score > 0) {
-      scoredPosts.push({ post, score });
+    // Add category suggestions
+    if (post.categories) {
+      post.categories.forEach(cat => {
+        if (cat.toLowerCase().includes(queryLower)) {
+          suggestions.add(cat);
+        }
+      });
     }
   });
 
-  // Sort by score (highest first), then by date
-  return scoredPosts
-    .sort((a, b) => {
-      if (b.score !== a.score) {
-        return b.score - a.score;
+  return Array.from(suggestions).slice(0, limit);
+}
+
+/**
+ * Get related posts based on categories and content similarity
+ */
+export function getRelatedPosts(postId, limit = 3) {
+  const currentPost = getPostById(postId);
+  if (!currentPost) return [];
+
+  const allPosts = getAllPosts().filter(p => p.id !== postId);
+  
+  // Score posts based on shared categories and content similarity
+  const scoredPosts = allPosts.map(post => {
+    let score = 0;
+
+    // Category overlap
+    if (currentPost.categories && post.categories) {
+      const sharedCategories = currentPost.categories.filter(cat => 
+        post.categories.includes(cat)
+      );
+      score += sharedCategories.length * 10;
+    }
+
+    // Title word overlap
+    const currentWords = new Set(currentPost.title.toLowerCase().split(/\s+/));
+    const postWords = post.title.toLowerCase().split(/\s+/);
+    postWords.forEach(word => {
+      if (currentWords.has(word) && word.length > 3) {
+        score += 2;
       }
-      return new Date(b.post.date) - new Date(a.post.date);
-    })
+    });
+
+    return { post, score };
+  });
+
+  return scoredPosts
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
     .map(item => item.post);
-};
+}
 
 /**
  * Get all unique categories from all posts
