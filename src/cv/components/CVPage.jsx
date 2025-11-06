@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { 
   Printer, Share2, Copy, Globe, Award, Briefcase, GraduationCap, 
   Code, Heart, Languages, MapPin, Mail, Phone, Calendar, ExternalLink,
-  Check, X, Download, Settings
+  Check, X, Download, Settings, Github, Linkedin
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -16,9 +16,12 @@ export default function CVPage() {
 
   // Print Dialog State
   const [printData, setPrintData] = useState({
+    email: '',
     address: '',
     phone: '',
     birthdate: '',
+    birthplace: '',
+    nationality: '',
     includePersonalData: false
   });
 
@@ -107,12 +110,14 @@ export default function CVPage() {
   };
 
   const handlePrintWithPersonalData = () => {
-    // Store data temporarily
-    sessionStorage.setItem('cvPrintData', JSON.stringify(printData));
+    setPrintData({...printData, includePersonalData: true});
     setShowPrintDialog(false);
     setTimeout(() => {
       window.print();
-      sessionStorage.removeItem('cvPrintData');
+      // Reset after printing
+      setTimeout(() => {
+        setPrintData(prev => ({...prev, includePersonalData: false}));
+      }, 1000);
     }, 100);
   };
 
@@ -209,21 +214,72 @@ export default function CVPage() {
                 {language === 'en' ? 'Full-Stack Developer & AI Engineer' : 'Full-Stack Entwickler & KI-Ingenieur'}
               </p>
               
-              <div className="flex flex-wrap gap-4 print:gap-2 text-sm print:text-xs text-slate-600 dark:text-slate-400 print:text-blue-100">
-                <div className="flex items-center gap-2 print:gap-1">
-                  <Mail size={16} className="print:hidden" />
-                  <a href="mailto:BlogCodingTarik@web.de" className="hover:text-blue-500 print:text-blue-100">
-                    BlogCodingTarik@web.de
+              <div className="flex flex-wrap gap-3 print:gap-2 text-sm print:text-xs text-slate-600 dark:text-slate-400 print:text-blue-100">
+                {/* Show personal data only when printing with application data */}
+                {printData.includePersonalData && (
+                  <>
+                    <div className="hidden print:flex items-center gap-1">
+                      <Mail size={13} />
+                      <span>{printData.email}</span>
+                    </div>
+                    {printData.phone && (
+                      <div className="hidden print:flex items-center gap-1">
+                        <Phone size={13} />
+                        <span>{printData.phone}</span>
+                      </div>
+                    )}
+                    {printData.address && (
+                      <div className="hidden print:flex items-center gap-1">
+                        <MapPin size={13} />
+                        <span>{printData.address}</span>
+                      </div>
+                    )}
+                    {printData.birthdate && (
+                      <div className="hidden print:flex items-center gap-1">
+                        <Calendar size={13} />
+                        <span>{printData.birthdate}</span>
+                      </div>
+                    )}
+                    {printData.birthplace && (
+                      <div className="hidden print:flex items-center gap-1">
+                        <MapPin size={13} />
+                        <span>{language === 'en' ? 'Born in' : 'Geboren in'} {printData.birthplace}</span>
+                      </div>
+                    )}
+                    {printData.nationality && (
+                      <div className="hidden print:flex items-center gap-1">
+                        <Globe size={13} />
+                        <span>{printData.nationality}</span>
+                      </div>
+                    )}
+                  </>
+                )}
+                
+                {/* Links - always visible */}
+                <div className="flex items-center gap-1.5">
+                  <Globe size={15} className="print:w-[13px] print:h-[13px]" />
+                  <a href="https://codingtarik.github.io" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 print:text-blue-100 transition-colors">
+                    codingtarik.github.io
                   </a>
                 </div>
-                <div className="flex items-center gap-2 print:gap-1">
-                  <MapPin size={16} className="print:hidden" />
-                  <span>Darmstadt, Germany</span>
+                <div className="flex items-center gap-1.5">
+                  <Github size={15} className="print:w-[13px] print:h-[13px]" />
+                  <a href="https://github.com/codingtarik" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 print:text-blue-100 transition-colors">
+                    github.com/codingtarik
+                  </a>
                 </div>
-                <div className="flex items-center gap-2 print:gap-1">
-                  <Globe size={16} className="print:hidden" />
-                  <a href="https://codingtarik.github.io" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 print:text-blue-100">
-                    codingtarik.github.io
+                <div className="flex items-center gap-1.5">
+                  <Linkedin size={15} className="print:w-[13px] print:h-[13px]" />
+                  <a href="https://www.linkedin.com/in/tarik-azzouzi/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 print:text-blue-100 transition-colors">
+                    linkedin.com/in/tarik-azzouzi
+                  </a>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <svg className="w-[15px] h-[15px] print:w-[13px] print:h-[13px]" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M11.996 0C5.372 0 0 5.372 0 12s5.372 12 11.996 12C18.628 24 24 18.628 24 12S18.628 0 11.996 0zm6.056 17.544c-.214.276-.492.416-.834.416-.12 0-.24-.024-.36-.072l-4.8-2.4c-.24-.12-.408-.336-.408-.6V7.2c0-.432.336-.768.768-.768s.768.336.768.768v6.96l4.416 2.208c.384.192.528.648.336 1.032z"/>
+                  </svg>
+                  <a href="https://app.hackthebox.com/profile/477139" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 print:text-blue-100 transition-colors">
+                    hackthebox.com/profile/477139
                   </a>
                 </div>
               </div>
@@ -538,6 +594,19 @@ export default function CVPage() {
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium mb-1">
+                    {language === 'en' ? 'Private Email' : 'Private E-Mail'}
+                  </label>
+                  <input
+                    type="email"
+                    value={printData.email}
+                    onChange={(e) => setPrintData({...printData, email: e.target.value})}
+                    className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700"
+                    placeholder="your.email@example.com"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-1">
                     {language === 'en' ? 'Full Address' : 'Vollständige Adresse'}
                   </label>
                   <input
@@ -571,6 +640,32 @@ export default function CVPage() {
                     value={printData.birthdate}
                     onChange={(e) => setPrintData({...printData, birthdate: e.target.value})}
                     className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-1">
+                    {language === 'en' ? 'Place of Birth' : 'Geburtsort'}
+                  </label>
+                  <input
+                    type="text"
+                    value={printData.birthplace}
+                    onChange={(e) => setPrintData({...printData, birthplace: e.target.value})}
+                    className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700"
+                    placeholder={language === 'en' ? 'City, Country' : 'Stadt, Land'}
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-1">
+                    {language === 'en' ? 'Nationality' : 'Staatsangehörigkeit'}
+                  </label>
+                  <input
+                    type="text"
+                    value={printData.nationality}
+                    onChange={(e) => setPrintData({...printData, nationality: e.target.value})}
+                    className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700"
+                    placeholder={language === 'en' ? 'e.g., German' : 'z.B. Deutsch'}
                   />
                 </div>
               </div>
@@ -761,11 +856,12 @@ export default function CVPage() {
             margin-bottom: 0.8rem !important;
             width: 100vw !important;
             max-width: none !important;
-            padding: 15mm 12mm 1.5rem 12mm !important;
+            padding: 10mm 12mm 1rem 12mm !important;
             border-radius: 0 !important;
             background-color: #1e40af !important;
             background-image: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #6366f1 100%) !important;
             box-shadow: none !important;
+            border-bottom: 3px solid #1e293b !important;
           }
           
           /* Force all child elements to have transparent background */
@@ -791,10 +887,25 @@ export default function CVPage() {
           
           /* Professional typography */
           .cv-print-container h1 {
-            font-size: 2rem !important;
-            margin-bottom: 0.2rem !important;
+            font-size: 1.75rem !important;
+            margin-bottom: 0.15rem !important;
             color: #1e3a8a !important;
             font-weight: 700 !important;
+          }
+          
+          /* Compact header text */
+          .cv-print-container .cv-header h1 {
+            font-size: 1.75rem !important;
+            margin-bottom: 0.15rem !important;
+          }
+          
+          .cv-print-container .cv-header p {
+            font-size: 0.9rem !important;
+            margin-bottom: 0.3rem !important;
+          }
+          
+          .cv-print-container .cv-header .text-sm {
+            font-size: 0.8rem !important;
           }
           
           .cv-print-container h2 {
@@ -877,10 +988,10 @@ export default function CVPage() {
             background: #faf5ff !important;
           }
           
-          /* Professional profile picture - larger rectangular without border */
+          /* Professional profile picture - compact rectangular without border */
           .cv-print-container .cv-header img {
-            width: 128px !important;
-            height: 160px !important;
+            width: 100px !important;
+            height: 130px !important;
             border-radius: 0.5rem !important;
             border: none !important;
             box-shadow: 0 8px 16px rgba(0,0,0,0.25) !important;
