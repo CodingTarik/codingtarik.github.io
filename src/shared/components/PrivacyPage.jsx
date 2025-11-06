@@ -39,8 +39,10 @@ export default function PrivacyPage() {
           <p>
             The person responsible for data processing on this website is:<br />
             <strong>Tarik Azzouzi</strong><br />
-            {/* TODO: Add address */}
-            Email: your.email@example.com
+            Nieder-Ramstädter-Straße 187<br />
+            64285 Darmstadt<br />
+            Germany<br />
+            Email: <a href="mailto:BlogCodingTarik@web.de">BlogCodingTarik@web.de</a>
           </p>
 
           <h2>3. Analytics</h2>

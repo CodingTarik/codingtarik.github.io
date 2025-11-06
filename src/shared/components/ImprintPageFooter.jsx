@@ -27,19 +27,20 @@ export default function ImprintPageFooter() {
         {/* Content */}
         <div className="bg-light-card dark:bg-dark-card rounded-lg border border-light-border dark:border-dark-border p-6 md:p-8">
           <div className="prose dark:prose-invert max-w-none">
-            <h2>Information according to § 5 TMG</h2>
+            <h2>Angaben gemäß § 5 TMG</h2>
             <p>
               <strong>Tarik Azzouzi</strong><br />
-              {/* TODO: Add full address */}
-              Street and House Number<br />
-              Postal Code, City<br />
+              Nieder-Ramstädter-Straße 187<br />
+              64285 Darmstadt<br />
               Germany
             </p>
 
-            <h2>Contact</h2>
+            <h2>Kontakt</h2>
             <p>
-              Email: your.email@example.com<br />
-              GitHub: <a href="https://github.com/CodingTarik" target="_blank" rel="noopener noreferrer">@CodingTarik</a>
+              Telefon: +49 1590 2299884<br />
+              E-Mail: <a href="mailto:BlogCodingTarik@web.de">BlogCodingTarik@web.de</a><br />
+              GitHub: <a href="https://github.com/CodingTarik" target="_blank" rel="noopener noreferrer">@CodingTarik</a><br />
+              LinkedIn: <a href="https://www.linkedin.com/in/tarik-azzouzi/" target="_blank" rel="noopener noreferrer">Tarik Azzouzi</a>
             </p>
 
             <h2>Liability for Content</h2>

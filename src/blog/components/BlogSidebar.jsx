@@ -48,31 +48,31 @@ export default function BlogSidebar({
     {
       icon: Linkedin,
       label: 'LinkedIn', 
-      url: 'https://linkedin.com/in/tarikazzouzi', // TODO: Anpassen
+      url: 'https://www.linkedin.com/in/tarik-azzouzi/',
       color: 'hover:text-primary'
     },
     {
       icon: Box,
       label: 'HackTheBox',
-      url: 'https://app.hackthebox.com/profile/yourprofile', // TODO: Anpassen
+      url: 'https://app.hackthebox.com/profile/477139',
       color: 'hover:text-green-600 dark:hover:text-green-400'
     },
     {
       icon: Target,
       label: 'TryHackMe',
-      url: 'https://tryhackme.com/p/yourprofile', // TODO: Anpassen
+      url: 'https://tryhackme.com/p/CodingTarik',
       color: 'hover:text-red-600 dark:hover:text-red-400'
     },
     {
       icon: DiscordIcon,
       label: 'Discord',
-      url: 'https://discord.com/users/yourid', // TODO: Anpassen
+      url: 'https://discord.gg/xggTvK2',
       color: 'hover:text-primary'
     },
     {
       icon: Mail,
       label: 'Email',
-      url: 'mailto:your.email@example.com', // TODO: Anpassen
+      url: 'mailto:BlogCodingTarik@web.de',
       color: 'hover:text-text'
     }
   ];
