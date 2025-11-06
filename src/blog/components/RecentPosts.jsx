@@ -10,8 +10,8 @@ export default function RecentPosts({ onPostClick, currentPostId }) {
 
   return (
     <div className="mt-8">
-      <div className="bg-white dark:bg-stone-800 rounded-lg shadow-sm border border-stone-200 dark:border-stone-700 p-4">
-        <h3 className="text-sm font-semibold text-stone-600 dark:text-stone-400 mb-3 flex items-center gap-2 uppercase tracking-wide">
+      <div className="bg-card rounded-lg border border-border p-4">
+        <h3 className="text-sm font-semibold text-muted mb-3 flex items-center gap-2 uppercase tracking-wider">
           <Calendar size={14} />
           <span>Recent Posts</span>
         </h3>
@@ -23,7 +23,7 @@ export default function RecentPosts({ onPostClick, currentPostId }) {
               onClick={() => onPostClick(post.id)}
               className="w-full text-left group"
             >
-              <div className="p-3 rounded-lg hover:bg-stone-50 dark:hover:bg-stone-700/50 transition-all">
+              <div className="p-3 rounded-lg hover:bg-background transition-all">
                 {/* Thumbnail if available */}
                 {post.thumbnail && (
                   <div className="aspect-video w-full overflow-hidden rounded-md mb-2">
@@ -36,12 +36,12 @@ export default function RecentPosts({ onPostClick, currentPostId }) {
                 )}
                 
                 {/* Title */}
-                <h4 className="text-sm font-semibold text-stone-900 dark:text-stone-100 mb-1 line-clamp-2 group-hover:text-stone-600 dark:group-hover:text-stone-300 transition-colors">
+                <h4 className="text-sm font-semibold text-text mb-1 line-clamp-2 group-hover:text-primary transition-colors">
                   {post.title}
                 </h4>
                 
                 {/* Date */}
-                <div className="flex items-center gap-2 text-xs text-stone-500 dark:text-stone-400">
+                <div className="flex items-center gap-2 text-xs text-muted">
                   <Calendar size={12} />
                   <span>{formatDate(post.date)}</span>
                 </div>
@@ -51,7 +51,7 @@ export default function RecentPosts({ onPostClick, currentPostId }) {
         </div>
         
         {recentPosts.length === 0 && (
-          <p className="text-sm text-stone-500 dark:text-stone-400 text-center py-4">
+          <p className="text-sm text-muted text-center py-4">
             No more posts available
           </p>
         )}

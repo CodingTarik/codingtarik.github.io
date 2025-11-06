@@ -109,7 +109,7 @@ export default function PostDetail({ post, onBack, onPostClick }) {
         {/* Back Button */}
         <button
           onClick={onBack}
-          className="flex items-center gap-2 text-stone-600 dark:text-stone-400 hover:text-purple-600 dark:hover:text-purple-400 mb-6 transition-colors"
+          className="flex items-center gap-2 text-muted hover:text-primary mb-6 transition-colors font-medium"
         >
           <ArrowLeft size={20} />
           <span>Back to overview</span>
@@ -123,9 +123,9 @@ export default function PostDetail({ post, onBack, onPostClick }) {
               {post.categories.map(category => (
                 <span
                   key={category}
-                  className="inline-flex items-center gap-1 px-2 md:px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-full text-xs md:text-sm font-medium"
+                  className="inline-flex items-center gap-1.5 px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-bold"
                 >
-                  <Tag size={14} />
+                  <Tag size={12} />
                   {category}
                 </span>
               ))}
@@ -133,73 +133,73 @@ export default function PostDetail({ post, onBack, onPostClick }) {
           )}
 
           {/* Title */}
-          <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-stone-800 dark:text-stone-100 mb-4">
+          <h1 className="text-3xl md:text-5xl font-extrabold text-text mb-4 tracking-tight">
             {post.title}
           </h1>
 
           {/* Description */}
           {post.description && (
-            <p className="text-base md:text-xl text-stone-600 dark:text-stone-400 mb-6">
+            <p className="text-lg md:text-xl text-muted">
               {post.description}
             </p>
           )}
 
           {/* Meta Information */}
-          <div className="flex flex-wrap items-center gap-4 text-sm text-stone-500 dark:text-stone-400 pb-6 border-b border-stone-200 dark:border-stone-700">
-            <div className="flex items-center gap-1">
-              <Calendar size={16} />
+          <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted pt-6 border-t border-border">
+            <div className="flex items-center gap-1.5">
+              <Calendar size={14} />
               <span>{formatDate(post.date)}</span>
             </div>
-            <div className="flex items-center gap-1">
-              <Clock size={16} />
-              <span>{readingTime} Min. Lesezeit</span>
+            <div className="flex items-center gap-1.5">
+              <Clock size={14} />
+              <span>{readingTime} min read</span>
             </div>
             {post.author && (
-              <div className="flex items-center gap-1">
-                <span>von <strong>{post.author}</strong></span>
+              <div className="flex items-center gap-1.5">
+                <span>by {post.author}</span>
               </div>
             )}
-            <button
+            <div className="flex-grow"></div>
+            <button 
               onClick={handleShare}
-              className="ml-auto flex items-center gap-1 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+              className="flex items-center gap-1.5 hover:text-primary transition-colors"
             >
-              <Share2 size={16} />
-              <span>Teilen</span>
+              <Share2 size={14} />
+              <span>Share</span>
             </button>
           </div>
         </header>
 
-        {/* Thumbnail (if available) */}
+        {/* Thumbnail */}
         {post.thumbnail && (
-          <div className="mb-8 rounded-lg overflow-hidden">
+          <div className="my-8 aspect-video overflow-hidden rounded-xl shadow-lg border border-border">
             <img
               src={post.thumbnail}
               alt={post.title}
-              className="w-full h-auto"
+              className="w-full h-full object-cover"
             />
           </div>
         )}
-
-        {/* Post Content */}
-        <div className="prose prose-lg prose-stone dark:prose-invert max-w-none">
+        
+        {/* Content */}
+        <div className="prose prose-lg dark:prose-invert max-w-none
+          prose-headings:font-bold prose-headings:text-text prose-headings:scroll-mt-24
+          prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:pb-2 prose-h2:border-b prose-h2:border-border
+          prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3
+          prose-p:text-muted prose-p:leading-relaxed
+          prose-a:text-primary prose-a:font-medium prose-a:no-underline hover:prose-a:underline
+          prose-code:text-secondary prose-code:bg-secondary/10 prose-code:px-1.5 prose-code:py-1 prose-code:rounded-md prose-code:font-mono
+          prose-pre:bg-card prose-pre:text-text prose-pre:p-4 prose-pre:rounded-lg prose-pre:overflow-x-auto prose-pre:scrollbar-thin
+          prose-img:rounded-lg prose-img:shadow-md
+          prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:bg-background prose-blockquote:p-4 prose-blockquote:text-base
+          prose-ul:text-muted
+          prose-ol:text-muted
+          prose-li:my-1
+          prose-strong:text-text
+        ">
           <Markdown
             options={{
               overrides: {
-                // Custom styling for markdown elements
-                h1: {
-                  component: ({ children, ...props }) => {
-                    const id = children
-                      ?.toString()
-                      .toLowerCase()
-                      .replace(/[^a-z0-9]+/g, '-')
-                      .replace(/(^-|-$)/g, '');
-                    return (
-                      <h1 id={id} className="text-3xl font-bold text-stone-800 dark:text-stone-100 mt-8 mb-4 scroll-mt-20" {...props}>
-                        {children}
-                      </h1>
-                    );
-                  },
-                },
                 h2: {
                   component: ({ children, ...props }) => {
                     const id = children
@@ -207,11 +207,7 @@ export default function PostDetail({ post, onBack, onPostClick }) {
                       .toLowerCase()
                       .replace(/[^a-z0-9]+/g, '-')
                       .replace(/(^-|-$)/g, '');
-                    return (
-                      <h2 id={id} className="text-2xl font-bold text-stone-800 dark:text-stone-100 mt-6 mb-3 scroll-mt-20" {...props}>
-                        {children}
-                      </h2>
-                    );
+                    return <h2 id={id} {...props}>{children}</h2>;
                   },
                 },
                 h3: {
@@ -221,51 +217,7 @@ export default function PostDetail({ post, onBack, onPostClick }) {
                       .toLowerCase()
                       .replace(/[^a-z0-9]+/g, '-')
                       .replace(/(^-|-$)/g, '');
-                    return (
-                      <h3 id={id} className="text-xl font-bold text-stone-800 dark:text-stone-100 mt-4 mb-2 scroll-mt-20" {...props}>
-                        {children}
-                      </h3>
-                    );
-                  },
-                },
-                p: {
-                  props: {
-                    className: 'text-stone-700 dark:text-stone-300 mb-4 leading-relaxed',
-                  },
-                },
-                a: {
-                  props: {
-                    className: 'text-purple-600 dark:text-purple-400 hover:underline',
-                  },
-                },
-                code: {
-                  props: {
-                    className: 'bg-stone-100 dark:bg-stone-800 px-2 py-1 rounded text-sm',
-                  },
-                },
-                pre: {
-                  props: {
-                    className: 'bg-stone-800 dark:bg-stone-900 p-4 rounded-lg overflow-x-auto my-4',
-                  },
-                },
-                ul: {
-                  props: {
-                    className: 'list-disc list-inside space-y-2 mb-4',
-                  },
-                },
-                ol: {
-                  props: {
-                    className: 'list-decimal list-inside space-y-2 mb-4',
-                  },
-                },
-                blockquote: {
-                  props: {
-                    className: 'border-l-4 border-purple-500 pl-4 italic text-stone-600 dark:text-stone-400 my-4',
-                  },
-                },
-                img: {
-                  props: {
-                    className: 'rounded-lg my-6 w-full h-auto',
+                    return <h3 id={id} {...props}>{children}</h3>;
                   },
                 },
               },
@@ -276,10 +228,10 @@ export default function PostDetail({ post, onBack, onPostClick }) {
         </div>
 
         {/* Post Footer */}
-        <footer className="mt-12 pt-6 border-t border-stone-200 dark:border-stone-700">
+        <footer className="mt-12 pt-8 border-t border-border">
           <button
             onClick={onBack}
-            className="flex items-center gap-2 text-purple-600 dark:text-purple-400 hover:underline font-medium"
+            className="flex items-center gap-2 text-primary hover:underline font-medium"
           >
             <ArrowLeft size={20} />
             <span>Back to overview</span>

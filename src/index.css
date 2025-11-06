@@ -2,60 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom Scrollbar Styles */
-@layer utilities {
-  /* Firefox */
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: #a8a29e #f5f5f4;
+@layer base {
+  :root {
+    --background: 249 250 251; /* #F9FAFB */
+    --text: 31 41 55;         /* #1F2937 */
+    --primary: 109 40 217;      /* #6D28D9 */
+    --secondary: 5 150 105;     /* #059669 */
+    --accent: 220 38 38;        /* #DC2626 */
+    --border: 229 231 235;      /* #E5E7EB */
+    --card: 255 255 255;      /* #FFFFFF */
+    --card-border: 243 244 246; /* #F3F4F6 */
+    --text-muted: 107 114 128;   /* #6B7280 */
   }
-
-  .dark * {
-    scrollbar-color: #57534e #292524;
+  .dark {
+    --background: 18 18 18;       /* #121212 */
+    --text: 234 234 234;      /* #EAEAEA */
+    --primary: 187 134 252;     /* #BB86FC */
+    --secondary: 3 218 198;     /* #03DAC6 */
+    --accent: 207 102 121;      /* #CF6679 */
+    --border: 46 46 46;         /* #2E2E2E */
+    --card: 30 30 30;           /* #1E1E1E */
+    --card-border: 42 42 42;      /* #2A2A2A */
+    --text-muted: 156 163 175;   /* #9CA3AF */
   }
-
-  /* Webkit browsers (Chrome, Safari, Edge) */
-  ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: #f5f5f4;
-    border-radius: 5px;
-  }
-
-  .dark ::-webkit-scrollbar-track {
-    background: #292524;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: #a8a29e;
-    border-radius: 5px;
-    border: 2px solid #f5f5f4;
-  }
-
-  .dark ::-webkit-scrollbar-thumb {
-    background: #57534e;
-    border: 2px solid #292524;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: #78716c;
-  }
-
-  .dark ::-webkit-scrollbar-thumb:hover {
-    background: #78716c;
-  }
-
-  /* Thin scrollbar variant */
-  .scrollbar-thin::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-
-  .scrollbar-thin::-webkit-scrollbar-thumb {
-    border-width: 1px;
+  body {
+    @apply bg-background text-text;
   }
 }
 

@@ -115,8 +115,8 @@ export default function TableOfContents({ content }) {
 
   return (
     <nav className="sticky top-8">
-      <div className="bg-white dark:bg-stone-800 rounded-lg shadow-sm border border-stone-200 dark:border-stone-700 p-4 max-h-[calc(100vh-6rem)] overflow-y-auto scrollbar-thin">
-        <h3 className="text-sm font-semibold text-stone-600 dark:text-stone-400 mb-3 flex items-center gap-2 uppercase tracking-wide">
+      <div className="bg-card rounded-lg border border-border p-4 max-h-[calc(100vh-6rem)] overflow-y-auto scrollbar-thin">
+        <h3 className="text-sm font-semibold text-muted mb-3 flex items-center gap-2 uppercase tracking-wider">
           <List size={14} />
           <span>Contents</span>
         </h3>
@@ -138,13 +138,13 @@ export default function TableOfContents({ content }) {
                         e.stopPropagation();
                         toggleH2(h2.id, e);
                       }}
-                      className="flex-shrink-0 px-1 hover:bg-stone-100 dark:hover:bg-stone-700/50 rounded transition-colors cursor-pointer"
+                      className="flex-shrink-0 px-1 hover:bg-background rounded transition-colors cursor-pointer"
                       aria-label={isExpanded ? 'Collapse' : 'Expand'}
                     >
                       {isExpanded ? (
-                        <ChevronDown size={14} className="text-stone-600 dark:text-stone-400 pointer-events-none" />
+                        <ChevronDown size={14} className="text-muted pointer-events-none" />
                       ) : (
-                        <ChevronRight size={14} className="text-stone-600 dark:text-stone-400 pointer-events-none" />
+                        <ChevronRight size={14} className="text-muted pointer-events-none" />
                       )}
                     </button>
                   )}
@@ -159,8 +159,8 @@ export default function TableOfContents({ content }) {
                       !hasChildren ? 'ml-5' : ''
                     } ${
                       activeId === h2.id
-                        ? 'bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 font-medium'
-                        : 'text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 hover:bg-stone-100 dark:hover:bg-stone-700/50'
+                        ? 'bg-primary/10 text-primary font-medium'
+                        : 'text-muted hover:text-text hover:bg-background'
                     }`}
                   >
                     <span className="line-clamp-2 pointer-events-none">{h2.text}</span>
@@ -181,15 +181,14 @@ export default function TableOfContents({ content }) {
                           }}
                           className={`w-full text-left text-sm py-1.5 px-2 rounded transition-all flex items-start gap-2 group cursor-pointer ${
                             activeId === h3.id
-                              ? 'bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 font-medium'
-                              : 'text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 hover:bg-stone-100 dark:hover:bg-stone-700/50'
+                              ? 'bg-primary/10 text-primary font-medium'
+                              : 'text-muted hover:text-text hover:bg-background'
                           }`}
                         >
-                          <ChevronRight 
-                            size={12} 
-                            className="mt-0.5 flex-shrink-0 pointer-events-none"
-                          />
-                          <span className="line-clamp-2 text-xs pointer-events-none">{h3.text}</span>
+                          <div className="w-4 h-4 flex-shrink-0 flex items-center justify-center">
+                            <div className="w-1 h-1 bg-muted rounded-full group-hover:bg-primary"></div>
+                          </div>
+                          <span className="line-clamp-2 text-xs">{h3.text}</span>
                         </button>
                       </li>
                     ))}

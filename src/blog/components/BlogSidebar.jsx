@@ -41,13 +41,13 @@ export default function BlogSidebar({
       icon: Github,
       label: 'GitHub',
       url: 'https://github.com/CodingTarik',
-      color: 'hover:text-stone-900 dark:hover:text-white'
+      color: 'hover:text-text'
     },
     {
       icon: Linkedin,
       label: 'LinkedIn', 
       url: 'https://linkedin.com/in/tarikazzouzi', // TODO: Anpassen
-      color: 'hover:text-blue-600 dark:hover:text-blue-400'
+      color: 'hover:text-primary'
     },
     {
       icon: Box,
@@ -65,13 +65,13 @@ export default function BlogSidebar({
       icon: DiscordIcon,
       label: 'Discord',
       url: 'https://discord.com/users/yourid', // TODO: Anpassen
-      color: 'hover:text-indigo-600 dark:hover:text-indigo-400'
+      color: 'hover:text-primary'
     },
     {
       icon: Mail,
       label: 'Email',
       url: 'mailto:your.email@example.com', // TODO: Anpassen
-      color: 'hover:text-stone-900 dark:hover:text-stone-100'
+      color: 'hover:text-text'
     }
   ];
 
@@ -80,50 +80,45 @@ export default function BlogSidebar({
       {/* Mobile Overlay */}
       {isOpen && (
         <div 
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          className="fixed inset-0 bg-black/60 z-40 lg:hidden"
           onClick={onClose}
         />
       )}
 
       {/* Sidebar */}
       <div className={`
-        fixed left-0 top-0 bottom-0 w-80 bg-white dark:bg-stone-900 border-r border-stone-200 dark:border-stone-800 flex flex-col z-50
+        fixed left-0 top-0 bottom-0 w-80 bg-background border-r border-border flex flex-col z-50
         transition-transform duration-300 ease-in-out
         ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
         {/* Mobile Close Button */}
         <button
           onClick={onClose}
-          className="lg:hidden absolute top-4 right-4 p-2 rounded-lg hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
+          className="lg:hidden absolute top-4 right-4 p-2 rounded-lg hover:bg-border transition-colors"
         >
-          <X size={24} className="text-stone-600 dark:text-stone-400" />
+          <X size={24} className="text-text" />
         </button>
 
         {/* Header - Profile */}
-        <div className="p-6 border-b border-stone-200 dark:border-stone-800">
+        <div className="p-6 border-b border-border text-center">
         {/* Profile Photo Placeholder */}
-        <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-stone-200 to-stone-300 dark:from-stone-700 dark:to-stone-800 flex items-center justify-center">
-          <User size={40} className="text-stone-500 dark:text-stone-400" />
+        <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-border to-gray-200 dark:to-gray-800 flex items-center justify-center ring-4 ring-background">
+          <User size={40} className="text-muted" />
         </div>
         
-        {/* Name & Username */}
-        <div className="text-center">
-          <h1 className="text-xl font-bold text-stone-900 dark:text-stone-100 mb-1">
-            Tarik Azzouzi
-          </h1>
-          <a
-            href="https://github.com/CodingTarik"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 transition-colors"
-          >
-            @CodingTarik
-          </a>
+        <h2 className="text-xl font-bold text-text">Tarik Azzouzi</h2>
+        <a 
+          href="https://github.com/CodingTarik" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="text-sm text-muted hover:text-primary transition-colors"
+        >
+          @CodingTarik
+        </a>
         </div>
-      </div>
 
       {/* Navigation Tabs */}
-      <nav className="border-b border-stone-200 dark:border-stone-800">
+      <nav className="border-b border-border">
         {tabs.map(tab => {
           const Icon = tab.icon;
           return (
@@ -136,40 +131,40 @@ export default function BlogSidebar({
                   onTabChange(tab.id);
                 }
               }}
-              className={`w-full px-6 py-3 text-left font-medium transition-all ${
+              className={`w-full px-6 py-3 text-left font-medium transition-all flex items-center gap-3 group ${
                 selectedTab === tab.id
-                  ? 'bg-stone-100 dark:bg-stone-800 text-stone-900 dark:text-stone-100 border-l-4 border-stone-900 dark:border-stone-100'
-                  : 'text-stone-600 dark:text-stone-400 hover:bg-stone-50 dark:hover:bg-stone-800/50'
+                  ? 'bg-border/50 text-primary border-l-4 border-primary'
+                  : 'text-muted hover:bg-border/30 hover:text-text'
               }`}
             >
-              <div className="flex items-center gap-2">
-                {Icon && <Icon size={18} />}
-                <span>{tab.label}</span>
-              </div>
+              {Icon && <Icon size={18} className="group-hover:text-primary transition-colors" />}
+              <span>{tab.label}</span>
             </button>
           );
         })}
       </nav>
 
       {/* Main Content Area - Empty, content shows on the right */}
-      <div className="flex-1"></div>
+      <div className="flex-grow overflow-y-auto p-6 scrollbar-thin">
+        
+      </div>
 
-      {/* Bottom Section - Go to LearnBuddy, Buy Me a Coffee, Theme Toggle & Social */}
-      <div className="p-6 border-t border-stone-200 dark:border-stone-800 space-y-3">
+      {/* Footer Buttons */}
+      <div className="p-6 border-t border-border space-y-3">
         {/* Go to LearnBuddy Button */}
-        {onBackToLearnBuddy && (
-          <button
-            onClick={onBackToLearnBuddy}
-            className="w-full bg-gradient-to-r from-teal-500 to-orange-500 text-white rounded-lg shadow-lg p-3 hover:shadow-xl hover:scale-[1.02] transition-all flex items-center justify-center gap-2 font-semibold"
-          >
-            <BookOpen size={18} />
-            <span>Go to LearnBuddy</span>
-          </button>
-        )}
+        <button
+          onClick={onBackToLearnBuddy}
+          className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-lg shadow-md p-3 hover:shadow-lg hover:scale-[1.02] transition-all flex items-center justify-center gap-2 font-semibold"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          <span>Go to LearnBuddy</span>
+        </button>
 
-        {/* Buy Me a Coffee Button */}
+        {/* Buy Me a Coffee */}
         <a
-          href="https://www.buymeacoffee.com/yourname" // TODO: Deine Buy Me a Coffee URL
+          href="https://www.buymeacoffee.com/tarikazzouzi"
           target="_blank"
           rel="noopener noreferrer"
           className="w-full bg-amber-500 hover:bg-amber-600 text-white rounded-lg shadow-md p-3 hover:shadow-lg hover:scale-[1.02] transition-all flex items-center justify-center gap-2 font-semibold"
@@ -197,7 +192,7 @@ export default function BlogSidebar({
         {/* Theme Toggle */}
         <button
           onClick={toggleTheme}
-          className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 transition-all text-sm font-medium text-stone-700 dark:text-stone-300"
+          className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-border/50 hover:bg-border transition-all text-sm font-medium text-text"
         >
           {isDark ? (
             <>
@@ -206,14 +201,14 @@ export default function BlogSidebar({
             </>
           ) : (
             <>
-              <Moon size={16} className="text-stone-600" />
+              <Moon size={16} className="text-muted" />
               <span>Dark Mode</span>
             </>
           )}
         </button>
 
         {/* Social Media Links */}
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-3 gap-2 pt-2">
           {socialLinks.map(link => {
             const Icon = link.icon;
             return (
@@ -222,7 +217,7 @@ export default function BlogSidebar({
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`flex items-center justify-center p-2 rounded-lg bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 transition-all ${link.color}`}
+                className={`flex items-center justify-center p-2 rounded-lg bg-border/50 text-muted transition-all ${link.color}`}
                 title={link.label}
               >
                 <Icon size={18} />

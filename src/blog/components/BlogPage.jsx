@@ -1,11 +1,12 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Search, Menu, X, Tag } from 'lucide-react';
+import { Search, Menu, X, Tag, Filter } from 'lucide-react';
 import PostCard from './PostCard';
 import BlogSidebar from './BlogSidebar';
 import CategoriesPage from './CategoriesPage';
 import ProjectsPage from './ProjectsPage';
 import { getAllPosts, getPostsByCategory, getAllCategories } from '../utils/blogUtils';
 import { generateBlogStructuredData, injectStructuredData } from '../utils/seoUtils';
+import SearchBar from './SearchBar';
 
 export default function BlogPage({ onPostClick, onBackToLearnBuddy }) {
   const [searchQuery, setSearchQuery] = useState('');
@@ -87,7 +88,7 @@ export default function BlogPage({ onPostClick, onBackToLearnBuddy }) {
   };
 
   return (
-    <div className="min-h-screen bg-stone-50 dark:bg-stone-900 flex">
+    <div className="flex">
       {/* Left Sidebar */}
       <BlogSidebar
         onBackToLearnBuddy={onBackToLearnBuddy}
@@ -104,7 +105,7 @@ export default function BlogPage({ onPostClick, onBackToLearnBuddy }) {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsSidebarOpen(true)}
-          className="lg:hidden fixed bottom-6 right-6 p-4 bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 rounded-full shadow-lg hover:scale-110 transition-transform z-30"
+          className="lg:hidden fixed bottom-6 right-6 p-4 bg-primary text-white rounded-full shadow-lg hover:scale-110 transition-transform z-30"
         >
           <Menu size={24} />
         </button>
@@ -114,26 +115,18 @@ export default function BlogPage({ onPostClick, onBackToLearnBuddy }) {
           {selectedTab === 'posts' && (
             <div className="mb-6">
               {/* Search Bar */}
-              <div className="flex justify-end mb-4">
-                <div className="relative w-full md:w-96">
-                  <Search
-                    className="absolute left-3 top-1/2 transform -translate-y-1/2 text-stone-400"
-                    size={18}
-                  />
-                  <input
-                    type="text"
-                    placeholder="Search posts..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2 bg-white dark:bg-stone-800 border border-stone-300 dark:border-stone-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900 dark:focus:ring-stone-100 text-sm text-stone-900 dark:text-stone-100 placeholder-stone-500"
-                  />
-                </div>
+              <div className="mb-4">
+                <SearchBar
+                  onSearch={(query) => {
+                    window.location.hash = `#/blog/search?q=${encodeURIComponent(query)}`;
+                  }}
+                />
               </div>
 
               {/* Category Filter Section */}
               <div className="flex flex-wrap items-center gap-2 mb-4">
-                <span className="text-sm text-stone-600 dark:text-stone-400 font-medium">
-                  Filter:
+                <span className="text-sm font-medium text-muted">
+                  Filter by category:
                 </span>
                 
                 {/* Show all categories as filter chips */}
@@ -141,37 +134,25 @@ export default function BlogPage({ onPostClick, onBackToLearnBuddy }) {
                   <button
                     key={category}
                     onClick={() => handleCategorySelect(category === selectedCategory ? null : category)}
-                    className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium transition-all ${
+                    className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition-all ${
                       selectedCategory === category
-                        ? 'bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 border-2 border-stone-900 dark:border-stone-100'
-                        : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 border border-stone-300 dark:border-stone-600 hover:border-stone-900 dark:hover:border-stone-100'
+                        ? 'bg-primary text-white'
+                        : 'bg-card text-text border border-card-border hover:border-primary'
                     }`}
                   >
-                    <Tag size={12} />
                     <span>{category}</span>
                     {selectedCategory === category && (
                       <X size={12} />
                     )}
                   </button>
                 ))}
-
-                {/* Clear all filters button */}
-                {selectedCategory && (
-                  <button
-                    onClick={() => handleCategorySelect(null)}
-                    className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 border border-red-300 dark:border-red-600 hover:bg-red-200 dark:hover:bg-red-900/50 transition-all"
-                  >
-                    <X size={12} />
-                    <span>Clear Filter</span>
-                  </button>
-                )}
               </div>
 
               {/* Active Filter Badge */}
               {selectedCategory && (
-                <div className="mb-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+                <div className="mb-4 p-3 bg-primary/10 border border-primary/20 rounded-lg">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-sm text-blue-900 dark:text-blue-100">
+                    <div className="flex items-center gap-2 text-sm text-primary">
                       <Tag size={16} />
                       <span>
                         Showing posts in: <strong>{selectedCategory}</strong>
@@ -179,10 +160,10 @@ export default function BlogPage({ onPostClick, onBackToLearnBuddy }) {
                     </div>
                     <button
                       onClick={() => handleCategorySelect(null)}
-                      className="p-1 hover:bg-blue-100 dark:hover:bg-blue-900/40 rounded transition-colors"
+                      className="p-1 hover:bg-primary/20 rounded transition-colors"
                       title="Remove filter"
                     >
-                      <X size={16} className="text-blue-900 dark:text-blue-100" />
+                      <X size={16} className="text-primary" />
                     </button>
                   </div>
                 </div>
@@ -194,7 +175,7 @@ export default function BlogPage({ onPostClick, onBackToLearnBuddy }) {
           {selectedTab === 'posts' && (
             <>
               {filteredPosts.length > 0 ? (
-                <div className="space-y-6">
+                <div className="grid grid-cols-1 gap-6">
                   {filteredPosts.map(post => (
                     <PostCard
                       key={post.id}
@@ -204,21 +185,20 @@ export default function BlogPage({ onPostClick, onBackToLearnBuddy }) {
                   ))}
                 </div>
               ) : (
-                <div className="bg-white dark:bg-stone-800 rounded-lg shadow-sm border border-stone-200 dark:border-stone-700 p-12 text-center">
-                  <p className="text-stone-600 dark:text-stone-400 text-lg">
-                    No posts found.
+                <div className="bg-card rounded-lg border border-border p-12 text-center">
+                  <Filter size={48} className="mx-auto mb-4 text-muted" />
+                  <h3 className="text-xl font-bold mb-2">
+                    No posts found
+                  </h3>
+                  <p className="text-muted mb-4">
+                    There are no posts matching your current filter.
                   </p>
-                  {(searchQuery || selectedCategory) && (
-                    <button
-                      onClick={() => {
-                        setSearchQuery('');
-                        setSelectedCategory(null);
-                      }}
-                      className="mt-4 text-stone-900 dark:text-stone-100 hover:underline font-medium"
-                    >
-                      Reset filters
-                    </button>
-                  )}
+                  <button
+                    onClick={() => handleCategorySelect(null)}
+                    className="text-primary hover:underline font-medium"
+                  >
+                    Clear filter
+                  </button>
                 </div>
               )}
             </>

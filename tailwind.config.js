@@ -1,14 +1,26 @@
 /** @type {import('tailwindcss').Config} */
 const plugin = require('tailwindcss/plugin');
+const { fontFamily } = require('tailwindcss/defaultTheme');
 
 module.exports = {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
   darkMode: 'class',
+  content: ['./index.html', './src/**/*.{js,jsx}'],
   theme: {
     extend: {
+      colors: {
+        background: 'rgb(var(--background) / <alpha-value>)',
+        text: 'rgb(var(--text) / <alpha-value>)',
+        primary: 'rgb(var(--primary) / <alpha-value>)',
+        secondary: 'rgb(var(--secondary) / <alpha-value>)',
+        accent: 'rgb(var(--accent) / <alpha-value>)',
+        border: 'rgb(var(--border) / <alpha-value>)',
+        card: 'rgb(var(--card) / <alpha-value>)',
+        'card-border': 'rgb(var(--card-border) / <alpha-value>)',
+        muted: 'rgb(var(--text-muted) / <alpha-value>)',
+      },
+      fontFamily: {
+        sans: ['Inter', ...fontFamily.sans],
+      },
       keyframes: {
         bounce: {
           '0%, 100%': { transform: 'translateY(-5%)', animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)' },
@@ -36,6 +48,7 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/typography'),
+    require('tailwind-scrollbar'),
     plugin(function({ addUtilities }) {
       addUtilities({
         '.backface-hidden': {

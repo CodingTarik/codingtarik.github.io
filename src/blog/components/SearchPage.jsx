@@ -56,16 +56,15 @@ export default function SearchPage({ onPostClick }) {
   const categories = getAllCategories();
 
   return (
-    <div className="min-h-screen bg-stone-50 dark:bg-stone-900 py-8">
-      <div className="max-w-6xl mx-auto px-4 md:px-8">
+    <div className="min-h-screen py-8">
+      <div className="max-w-4xl mx-auto px-4 md:px-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-stone-900 dark:text-stone-100 mb-4 flex items-center gap-3">
-            <SearchIcon size={32} />
-            <span>Search</span>
+        <div className="mb-8 text-center">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-text mb-4 tracking-tight">
+            Search Posts
           </h1>
-          <p className="text-stone-600 dark:text-stone-400">
-            Search all blog posts by title, description and content
+          <p className="text-lg text-muted">
+            Find what you're looking for across all articles.
           </p>
         </div>
 
@@ -76,17 +75,17 @@ export default function SearchPage({ onPostClick }) {
 
         {/* Category Filter */}
         {searchResults.length > 0 && (
-          <div className="mb-6 flex flex-wrap items-center gap-2">
-            <div className="flex items-center gap-2 text-sm text-stone-600 dark:text-stone-400">
+          <div className="mb-8 flex flex-wrap items-center justify-center gap-2">
+            <div className="flex items-center gap-2 text-sm text-muted">
               <Filter size={16} />
               <span className="font-medium">Filter:</span>
             </div>
             <button
               onClick={() => setSelectedCategory(null)}
-              className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
+              className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
                 selectedCategory === null
-                  ? 'bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900'
-                  : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-700'
+                  ? 'bg-primary text-white'
+                  : 'bg-card border border-card-border hover:border-primary'
               }`}
             >
               All ({searchResults.length})
@@ -102,10 +101,10 @@ export default function SearchPage({ onPostClick }) {
                 <button
                   key={category}
                   onClick={() => setSelectedCategory(selectedCategory === category ? null : category)}
-                  className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
+                  className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
                     selectedCategory === category
-                      ? 'bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900'
-                      : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-700'
+                      ? 'bg-primary text-white'
+                      : 'bg-card border border-card-border hover:border-primary'
                   }`}
                 >
                   {category} ({count})
@@ -118,28 +117,28 @@ export default function SearchPage({ onPostClick }) {
         {/* Results */}
         {isSearching ? (
           <div className="text-center py-12">
-            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-stone-900 dark:border-stone-100"></div>
-            <p className="mt-4 text-stone-600 dark:text-stone-400">Searching...</p>
+            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+            <p className="mt-4 text-muted">Searching...</p>
           </div>
         ) : searchQuery ? (
           <>
             {/* Results Header */}
             <div className="mb-6">
-              <p className="text-stone-600 dark:text-stone-400">
+              <p className="text-muted">
                 {filteredResults.length > 0 ? (
                   <>
-                    <span className="font-semibold text-stone-900 dark:text-stone-100">
+                    <span className="font-semibold text-text">
                       {filteredResults.length}
                     </span>
                     {' '}result{filteredResults.length !== 1 ? 's' : ''} for{' '}
-                    <span className="font-semibold text-stone-900 dark:text-stone-100">
+                    <span className="font-semibold text-text">
                       "{searchQuery}"
                     </span>
                   </>
                 ) : (
                   <>
                     No results for{' '}
-                    <span className="font-semibold text-stone-900 dark:text-stone-100">
+                    <span className="font-semibold text-text">
                       "{searchQuery}"
                     </span>
                   </>
@@ -149,7 +148,7 @@ export default function SearchPage({ onPostClick }) {
 
             {/* Results Grid */}
             {filteredResults.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 gap-6">
                 {filteredResults.map(post => (
                   <PostCard
                     key={post.id}
@@ -159,17 +158,17 @@ export default function SearchPage({ onPostClick }) {
                 ))}
               </div>
             ) : (
-              <div className="bg-white dark:bg-stone-800 rounded-lg shadow-sm border border-stone-200 dark:border-stone-700 p-12 text-center">
-                <SearchIcon size={48} className="mx-auto mb-4 text-stone-400" />
-                <h3 className="text-xl font-bold text-stone-900 dark:text-stone-100 mb-2">
+              <div className="bg-card rounded-lg border border-border p-12 text-center">
+                <SearchIcon size={48} className="mx-auto mb-4 text-muted" />
+                <h3 className="text-xl font-bold mb-2">
                   No results found
                 </h3>
-                <p className="text-stone-600 dark:text-stone-400 mb-4">
+                <p className="text-muted mb-4">
                   Try different keywords or remove filters.
                 </p>
                 <button
                   onClick={() => handleSearch('')}
-                  className="text-purple-600 dark:text-purple-400 hover:underline font-medium"
+                  className="text-primary hover:underline font-medium"
                 >
                   Reset search
                 </button>
@@ -177,12 +176,12 @@ export default function SearchPage({ onPostClick }) {
             )}
           </>
         ) : (
-          <div className="bg-white dark:bg-stone-800 rounded-lg shadow-sm border border-stone-200 dark:border-stone-700 p-12 text-center">
-            <SearchIcon size={64} className="mx-auto mb-4 text-stone-300 dark:text-stone-600" />
-            <h3 className="text-xl font-bold text-stone-900 dark:text-stone-100 mb-2">
+          <div className="bg-card rounded-lg border border-border p-12 text-center">
+            <SearchIcon size={64} className="mx-auto mb-4 text-muted opacity-50" />
+            <h3 className="text-xl font-bold mb-2">
               Start your search
             </h3>
-            <p className="text-stone-600 dark:text-stone-400">
+            <p className="text-muted">
               Enter a search term to find blog posts
             </p>
           </div>

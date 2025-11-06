@@ -578,7 +578,7 @@ function AppContent() {
   };
 
   return (
-    <div className="min-h-screen bg-stone-50 dark:bg-stone-900 flex flex-col">
+    <div className="min-h-screen flex flex-col">
       {/* LearnBuddy Header - Only in LearnBuddy view */}
       {appView === 'learnbuddy' && (
         <GlobalHeader currentView={appView} onViewChange={handleViewChange} />
