@@ -1,4 +1,5 @@
 import { Waves, Timer, TrendingUp } from 'lucide-react';
+import SwimHomePage from './components/SwimHomePage';
 
 export const swimBuddyConfig = {
   id: 'swim',
@@ -12,6 +13,12 @@ export const swimBuddyConfig = {
     primaryColor: '#3b82f6',
     accent: 'cyan',
     background: 'slate'
+  },
+  homePage: SwimHomePage,
+  lessons: {
+    data: [],
+    getLessonById: () => null,
+    getNextLesson: () => null
   },
   
   sharedTabs: ['home', 'lessons', 'plan'],

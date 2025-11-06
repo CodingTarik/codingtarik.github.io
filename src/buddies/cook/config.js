@@ -1,4 +1,5 @@
 import { ChefHat, ShoppingCart, BookOpen } from 'lucide-react';
+import CookHomePage from './components/CookHomePage';
 
 export const cookBuddyConfig = {
   id: 'cook',
@@ -12,6 +13,12 @@ export const cookBuddyConfig = {
     primaryColor: '#f59e0b',
     accent: 'yellow',
     background: 'orange'
+  },
+  homePage: CookHomePage,
+  lessons: {
+    data: [],
+    getLessonById: () => null,
+    getNextLesson: () => null
   },
   
   sharedTabs: ['home', 'lessons', 'plan'],

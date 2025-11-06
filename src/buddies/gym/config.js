@@ -1,4 +1,5 @@
 import { Dumbbell, Calendar, BarChart3 } from 'lucide-react';
+import GymHomePage from './components/GymHomePage';
 
 export const gymBuddyConfig = {
   id: 'gym',
@@ -12,6 +13,12 @@ export const gymBuddyConfig = {
     primaryColor: '#ef4444',
     accent: 'orange',
     background: 'stone'
+  },
+  homePage: GymHomePage,
+  lessons: {
+    data: [],
+    getLessonById: () => null,
+    getNextLesson: () => null
   },
   
   sharedTabs: ['home', 'lessons', 'plan'],

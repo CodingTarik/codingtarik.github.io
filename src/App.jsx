@@ -21,12 +21,6 @@ import TrainingPage from './buddies/boulder/components/TrainingPage';
 import SessionLogger from './buddies/boulder/components/SessionLogger';
 import WorkoutExecutor from './buddies/boulder/components/WorkoutExecutor';
 
-// Buddy Home Pages
-import SwimHomePage from './buddies/swim/components/SwimHomePage';
-import RunHomePage from './buddies/run/components/RunHomePage';
-import GymHomePage from './buddies/gym/components/GymHomePage';
-import CookHomePage from './buddies/cook/components/CookHomePage';
-
 // Data - will be loaded dynamically based on active buddy
 import { lessons as boulderLessons, getLessonById as getBoulderLessonById, getNextLesson as getBoulderNextLesson } from './buddies/boulder/data/lessons';
 
@@ -168,18 +162,15 @@ function AppContent() {
       onStartLesson: () => handleSetCurrentPage('lektionen')
     };
 
-    switch (activeBuddy) {
-      case 'swim':
-        return <SwimHomePage {...commonProps} />;
-      case 'run':
-        return <RunHomePage {...commonProps} />;
-      case 'gym':
-        return <GymHomePage {...commonProps} />;
-      case 'cook':
-        return <CookHomePage {...commonProps} />;
-      default: // boulder
-        return <HomePage {...commonProps} />;
+    // Get the HomePage component from the current buddy's config
+    const BuddyHomePageComponent = currentBuddyConfig.homePage;
+    
+    if (BuddyHomePageComponent) {
+      return <BuddyHomePageComponent {...commonProps} />;
     }
+    
+    // Fallback to generic HomePage if no specific one is defined
+    return <HomePage {...commonProps} />;
   };
 
   // Render custom buddy tabs

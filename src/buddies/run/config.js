@@ -1,4 +1,5 @@
 import { Footprints, MapPin, Trophy } from 'lucide-react';
+import RunHomePage from './components/RunHomePage';
 
 export const runBuddyConfig = {
   id: 'run',
@@ -12,6 +13,12 @@ export const runBuddyConfig = {
     primaryColor: '#22c55e',
     accent: 'lime',
     background: 'emerald'
+  },
+  homePage: RunHomePage,
+  lessons: {
+    data: [],
+    getLessonById: () => null,
+    getNextLesson: () => null
   },
   
   sharedTabs: ['home', 'lessons', 'plan'],
