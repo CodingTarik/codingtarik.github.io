@@ -1,221 +1,215 @@
-import React from 'react';
-import { Mail, Github, Linkedin, MessageCircle, FileText, Calendar, BookOpen, Sun, Moon, Search, Tag, Home } from 'lucide-react';
-import { getRecentPosts, getAllCategories, formatDate } from '../utils/blogUtils';
+import React, { useState } from 'react';
+import { Mail, Github, Linkedin, MessageCircle, FileText, BookOpen, Sun, Moon, User, FolderOpen, Code, Shield, Coffee, Box, Target, X, Rss } from 'lucide-react';
+import { getAllCategories } from '../utils/blogUtils';
 import { useTheme } from '../../learnbuddy/context/ThemeContext';
+import { downloadRSSFeed } from '../utils/rssUtils';
 
 export default function BlogSidebar({ 
-  onPostClick, 
   onBackToLearnBuddy, 
+  selectedTab,
+  onTabChange,
   onCategorySelect,
   selectedCategory,
-  onHomeClick,
-  searchQuery,
-  onSearchChange 
+  isOpen,
+  onClose
 }) {
   const { isDark, toggleTheme } = useTheme();
-  const recentPosts = getRecentPosts(5);
   const categories = getAllCategories();
+
+  const tabs = [
+    { id: 'posts', label: 'Posts', icon: FileText },
+    { id: 'categories', label: 'Categories', icon: FolderOpen },
+    { id: 'projects', label: 'Projects', icon: Code },
+    { id: 'cv', label: 'CV', icon: User }
+  ];
 
   const socialLinks = [
     {
       icon: Github,
       label: 'GitHub',
-      url: 'https://github.com/yourusername', // TODO: Anpassen
-      color: 'hover:text-stone-800 dark:hover:text-white'
+      url: 'https://github.com/CodingTarik',
+      color: 'hover:text-stone-900 dark:hover:text-white'
     },
     {
       icon: Linkedin,
-      label: 'LinkedIn',
-      url: 'https://linkedin.com/in/yourprofile', // TODO: Anpassen
-      color: 'hover:text-blue-600'
+      label: 'LinkedIn', 
+      url: 'https://linkedin.com/in/tarikazzouzi', // TODO: Anpassen
+      color: 'hover:text-blue-600 dark:hover:text-blue-400'
+    },
+    {
+      icon: Box,
+      label: 'HackTheBox',
+      url: 'https://app.hackthebox.com/profile/yourprofile', // TODO: Anpassen
+      color: 'hover:text-green-600 dark:hover:text-green-400'
+    },
+    {
+      icon: Target,
+      label: 'TryHackMe',
+      url: 'https://tryhackme.com/p/yourprofile', // TODO: Anpassen
+      color: 'hover:text-red-600 dark:hover:text-red-400'
     },
     {
       icon: MessageCircle,
       label: 'Discord',
       url: 'https://discord.com/users/yourid', // TODO: Anpassen
-      color: 'hover:text-indigo-500'
+      color: 'hover:text-indigo-600 dark:hover:text-indigo-400'
     },
     {
       icon: Mail,
       label: 'Email',
       url: 'mailto:your.email@example.com', // TODO: Anpassen
-      color: 'hover:text-red-500'
+      color: 'hover:text-stone-900 dark:hover:text-stone-100'
     }
   ];
 
   return (
-    <div className="fixed left-0 top-0 bottom-0 w-80 bg-white dark:bg-stone-900 border-r border-stone-200 dark:border-stone-800 overflow-y-auto">
-      <div className="p-6 space-y-6">
-        {/* Blog Header */}
-        <div>
-          <button
-            onClick={onHomeClick}
-            className="group mb-4"
-          >
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent group-hover:opacity-80 transition-opacity">
-              Tarik's Blog
-            </h1>
-            <p className="text-sm text-stone-600 dark:text-stone-400 mt-1">
-              Gedanken & Projekte
-            </p>
-          </button>
+    <>
+      {/* Mobile Overlay */}
+      {isOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={onClose}
+        />
+      )}
 
-          {/* Theme Toggle */}
-          <div className="flex items-center justify-between mb-4">
-            <button
-              onClick={toggleTheme}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 transition-all text-sm font-medium text-stone-700 dark:text-stone-300"
-            >
-              {isDark ? (
-                <>
-                  <Sun size={16} className="text-amber-500" />
-                  <span>Light Mode</span>
-                </>
-              ) : (
-                <>
-                  <Moon size={16} className="text-stone-600" />
-                  <span>Dark Mode</span>
-                </>
-              )}
-            </button>
-          </div>
+      {/* Sidebar */}
+      <div className={`
+        fixed left-0 top-0 bottom-0 w-80 bg-white dark:bg-stone-900 border-r border-stone-200 dark:border-stone-800 flex flex-col z-50
+        transition-transform duration-300 ease-in-out
+        ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+      `}>
+        {/* Mobile Close Button */}
+        <button
+          onClick={onClose}
+          className="lg:hidden absolute top-4 right-4 p-2 rounded-lg hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
+        >
+          <X size={24} className="text-stone-600 dark:text-stone-400" />
+        </button>
+
+        {/* Header - Profile */}
+        <div className="p-6 border-b border-stone-200 dark:border-stone-800">
+        {/* Profile Photo Placeholder */}
+        <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-stone-200 to-stone-300 dark:from-stone-700 dark:to-stone-800 flex items-center justify-center">
+          <User size={40} className="text-stone-500 dark:text-stone-400" />
         </div>
+        
+        {/* Name & Username */}
+        <div className="text-center">
+          <h1 className="text-xl font-bold text-stone-900 dark:text-stone-100 mb-1">
+            Tarik Azzouzi
+          </h1>
+          <a
+            href="https://github.com/CodingTarik"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 transition-colors"
+          >
+            @CodingTarik
+          </a>
+        </div>
+      </div>
 
-        {/* Back to LearnBuddy Button */}
+      {/* Navigation Tabs */}
+      <nav className="border-b border-stone-200 dark:border-stone-800">
+        {tabs.map(tab => {
+          const Icon = tab.icon;
+          return (
+            <button
+              key={tab.id}
+              onClick={() => onTabChange(tab.id)}
+              className={`w-full px-6 py-3 text-left font-medium transition-all ${
+                selectedTab === tab.id
+                  ? 'bg-stone-100 dark:bg-stone-800 text-stone-900 dark:text-stone-100 border-l-4 border-stone-900 dark:border-stone-100'
+                  : 'text-stone-600 dark:text-stone-400 hover:bg-stone-50 dark:hover:bg-stone-800/50'
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                {Icon && <Icon size={18} />}
+                <span>{tab.label}</span>
+              </div>
+            </button>
+          );
+        })}
+      </nav>
+
+      {/* Main Content Area - Empty, content shows on the right */}
+      <div className="flex-1"></div>
+
+      {/* Bottom Section - Go to LearnBuddy, Buy Me a Coffee, Theme Toggle & Social */}
+      <div className="p-6 border-t border-stone-200 dark:border-stone-800 space-y-3">
+        {/* Go to LearnBuddy Button */}
         {onBackToLearnBuddy && (
           <button
             onClick={onBackToLearnBuddy}
-            className="w-full bg-gradient-to-r from-teal-500 to-orange-500 text-white rounded-xl shadow-lg p-4 hover:shadow-xl hover:scale-[1.02] transition-all flex items-center justify-center gap-2 font-bold"
+            className="w-full bg-gradient-to-r from-teal-500 to-orange-500 text-white rounded-lg shadow-lg p-3 hover:shadow-xl hover:scale-[1.02] transition-all flex items-center justify-center gap-2 font-semibold"
           >
-            <BookOpen size={20} />
+            <BookOpen size={18} />
             <span>Go to LearnBuddy</span>
           </button>
         )}
 
-        {/* Search */}
-        <div className="relative">
-          <Search
-            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-stone-400"
-            size={16}
-          />
-          <input
-            type="text"
-            placeholder="Suche..."
-            value={searchQuery}
-            onChange={(e) => onSearchChange(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 bg-stone-100 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm text-stone-800 dark:text-stone-100"
-          />
-        </div>
+        {/* Buy Me a Coffee Button */}
+        <a
+          href="https://www.buymeacoffee.com/yourname" // TODO: Deine Buy Me a Coffee URL
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-full bg-amber-500 hover:bg-amber-600 text-white rounded-lg shadow-md p-3 hover:shadow-lg hover:scale-[1.02] transition-all flex items-center justify-center gap-2 font-semibold"
+        >
+          <Coffee size={18} />
+          <span>Buy Me a Coffee</span>
+        </a>
 
-        {/* Categories */}
-        {categories.length > 0 && (
-          <div>
-            <h3 className="text-sm font-bold text-stone-800 dark:text-stone-100 mb-3 flex items-center gap-2">
-              <Tag size={16} />
-              Kategorien
-            </h3>
-            <div className="space-y-1">
-              <button
-                onClick={() => onCategorySelect(null)}
-                className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-all ${
-                  selectedCategory === null
-                    ? 'bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300'
-                    : 'text-stone-600 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-stone-800'
-                }`}
-              >
-                Alle Beiträge
-              </button>
-              {categories.map(category => (
-                <button
-                  key={category}
-                  onClick={() => onCategorySelect(category)}
-                  className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-all ${
-                    selectedCategory === category
-                      ? 'bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300'
-                      : 'text-stone-600 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-stone-800'
-                  }`}
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
+        {/* RSS Feed Button */}
+        <button
+          onClick={() => {
+            downloadRSSFeed();
+            alert('RSS Feed wurde heruntergeladen!');
+          }}
+          className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-orange-100 dark:bg-orange-900/30 hover:bg-orange-200 dark:hover:bg-orange-900/50 transition-all text-sm font-medium text-orange-700 dark:text-orange-300"
+        >
+          <Rss size={16} />
+          <span>RSS Feed</span>
+        </button>
 
-        {/* Recent Posts */}
-        <div>
-          <h3 className="text-sm font-bold text-stone-800 dark:text-stone-100 mb-3 flex items-center gap-2">
-            <FileText size={16} />
-            Neueste Beiträge
-          </h3>
-          <div className="space-y-3">
-            {recentPosts.map(post => (
-              <button
-                key={post.id}
-                onClick={() => onPostClick(post.id)}
-                className="w-full text-left group"
-              >
-                <div className="text-sm font-medium text-stone-800 dark:text-stone-200 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors line-clamp-2">
-                  {post.title}
-                </div>
-                <div className="text-xs text-stone-500 dark:text-stone-400 mt-1 flex items-center gap-1">
-                  <Calendar size={12} />
-                  {formatDate(post.date)}
-                </div>
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* About / CV */}
-        <div className="pt-6 border-t border-stone-200 dark:border-stone-800">
-          <h3 className="text-sm font-bold text-stone-800 dark:text-stone-100 mb-3">
-            Über mich
-          </h3>
-          <div className="text-sm text-stone-600 dark:text-stone-400 space-y-3">
-            <p>
-              Hi! Ich bin <strong className="text-stone-800 dark:text-stone-200">Tarik</strong>, 
-              ein Entwickler mit Leidenschaft für Lernen und Technologie.
-            </p>
-            
-            {/* CV/Resume Link */}
-            <a
-              href="/path/to/your/cv.pdf" // TODO: CV-Pfad anpassen
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-purple-600 dark:text-purple-400 hover:underline font-medium"
-            >
-              <FileText size={16} />
-              Lebenslauf (PDF)
-            </a>
-          </div>
-        </div>
+        {/* Theme Toggle */}
+        <button
+          onClick={toggleTheme}
+          className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 transition-all text-sm font-medium text-stone-700 dark:text-stone-300"
+        >
+          {isDark ? (
+            <>
+              <Sun size={16} className="text-amber-500" />
+              <span>Light Mode</span>
+            </>
+          ) : (
+            <>
+              <Moon size={16} className="text-stone-600" />
+              <span>Dark Mode</span>
+            </>
+          )}
+        </button>
 
         {/* Social Media Links */}
-        <div className="pt-6 border-t border-stone-200 dark:border-stone-800">
-          <h3 className="text-sm font-bold text-stone-800 dark:text-stone-100 mb-3">
-            Social Media
-          </h3>
-          <div className="space-y-2">
-            {socialLinks.map(link => {
-              const Icon = link.icon;
-              return (
-                <a
-                  key={link.label}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`flex items-center gap-3 px-3 py-2 rounded-lg text-stone-600 dark:text-stone-300 transition-all ${link.color} hover:bg-stone-100 dark:hover:bg-stone-800`}
-                >
-                  <Icon size={18} />
-                  <span className="text-sm font-medium">{link.label}</span>
-                </a>
-              );
-            })}
-          </div>
+        <div className="grid grid-cols-3 gap-2">
+          {socialLinks.map(link => {
+            const Icon = link.icon;
+            return (
+              <a
+                key={link.label}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`flex items-center justify-center p-2 rounded-lg bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 transition-all ${link.color}`}
+                title={link.label}
+              >
+                <Icon size={18} />
+              </a>
+            );
+          })}
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
 

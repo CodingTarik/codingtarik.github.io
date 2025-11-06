@@ -33,6 +33,9 @@ import BlogPage from './blog/components/BlogPage';
 import PostDetail from './blog/components/PostDetail';
 import { getPostById } from './blog/utils/blogUtils';
 
+// CV Component
+import CVPage from './cv/components/CVPage';
+
 function AppContent() {
   const { activeBuddy, currentBuddyConfig, allBuddies, switchBuddy } = useBuddy();
   const { language } = useLanguage();
@@ -105,6 +108,12 @@ function AppContent() {
     const handleHashChange = () => {
       const hash = window.location.hash;
       
+      // Check for CV route
+      if (hash === '#/cv') {
+        setAppView('cv');
+        return;
+      }
+
       // Check for blog routes
       if (hash.startsWith('#/blog')) {
         setAppView('blog');
@@ -121,7 +130,7 @@ function AppContent() {
           setCurrentPost(null);
         }
         return;
-      } else {
+      } else if (hash !== '#/cv') {
         setAppView('learnbuddy');
       }
       
@@ -338,6 +347,11 @@ function AppContent() {
 
   // Determine what to render
   const renderContent = () => {
+    // CV View
+    if (appView === 'cv') {
+      return <CVPage />;
+    }
+
     // Blog View
     if (appView === 'blog') {
       if (currentPost) {

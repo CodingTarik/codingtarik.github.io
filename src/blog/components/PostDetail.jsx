@@ -106,10 +106,10 @@ export default function PostDetail({ post, onBack }) {
 
   return (
     <div className="min-h-screen bg-stone-50 dark:bg-stone-900 flex">
-      {/* Placeholder for sidebar space */}
-      <div className="w-80"></div>
+      {/* Placeholder for sidebar space - only on desktop */}
+      <div className="hidden lg:block lg:w-80"></div>
       
-      <article className="flex-1 max-w-4xl mx-auto px-8 py-8">
+      <article className="flex-1 max-w-4xl mx-auto px-4 md:px-8 py-4 md:py-8">
         {/* Back Button */}
         <button
           onClick={onBack}
@@ -120,14 +120,14 @@ export default function PostDetail({ post, onBack }) {
         </button>
 
         {/* Post Header */}
-        <header className="mb-8">
+        <header className="mb-6 md:mb-8">
           {/* Categories */}
           {post.categories && post.categories.length > 0 && (
             <div className="flex flex-wrap gap-2 mb-4">
               {post.categories.map(category => (
                 <span
                   key={category}
-                  className="inline-flex items-center gap-1 px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-full text-sm font-medium"
+                  className="inline-flex items-center gap-1 px-2 md:px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-full text-xs md:text-sm font-medium"
                 >
                   <Tag size={14} />
                   {category}
@@ -137,13 +137,13 @@ export default function PostDetail({ post, onBack }) {
           )}
 
           {/* Title */}
-          <h1 className="text-4xl md:text-5xl font-bold text-stone-800 dark:text-stone-100 mb-4">
+          <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-stone-800 dark:text-stone-100 mb-4">
             {post.title}
           </h1>
 
           {/* Description */}
           {post.description && (
-            <p className="text-xl text-stone-600 dark:text-stone-400 mb-6">
+            <p className="text-base md:text-xl text-stone-600 dark:text-stone-400 mb-6">
               {post.description}
             </p>
           )}

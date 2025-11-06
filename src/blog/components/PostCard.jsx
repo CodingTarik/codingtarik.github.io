@@ -8,7 +8,7 @@ export default function PostCard({ post, onClick }) {
   return (
     <article
       onClick={onClick}
-      className="bg-white dark:bg-stone-800 rounded-lg shadow-md hover:shadow-xl transition-all cursor-pointer overflow-hidden group"
+      className="bg-white dark:bg-stone-800 rounded-lg shadow-sm hover:shadow-md border border-stone-200 dark:border-stone-700 transition-all cursor-pointer overflow-hidden group"
     >
       {/* Thumbnail (if available) */}
       {post.thumbnail && (
@@ -21,14 +21,14 @@ export default function PostCard({ post, onClick }) {
         </div>
       )}
       
-      <div className="p-6">
+      <div className="p-4 md:p-6">
         {/* Categories */}
         {post.categories && post.categories.length > 0 && (
           <div className="flex flex-wrap gap-2 mb-3">
             {post.categories.map(category => (
               <span
                 key={category}
-                className="inline-flex items-center gap-1 px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-full text-xs font-medium"
+                className="inline-flex items-center gap-1 px-2 md:px-3 py-1 bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 border border-stone-300 dark:border-stone-600 rounded-full text-xs font-medium"
               >
                 <Tag size={12} />
                 {category}
@@ -38,7 +38,7 @@ export default function PostCard({ post, onClick }) {
         )}
 
         {/* Title */}
-        <h2 className="text-2xl font-bold text-stone-800 dark:text-stone-100 mb-3 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+        <h2 className="text-xl md:text-2xl font-bold text-stone-900 dark:text-stone-100 mb-3 group-hover:text-stone-600 dark:group-hover:text-stone-300 transition-colors">
           {post.title}
         </h2>
 
