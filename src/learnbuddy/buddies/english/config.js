@@ -1,6 +1,7 @@
 import { BookOpen, Headphones, MessageCircle, Languages, BookText } from 'lucide-react';
 import EnglishHomePage from './components/EnglishHomePage';
 import VocabularyPage from './components/VocabularyPage';
+import VideoPlayerPage from './components/VideoPlayerPage';
 import { lessons, getLessonById, getNextLesson } from './data/lessons';
 
 export const englishBuddyConfig = {
@@ -60,7 +61,7 @@ export const englishBuddyConfig = {
       id: 'listening',
       name: { en: 'Listening', de: 'Hören' },
       icon: Headphones,
-      component: 'ListeningPage'
+      component: VideoPlayerPage
     },
     {
       id: 'reading',

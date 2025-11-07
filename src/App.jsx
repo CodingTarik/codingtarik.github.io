@@ -28,6 +28,7 @@ import WorkoutExecutor from './learnbuddy/buddies/boulder/components/WorkoutExec
 import GrammarLevels from './learnbuddy/buddies/english/components/GrammarLevels';
 import ReadingLibrary from './learnbuddy/buddies/english/components/ReadingLibrary';
 import VocabularyPage from './learnbuddy/buddies/english/components/VocabularyPage';
+import VideoPlayerPage from './learnbuddy/buddies/english/components/VideoPlayerPage';
 
 // Blog Components
 import BlogPage from './blog/components/BlogPage';
@@ -344,6 +345,8 @@ function AppContent() {
         return <VocabularyPage />;
       } else if (tabId === 'reading') {
         return <ReadingLibrary />;
+      } else if (tabId === 'listening') {
+        return <VideoPlayerPage />;
       }
       // Other English tabs coming soon
       return (
