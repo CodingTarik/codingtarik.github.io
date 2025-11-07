@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, BookOpen, Edit, Trash2, Play, Brain, TrendingUp } from 'lucide-react';
+import { Plus, BookOpen, Edit, Trash2, Play, Brain, TrendingUp, AlertCircle, RefreshCw } from 'lucide-react';
 import { useLanguage } from '../../../../context/LanguageContext';
 import { getDecks, deleteDeck } from '../../utils/deckStorage';
 import { getDeckStats } from '../../utils/spacedRepetition';
+import { getPendingChangesCount, getPendingChanges, clearPendingChanges, getCachedCards, setCachedCards } from '../../utils/vocabularyCache';
+import { fetchCardsFromSheet, addCardToSheet, updateCardInSheet, deleteCardFromSheet } from '../../utils/googleSheetsAPI';
 
 function DeckList({ onCreateDeck, onEditDeck, onSelectDeck, refreshTrigger }) {
   const { language } = useLanguage();
   const [decks, setDecks] = useState([]);
   const [deckStats, setDeckStats] = useState({});
+  const [pendingCounts, setPendingCounts] = useState({});
+  const [syncingDeck, setSyncingDeck] = useState(null);
 
   useEffect(() => {
     loadDecks();
@@ -16,6 +20,13 @@ function DeckList({ onCreateDeck, onEditDeck, onSelectDeck, refreshTrigger }) {
   const loadDecks = () => {
     const loadedDecks = getDecks();
     setDecks(loadedDecks);
+    
+    // Load pending counts for each deck
+    const counts = {};
+    loadedDecks.forEach(deck => {
+      counts[deck.id] = getPendingChangesCount(deck.id);
+    });
+    setPendingCounts(counts);
     
     // Load stats for each deck (would need to fetch cards from sheets)
     const stats = {};
@@ -40,6 +51,69 @@ function DeckList({ onCreateDeck, onEditDeck, onSelectDeck, refreshTrigger }) {
     )) {
       deleteDeck(deckId);
       loadDecks();
+    }
+  };
+
+  const handleSync = async (deck, event) => {
+    event.stopPropagation(); // Prevent triggering deck selection
+    setSyncingDeck(deck.id);
+    
+    try {
+      const pending = getPendingChanges(deck.id);
+      let errors = [];
+      
+      // Process deletes first (in reverse order to maintain indices)
+      for (const index of pending.deletes.sort((a, b) => b - a)) {
+        try {
+          await deleteCardFromSheet(deck.scriptUrl, index);
+        } catch (e) {
+          errors.push(`Delete at index ${index}: ${e.message}`);
+        }
+      }
+      
+      // Process updates
+      for (const { index, card } of pending.updates) {
+        try {
+          await updateCardInSheet(deck.scriptUrl, index, card);
+        } catch (e) {
+          errors.push(`Update at index ${index}: ${e.message}`);
+        }
+      }
+      
+      // Process adds
+      for (const card of pending.adds) {
+        try {
+          const { _tempId, ...cardWithoutTemp } = card;
+          await addCardToSheet(deck.scriptUrl, cardWithoutTemp);
+        } catch (e) {
+          errors.push(`Add card "${card.word}": ${e.message}`);
+        }
+      }
+      
+      if (errors.length > 0) {
+        console.error('Sync errors:', errors);
+        alert(
+          (language === 'en' ? 'Some changes failed to sync:\n' : 'Einige Änderungen konnten nicht synchronisiert werden:\n') +
+          errors.join('\n')
+        );
+      } else {
+        // Clear pending changes and reload from Google Sheets
+        clearPendingChanges(deck.id);
+        
+        // Fetch fresh data from Google Sheets
+        const fetchedCards = await fetchCardsFromSheet(deck.scriptUrl);
+        setCachedCards(deck.id, fetchedCards);
+        
+        // Reload the deck list to update pending counts
+        loadDecks();
+        
+        alert(language === 'en' ? 'All changes synced successfully!' : 'Alle Änderungen erfolgreich synchronisiert!');
+      }
+    } catch (error) {
+      console.error('Sync error:', error);
+      alert(language === 'en' ? 'Sync failed' : 'Synchronisierung fehlgeschlagen');
+    } finally {
+      setSyncingDeck(null);
     }
   };
 
@@ -95,6 +169,7 @@ function DeckList({ onCreateDeck, onEditDeck, onSelectDeck, refreshTrigger }) {
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {decks.map(deck => {
           const stats = deckStats[deck.id] || { total: 0, new: 0, learning: 0, mature: 0, due: 0 };
+          const pendingCount = pendingCounts[deck.id] || 0;
           
           return (
             <div
@@ -104,7 +179,15 @@ function DeckList({ onCreateDeck, onEditDeck, onSelectDeck, refreshTrigger }) {
               {/* Deck Header */}
               <div className="bg-gradient-to-r from-rose-500 to-pink-500 p-4">
                 <div className="flex items-start justify-between mb-2">
-                  <BookOpen className="text-white" size={32} />
+                  <div className="flex items-center gap-2">
+                    <BookOpen className="text-white" size={32} />
+                    {pendingCount > 0 && (
+                      <span className="px-2 py-0.5 bg-orange-500 text-white text-xs font-bold rounded-full flex items-center gap-1">
+                        <AlertCircle size={12} />
+                        {pendingCount}
+                      </span>
+                    )}
+                  </div>
                   <div className="flex gap-1">
                     <button
                       onClick={() => onEditDeck(deck)}
@@ -125,6 +208,14 @@ function DeckList({ onCreateDeck, onEditDeck, onSelectDeck, refreshTrigger }) {
                 <h3 className="text-xl font-bold text-white mb-1">{deck.name}</h3>
                 {deck.description && (
                   <p className="text-sm text-white/80 line-clamp-2">{deck.description}</p>
+                )}
+                {pendingCount > 0 && (
+                  <p className="text-xs text-orange-200 mt-2 flex items-center gap-1">
+                    <AlertCircle size={12} />
+                    {language === 'en' 
+                      ? `${pendingCount} change${pendingCount > 1 ? 's' : ''} not synced`
+                      : `${pendingCount} Änderung${pendingCount > 1 ? 'en' : ''} nicht synchronisiert`}
+                  </p>
                 )}
               </div>
 
@@ -170,6 +261,20 @@ function DeckList({ onCreateDeck, onEditDeck, onSelectDeck, refreshTrigger }) {
 
                 {/* Action Buttons */}
                 <div className="space-y-2">
+                  {/* Sync Button - only show if there are pending changes */}
+                  {pendingCount > 0 && (
+                    <button
+                      onClick={(e) => handleSync(deck, e)}
+                      disabled={syncingDeck === deck.id}
+                      className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-bold rounded-xl hover:shadow-lg transition-all disabled:opacity-50"
+                    >
+                      <RefreshCw size={18} className={syncingDeck === deck.id ? 'animate-spin' : ''} />
+                      {syncingDeck === deck.id
+                        ? (language === 'en' ? 'Syncing...' : 'Synchronisiere...')
+                        : (language === 'en' ? `Sync ${pendingCount} changes` : `${pendingCount} Änderungen syncen`)}
+                    </button>
+                  )}
+                  
                   <button
                     onClick={() => onSelectDeck(deck, 'spaced')}
                     className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-rose-500 to-pink-500 text-white font-bold rounded-xl hover:shadow-lg transition-all"

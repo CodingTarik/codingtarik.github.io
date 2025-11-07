@@ -1,10 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, RotateCcw, Check, Trophy, TrendingUp } from 'lucide-react';
+import { ArrowLeft, RotateCcw, Check, Trophy, TrendingUp, Volume2, VolumeX, RefreshCw } from 'lucide-react';
 import { useLanguage } from '../../../../context/LanguageContext';
-import { fetchCardsFromSheet, updateCardInSheet } from '../../utils/googleSheetsAPI';
+import { fetchCardsFromSheet, updateCardInSheet, addCardToSheet, deleteCardFromSheet } from '../../utils/googleSheetsAPI';
 import { getDueCards, calculateNextReview, RATING } from '../../utils/spacedRepetition';
 import { saveReviewSession } from '../../utils/deckStorage';
+import { 
+  getCachedCards, 
+  setCachedCards, 
+  updateCardLocally,
+  getPendingChanges,
+  clearPendingChanges,
+  getPendingChangesCount
+} from '../../utils/vocabularyCache';
 import ReactMarkdown from 'react-markdown';
+import VocabularyMascot, { getMotivationalMessage } from './VocabularyMascot';
+import ConfettiEffect from './ConfettiEffect';
+import * as sounds from '../../utils/vocabularySounds';
 
 function SpacedRepetitionMode({ deck, onBack }) {
   const { language } = useLanguage();
@@ -13,6 +24,8 @@ function SpacedRepetitionMode({ deck, onBack }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [syncing, setSyncing] = useState(false);
+  const [pendingCount, setPendingCount] = useState(0);
   const [sessionStats, setSessionStats] = useState({
     again: 0,
     hard: 0,
@@ -21,15 +34,38 @@ function SpacedRepetitionMode({ deck, onBack }) {
     total: 0
   });
   const [sessionComplete, setSessionComplete] = useState(false);
+  const [streak, setStreak] = useState(0);
+  const [mascotMessage, setMascotMessage] = useState('');
+  const [mascotMood, setMascotMood] = useState('happy');
+  const [showMascot, setShowMascot] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [soundsEnabled, setSoundsEnabled] = useState(sounds.areSoundsEnabled());
+  const [isFlipping, setIsFlipping] = useState(false);
 
   useEffect(() => {
     loadCards();
+    updatePendingCount();
   }, [deck]);
 
-  const loadCards = async () => {
+  const updatePendingCount = () => {
+    setPendingCount(getPendingChangesCount(deck.id));
+  };
+
+  const loadCards = async (forceRefresh = false) => {
     setLoading(true);
     try {
-      const fetchedCards = await fetchCardsFromSheet(deck.scriptUrl);
+      // Try to load from cache first
+      const cached = getCachedCards(deck.id);
+      
+      let fetchedCards;
+      if (!forceRefresh && cached && cached.cards) {
+        fetchedCards = cached.cards;
+      } else {
+        // Fetch from Google Sheets
+        fetchedCards = await fetchCardsFromSheet(deck.scriptUrl);
+        setCachedCards(deck.id, fetchedCards);
+      }
+      
       setAllCards(fetchedCards);
       
       const due = getDueCards(fetchedCards);
@@ -46,45 +82,146 @@ function SpacedRepetitionMode({ deck, onBack }) {
     }
   };
 
-  const handleRating = async (rating) => {
+  const showMascotWithMessage = (message, mood = 'happy') => {
+    setMascotMessage(message);
+    setMascotMood(mood);
+    setShowMascot(true);
+  };
+
+  const toggleSound = () => {
+    const newState = !soundsEnabled;
+    setSoundsEnabled(newState);
+    sounds.saveSoundSettings(newState);
+    sounds.playButtonClick();
+  };
+
+  const handleRating = (rating) => {
     const currentCard = dueCards[currentIndex];
     const updatedCard = calculateNextReview(currentCard, rating);
     
-    // Update card in Google Sheets
-    try {
-      const cardIndex = allCards.findIndex(c => c === currentCard);
-      await updateCardInSheet(deck.scriptUrl, cardIndex, updatedCard);
+    // Sound effects and mascot feedback
+    if (rating >= RATING.GOOD) {
+      sounds.playCorrect();
+      const newStreak = streak + 1;
+      setStreak(newStreak);
       
-      // Update session stats
-      const newStats = { ...sessionStats, total: sessionStats.total + 1 };
-      switch (rating) {
-        case RATING.AGAIN:
-          newStats.again++;
-          break;
-        case RATING.HARD:
-          newStats.hard++;
-          break;
-        case RATING.GOOD:
-          newStats.good++;
-          break;
-        case RATING.EASY:
-          newStats.easy++;
-          break;
+      // Streak milestones
+      if (newStreak === 3) {
+        sounds.playStreak();
+        showMascotWithMessage(getMotivationalMessage('streak3', language), 'excited');
+      } else if (newStreak === 5) {
+        sounds.playStreak();
+        showMascotWithMessage(getMotivationalMessage('streak5', language), 'celebrating');
+      } else if (newStreak === 10) {
+        sounds.playLevelUp();
+        sounds.playCelebration();
+        setShowConfetti(true);
+        showMascotWithMessage(getMotivationalMessage('streak10', language), 'celebrating');
+      } else if (newStreak % 5 === 0 && newStreak > 10) {
+        sounds.playStreak();
+        showMascotWithMessage(getMotivationalMessage('correct', language), 'proud');
+      } else {
+        showMascotWithMessage(getMotivationalMessage('correct', language), 'happy');
       }
-      setSessionStats(newStats);
-      
-      // Move to next card
-      if (currentIndex < dueCards.length - 1) {
+    } else {
+      sounds.playWrong();
+      setStreak(0);
+      showMascotWithMessage(getMotivationalMessage('encouragement', language), 'encouraging');
+    }
+    
+    // Update locally (instant feedback, no network delay!)
+    const cardIndex = allCards.findIndex(c => c === currentCard);
+    updateCardLocally(deck.id, cardIndex, updatedCard);
+    updatePendingCount();
+    
+    // Update session stats
+    const newStats = { ...sessionStats, total: sessionStats.total + 1 };
+    switch (rating) {
+      case RATING.AGAIN:
+        newStats.again++;
+        break;
+      case RATING.HARD:
+        newStats.hard++;
+        break;
+      case RATING.GOOD:
+        newStats.good++;
+        break;
+      case RATING.EASY:
+        newStats.easy++;
+        break;
+    }
+    setSessionStats(newStats);
+    
+    // Move to next card
+    if (currentIndex < dueCards.length - 1) {
+      setTimeout(() => {
+        sounds.playWhoosh();
         setCurrentIndex(currentIndex + 1);
         setShowAnswer(false);
+      }, 800);
+    } else {
+      // Session complete
+      sounds.playLevelUp();
+      sounds.playCelebration();
+      setShowConfetti(true);
+      showMascotWithMessage(getMotivationalMessage('sessionComplete', language), 'celebrating');
+      saveReviewSession(deck.id, newStats);
+      setTimeout(() => setSessionComplete(true), 1500);
+    }
+  };
+
+  const handleSync = async () => {
+    setSyncing(true);
+    try {
+      const pending = getPendingChanges(deck.id);
+      let errors = [];
+      
+      // Process deletes first (in reverse order to maintain indices)
+      for (const index of pending.deletes.sort((a, b) => b - a)) {
+        try {
+          await deleteCardFromSheet(deck.scriptUrl, index);
+        } catch (e) {
+          errors.push(`Delete at index ${index}: ${e.message}`);
+        }
+      }
+      
+      // Process updates (including review progress)
+      for (const { index, card } of pending.updates) {
+        try {
+          await updateCardInSheet(deck.scriptUrl, index, card);
+        } catch (e) {
+          errors.push(`Update at index ${index}: ${e.message}`);
+        }
+      }
+      
+      // Process adds
+      for (const card of pending.adds) {
+        try {
+          const { _tempId, ...cardWithoutTemp } = card;
+          await addCardToSheet(deck.scriptUrl, cardWithoutTemp);
+        } catch (e) {
+          errors.push(`Add card "${card.word}": ${e.message}`);
+        }
+      }
+      
+      if (errors.length > 0) {
+        console.error('Sync errors:', errors);
+        alert(
+          (language === 'en' ? 'Some changes failed to sync:\n' : 'Einige Änderungen konnten nicht synchronisiert werden:\n') +
+          errors.join('\n')
+        );
       } else {
-        // Session complete
-        saveReviewSession(deck.id, newStats);
-        setSessionComplete(true);
+        // Clear pending changes and reload
+        clearPendingChanges(deck.id);
+        await loadCards(true);
+        updatePendingCount();
+        alert(language === 'en' ? 'All changes synced successfully!' : 'Alle Änderungen erfolgreich synchronisiert!');
       }
     } catch (error) {
-      console.error('Error updating card:', error);
-      alert(language === 'en' ? 'Failed to save progress' : 'Fortschritt konnte nicht gespeichert werden');
+      console.error('Sync error:', error);
+      alert(language === 'en' ? 'Sync failed' : 'Synchronisierung fehlgeschlagen');
+    } finally {
+      setSyncing(false);
     }
   };
 
@@ -249,10 +386,39 @@ function SpacedRepetitionMode({ deck, onBack }) {
         </div>
 
         <div className="flex items-center gap-3">
+          {pendingCount > 0 && (
+            <span className="px-2 py-0.5 bg-orange-100 dark:bg-orange-900/20 text-orange-700 dark:text-orange-400 text-xs font-bold rounded-full">
+              {pendingCount}
+            </span>
+          )}
+          {streak > 0 && (
+            <div className="flex items-center gap-2 px-3 py-1 bg-gradient-to-r from-orange-400 to-red-500 rounded-full animate-pulse">
+              <span className="text-white font-bold">🔥 {streak}</span>
+            </div>
+          )}
           <TrendingUp className="text-rose-500" size={20} />
           <span className="font-bold text-stone-800 dark:text-stone-100">
             {sessionStats.total}
           </span>
+          <button
+            onClick={handleSync}
+            disabled={syncing}
+            className="p-2 hover:bg-stone-200 dark:hover:bg-stone-700 rounded-lg transition-colors disabled:opacity-50"
+            title={language === 'en' ? 'Sync with Google Sheets' : 'Mit Google Sheets synchronisieren'}
+          >
+            <RefreshCw size={20} className={`text-blue-500 ${syncing ? 'animate-spin' : ''}`} />
+          </button>
+          <button
+            onClick={toggleSound}
+            className="p-2 hover:bg-stone-200 dark:hover:bg-stone-700 rounded-lg transition-colors"
+            title={soundsEnabled ? (language === 'en' ? 'Mute' : 'Stumm') : (language === 'en' ? 'Unmute' : 'Laut')}
+          >
+            {soundsEnabled ? (
+              <Volume2 size={20} className="text-stone-600 dark:text-stone-400" />
+            ) : (
+              <VolumeX size={20} className="text-stone-400 dark:text-stone-600" />
+            )}
+          </button>
         </div>
       </div>
 
@@ -268,8 +434,19 @@ function SpacedRepetitionMode({ deck, onBack }) {
 
       {/* Flashcard */}
       <div
-        className="bg-gradient-to-br from-white to-stone-50 dark:from-stone-800 dark:to-stone-900 rounded-2xl p-12 shadow-2xl border-2 border-stone-200 dark:border-stone-700 min-h-[400px] flex flex-col items-center justify-center cursor-pointer"
-        onClick={() => !showAnswer && setShowAnswer(true)}
+        className={`bg-gradient-to-br from-white to-stone-50 dark:from-stone-800 dark:to-stone-900 rounded-2xl p-12 shadow-2xl border-2 border-stone-200 dark:border-stone-700 min-h-[400px] flex flex-col items-center justify-center cursor-pointer transition-all duration-300 ${
+          isFlipping ? 'scale-95 opacity-50' : 'scale-100 opacity-100'
+        }`}
+        onClick={() => {
+          if (!showAnswer) {
+            setIsFlipping(true);
+            sounds.playCardFlip();
+            setTimeout(() => {
+              setShowAnswer(true);
+              setIsFlipping(false);
+            }, 150);
+          }
+        }}
       >
         {!showAnswer ? (
           <>
@@ -372,6 +549,20 @@ function SpacedRepetitionMode({ deck, onBack }) {
             : 'Denke über die Antwort nach, dann klicke um sie zu enthüllen'}</p>
         </div>
       )}
+
+      {/* Mascot */}
+      <VocabularyMascot
+        show={showMascot}
+        message={mascotMessage}
+        mood={mascotMood}
+        onComplete={() => setShowMascot(false)}
+      />
+
+      {/* Confetti */}
+      <ConfettiEffect
+        show={showConfetti}
+        onComplete={() => setShowConfetti(false)}
+      />
     </div>
   );
 }

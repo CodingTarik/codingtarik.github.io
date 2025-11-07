@@ -1,31 +1,67 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, RotateCcw, Check, Star, Shuffle, TrendingUp } from 'lucide-react';
+import { ArrowLeft, RotateCcw, Check, Star, Shuffle, TrendingUp, RefreshCw, ChevronLeft, ChevronRight, Filter } from 'lucide-react';
 import { useLanguage } from '../../../../context/LanguageContext';
-import { fetchCardsFromSheet, updateCardInSheet } from '../../utils/googleSheetsAPI';
+import { fetchCardsFromSheet, updateCardInSheet, addCardToSheet, deleteCardFromSheet } from '../../utils/googleSheetsAPI';
+import { 
+  getCachedCards, 
+  setCachedCards, 
+  updateCardLocally,
+  getPendingChanges,
+  clearPendingChanges,
+  getPendingChangesCount
+} from '../../utils/vocabularyCache';
 import ReactMarkdown from 'react-markdown';
+import * as sounds from '../../utils/vocabularySounds';
 
 function GeneralLearningMode({ deck, onBack }) {
   const { language } = useLanguage();
-  const [cards, setCards] = useState([]);
+  const [allCards, setAllCards] = useState([]);
+  const [filteredCards, setFilteredCards] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [syncing, setSyncing] = useState(false);
+  const [pendingCount, setPendingCount] = useState(0);
   const [sessionStats, setSessionStats] = useState({
     reviewed: 0,
     ratings: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
   });
   const [sessionComplete, setSessionComplete] = useState(false);
   const [shuffled, setShuffled] = useState(false);
+  const [isFlipping, setIsFlipping] = useState(false);
+  const [showFilterMenu, setShowFilterMenu] = useState(false);
+  const [ratingFilter, setRatingFilter] = useState([1, 2, 3, 4, 5, 0]); // 0 = unrated
 
   useEffect(() => {
     loadCards();
+    updatePendingCount();
   }, [deck]);
 
-  const loadCards = async () => {
+  useEffect(() => {
+    // Apply filter when cards or filter changes
+    applyFilter();
+  }, [allCards, ratingFilter]);
+
+  const updatePendingCount = () => {
+    setPendingCount(getPendingChangesCount(deck.id));
+  };
+
+  const loadCards = async (forceRefresh = false) => {
     setLoading(true);
     try {
-      const fetchedCards = await fetchCardsFromSheet(deck.scriptUrl);
-      setCards(fetchedCards);
+      // Try to load from cache first
+      const cached = getCachedCards(deck.id);
+      
+      let fetchedCards;
+      if (!forceRefresh && cached && cached.cards) {
+        fetchedCards = cached.cards;
+      } else {
+        // Fetch from Google Sheets
+        fetchedCards = await fetchCardsFromSheet(deck.scriptUrl);
+        setCachedCards(deck.id, fetchedCards);
+      }
+      
+      setAllCards(fetchedCards);
       
       if (fetchedCards.length === 0) {
         alert(language === 'en' ? 'No cards in this deck' : 'Keine Karten in diesem Deck');
@@ -39,61 +75,137 @@ function GeneralLearningMode({ deck, onBack }) {
     }
   };
 
+  const applyFilter = () => {
+    const filtered = allCards.filter(card => {
+      const rating = card.ratingGeneral || 0;
+      return ratingFilter.includes(rating);
+    });
+    setFilteredCards(filtered);
+    setCurrentIndex(0);
+  };
+
+  const toggleRatingFilter = (rating) => {
+    setRatingFilter(prev => {
+      if (prev.includes(rating)) {
+        // Remove rating from filter
+        const newFilter = prev.filter(r => r !== rating);
+        return newFilter.length > 0 ? newFilter : prev; // Keep at least one
+      } else {
+        // Add rating to filter
+        return [...prev, rating].sort();
+      }
+    });
+  };
+
   const handleShuffle = () => {
-    const shuffledCards = [...cards].sort(() => Math.random() - 0.5);
-    setCards(shuffledCards);
+    const shuffledCards = [...filteredCards].sort(() => Math.random() - 0.5);
+    setFilteredCards(shuffledCards);
     setCurrentIndex(0);
     setShowAnswer(false);
     setShuffled(true);
   };
 
-  const handleRating = async (rating) => {
-    const currentCard = cards[currentIndex];
+  const handleRating = (rating) => {
+    const currentCard = filteredCards[currentIndex];
     
-    // Update general rating
+    // Find card index in allCards
+    const cardIndexInAll = allCards.findIndex(c => c.word === currentCard.word);
+    
+    // Update general rating locally (instant!)
+    const updatedCard = {
+      ...currentCard,
+      ratingGeneral: rating
+    };
+    
+    updateCardLocally(deck.id, cardIndexInAll, updatedCard);
+    updatePendingCount();
+    
+    // Update local cards arrays for immediate UI feedback
+    const updatedAllCards = [...allCards];
+    updatedAllCards[cardIndexInAll] = updatedCard;
+    setAllCards(updatedAllCards);
+    
+    const updatedFilteredCards = [...filteredCards];
+    updatedFilteredCards[currentIndex] = updatedCard;
+    setFilteredCards(updatedFilteredCards);
+    
+    // Update session stats
+    const newStats = {
+      reviewed: sessionStats.reviewed + 1,
+      ratings: {
+        ...sessionStats.ratings,
+        [rating]: sessionStats.ratings[rating] + 1
+      }
+    };
+    setSessionStats(newStats);
+    
+    // Play sound
+    sounds.playCorrect();
+    
+    // Don't auto-advance - user will use navigation buttons
+    setShowAnswer(false);
+  };
+
+  const handleSync = async () => {
+    setSyncing(true);
     try {
-      const updatedCard = {
-        ...currentCard,
-        ratingGeneral: rating
-      };
+      const pending = getPendingChanges(deck.id);
+      let errors = [];
       
-      const cardIndex = currentIndex;
-      await updateCardInSheet(deck.scriptUrl, cardIndex, updatedCard);
-      
-      // Update local cards array
-      const updatedCards = [...cards];
-      updatedCards[currentIndex] = updatedCard;
-      setCards(updatedCards);
-      
-      // Update session stats
-      const newStats = {
-        reviewed: sessionStats.reviewed + 1,
-        ratings: {
-          ...sessionStats.ratings,
-          [rating]: sessionStats.ratings[rating] + 1
+      // Process deletes first (in reverse order to maintain indices)
+      for (const index of pending.deletes.sort((a, b) => b - a)) {
+        try {
+          await deleteCardFromSheet(deck.scriptUrl, index);
+        } catch (e) {
+          errors.push(`Delete at index ${index}: ${e.message}`);
         }
-      };
-      setSessionStats(newStats);
+      }
       
-      // Move to next card
-      if (currentIndex < cards.length - 1) {
-        setCurrentIndex(currentIndex + 1);
-        setShowAnswer(false);
+      // Process updates (including ratings)
+      for (const { index, card } of pending.updates) {
+        try {
+          await updateCardInSheet(deck.scriptUrl, index, card);
+        } catch (e) {
+          errors.push(`Update at index ${index}: ${e.message}`);
+        }
+      }
+      
+      // Process adds
+      for (const card of pending.adds) {
+        try {
+          const { _tempId, ...cardWithoutTemp } = card;
+          await addCardToSheet(deck.scriptUrl, cardWithoutTemp);
+        } catch (e) {
+          errors.push(`Add card "${card.word}": ${e.message}`);
+        }
+      }
+      
+      if (errors.length > 0) {
+        console.error('Sync errors:', errors);
+        alert(
+          (language === 'en' ? 'Some changes failed to sync:\n' : 'Einige Änderungen konnten nicht synchronisiert werden:\n') +
+          errors.join('\n')
+        );
       } else {
-        setSessionComplete(true);
+        // Clear pending changes and reload
+        clearPendingChanges(deck.id);
+        await loadCards(true);
+        updatePendingCount();
+        alert(language === 'en' ? 'All changes synced successfully!' : 'Alle Änderungen erfolgreich synchronisiert!');
       }
     } catch (error) {
-      console.error('Error updating card:', error);
-      alert(language === 'en' ? 'Failed to save rating' : 'Bewertung konnte nicht gespeichert werden');
+      console.error('Sync error:', error);
+      alert(language === 'en' ? 'Sync failed' : 'Synchronisierung fehlgeschlagen');
+    } finally {
+      setSyncing(false);
     }
   };
 
   const handleNext = () => {
-    if (currentIndex < cards.length - 1) {
+    if (currentIndex < filteredCards.length - 1) {
       setCurrentIndex(currentIndex + 1);
       setShowAnswer(false);
-    } else {
-      setSessionComplete(true);
+      sounds.playWhoosh();
     }
   };
 
@@ -101,6 +213,7 @@ function GeneralLearningMode({ deck, onBack }) {
     if (currentIndex > 0) {
       setCurrentIndex(currentIndex - 1);
       setShowAnswer(false);
+      sounds.playWhoosh();
     }
   };
 
@@ -110,6 +223,7 @@ function GeneralLearningMode({ deck, onBack }) {
     setSessionStats({ reviewed: 0, ratings: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 } });
     setSessionComplete(false);
     setShuffled(false);
+    setRatingFilter([1, 2, 3, 4, 5, 0]);
     loadCards();
   };
 
@@ -158,8 +272,8 @@ function GeneralLearningMode({ deck, onBack }) {
           
           <p className="text-lg text-purple-700 dark:text-purple-400 mb-6">
             {language === 'en' 
-              ? `You reviewed ${sessionStats.reviewed} out of ${cards.length} cards!`
-              : `Du hast ${sessionStats.reviewed} von ${cards.length} Karten wiederholt!`}
+              ? `You reviewed ${sessionStats.reviewed} out of ${filteredCards.length} cards!`
+              : `Du hast ${sessionStats.reviewed} von ${filteredCards.length} Karten wiederholt!`}
           </p>
 
           {sessionStats.reviewed > 0 && (
@@ -215,8 +329,39 @@ function GeneralLearningMode({ deck, onBack }) {
     );
   }
 
-  const currentCard = cards[currentIndex];
-  const progress = ((currentIndex) / cards.length) * 100;
+  if (filteredCards.length === 0) {
+    return (
+      <div className="max-w-4xl mx-auto">
+        <div className="flex items-center gap-4 mb-6">
+          <button
+            onClick={onBack}
+            className="p-2 hover:bg-stone-200 dark:hover:bg-stone-700 rounded-lg transition-colors"
+          >
+            <ArrowLeft size={24} className="text-stone-600 dark:text-stone-400" />
+          </button>
+          <h2 className="text-2xl font-bold text-stone-800 dark:text-stone-100">
+            {deck.name}
+          </h2>
+        </div>
+
+        <div className="text-center py-12">
+          <Filter size={64} className="mx-auto text-stone-300 dark:text-stone-600 mb-4" />
+          <p className="text-xl text-stone-600 dark:text-stone-400 mb-4">
+            {language === 'en' ? 'No cards match your filter' : 'Keine Karten entsprechen deinem Filter'}
+          </p>
+          <button
+            onClick={() => setRatingFilter([1, 2, 3, 4, 5, 0])}
+            className="px-6 py-3 bg-gradient-to-r from-rose-500 to-pink-500 text-white font-bold rounded-xl hover:shadow-lg transition-all"
+          >
+            {language === 'en' ? 'Reset Filter' : 'Filter zurücksetzen'}
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const currentCard = filteredCards[currentIndex];
+  const progress = ((currentIndex) / filteredCards.length) * 100;
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -234,12 +379,86 @@ function GeneralLearningMode({ deck, onBack }) {
               {deck.name}
             </h2>
             <p className="text-stone-600 dark:text-stone-400">
-              {currentIndex + 1} / {cards.length} {language === 'en' ? 'cards' : 'Karten'}
+              {currentIndex + 1} / {filteredCards.length} {language === 'en' ? 'cards' : 'Karten'}
+              {filteredCards.length < allCards.length && (
+                <span className="ml-2 text-xs text-purple-500">
+                  ({language === 'en' ? 'filtered' : 'gefiltert'})
+                </span>
+              )}
             </p>
           </div>
         </div>
 
         <div className="flex items-center gap-3">
+          {pendingCount > 0 && (
+            <span className="px-2 py-0.5 bg-orange-100 dark:bg-orange-900/20 text-orange-700 dark:text-orange-400 text-xs font-bold rounded-full">
+              {pendingCount}
+            </span>
+          )}
+          <button
+            onClick={handleSync}
+            disabled={syncing}
+            className="p-2 hover:bg-stone-200 dark:hover:bg-stone-700 rounded-lg transition-colors disabled:opacity-50"
+            title={language === 'en' ? 'Sync with Google Sheets' : 'Mit Google Sheets synchronisieren'}
+          >
+            <RefreshCw size={20} className={`text-blue-500 ${syncing ? 'animate-spin' : ''}`} />
+          </button>
+          
+          {/* Filter Button */}
+          <div className="relative">
+            <button
+              onClick={() => setShowFilterMenu(!showFilterMenu)}
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors ${
+                ratingFilter.length < 6
+                  ? 'bg-purple-500 text-white hover:bg-purple-600'
+                  : 'bg-stone-200 dark:bg-stone-700 hover:bg-stone-300 dark:hover:bg-stone-600'
+              }`}
+              title={language === 'en' ? 'Filter by rating' : 'Nach Bewertung filtern'}
+            >
+              <Filter size={18} />
+              {ratingFilter.length < 6 && (
+                <span className="text-xs font-bold">{ratingFilter.length}</span>
+              )}
+            </button>
+            
+            {/* Filter Dropdown */}
+            {showFilterMenu && (
+              <div className="absolute right-0 mt-2 bg-white dark:bg-stone-800 rounded-xl shadow-2xl border-2 border-stone-200 dark:border-stone-700 p-4 z-10 w-64">
+                <p className="text-sm font-bold text-stone-800 dark:text-stone-100 mb-3">
+                  {language === 'en' ? 'Show cards with rating:' : 'Zeige Karten mit Bewertung:'}
+                </p>
+                <div className="space-y-2">
+                  {[0, 1, 2, 3, 4, 5].map(rating => (
+                    <label key={rating} className="flex items-center gap-3 cursor-pointer hover:bg-stone-100 dark:hover:bg-stone-700 p-2 rounded-lg">
+                      <input
+                        type="checkbox"
+                        checked={ratingFilter.includes(rating)}
+                        onChange={() => toggleRatingFilter(rating)}
+                        className="w-4 h-4"
+                      />
+                      <div className="flex items-center gap-2 flex-1">
+                        {rating === 0 ? (
+                          <span className="text-stone-600 dark:text-stone-400 text-sm">
+                            {language === 'en' ? 'Unrated' : 'Nicht bewertet'}
+                          </span>
+                        ) : (
+                          <>
+                            {[...Array(rating)].map((_, i) => (
+                              <Star key={i} size={16} className="text-yellow-500 fill-yellow-500" />
+                            ))}
+                          </>
+                        )}
+                      </div>
+                      <span className="text-xs text-stone-500">
+                        ({allCards.filter(c => (c.ratingGeneral || 0) === rating).length})
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+          
           <button
             onClick={handleShuffle}
             className="flex items-center gap-2 px-3 py-2 bg-stone-200 dark:bg-stone-700 hover:bg-stone-300 dark:hover:bg-stone-600 rounded-lg transition-colors"
@@ -268,8 +487,19 @@ function GeneralLearningMode({ deck, onBack }) {
 
       {/* Flashcard */}
       <div
-        className="bg-gradient-to-br from-white to-stone-50 dark:from-stone-800 dark:to-stone-900 rounded-2xl p-12 shadow-2xl border-2 border-stone-200 dark:border-stone-700 min-h-[400px] flex flex-col items-center justify-center cursor-pointer"
-        onClick={() => !showAnswer && setShowAnswer(true)}
+        className={`bg-gradient-to-br from-white to-stone-50 dark:from-stone-800 dark:to-stone-900 rounded-2xl p-12 shadow-2xl border-2 border-stone-200 dark:border-stone-700 min-h-[400px] flex flex-col items-center justify-center cursor-pointer transition-all duration-300 ${
+          isFlipping ? 'scale-95 opacity-50' : 'scale-100 opacity-100'
+        }`}
+        onClick={() => {
+          if (!showAnswer) {
+            setIsFlipping(true);
+            sounds.playCardFlip();
+            setTimeout(() => {
+              setShowAnswer(true);
+              setIsFlipping(false);
+            }, 150);
+          }
+        }}
       >
         {!showAnswer ? (
           <>
@@ -338,41 +568,38 @@ function GeneralLearningMode({ deck, onBack }) {
               </div>
             </div>
 
-            {/* Navigation Buttons */}
-            <div className="flex gap-3 justify-center mt-4">
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handlePrevious();
-                }}
-                disabled={currentIndex === 0}
-                className="px-6 py-2 bg-stone-200 dark:bg-stone-700 text-stone-800 dark:text-stone-100 font-semibold rounded-lg hover:bg-stone-300 dark:hover:bg-stone-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {language === 'en' ? 'Previous' : 'Zurück'}
-              </button>
-              
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleNext();
-                }}
-                className="px-6 py-2 bg-stone-200 dark:bg-stone-700 text-stone-800 dark:text-stone-100 font-semibold rounded-lg hover:bg-stone-300 dark:hover:bg-stone-600 transition-colors"
-              >
-                {language === 'en' ? 'Skip' : 'Überspringen'}
-              </button>
-            </div>
           </div>
         )}
       </div>
 
-      {/* Instructions */}
-      {!showAnswer && (
-        <div className="mt-6 text-center text-sm text-stone-500 dark:text-stone-400">
-          <p>{language === 'en' 
-            ? 'Click the card to reveal the translation'
-            : 'Klicke auf die Karte um die Übersetzung zu sehen'}</p>
+      {/* Navigation */}
+      <div className="flex items-center justify-between mt-6">
+        <button
+          onClick={handlePrevious}
+          disabled={currentIndex === 0}
+          className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-stone-200 to-stone-300 dark:from-stone-700 dark:to-stone-600 text-stone-800 dark:text-stone-100 font-bold rounded-xl hover:shadow-lg transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+        >
+          <ChevronLeft size={24} />
+          {language === 'en' ? 'Previous' : 'Zurück'}
+        </button>
+
+        <div className="text-sm text-stone-500 dark:text-stone-400">
+          {!showAnswer && (
+            <p>{language === 'en' 
+              ? 'Click card to reveal'
+              : 'Karte klicken zum aufdecken'}</p>
+          )}
         </div>
-      )}
+
+        <button
+          onClick={handleNext}
+          disabled={currentIndex === filteredCards.length - 1}
+          className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold rounded-xl hover:shadow-lg transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+        >
+          {language === 'en' ? 'Next' : 'Weiter'}
+          <ChevronRight size={24} />
+        </button>
+      </div>
     </div>
   );
 }

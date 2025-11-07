@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BookOpen, BarChart3 } from 'lucide-react';
+import { BookOpen, BarChart3, Settings, Volume2, VolumeX } from 'lucide-react';
 import { useLanguage } from '../../../context/LanguageContext';
 import DeckList from './vocabulary/DeckList';
 import DeckSetupModal from './vocabulary/DeckSetupModal';
@@ -8,6 +8,7 @@ import SpacedRepetitionMode from './vocabulary/SpacedRepetitionMode';
 import GeneralLearningMode from './vocabulary/GeneralLearningMode';
 import StatsPanel from './vocabulary/StatsPanel';
 import { saveDeck } from '../utils/deckStorage';
+import * as sounds from '../utils/vocabularySounds';
 
 function VocabularyPage() {
   const { language } = useLanguage();
@@ -16,7 +17,8 @@ function VocabularyPage() {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [editingDeck, setEditingDeck] = useState(null);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
-  const [activeTab, setActiveTab] = useState('decks'); // decks or stats
+  const [activeTab, setActiveTab] = useState('decks'); // decks, stats, or settings
+  const [soundsEnabled, setSoundsEnabled] = useState(sounds.areSoundsEnabled());
 
   const handleCreateDeck = (deckData) => {
     if (editingDeck) {
@@ -95,6 +97,17 @@ function VocabularyPage() {
               <BarChart3 size={20} />
               {language === 'en' ? 'Statistics' : 'Statistiken'}
             </button>
+            <button
+              onClick={() => setActiveTab('settings')}
+              className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all ${
+                activeTab === 'settings'
+                  ? 'bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-lg'
+                  : 'bg-stone-200 dark:bg-stone-700 text-stone-600 dark:text-stone-400 hover:bg-stone-300 dark:hover:bg-stone-600'
+              }`}
+            >
+              <Settings size={20} />
+              {language === 'en' ? 'Settings' : 'Einstellungen'}
+            </button>
           </div>
         </>
       )}
@@ -111,6 +124,105 @@ function VocabularyPage() {
 
       {currentView === 'decks' && activeTab === 'stats' && (
         <StatsPanel />
+      )}
+
+      {currentView === 'decks' && activeTab === 'settings' && (
+        <div className="max-w-2xl mx-auto">
+          <h2 className="text-2xl font-bold text-stone-800 dark:text-stone-100 mb-6">
+            {language === 'en' ? 'Vocabulary Settings' : 'Vokabel-Einstellungen'}
+          </h2>
+
+          {/* Sound Settings */}
+          <div className="bg-white dark:bg-stone-800 rounded-2xl p-6 shadow-lg border-2 border-stone-200 dark:border-stone-700 mb-6">
+            <h3 className="text-lg font-bold text-stone-800 dark:text-stone-100 mb-4 flex items-center gap-2">
+              {soundsEnabled ? <Volume2 size={24} className="text-rose-500" /> : <VolumeX size={24} className="text-stone-400" />}
+              {language === 'en' ? 'Sound Effects' : 'Soundeffekte'}
+            </h3>
+            
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-stone-700 dark:text-stone-300 mb-1">
+                  {language === 'en' 
+                    ? 'Enable motivating sounds during learning'
+                    : 'Aktiviere motivierende Sounds beim Lernen'}
+                </p>
+                <p className="text-sm text-stone-500 dark:text-stone-400">
+                  {language === 'en' 
+                    ? 'Includes card flip, correct/wrong answers, streaks, and celebrations'
+                    : 'Beinhaltet Kartenumdrehen, richtige/falsche Antworten, Serien und Feiern'}
+                </p>
+              </div>
+              
+              <button
+                onClick={() => {
+                  const newState = !soundsEnabled;
+                  setSoundsEnabled(newState);
+                  sounds.saveSoundSettings(newState);
+                  if (newState) sounds.playCorrect();
+                }}
+                className={`relative inline-flex h-8 w-14 items-center rounded-full transition-colors ${
+                  soundsEnabled ? 'bg-gradient-to-r from-rose-500 to-pink-500' : 'bg-stone-300 dark:bg-stone-600'
+                }`}
+              >
+                <span
+                  className={`inline-block h-6 w-6 transform rounded-full bg-white transition-transform ${
+                    soundsEnabled ? 'translate-x-7' : 'translate-x-1'
+                  }`}
+                />
+              </button>
+            </div>
+
+            {/* Test Sound Button */}
+            {soundsEnabled && (
+              <div className="mt-4 pt-4 border-t border-stone-200 dark:border-stone-700">
+                <p className="text-sm text-stone-600 dark:text-stone-400 mb-3">
+                  {language === 'en' ? 'Test sounds:' : 'Sounds testen:'}
+                </p>
+                <div className="flex gap-2 flex-wrap">
+                  <button
+                    onClick={() => sounds.playCorrect()}
+                    className="px-3 py-1 bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-400 rounded-lg text-sm hover:bg-green-200 dark:hover:bg-green-900/30"
+                  >
+                    ✓ {language === 'en' ? 'Correct' : 'Richtig'}
+                  </button>
+                  <button
+                    onClick={() => sounds.playWrong()}
+                    className="px-3 py-1 bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-400 rounded-lg text-sm hover:bg-red-200 dark:hover:bg-red-900/30"
+                  >
+                    ✗ {language === 'en' ? 'Wrong' : 'Falsch'}
+                  </button>
+                  <button
+                    onClick={() => sounds.playStreak()}
+                    className="px-3 py-1 bg-orange-100 dark:bg-orange-900/20 text-orange-700 dark:text-orange-400 rounded-lg text-sm hover:bg-orange-200 dark:hover:bg-orange-900/30"
+                  >
+                    🔥 {language === 'en' ? 'Streak' : 'Serie'}
+                  </button>
+                  <button
+                    onClick={() => { sounds.playLevelUp(); sounds.playCelebration(); }}
+                    className="px-3 py-1 bg-purple-100 dark:bg-purple-900/20 text-purple-700 dark:text-purple-400 rounded-lg text-sm hover:bg-purple-200 dark:hover:bg-purple-900/30"
+                  >
+                    🎉 {language === 'en' ? 'Celebration' : 'Feier'}
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Mascot Info */}
+          <div className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-2xl p-6 border-2 border-purple-200 dark:border-purple-800">
+            <h3 className="text-lg font-bold text-purple-800 dark:text-purple-300 mb-3">
+              🦉 {language === 'en' ? 'About Your Learning Companion' : 'Über deinen Lern-Begleiter'}
+            </h3>
+            <p className="text-sm text-purple-700 dark:text-purple-300 mb-3">
+              {language === 'en' 
+                ? 'Meet your vocabulary owl! This wise companion will encourage you with motivating messages as you learn. Watch for special messages when you hit streaks or complete sessions!'
+                : 'Triff deine Vokabel-Eule! Dieser weise Begleiter wird dich mit motivierenden Nachrichten beim Lernen unterstützen. Achte auf besondere Nachrichten, wenn du Serien erreichst oder Sessions abschließt!'}
+            </p>
+            <div className="flex items-center gap-3 text-3xl">
+              🦉 → 💪🦉 → 🎉🦉🎉 → 👑
+            </div>
+          </div>
+        </div>
       )}
 
       {currentView === 'manage' && selectedDeck && (

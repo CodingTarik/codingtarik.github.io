@@ -1,16 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Edit, Trash2, ArrowLeft, Save, X, Search, Download, Upload } from 'lucide-react';
+import { Plus, Edit, Trash2, ArrowLeft, Save, X, Search, Download, Upload, RefreshCw, AlertCircle } from 'lucide-react';
 import { useLanguage } from '../../../../context/LanguageContext';
 import { fetchCardsFromSheet, addCardToSheet, updateCardInSheet, deleteCardFromSheet } from '../../utils/googleSheetsAPI';
+import { 
+  getCachedCards, 
+  setCachedCards, 
+  addCardLocally, 
+  updateCardLocally, 
+  deleteCardLocally,
+  getPendingChanges,
+  clearPendingChanges,
+  hasPendingChanges,
+  getPendingChangesCount 
+} from '../../utils/vocabularyCache';
 import ReactMarkdown from 'react-markdown';
 
 function CardManager({ deck, onBack }) {
   const { language } = useLanguage();
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [syncing, setSyncing] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [editingCard, setEditingCard] = useState(null);
   const [isAdding, setIsAdding] = useState(false);
+  const [pendingCount, setPendingCount] = useState(0);
   const [formData, setFormData] = useState({
     word: '',
     translation: '',
@@ -20,13 +33,29 @@ function CardManager({ deck, onBack }) {
 
   useEffect(() => {
     loadCards();
+    updatePendingCount();
   }, [deck]);
 
-  const loadCards = async () => {
+  const updatePendingCount = () => {
+    setPendingCount(getPendingChangesCount(deck.id));
+  };
+
+  const loadCards = async (forceRefresh = false) => {
     setLoading(true);
     try {
+      // Try to load from cache first
+      const cached = getCachedCards(deck.id);
+      
+      if (!forceRefresh && cached && cached.cards) {
+        setCards(cached.cards);
+        setLoading(false);
+        return;
+      }
+      
+      // Fetch from Google Sheets
       const fetchedCards = await fetchCardsFromSheet(deck.scriptUrl);
       setCards(fetchedCards);
+      setCachedCards(deck.id, fetchedCards);
     } catch (error) {
       console.error('Error loading cards:', error);
       alert(language === 'en' ? 'Failed to load cards' : 'Karten konnten nicht geladen werden');
@@ -35,54 +64,71 @@ function CardManager({ deck, onBack }) {
     }
   };
 
-  const handleAdd = async () => {
+  const handleAdd = () => {
     if (!formData.word.trim() || !formData.translation.trim()) {
       alert(language === 'en' ? 'Word and translation are required' : 'Wort und Übersetzung sind erforderlich');
       return;
     }
 
-    try {
-      await addCardToSheet(deck.scriptUrl, {
-        ...formData,
-        lastReviewDate: null,
-        nextReviewDate: null,
-        interval: 0,
-        easeFactor: 2.5,
-        repetitions: 0
-      });
+    const newCard = {
+      ...formData,
+      lastReviewDate: null,
+      nextReviewDate: null,
+      interval: 0,
+      easeFactor: 2.5,
+      repetitions: 0
+    };
+
+    // Add locally
+    const success = addCardLocally(deck.id, newCard);
+    
+    if (success) {
+      // Update UI
+      const cached = getCachedCards(deck.id);
+      setCards(cached.cards);
       
-      setFormData({ word: '', translation: '', explanation: '', ratingGeneral: 0 });
-      setIsAdding(false);
-      await loadCards();
-    } catch (error) {
-      console.error('Error adding card:', error);
-      alert(language === 'en' ? 'Failed to add card' : 'Karte konnte nicht hinzugefügt werden');
+      // Clear only word and translation, keep form open
+      setFormData({ word: '', translation: '', explanation: formData.explanation, ratingGeneral: 0 });
+      updatePendingCount();
+      
+      // Show success message
+      const message = language === 'en' 
+        ? 'Card added locally. Remember to sync!'
+        : 'Karte lokal hinzugefügt. Vergiss nicht zu synchronisieren!';
+      
+      // Optional: Show a toast notification instead of alert
+      console.log(message);
+    } else {
+      alert(language === 'en' ? 'Failed to add card locally' : 'Karte konnte nicht lokal hinzugefügt werden');
     }
   };
 
-  const handleEdit = async () => {
+  const handleEdit = () => {
     if (!formData.word.trim() || !formData.translation.trim()) {
       alert(language === 'en' ? 'Word and translation are required' : 'Wort und Übersetzung sind erforderlich');
       return;
     }
 
-    try {
-      const cardIndex = cards.findIndex(c => c === editingCard);
-      await updateCardInSheet(deck.scriptUrl, cardIndex, {
-        ...editingCard,
-        ...formData
-      });
-      
+    const cardIndex = cards.findIndex(c => c === editingCard);
+    const updatedCard = {
+      ...editingCard,
+      ...formData
+    };
+    
+    const success = updateCardLocally(deck.id, cardIndex, updatedCard);
+    
+    if (success) {
+      const cached = getCachedCards(deck.id);
+      setCards(cached.cards);
       setEditingCard(null);
       setFormData({ word: '', translation: '', explanation: '', ratingGeneral: 0 });
-      await loadCards();
-    } catch (error) {
-      console.error('Error updating card:', error);
+      updatePendingCount();
+    } else {
       alert(language === 'en' ? 'Failed to update card' : 'Karte konnte nicht aktualisiert werden');
     }
   };
 
-  const handleDelete = async (card) => {
+  const handleDelete = (card) => {
     if (!window.confirm(
       language === 'en' 
         ? 'Are you sure you want to delete this card?'
@@ -91,13 +137,70 @@ function CardManager({ deck, onBack }) {
       return;
     }
 
-    try {
-      const cardIndex = cards.findIndex(c => c === card);
-      await deleteCardFromSheet(deck.scriptUrl, cardIndex);
-      await loadCards();
-    } catch (error) {
-      console.error('Error deleting card:', error);
+    const cardIndex = cards.findIndex(c => c === card);
+    const success = deleteCardLocally(deck.id, cardIndex);
+    
+    if (success) {
+      const cached = getCachedCards(deck.id);
+      setCards(cached.cards);
+      updatePendingCount();
+    } else {
       alert(language === 'en' ? 'Failed to delete card' : 'Karte konnte nicht gelöscht werden');
+    }
+  };
+
+  const handleSync = async () => {
+    setSyncing(true);
+    try {
+      const pending = getPendingChanges(deck.id);
+      let errors = [];
+      
+      // Process deletes first (in reverse order to maintain indices)
+      for (const index of pending.deletes.sort((a, b) => b - a)) {
+        try {
+          await deleteCardFromSheet(deck.scriptUrl, index);
+        } catch (e) {
+          errors.push(`Delete at index ${index}: ${e.message}`);
+        }
+      }
+      
+      // Process updates
+      for (const { index, card } of pending.updates) {
+        try {
+          await updateCardInSheet(deck.scriptUrl, index, card);
+        } catch (e) {
+          errors.push(`Update at index ${index}: ${e.message}`);
+        }
+      }
+      
+      // Process adds
+      for (const card of pending.adds) {
+        try {
+          const { _tempId, ...cardWithoutTemp } = card;
+          await addCardToSheet(deck.scriptUrl, cardWithoutTemp);
+        } catch (e) {
+          errors.push(`Add card "${card.word}": ${e.message}`);
+        }
+      }
+      
+      if (errors.length > 0) {
+        console.error('Sync errors:', errors);
+        alert(
+          (language === 'en' ? 'Some changes failed to sync:\n' : 'Einige Änderungen konnten nicht synchronisiert werden:\n') +
+          errors.join('\n')
+        );
+      } else {
+        // Clear pending changes and reload
+        clearPendingChanges(deck.id);
+        await loadCards(true);
+        updatePendingCount();
+        alert(language === 'en' ? 'All changes synced successfully!' : 'Alle Änderungen erfolgreich synchronisiert!');
+      }
+    } catch (error) {
+      console.error('Sync error:', error);
+      alert(language === 'en' ? 'Sync failed' : 'Synchronisierung fehlgeschlagen');
+    } finally {
+      setSyncing(false);
     }
   };
 
@@ -146,19 +249,59 @@ function CardManager({ deck, onBack }) {
             </h2>
             <p className="text-stone-600 dark:text-stone-400">
               {cards.length} {language === 'en' ? 'cards' : 'Karten'}
+              {pendingCount > 0 && (
+                <span className="ml-2 px-2 py-0.5 bg-orange-100 dark:bg-orange-900/20 text-orange-700 dark:text-orange-400 text-xs font-bold rounded-full">
+                  {pendingCount} {language === 'en' ? 'pending' : 'ausstehend'}
+                </span>
+              )}
             </p>
           </div>
         </div>
         
-        <button
-          onClick={startAdd}
-          disabled={isAdding || editingCard}
-          className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-rose-500 to-pink-500 text-white font-bold rounded-xl hover:shadow-lg transition-all disabled:opacity-50"
-        >
-          <Plus size={20} />
-          {language === 'en' ? 'Add Card' : 'Karte hinzufügen'}
-        </button>
+        <div className="flex items-center gap-2">
+          {pendingCount > 0 && (
+            <button
+              onClick={handleSync}
+              disabled={syncing}
+              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-bold rounded-xl hover:shadow-lg transition-all disabled:opacity-50"
+            >
+              <RefreshCw size={20} className={syncing ? 'animate-spin' : ''} />
+              {syncing 
+                ? (language === 'en' ? 'Syncing...' : 'Synchronisiere...')
+                : (language === 'en' ? 'Sync' : 'Synchronisieren')}
+            </button>
+          )}
+          <button
+            onClick={startAdd}
+            disabled={isAdding || editingCard}
+            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-rose-500 to-pink-500 text-white font-bold rounded-xl hover:shadow-lg transition-all disabled:opacity-50"
+          >
+            <Plus size={20} />
+            {language === 'en' ? 'Add Card' : 'Karte hinzufügen'}
+          </button>
+        </div>
       </div>
+
+      {/* Pending Changes Warning */}
+      {pendingCount > 0 && !syncing && (
+        <div className="mb-6 bg-gradient-to-r from-orange-50 to-yellow-50 dark:from-orange-900/20 dark:to-yellow-900/20 border-2 border-orange-200 dark:border-orange-800 rounded-xl p-4">
+          <div className="flex items-start gap-3">
+            <AlertCircle className="text-orange-500 flex-shrink-0 mt-0.5" size={20} />
+            <div className="flex-1">
+              <p className="text-sm font-semibold text-orange-800 dark:text-orange-300 mb-1">
+                {language === 'en' 
+                  ? `You have ${pendingCount} unsync${pendingCount > 1 ? '' : ''}ed change${pendingCount > 1 ? 's' : ''}`
+                  : `Du hast ${pendingCount} nicht synchronisierte Änderung${pendingCount > 1 ? 'en' : ''}`}
+              </p>
+              <p className="text-xs text-orange-700 dark:text-orange-400">
+                {language === 'en' 
+                  ? 'Changes are saved locally. Click "Sync" to save them to Google Sheets.'
+                  : 'Änderungen sind lokal gespeichert. Klicke auf "Synchronisieren" um sie in Google Sheets zu speichern.'}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Search */}
       <div className="mb-6">
@@ -238,8 +381,21 @@ function CardManager({ deck, onBack }) {
                 className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-rose-500 to-pink-500 text-white font-bold rounded-xl hover:shadow-lg transition-all"
               >
                 <Save size={20} />
-                {language === 'en' ? 'Save' : 'Speichern'}
+                {isAdding 
+                  ? (language === 'en' ? 'Add & Continue' : 'Hinzufügen & Weiter')
+                  : (language === 'en' ? 'Save' : 'Speichern')}
               </button>
+              {isAdding && (
+                <button
+                  onClick={() => {
+                    handleAdd();
+                    setIsAdding(false);
+                  }}
+                  className="px-4 py-3 bg-stone-200 dark:bg-stone-700 text-stone-800 dark:text-stone-100 font-semibold rounded-xl hover:bg-stone-300 dark:hover:bg-stone-600 transition-all"
+                >
+                  {language === 'en' ? 'Add & Close' : 'Hinzufügen & Schließen'}
+                </button>
+              )}
             </div>
           </div>
         </div>
