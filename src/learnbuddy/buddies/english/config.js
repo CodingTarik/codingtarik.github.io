@@ -1,5 +1,6 @@
 import { BookOpen, Headphones, MessageCircle, Languages, BookText } from 'lucide-react';
 import EnglishHomePage from './components/EnglishHomePage';
+import VocabularyPage from './components/VocabularyPage';
 import { lessons, getLessonById, getNextLesson } from './data/lessons';
 
 export const englishBuddyConfig = {
@@ -41,7 +42,7 @@ export const englishBuddyConfig = {
       id: 'vocabulary',
       name: { en: 'Vocabulary', de: 'Vokabeln' },
       icon: BookOpen,
-      component: 'VocabularyPage'
+      component: VocabularyPage
     },
     {
       id: 'writing',
