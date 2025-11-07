@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, BookOpen, Edit, Trash2, Play, Brain, TrendingUp, AlertCircle, RefreshCw } from 'lucide-react';
+import toast from 'react-hot-toast';
 import { useLanguage } from '../../../../context/LanguageContext';
 import { getDecks, deleteDeck } from '../../utils/deckStorage';
-import { getDeckStats } from '../../utils/spacedRepetition';
+import { getDueCards } from '../../utils/spacedRepetition';
 import { getPendingChangesCount, getPendingChanges, clearPendingChanges, getCachedCards, setCachedCards } from '../../utils/vocabularyCache';
 import { fetchCardsFromSheet, addCardToSheet, updateCardInSheet, deleteCardFromSheet } from '../../utils/googleSheetsAPI';
 
@@ -17,7 +18,7 @@ function DeckList({ onCreateDeck, onEditDeck, onSelectDeck, refreshTrigger }) {
     loadDecks();
   }, [refreshTrigger]);
 
-  const loadDecks = () => {
+  const loadDecks = async () => {
     const loadedDecks = getDecks();
     setDecks(loadedDecks);
     
@@ -28,18 +29,26 @@ function DeckList({ onCreateDeck, onEditDeck, onSelectDeck, refreshTrigger }) {
     });
     setPendingCounts(counts);
     
-    // Load stats for each deck (would need to fetch cards from sheets)
+    // Load stats for each deck from cached cards
     const stats = {};
-    loadedDecks.forEach(deck => {
-      // Placeholder stats - in real usage would fetch from Google Sheets
+    for (const deck of loadedDecks) {
+      const cached = getCachedCards(deck.id);
+      const cards = cached?.cards || [];
+      
+      const dueCards = getDueCards(cards);
+      const now = new Date();
+      
       stats[deck.id] = {
-        total: 0,
-        new: 0,
-        learning: 0,
-        mature: 0,
-        due: 0
+        total: cards.length,
+        due: dueCards.length,
+        new: cards.filter(c => !c.lastReviewDate).length,
+        mature: cards.filter(c => {
+          if (!c.lastReviewDate) return false;
+          const daysSinceReview = (now - new Date(c.lastReviewDate)) / (1000 * 60 * 60 * 24);
+          return daysSinceReview > 21 && c.interval > 21;
+        }).length
       };
-    });
+    }
     setDeckStats(stats);
   };
 
@@ -54,12 +63,27 @@ function DeckList({ onCreateDeck, onEditDeck, onSelectDeck, refreshTrigger }) {
     }
   };
 
-  const handleSync = async (deck, event) => {
+  const handleSync = async (deck, event, forceRefresh = false) => {
     event.stopPropagation(); // Prevent triggering deck selection
     setSyncingDeck(deck.id);
     
     try {
       const pending = getPendingChanges(deck.id);
+      const hasPending = pending.adds.length > 0 || pending.updates.length > 0 || pending.deletes.length > 0;
+      
+      if (!hasPending || forceRefresh) {
+        // No pending changes - just refresh from Google Sheets
+        const fetchedCards = await fetchCardsFromSheet(deck.scriptUrl);
+        setCachedCards(deck.id, fetchedCards);
+        loadDecks();
+        toast.success(
+          language === 'en' ? 'Cards refreshed from Google Sheets!' : 'Karten von Google Sheets aktualisiert!',
+          { icon: '✅' }
+        );
+        return;
+      }
+      
+      // Has pending changes - upload to Google Sheets
       let errors = [];
       
       // Process deletes first (in reverse order to maintain indices)
@@ -92,9 +116,9 @@ function DeckList({ onCreateDeck, onEditDeck, onSelectDeck, refreshTrigger }) {
       
       if (errors.length > 0) {
         console.error('Sync errors:', errors);
-        alert(
-          (language === 'en' ? 'Some changes failed to sync:\n' : 'Einige Änderungen konnten nicht synchronisiert werden:\n') +
-          errors.join('\n')
+        toast.error(
+          language === 'en' ? `${errors.length} changes failed to sync` : `${errors.length} Änderungen konnten nicht synchronisiert werden`,
+          { duration: 5000 }
         );
       } else {
         // Clear pending changes and reload from Google Sheets
@@ -107,11 +131,14 @@ function DeckList({ onCreateDeck, onEditDeck, onSelectDeck, refreshTrigger }) {
         // Reload the deck list to update pending counts
         loadDecks();
         
-        alert(language === 'en' ? 'All changes synced successfully!' : 'Alle Änderungen erfolgreich synchronisiert!');
+        toast.success(
+          language === 'en' ? 'All changes synced successfully!' : 'Alle Änderungen erfolgreich synchronisiert!',
+          { icon: '🎉' }
+        );
       }
     } catch (error) {
       console.error('Sync error:', error);
-      alert(language === 'en' ? 'Sync failed' : 'Synchronisierung fehlgeschlagen');
+      toast.error(language === 'en' ? 'Sync failed' : 'Synchronisierung fehlgeschlagen');
     } finally {
       setSyncingDeck(null);
     }
@@ -261,19 +288,23 @@ function DeckList({ onCreateDeck, onEditDeck, onSelectDeck, refreshTrigger }) {
 
                 {/* Action Buttons */}
                 <div className="space-y-2">
-                  {/* Sync Button - only show if there are pending changes */}
-                  {pendingCount > 0 && (
-                    <button
-                      onClick={(e) => handleSync(deck, e)}
-                      disabled={syncingDeck === deck.id}
-                      className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-bold rounded-xl hover:shadow-lg transition-all disabled:opacity-50"
-                    >
-                      <RefreshCw size={18} className={syncingDeck === deck.id ? 'animate-spin' : ''} />
-                      {syncingDeck === deck.id
-                        ? (language === 'en' ? 'Syncing...' : 'Synchronisiere...')
-                        : (language === 'en' ? `Sync ${pendingCount} changes` : `${pendingCount} Änderungen syncen`)}
-                    </button>
-                  )}
+                  {/* Sync Button - always visible, changes based on pending state */}
+                  <button
+                    onClick={(e) => handleSync(deck, e, false)}
+                    disabled={syncingDeck === deck.id}
+                    className={`w-full flex items-center justify-center gap-2 px-4 py-3 font-bold rounded-xl hover:shadow-lg transition-all disabled:opacity-50 ${
+                      pendingCount > 0
+                        ? 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white'
+                        : 'bg-gradient-to-r from-green-500 to-emerald-500 text-white'
+                    }`}
+                  >
+                    <RefreshCw size={18} className={syncingDeck === deck.id ? 'animate-spin' : ''} />
+                    {syncingDeck === deck.id
+                      ? (language === 'en' ? 'Syncing...' : 'Synchronisiere...')
+                      : pendingCount > 0
+                        ? (language === 'en' ? `Upload ${pendingCount}` : `${pendingCount} hochladen`)
+                        : (language === 'en' ? 'Refresh' : 'Aktualisieren')}
+                  </button>
                   
                   <button
                     onClick={() => onSelectDeck(deck, 'spaced')}

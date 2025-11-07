@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, RotateCcw, Check, Star, Shuffle, TrendingUp, RefreshCw, ChevronLeft, ChevronRight, Filter } from 'lucide-react';
+import toast from 'react-hot-toast';
 import { useLanguage } from '../../../../context/LanguageContext';
 import { fetchCardsFromSheet, updateCardInSheet, addCardToSheet, deleteCardFromSheet } from '../../utils/googleSheetsAPI';
 import { 
@@ -64,12 +65,12 @@ function GeneralLearningMode({ deck, onBack }) {
       setAllCards(fetchedCards);
       
       if (fetchedCards.length === 0) {
-        alert(language === 'en' ? 'No cards in this deck' : 'Keine Karten in diesem Deck');
+        toast.error(language === 'en' ? 'No cards in this deck' : 'Keine Karten in diesem Deck');
         onBack();
       }
     } catch (error) {
       console.error('Error loading cards:', error);
-      alert(language === 'en' ? 'Failed to load cards' : 'Karten konnten nicht geladen werden');
+      toast.error(language === 'en' ? 'Failed to load cards' : 'Karten konnten nicht geladen werden');
     } finally {
       setLoading(false);
     }
@@ -146,10 +147,24 @@ function GeneralLearningMode({ deck, onBack }) {
     setShowAnswer(false);
   };
 
-  const handleSync = async () => {
+  const handleSync = async (forceRefresh = false) => {
     setSyncing(true);
     try {
       const pending = getPendingChanges(deck.id);
+      const hasPending = pending.adds.length > 0 || pending.updates.length > 0 || pending.deletes.length > 0;
+      
+      if (!hasPending || forceRefresh) {
+        // No pending changes - just refresh from Google Sheets
+        await loadCards(true);
+        updatePendingCount();
+        toast.success(
+          language === 'en' ? 'Cards refreshed from Google Sheets!' : 'Karten von Google Sheets aktualisiert!',
+          { icon: '✅' }
+        );
+        return;
+      }
+      
+      // Has pending changes - upload to Google Sheets
       let errors = [];
       
       // Process deletes first (in reverse order to maintain indices)
@@ -182,20 +197,23 @@ function GeneralLearningMode({ deck, onBack }) {
       
       if (errors.length > 0) {
         console.error('Sync errors:', errors);
-        alert(
-          (language === 'en' ? 'Some changes failed to sync:\n' : 'Einige Änderungen konnten nicht synchronisiert werden:\n') +
-          errors.join('\n')
+        toast.error(
+          language === 'en' ? `${errors.length} changes failed to sync` : `${errors.length} Änderungen konnten nicht synchronisiert werden`,
+          { duration: 5000 }
         );
       } else {
         // Clear pending changes and reload
         clearPendingChanges(deck.id);
         await loadCards(true);
         updatePendingCount();
-        alert(language === 'en' ? 'All changes synced successfully!' : 'Alle Änderungen erfolgreich synchronisiert!');
+        toast.success(
+          language === 'en' ? 'All changes synced successfully!' : 'Alle Änderungen erfolgreich synchronisiert!',
+          { icon: '🎉' }
+        );
       }
     } catch (error) {
       console.error('Sync error:', error);
-      alert(language === 'en' ? 'Sync failed' : 'Synchronisierung fehlgeschlagen');
+      toast.error(language === 'en' ? 'Sync failed' : 'Synchronisierung fehlgeschlagen');
     } finally {
       setSyncing(false);
     }
@@ -396,12 +414,16 @@ function GeneralLearningMode({ deck, onBack }) {
             </span>
           )}
           <button
-            onClick={handleSync}
+            onClick={() => handleSync(false)}
             disabled={syncing}
-            className="p-2 hover:bg-stone-200 dark:hover:bg-stone-700 rounded-lg transition-colors disabled:opacity-50"
-            title={language === 'en' ? 'Sync with Google Sheets' : 'Mit Google Sheets synchronisieren'}
+            className={`p-2 rounded-lg transition-colors disabled:opacity-50 hover:bg-stone-200 dark:hover:bg-stone-700 ${
+              pendingCount > 0 ? 'text-blue-500' : 'text-green-500'
+            }`}
+            title={pendingCount > 0 
+              ? (language === 'en' ? 'Upload ratings' : 'Bewertungen hochladen')
+              : (language === 'en' ? 'Refresh from Google Sheets' : 'Von Google Sheets aktualisieren')}
           >
-            <RefreshCw size={20} className={`text-blue-500 ${syncing ? 'animate-spin' : ''}`} />
+            <RefreshCw size={20} className={syncing ? 'animate-spin' : ''} />
           </button>
           
           {/* Filter Button */}

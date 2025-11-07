@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Edit, Trash2, ArrowLeft, Save, X, Search, Download, Upload, RefreshCw, AlertCircle } from 'lucide-react';
+import toast from 'react-hot-toast';
 import { useLanguage } from '../../../../context/LanguageContext';
 import { fetchCardsFromSheet, addCardToSheet, updateCardInSheet, deleteCardFromSheet } from '../../utils/googleSheetsAPI';
 import { 
@@ -58,7 +59,7 @@ function CardManager({ deck, onBack }) {
       setCachedCards(deck.id, fetchedCards);
     } catch (error) {
       console.error('Error loading cards:', error);
-      alert(language === 'en' ? 'Failed to load cards' : 'Karten konnten nicht geladen werden');
+      toast.error(language === 'en' ? 'Failed to load cards' : 'Karten konnten nicht geladen werden');
     } finally {
       setLoading(false);
     }
@@ -66,7 +67,7 @@ function CardManager({ deck, onBack }) {
 
   const handleAdd = () => {
     if (!formData.word.trim() || !formData.translation.trim()) {
-      alert(language === 'en' ? 'Word and translation are required' : 'Wort und Übersetzung sind erforderlich');
+      toast.error(language === 'en' ? 'Word and translation are required' : 'Wort und Übersetzung sind erforderlich');
       return;
     }
 
@@ -96,16 +97,16 @@ function CardManager({ deck, onBack }) {
         ? 'Card added locally. Remember to sync!'
         : 'Karte lokal hinzugefügt. Vergiss nicht zu synchronisieren!';
       
-      // Optional: Show a toast notification instead of alert
-      console.log(message);
+      // Show success toast
+      toast.success(message, { icon: '✅', duration: 2000 });
     } else {
-      alert(language === 'en' ? 'Failed to add card locally' : 'Karte konnte nicht lokal hinzugefügt werden');
+      toast.error(language === 'en' ? 'Failed to add card locally' : 'Karte konnte nicht lokal hinzugefügt werden');
     }
   };
 
   const handleEdit = () => {
     if (!formData.word.trim() || !formData.translation.trim()) {
-      alert(language === 'en' ? 'Word and translation are required' : 'Wort und Übersetzung sind erforderlich');
+      toast.error(language === 'en' ? 'Word and translation are required' : 'Wort und Übersetzung sind erforderlich');
       return;
     }
 
@@ -123,8 +124,9 @@ function CardManager({ deck, onBack }) {
       setEditingCard(null);
       setFormData({ word: '', translation: '', explanation: '', ratingGeneral: 0 });
       updatePendingCount();
+      toast.success(language === 'en' ? 'Card updated!' : 'Karte aktualisiert!', { icon: '✏️' });
     } else {
-      alert(language === 'en' ? 'Failed to update card' : 'Karte konnte nicht aktualisiert werden');
+      toast.error(language === 'en' ? 'Failed to update card' : 'Karte konnte nicht aktualisiert werden');
     }
   };
 
@@ -144,15 +146,30 @@ function CardManager({ deck, onBack }) {
       const cached = getCachedCards(deck.id);
       setCards(cached.cards);
       updatePendingCount();
+      toast.success(language === 'en' ? 'Card deleted!' : 'Karte gelöscht!', { icon: '🗑️' });
     } else {
-      alert(language === 'en' ? 'Failed to delete card' : 'Karte konnte nicht gelöscht werden');
+      toast.error(language === 'en' ? 'Failed to delete card' : 'Karte konnte nicht gelöscht werden');
     }
   };
 
-  const handleSync = async () => {
+  const handleSync = async (forceRefresh = false) => {
     setSyncing(true);
     try {
       const pending = getPendingChanges(deck.id);
+      const hasPending = pending.adds.length > 0 || pending.updates.length > 0 || pending.deletes.length > 0;
+      
+      if (!hasPending || forceRefresh) {
+        // No pending changes - just refresh from Google Sheets
+        await loadCards(true);
+        updatePendingCount();
+        toast.success(
+          language === 'en' ? 'Cards refreshed from Google Sheets!' : 'Karten von Google Sheets aktualisiert!',
+          { icon: '✅' }
+        );
+        return;
+      }
+      
+      // Has pending changes - upload to Google Sheets
       let errors = [];
       
       // Process deletes first (in reverse order to maintain indices)
@@ -185,20 +202,23 @@ function CardManager({ deck, onBack }) {
       
       if (errors.length > 0) {
         console.error('Sync errors:', errors);
-        alert(
-          (language === 'en' ? 'Some changes failed to sync:\n' : 'Einige Änderungen konnten nicht synchronisiert werden:\n') +
-          errors.join('\n')
+        toast.error(
+          language === 'en' ? `${errors.length} changes failed to sync` : `${errors.length} Änderungen konnten nicht synchronisiert werden`,
+          { duration: 5000 }
         );
       } else {
         // Clear pending changes and reload
         clearPendingChanges(deck.id);
         await loadCards(true);
         updatePendingCount();
-        alert(language === 'en' ? 'All changes synced successfully!' : 'Alle Änderungen erfolgreich synchronisiert!');
+        toast.success(
+          language === 'en' ? 'All changes synced successfully!' : 'Alle Änderungen erfolgreich synchronisiert!',
+          { icon: '🎉' }
+        );
       }
     } catch (error) {
       console.error('Sync error:', error);
-      alert(language === 'en' ? 'Sync failed' : 'Synchronisierung fehlgeschlagen');
+      toast.error(language === 'en' ? 'Sync failed' : 'Synchronisierung fehlgeschlagen');
     } finally {
       setSyncing(false);
     }
@@ -259,18 +279,25 @@ function CardManager({ deck, onBack }) {
         </div>
         
         <div className="flex items-center gap-2">
-          {pendingCount > 0 && (
-            <button
-              onClick={handleSync}
-              disabled={syncing}
-              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-bold rounded-xl hover:shadow-lg transition-all disabled:opacity-50"
-            >
-              <RefreshCw size={20} className={syncing ? 'animate-spin' : ''} />
-              {syncing 
-                ? (language === 'en' ? 'Syncing...' : 'Synchronisiere...')
-                : (language === 'en' ? 'Sync' : 'Synchronisieren')}
-            </button>
-          )}
+          <button
+            onClick={() => handleSync(false)}
+            disabled={syncing}
+            className={`flex items-center gap-2 px-4 py-2 font-bold rounded-xl hover:shadow-lg transition-all disabled:opacity-50 ${
+              pendingCount > 0
+                ? 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white'
+                : 'bg-gradient-to-r from-green-500 to-emerald-500 text-white'
+            }`}
+            title={pendingCount > 0 
+              ? (language === 'en' ? 'Upload changes to Google Sheets' : 'Änderungen zu Google Sheets hochladen')
+              : (language === 'en' ? 'Refresh from Google Sheets' : 'Von Google Sheets aktualisieren')}
+          >
+            <RefreshCw size={20} className={syncing ? 'animate-spin' : ''} />
+            {syncing 
+              ? (language === 'en' ? 'Syncing...' : 'Synchronisiere...')
+              : pendingCount > 0
+                ? (language === 'en' ? `Upload ${pendingCount}` : `${pendingCount} hochladen`)
+                : (language === 'en' ? 'Refresh' : 'Aktualisieren')}
+          </button>
           <button
             onClick={startAdd}
             disabled={isAdding || editingCard}

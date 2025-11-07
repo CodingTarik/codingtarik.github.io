@@ -1,5 +1,6 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { Check } from 'lucide-react';
+import { Toaster } from 'react-hot-toast';
 
 // Context Providers
 import { LanguageProvider } from './learnbuddy/context/LanguageContext';
@@ -694,6 +695,43 @@ function AppContent() {
 
   return (
     <div className="min-h-screen flex flex-col">
+      {/* Toast Notifications */}
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+        toastOptions={{
+          duration: 3000,
+          style: {
+            background: '#363636',
+            color: '#fff',
+            borderRadius: '12px',
+            padding: '16px',
+            fontSize: '14px',
+            fontWeight: '600',
+          },
+          success: {
+            duration: 3000,
+            iconTheme: {
+              primary: '#10b981',
+              secondary: '#fff',
+            },
+          },
+          error: {
+            duration: 4000,
+            iconTheme: {
+              primary: '#ef4444',
+              secondary: '#fff',
+            },
+          },
+          loading: {
+            iconTheme: {
+              primary: '#3b82f6',
+              secondary: '#fff',
+            },
+          },
+        }}
+      />
+      
       {/* LearnBuddy Header - Only in LearnBuddy view */}
       {appView === 'learnbuddy' && (
         <GlobalHeader currentView={appView} onViewChange={handleViewChange} />
