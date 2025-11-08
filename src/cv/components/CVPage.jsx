@@ -1220,7 +1220,7 @@ function Achievement({ title, period, subtitle, description }) {
 
 function Experience({ title, company, period, location, description, skills }) {
   return (
-    <div className="border-l-4 border-green-500 pl-4 print:pl-3">
+    <div className="experience-card border-l-4 border-green-500 pl-4 print:pl-3">
       <div className="flex justify-between items-start mb-1">
         <div>
           <h3 className="font-bold text-slate-900 dark:text-white text-base print:text-sm">{title}</h3>
@@ -1244,7 +1244,7 @@ function Experience({ title, company, period, location, description, skills }) {
 
 function Education({ degree, institution, period, grade, description }) {
   return (
-    <div className="border-l-4 border-purple-500 pl-4 print:pl-3">
+    <div className="education-card border-l-4 border-purple-500 pl-4 print:pl-3">
       <div className="flex justify-between items-start mb-1">
         <div>
           <h3 className="font-bold text-slate-900 dark:text-white text-base print:text-sm">{degree}</h3>
@@ -1260,7 +1260,7 @@ function Education({ degree, institution, period, grade, description }) {
 
 function LanguageSkill({ language, level }) {
   return (
-    <div className="flex justify-between items-center">
+    <div className="language-item flex justify-between items-center">
       <span className="font-medium text-slate-900 dark:text-white">{language}</span>
       <span className="text-sm text-slate-600 dark:text-slate-400">{level}</span>
     </div>
@@ -1269,7 +1269,7 @@ function LanguageSkill({ language, level }) {
 
 function SkillCategory({ title, skills }) {
   return (
-    <div className="mb-3">
+    <div className="skill-category mb-3">
       <h4 className="font-semibold text-slate-900 dark:text-white mb-2 text-sm">{title}</h4>
       <div className="flex flex-wrap gap-1">
         {skills.map(skill => (
@@ -1310,7 +1310,7 @@ function Certificate({ title, issuer, year, link, description }) {
 
 function Hobby({ icon, title, subtitle }) {
   return (
-    <div className="flex items-center gap-3">
+    <div className="hobby-item flex items-center gap-3">
       <span className="text-2xl">{icon}</span>
       <div>
         <h4 className="font-medium text-slate-900 dark:text-white text-sm">{title}</h4>
