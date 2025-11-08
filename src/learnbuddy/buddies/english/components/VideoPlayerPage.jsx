@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Upload, Play, Pause, Volume2, VolumeX, Maximize, Star, Copy, Trash2, ArrowLeft, FileVideo, Subtitles, Check } from 'lucide-react';
+import { Upload, Play, Pause, Volume2, VolumeX, Maximize, Star, Copy, Trash2, ArrowLeft, FileVideo, Subtitles, Check, Search, Download, Film, Globe, X, AlertCircle, ExternalLink } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useLanguage } from '../../../context/LanguageContext';
 import { parseSubtitle, findCurrentSubtitle, formatTime, mergeSubtitles } from '../utils/subtitleParser';
@@ -13,6 +13,23 @@ import {
   deleteFavorite,
   isFavorited 
 } from '../utils/videoStorage';
+import { 
+  searchSubtitlesByHash, 
+  searchSubtitlesByQuery, 
+  downloadSubtitle, 
+  formatSubtitleResults,
+  isAPIKeyConfigured,
+  getAPISetupInstructions,
+  openManualSearch,
+  getAlternativeSubtitleSources
+} from '../utils/openSubtitlesAPI';
+import { 
+  detectEmbeddedSubtitles, 
+  extractEmbeddedSubtitle, 
+  cuesToSRT, 
+  mightHaveEmbeddedSubtitles,
+  getLanguageName
+} from '../utils/embeddedSubtitles';
 
 function VideoPlayerPage() {
   const { language } = useLanguage();
@@ -25,6 +42,20 @@ function VideoPlayerPage() {
   const [uploadingVideo, setUploadingVideo] = useState(null);
   const [uploadingPrimarySub, setUploadingPrimarySub] = useState(null);
   const [uploadingSecondarySub, setUploadingSecondarySub] = useState(null);
+  
+  // Embedded subtitles
+  const [embeddedTracks, setEmbeddedTracks] = useState([]);
+  const [selectedPrimaryTrack, setSelectedPrimaryTrack] = useState(null);
+  const [selectedSecondaryTrack, setSelectedSecondaryTrack] = useState(null);
+  const [detectingEmbedded, setDetectingEmbedded] = useState(false);
+  
+  // OpenSubtitles search
+  const [showSubtitleSearch, setShowSubtitleSearch] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [searching, setSearching] = useState(false);
+  const [searchingFor, setSearchingFor] = useState(null); // 'primary' or 'secondary'
+  const [showManualSources, setShowManualSources] = useState(false);
 
   // Player state
   const videoRef = useRef(null);
@@ -55,6 +86,175 @@ function VideoPlayerPage() {
     } catch (error) {
       console.error('Error loading videos:', error);
       toast.error(language === 'en' ? 'Failed to load videos' : 'Videos konnten nicht geladen werden');
+    }
+  };
+
+  // Handle video file selection - detect embedded subtitles
+  const handleVideoFileChange = async (file) => {
+    setUploadingVideo(file);
+    setEmbeddedTracks([]);
+    setSelectedPrimaryTrack(null);
+    setSelectedSecondaryTrack(null);
+
+    // Check if file might have embedded subtitles
+    if (mightHaveEmbeddedSubtitles(file.name)) {
+      setDetectingEmbedded(true);
+      toast.loading(language === 'en' ? 'Detecting embedded subtitles...' : 'Erkenne eingebettete Untertitel...', { id: 'detect-subs' });
+      
+      try {
+        const tracks = await detectEmbeddedSubtitles(file);
+        if (tracks.length > 0) {
+          setEmbeddedTracks(tracks);
+          toast.success(
+            language === 'en' 
+              ? `Found ${tracks.length} embedded subtitle${tracks.length > 1 ? 's' : ''}!` 
+              : `${tracks.length} eingebettete Untertitel gefunden!`,
+            { id: 'detect-subs', icon: '🎬' }
+          );
+        } else {
+          toast.dismiss('detect-subs');
+        }
+      } catch (error) {
+        console.error('Error detecting embedded subtitles:', error);
+        toast.dismiss('detect-subs');
+      } finally {
+        setDetectingEmbedded(false);
+      }
+    }
+  };
+
+  // OpenSubtitles search (with or without API)
+  const handleSearchSubtitles = async (forTrack) => {
+    setSearchingFor(forTrack);
+    
+    // If no API key, show manual sources instead
+    if (!isAPIKeyConfigured()) {
+      setShowManualSources(true);
+      return;
+    }
+
+    // API key configured - use automatic search
+    setShowSubtitleSearch(true);
+    setSearchResults([]);
+
+    // Auto-search by video hash if available
+    if (uploadingVideo) {
+      setSearching(true);
+      try {
+        const hashResults = await searchSubtitlesByHash(uploadingVideo);
+        if (hashResults.length > 0) {
+          setSearchResults(formatSubtitleResults(hashResults));
+          toast.success(
+            language === 'en' 
+              ? `Found ${hashResults.length} matching subtitles!` 
+              : `${hashResults.length} passende Untertitel gefunden!`,
+            { icon: '🔍' }
+          );
+        } else {
+          toast(language === 'en' ? 'No automatic matches. Try searching by name.' : 'Keine automatischen Treffer. Versuche Suche nach Name.');
+        }
+      } catch (error) {
+        console.error('Error searching subtitles:', error);
+        toast.error(language === 'en' ? 'Search failed' : 'Suche fehlgeschlagen');
+      } finally {
+        setSearching(false);
+      }
+    }
+  };
+
+  const handleManualSearch = async () => {
+    if (!searchQuery.trim()) {
+      toast.error(language === 'en' ? 'Please enter a search query' : 'Bitte gib einen Suchbegriff ein');
+      return;
+    }
+
+    setSearching(true);
+    try {
+      const results = await searchSubtitlesByQuery(searchQuery);
+      setSearchResults(formatSubtitleResults(results));
+      
+      if (results.length === 0) {
+        toast(language === 'en' ? 'No results found' : 'Keine Ergebnisse gefunden', { icon: '😔' });
+      } else {
+        toast.success(
+          language === 'en' 
+            ? `Found ${results.length} subtitles!` 
+            : `${results.length} Untertitel gefunden!`,
+          { icon: '🔍' }
+        );
+      }
+    } catch (error) {
+      console.error('Error searching subtitles:', error);
+      toast.error(language === 'en' ? 'Search failed' : 'Suche fehlgeschlagen');
+    } finally {
+      setSearching(false);
+    }
+  };
+
+  const handleSelectSearchResult = async (result) => {
+    toast.loading(language === 'en' ? 'Downloading subtitle...' : 'Lade Untertitel herunter...', { id: 'download-sub' });
+    
+    try {
+      const subtitleContent = await downloadSubtitle(result.id);
+      
+      // Create a File object from the content
+      const blob = new Blob([subtitleContent], { type: 'text/plain' });
+      const file = new File([blob], `${result.name}.srt`, { type: 'text/plain' });
+      
+      if (searchingFor === 'primary') {
+        setUploadingPrimarySub(file);
+      } else {
+        setUploadingSecondarySub(file);
+      }
+      
+      toast.success(language === 'en' ? 'Subtitle downloaded!' : 'Untertitel heruntergeladen!', { id: 'download-sub', icon: '✅' });
+      setShowSubtitleSearch(false);
+    } catch (error) {
+      console.error('Error downloading subtitle:', error);
+      toast.error(language === 'en' ? 'Download failed' : 'Download fehlgeschlagen', { id: 'download-sub' });
+    }
+  };
+
+  const handleUseEmbeddedTrack = async (trackIndex, forTrack) => {
+    if (!uploadingVideo) return;
+
+    toast.loading(language === 'en' ? 'Extracting subtitle...' : 'Extrahiere Untertitel...', { id: 'extract-sub' });
+    
+    try {
+      const cues = await extractEmbeddedSubtitle(uploadingVideo, trackIndex);
+      
+      if (cues.length === 0) {
+        toast.error(
+          language === 'en' 
+            ? 'Could not extract subtitle. Browser limitations may prevent extraction. Try manual upload.' 
+            : 'Konnte Untertitel nicht extrahieren. Browser-Einschränkungen verhindern möglicherweise die Extraktion. Versuche manuellen Upload.',
+          { id: 'extract-sub', duration: 5000 }
+        );
+        return;
+      }
+
+      // Convert cues to SRT format
+      const srtContent = cuesToSRT(cues);
+      const blob = new Blob([srtContent], { type: 'text/plain' });
+      const file = new File([blob], `embedded_${trackIndex}.srt`, { type: 'text/plain' });
+      
+      if (forTrack === 'primary') {
+        setUploadingPrimarySub(file);
+        setSelectedPrimaryTrack(trackIndex);
+      } else {
+        setUploadingSecondarySub(file);
+        setSelectedSecondaryTrack(trackIndex);
+      }
+      
+      toast.success(language === 'en' ? 'Subtitle extracted!' : 'Untertitel extrahiert!', { id: 'extract-sub', icon: '✅' });
+    } catch (error) {
+      console.error('Error extracting subtitle:', error);
+      toast.error(
+        language === 'en' 
+          ? 'Extraction failed. Try manual upload or OpenSubtitles search.' 
+          : 'Extraktion fehlgeschlagen. Versuche manuellen Upload oder OpenSubtitles-Suche.',
+        { id: 'extract-sub', duration: 5000 }
+      );
     }
   };
 
@@ -501,59 +701,142 @@ function VideoPlayerPage() {
           {language === 'en' ? 'Upload Video' : 'Video hochladen'}
         </h2>
 
-        <div className="grid md:grid-cols-3 gap-4 mb-4">
-          {/* Video File */}
-          <div>
-            <label className="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-2">
-              {language === 'en' ? 'Video File (MP4, MKV)' : 'Video-Datei (MP4, MKV)'}
-            </label>
-            <input
-              type="file"
-              accept="video/mp4,video/x-matroska"
-              onChange={(e) => setUploadingVideo(e.target.files[0])}
-              className="w-full text-sm text-stone-600 dark:text-stone-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-rose-500 file:text-white file:cursor-pointer hover:file:bg-rose-600"
-            />
-            {uploadingVideo && (
-              <p className="text-xs text-stone-600 dark:text-stone-400 mt-1 flex items-center gap-1">
-                <Check size={12} className="text-green-500" /> {uploadingVideo.name}
-              </p>
-            )}
-          </div>
+        {/* Video File */}
+        <div className="mb-6">
+          <label className="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-2">
+            {language === 'en' ? 'Video File (MP4, MKV)' : 'Video-Datei (MP4, MKV)'}
+          </label>
+          <input
+            type="file"
+            accept="video/mp4,video/x-matroska"
+            onChange={(e) => handleVideoFileChange(e.target.files[0])}
+            className="w-full text-sm text-stone-600 dark:text-stone-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-rose-500 file:text-white file:cursor-pointer hover:file:bg-rose-600"
+          />
+          {uploadingVideo && (
+            <p className="text-xs text-stone-600 dark:text-stone-400 mt-1 flex items-center gap-1">
+              <Check size={12} className="text-green-500" /> {uploadingVideo.name}
+            </p>
+          )}
+        </div>
 
+        {/* Embedded Subtitles Alert */}
+        {embeddedTracks.length > 0 && (
+          <div className="bg-blue-50 dark:bg-blue-900/20 border-2 border-blue-300 dark:border-blue-700 rounded-lg p-4 mb-6">
+            <div className="flex items-start gap-3">
+              <Film size={20} className="text-blue-600 dark:text-blue-400 mt-0.5" />
+              <div className="flex-1">
+                <h3 className="font-bold text-blue-900 dark:text-blue-100 mb-2">
+                  {language === 'en' ? '🎉 Embedded Subtitles Detected!' : '🎉 Eingebettete Untertitel gefunden!'}
+                </h3>
+                <p className="text-sm text-blue-800 dark:text-blue-200 mb-3">
+                  {language === 'en' 
+                    ? `Found ${embeddedTracks.length} subtitle track(s). Click to use them:` 
+                    : `${embeddedTracks.length} Untertitel-Spur(en) gefunden. Klicke um sie zu nutzen:`}
+                </p>
+                <div className="space-y-2">
+                  {embeddedTracks.map((track, index) => (
+                    <div key={index} className="flex items-center gap-2 flex-wrap">
+                      <span className="text-xs bg-blue-100 dark:bg-blue-800 px-2 py-1 rounded">
+                        {track.label} {track.language && `(${getLanguageName(track.language)})`}
+                      </span>
+                      <button
+                        onClick={() => handleUseEmbeddedTrack(index, 'primary')}
+                        className={`text-xs px-3 py-1 rounded transition-colors ${
+                          selectedPrimaryTrack === index
+                            ? 'bg-green-500 text-white'
+                            : 'bg-blue-500 text-white hover:bg-blue-600'
+                        }`}
+                      >
+                        {language === 'en' ? 'Use as English' : 'Als Englisch nutzen'}
+                      </button>
+                      <button
+                        onClick={() => handleUseEmbeddedTrack(index, 'secondary')}
+                        className={`text-xs px-3 py-1 rounded transition-colors ${
+                          selectedSecondaryTrack === index
+                            ? 'bg-green-500 text-white'
+                            : 'bg-purple-500 text-white hover:bg-purple-600'
+                        }`}
+                      >
+                        {language === 'en' ? 'Use as Translation' : 'Als Übersetzung nutzen'}
+                      </button>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-xs text-blue-700 dark:text-blue-300 mt-3">
+                  {language === 'en' 
+                    ? 'Note: Browser limitations may prevent extraction. If it fails, use manual upload or OpenSubtitles search below.' 
+                    : 'Hinweis: Browser-Einschränkungen können Extraktion verhindern. Bei Fehlschlag nutze manuellen Upload oder OpenSubtitles-Suche.'}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <div className="grid md:grid-cols-2 gap-6 mb-6">
           {/* Primary Subtitle */}
           <div>
             <label className="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-2">
-              {language === 'en' ? 'English Subtitle (SRT/VTT)' : 'Englischer Untertitel (SRT/VTT)'}
+              {language === 'en' ? 'English Subtitle' : 'Englischer Untertitel'}
             </label>
-            <input
-              type="file"
-              accept=".srt,.vtt"
-              onChange={(e) => setUploadingPrimarySub(e.target.files[0])}
-              className="w-full text-sm text-stone-600 dark:text-stone-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-blue-500 file:text-white file:cursor-pointer hover:file:bg-blue-600"
-            />
-            {uploadingPrimarySub && (
-              <p className="text-xs text-stone-600 dark:text-stone-400 mt-1 flex items-center gap-1">
-                <Check size={12} className="text-green-500" /> {uploadingPrimarySub.name}
-              </p>
-            )}
+            
+            <div className="space-y-2">
+              {/* Manual Upload */}
+              <input
+                type="file"
+                accept=".srt,.vtt"
+                onChange={(e) => setUploadingPrimarySub(e.target.files[0])}
+                className="w-full text-sm text-stone-600 dark:text-stone-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-blue-500 file:text-white file:cursor-pointer hover:file:bg-blue-600"
+              />
+              
+              {/* OpenSubtitles Search Button */}
+              <button
+                onClick={() => handleSearchSubtitles('primary')}
+                disabled={!uploadingVideo}
+                className="w-full flex items-center justify-center gap-2 py-2 px-4 bg-green-500 hover:bg-green-600 text-white rounded-lg text-sm font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <Search size={16} />
+                {language === 'en' ? 'Search OpenSubtitles' : 'OpenSubtitles durchsuchen'}
+              </button>
+              
+              {uploadingPrimarySub && (
+                <p className="text-xs text-stone-600 dark:text-stone-400 flex items-center gap-1">
+                  <Check size={12} className="text-green-500" /> {uploadingPrimarySub.name}
+                </p>
+              )}
+            </div>
           </div>
 
           {/* Secondary Subtitle */}
           <div>
             <label className="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-2">
-              {language === 'en' ? 'Translation (SRT/VTT)' : 'Übersetzung (SRT/VTT)'}
+              {language === 'en' ? 'Translation Subtitle' : 'Übersetzungs-Untertitel'}
             </label>
-            <input
-              type="file"
-              accept=".srt,.vtt"
-              onChange={(e) => setUploadingSecondarySub(e.target.files[0])}
-              className="w-full text-sm text-stone-600 dark:text-stone-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-purple-500 file:text-white file:cursor-pointer hover:file:bg-purple-600"
-            />
-            {uploadingSecondarySub && (
-              <p className="text-xs text-stone-600 dark:text-stone-400 mt-1 flex items-center gap-1">
-                <Check size={12} className="text-green-500" /> {uploadingSecondarySub.name}
-              </p>
-            )}
+            
+            <div className="space-y-2">
+              {/* Manual Upload */}
+              <input
+                type="file"
+                accept=".srt,.vtt"
+                onChange={(e) => setUploadingSecondarySub(e.target.files[0])}
+                className="w-full text-sm text-stone-600 dark:text-stone-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-purple-500 file:text-white file:cursor-pointer hover:file:bg-purple-600"
+              />
+              
+              {/* OpenSubtitles Search Button */}
+              <button
+                onClick={() => handleSearchSubtitles('secondary')}
+                disabled={!uploadingVideo}
+                className="w-full flex items-center justify-center gap-2 py-2 px-4 bg-green-500 hover:bg-green-600 text-white rounded-lg text-sm font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <Search size={16} />
+                {language === 'en' ? 'Search OpenSubtitles' : 'OpenSubtitles durchsuchen'}
+              </button>
+              
+              {uploadingSecondarySub && (
+                <p className="text-xs text-stone-600 dark:text-stone-400 flex items-center gap-1">
+                  <Check size={12} className="text-green-500" /> {uploadingSecondarySub.name}
+                </p>
+              )}
+            </div>
           </div>
         </div>
 
@@ -567,6 +850,227 @@ function VideoPlayerPage() {
             : (language === 'en' ? 'Upload Video' : 'Video hochladen')}
         </button>
       </div>
+
+      {/* OpenSubtitles Search Modal */}
+      {showSubtitleSearch && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-2xl max-w-4xl w-full max-h-[80vh] overflow-hidden flex flex-col">
+            {/* Header */}
+            <div className="p-6 border-b border-stone-200 dark:border-stone-700 flex items-center justify-between">
+              <div>
+                <h2 className="text-2xl font-bold text-stone-800 dark:text-stone-100 flex items-center gap-2">
+                  <Globe size={24} className="text-green-500" />
+                  {language === 'en' ? 'Search Subtitles' : 'Untertitel suchen'}
+                </h2>
+                <p className="text-sm text-stone-600 dark:text-stone-400 mt-1">
+                  {searchingFor === 'primary' 
+                    ? (language === 'en' ? 'English Subtitle' : 'Englischer Untertitel')
+                    : (language === 'en' ? 'Translation Subtitle' : 'Übersetzungs-Untertitel')}
+                </p>
+              </div>
+              <button
+                onClick={() => setShowSubtitleSearch(false)}
+                className="p-2 hover:bg-stone-100 dark:hover:bg-stone-700 rounded-lg transition-colors"
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            {/* Search Bar */}
+            <div className="p-6 border-b border-stone-200 dark:border-stone-700">
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && handleManualSearch()}
+                  placeholder={language === 'en' ? 'Search by movie/show name...' : 'Nach Film/Serie suchen...'}
+                  className="flex-1 px-4 py-2 border-2 border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-800 dark:text-stone-100"
+                />
+                <button
+                  onClick={handleManualSearch}
+                  disabled={searching}
+                  className="px-6 py-2 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg transition-colors disabled:opacity-50"
+                >
+                  {searching ? '...' : <Search size={20} />}
+                </button>
+              </div>
+              <p className="text-xs text-stone-600 dark:text-stone-400 mt-2">
+                {language === 'en' 
+                  ? 'Automatic search by video file already performed. Use manual search for specific titles.' 
+                  : 'Automatische Suche nach Video-Datei bereits durchgeführt. Nutze manuelle Suche für spezifische Titel.'}
+              </p>
+            </div>
+
+            {/* Results */}
+            <div className="flex-1 overflow-y-auto p-6">
+              {searchResults.length === 0 ? (
+                <div className="text-center py-12 text-stone-600 dark:text-stone-400">
+                  {searching ? (
+                    <div className="flex flex-col items-center gap-3">
+                      <div className="animate-spin rounded-full h-12 w-12 border-4 border-green-500 border-t-transparent"></div>
+                      <p>{language === 'en' ? 'Searching...' : 'Suche läuft...'}</p>
+                    </div>
+                  ) : (
+                    <p>{language === 'en' ? 'No results yet. Try searching!' : 'Noch keine Ergebnisse. Starte eine Suche!'}</p>
+                  )}
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {searchResults.map((result) => (
+                    <div
+                      key={result.id}
+                      className="bg-stone-50 dark:bg-stone-700 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer"
+                      onClick={() => handleSelectSearchResult(result)}
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1">
+                          <h3 className="font-bold text-stone-800 dark:text-stone-100 mb-1">
+                            {result.name}
+                          </h3>
+                          {result.movieName && result.movieName !== result.name && (
+                            <p className="text-sm text-stone-600 dark:text-stone-400 mb-2">
+                              {result.movieName} {result.year && `(${result.year})`}
+                            </p>
+                          )}
+                          <div className="flex items-center gap-2 flex-wrap text-xs">
+                            <span className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded">
+                              {result.language.toUpperCase()}
+                            </span>
+                            <span className="bg-stone-200 dark:bg-stone-600 text-stone-700 dark:text-stone-300 px-2 py-1 rounded">
+                              {result.format}
+                            </span>
+                            <span className="text-stone-600 dark:text-stone-400">
+                              ⬇️ {result.downloads || 0}
+                            </span>
+                            {result.hearing_impaired && (
+                              <span className="bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 px-2 py-1 rounded">
+                                HI
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        <Download size={20} className="text-green-500" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Manual Sources Modal (No API Key Required) */}
+      {showManualSources && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-2xl max-w-lg w-full max-h-[85vh] overflow-y-auto">
+            {/* Header */}
+            <div className="p-4 border-b border-stone-200 dark:border-stone-700 flex items-center justify-between sticky top-0 bg-white dark:bg-stone-800 z-10">
+              <div>
+                <h2 className="text-xl font-bold text-stone-800 dark:text-stone-100 flex items-center gap-2">
+                  <Globe size={20} className="text-blue-500" />
+                  {language === 'en' ? 'Find Subtitles' : 'Untertitel finden'}
+                </h2>
+              </div>
+              <button
+                onClick={() => setShowManualSources(false)}
+                className="p-2 hover:bg-stone-100 dark:hover:bg-stone-700 rounded-lg transition-colors"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            <div className="p-4 space-y-3">
+              {/* Quick Search Button */}
+              {uploadingVideo && (
+                <button
+                  onClick={() => {
+                    const lang = searchingFor === 'primary' ? 'en' : 'de';
+                    openManualSearch(uploadingVideo.name, lang);
+                    toast.success(
+                      language === 'en' 
+                        ? 'Opened OpenSubtitles!' 
+                        : 'OpenSubtitles geöffnet!',
+                      { icon: '🔍' }
+                    );
+                    setShowManualSources(false);
+                  }}
+                  className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold rounded-lg shadow-lg transition-all"
+                >
+                  <Search size={20} />
+                  <span>{language === 'en' ? 'Search OpenSubtitles' : 'OpenSubtitles durchsuchen'}</span>
+                  <ExternalLink size={16} />
+                </button>
+              )}
+
+              {/* Alternative Sources (Compact) */}
+              <div>
+                <p className="text-xs text-stone-600 dark:text-stone-400 mb-2">
+                  {language === 'en' ? 'Or try these alternatives:' : 'Oder probiere Alternativen:'}
+                </p>
+                <div className="space-y-1.5">
+                  {uploadingVideo && getAlternativeSubtitleSources(uploadingVideo.name).slice(1, 3).map((source, index) => (
+                    <a
+                      key={index}
+                      href={source.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => {
+                        toast.success(language === 'en' ? 'Opened in new tab!' : 'In neuem Tab geöffnet!', { icon: '🔗' });
+                        setShowManualSources(false);
+                      }}
+                      className="block p-2.5 rounded-lg border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 hover:border-stone-300 dark:hover:border-stone-600 transition-all"
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm font-semibold text-stone-800 dark:text-stone-100">
+                          {source.name}
+                        </span>
+                        <ExternalLink size={14} className="text-stone-400" />
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              {/* Compact Instructions */}
+              <div className="p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+                <p className="text-xs text-blue-800 dark:text-blue-200">
+                  {language === 'en' 
+                    ? '💡 Download subtitle file (.srt/.vtt), then upload it above' 
+                    : '💡 Lade die Untertitel-Datei (.srt/.vtt) herunter und lade sie dann oben hoch'}
+                </p>
+              </div>
+
+              {/* API Key Info (Collapsed) */}
+              <button
+                onClick={() => {
+                  const instructions = getAPISetupInstructions();
+                  console.log('\n' + instructions.title);
+                  instructions.steps.forEach(step => console.log(step));
+                  console.log('\n' + instructions.note);
+                  toast.success(
+                    language === 'en' 
+                      ? 'Setup instructions in console (F12)' 
+                      : 'Setup-Anleitung in Konsole (F12)',
+                    { icon: '📝', duration: 4000 }
+                  );
+                }}
+                className="w-full text-left p-3 bg-stone-50 dark:bg-stone-900/50 border border-stone-200 dark:border-stone-700 rounded-lg hover:border-stone-300 dark:hover:border-stone-600 transition-colors"
+              >
+                <p className="text-xs font-semibold text-stone-700 dark:text-stone-300 mb-1">
+                  {language === 'en' ? '⚡ Want automatic downloads?' : '⚡ Automatische Downloads?'}
+                </p>
+                <p className="text-xs text-stone-600 dark:text-stone-400">
+                  {language === 'en' 
+                    ? 'Click for free API setup guide' 
+                    : 'Klick für kostenlose API-Anleitung'}
+                </p>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Video Grid */}
       {videos.length === 0 ? (
