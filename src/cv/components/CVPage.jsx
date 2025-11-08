@@ -442,15 +442,15 @@ export default function CVPage() {
 
               <Achievement
                 title={language === 'en' ? 'Cybersecurity & CTF Competitions' : 'Cybersecurity & CTF-Wettbewerbe'}
-                period="2021 - 2025"
+                period={`2021 - ${t.present}`}
                 subtitle={advancedMode ? (language === 'en' ? 'TUD.dll Hacking Team & CCC Wizards of Dos' : 'TUD.dll Hacking Team & CCC Wizards of Dos') : 'TUD.dll Hacking Team'}
                 description={advancedMode 
                   ? (language === 'en'
-                    ? 'Active member of TU Darmstadt\'s cybersecurity team (TUD.dll) and the "Wizards of Dos" team from Chaos Computer Club Darmstadt. Participating in CTF competitions, solving security challenges and developing offensive security skills.'
-                    : 'Aktives Mitglied des Cybersecurity-Teams der TU Darmstadt (TUD.dll) und des "Wizards of Dos"-Teams vom Chaos Computer Club Darmstadt. Teilnahme an CTF-Wettbewerben, Lösen von Sicherheits-Challenges und Entwicklung von Offensive-Security-Fähigkeiten.')
+                    ? 'Active participation in TU Darmstadt\'s cybersecurity team (TUD.dll) and the "Wizards of Dos" team from Chaos Computer Club Darmstadt. Participating in CTF competitions, solving security challenges and developing offensive security skills.'
+                    : 'Aktive Teilnahme im Cybersecurity-Team der TU Darmstadt (TUD.dll) und im "Wizards of Dos"-Team vom Chaos Computer Club Darmstadt. Teilnahme an CTF-Wettbewerben, Lösen von Sicherheits-Challenges und Entwicklung von Offensive-Security-Fähigkeiten.')
                   : (language === 'en'
-                    ? 'Active member of TU Darmstadt\'s cybersecurity team, participating in CTF competitions.'
-                    : 'Aktives Mitglied des Cybersecurity-Teams der TU Darmstadt, Teilnahme an CTF-Wettbewerben.')
+                    ? 'Active participation in TU Darmstadt\'s cybersecurity team, participating in CTF competitions.'
+                    : 'Aktive Teilnahme im Cybersecurity-Team der TU Darmstadt, Teilnahme an CTF-Wettbewerben.')
                 }
               />
 
@@ -569,7 +569,11 @@ export default function CVPage() {
               />
               <SkillCategory 
                 title="DevOps & Cloud" 
-                skills={['Docker', 'GCP', 'Git', 'Linux', 'Bash']} 
+                skills={['Docker', 'Kubernetes', 'GCP', 'Git', 'CI/CD', 'Linux', 'Bash']} 
+              />
+              <SkillCategory 
+                title={language === 'en' ? 'Databases & Tools' : 'Datenbanken & Tools'} 
+                skills={['PostgreSQL', 'MongoDB', 'Redis', 'SQL', 'Postman', 'VS Code']} 
               />
               <SkillCategory 
                 title="Cybersecurity" 
@@ -610,6 +614,11 @@ export default function CVPage() {
                   </p>
                   <p className="text-xs font-mono text-blue-700 mt-0.5 font-semibold">
                     codingtarik.github.io/#/cv
+                  </p>
+                  <p className="text-xs text-slate-600 leading-tight mt-1">
+                    {language === 'en'
+                      ? 'Note: Some PDF readers may have display issues. Chromium-based PDF browsers work best.'
+                      : 'Hinweis: Bei manchen PDF-Lesern kann es zu Darstellungsproblemen kommen. Der Chromium PDF Browser funktioniert am besten.'}
                   </p>
                 </div>
               </div>
