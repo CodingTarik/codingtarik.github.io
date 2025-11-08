@@ -205,7 +205,7 @@ export default function CVPage() {
                 Tarik Azzouzi
               </h1>
               <p className="text-xl print:text-base text-slate-600 dark:text-slate-300 print:text-blue-100 mb-3 print:mb-2">
-                {language === 'en' ? 'Full-Stack Developer & AI Engineer' : 'Full-Stack Entwickler & KI-Ingenieur'}
+                {language === 'en' ? 'Working Student Software Developer & M.Sc. Computer Science Student at TU Darmstadt' : 'Werkstudent Software-Entwickler & M.Sc. Informatik Student an der TU Darmstadt'}
               </p>
               
               {/* Contact Info Grid - Only for print with personal data */}
@@ -281,8 +281,7 @@ export default function CVPage() {
                     <path d="M11.996 0a1.119 1.119 0 0 0-.057.002a1.09 1.09 0 0 0-.31.057L1.111 5.095A1.119 1.119 0 0 0 .5 6.125v11.75a1.119 1.119 0 0 0 .611 1.03l10.518 5.036c.05.022.102.04.155.054a1.119 1.119 0 0 0 .432 0a1.118 1.118 0 0 0 .155-.054l10.518-5.035a1.119 1.119 0 0 0 .611-1.03V6.125a1.119 1.119 0 0 0-.611-1.03L12.371.059A1.118 1.118 0 0 0 11.996 0zm.002 2.366L19.623 6.5l-2.89 1.386-7.625-3.634zM5.117 5.252l7.625 3.634v7.864l-7.625-3.652zm10.266 0v7.846l-1.14.546V8.138zM2.875 7.25v9.5l6.238 2.986v-9.5zm18.75 0l-6.238 2.986v5.014l2.39-1.145a1.119 1.119 0 0 0 .611-1.03V11.5a1.119 1.119 0 0 0-2.238 0v.75l-.763.365V8.138l6.238-2.986z"/>
                   </svg>
                   <a href="https://app.hackthebox.com/profile/477139" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 print:text-blue-100 transition-colors truncate">
-                    <span className="print:hidden">hackthebox.com/477139</span>
-                    <span className="hidden print:inline">HTB: 477139</span>
+                    <span className="print:inline">hackthebox.com/477139</span>
                   </a>
                 </div>
               </div>
@@ -290,13 +289,13 @@ export default function CVPage() {
           </div>
         </motion.div>
 
-        {/* Professional Summary - Only for Print */}
-        <div className="hidden print:block">
+        {/* Professional Summary */}
+        <div className="block mb-6 print:mb-0">
           <Section title={language === 'en' ? 'Professional Summary' : 'Professionelle Zusammenfassung'} icon={<Briefcase />}>
-            <p className="text-xs leading-snug">
+            <p className="text-sm print:text-xs leading-relaxed print:leading-snug">
               {language === 'en' 
-                ? 'Full-Stack Developer & AI Engineer specializing in RAG platforms, AI agents, and secure implementations. Master\'s student at TU Darmstadt. Active TUD.dll Hacking Team member.'
-                : 'Full-Stack Entwickler & KI-Ingenieur mit Spezialisierung auf RAG-Plattformen, KI-Agenten und sichere Implementierungen. Masterstudent an der TU Darmstadt. Aktives TUD.dll Hacking Team Mitglied.'}
+                ? 'Working student software developer specializing in AI, RAG platforms and AI agents. Strong interest in cybersecurity. Master\'s student at TU Darmstadt.'
+                : 'Werkstudent Software-Entwickler im Bereich KI mit Spezialisierung auf RAG-Plattformen und AI Agents. Starkes Interesse an Cybersecurity. Masterstudent an der TU Darmstadt.'}
             </p>
           </Section>
         </div>
@@ -335,6 +334,7 @@ export default function CVPage() {
                 description={language === 'en'
                   ? 'Authored educational programming articles and tutorials for German-speaking beginners, translating complex technical concepts into accessible content.'
                   : 'Verfasste Bildungsartikel und Tutorials zum Programmieren für deutschsprachige Anfänger, übersetzte komplexe technische Konzepte in zugängliche Inhalte.'}
+                skills={['PHP', 'SQL', 'Python', 'Java']}
               />
 
               <Experience
@@ -352,8 +352,8 @@ export default function CVPage() {
                 company="Elektrotechnik Neis Gesellschaft für Haustechnik mbH"
                 period="2017"
                 description={language === 'en'
-                  ? 'Two-week vocational internship gaining practical experience in IT systems electronics and building services technology.'
-                  : 'Zweiwöchiges Betriebspraktikum mit praktischen Erfahrungen in IT-Systemelektronik und Gebäudetechnik.'}
+                  ? 'Two-week vocational internship gaining practical experience in IT systems electronics and building services technology, including DSL installations.'
+                  : 'Zweiwöchiges Betriebspraktikum mit praktischen Erfahrungen in IT-Systemelektronik und Gebäudetechnik, unter anderem DSL.'}
               />
             </Section>
 
@@ -364,8 +364,8 @@ export default function CVPage() {
                 institution="TU Darmstadt"
                 period={`2025 - ${language === 'en' ? 'Sept 2026' : 'Sept 2026'}`}
                 description={language === 'en'
-                  ? 'Focus: Software Engineering, AI, Cybersecurity. Thesis: Modular Plugin Frameworks for RAG.'
-                  : 'Schwerpunkt: Software Engineering, KI, Cybersecurity. Thesis: Modulare Plugin-Frameworks für RAG.'}
+                  ? 'Focus: Software Engineering, AI, Cybersecurity. Thesis: "Design and Implementation of a Modular Plugin Framework for Retrieval-Augmented Generation using Model Context Protocol" (submitted October 29, 2025)'
+                  : 'Schwerpunkt: Software Engineering, KI, Cybersecurity. Thesis: "Design und Implementierung eines modularen Plugin-Frameworks für Retrieval-Augmented Generation mittels Model Context Protocol" (abgegeben 29. Oktober 2025)'}
               />
 
               <Education
@@ -389,8 +389,8 @@ export default function CVPage() {
                 period="2021 - 2025"
                 grade={language === 'en' ? 'Grade: 1.3' : 'Note: 1.3'}
                 description={language === 'en'
-                  ? 'Thesis: "Secure Hybrid RAG Applications" - Grade: 1.0'
-                  : 'Thesis: "Sichere Hybrid-RAG-Anwendungen" - Note: 1.0'}
+                  ? 'Thesis: "Secure Hybrid RAG Applications in Enterprises" - Grade: 1.0'
+                  : 'Thesis: "Sichere Hybrid-RAG-Anwendungen in Unternehmen" - Note: 1.0'}
               />
 
               <Education
@@ -398,6 +398,9 @@ export default function CVPage() {
                 institution="Berufliches Gymnasium Gelnhausen"
                 period="2018 - 2021"
                 grade={language === 'en' ? 'Grade: 1.0' : 'Note: 1.0'}
+                description={language === 'en'
+                  ? 'Focus: Applied Computer Science'
+                  : 'Schwerpunkt: Praktische Informatik'}
               />
 
               <Education
@@ -430,7 +433,7 @@ export default function CVPage() {
 
               <Achievement
                 title={language === 'en' ? 'Animal Manager - Tikki Hywood Foundation' : 'Tierverwaltung - Tikki Hywood Foundation'}
-                period="2022 - 2023"
+                period={`2020 - ${t.present}`}
                 subtitle={language === 'en' ? 'Volunteer Developer (Wildlife Conservation NGO)' : 'Ehrenamtlicher Entwickler (Tierschutzorganisation)'}
                 description={language === 'en'
                   ? 'Built custom animal management system for wildlife conservation organization focused on pangolin rescue and rehabilitation with centralized data synchronization.'
@@ -465,7 +468,7 @@ export default function CVPage() {
 
                   <Achievement
                     title={language === 'en' ? 'Technical Blog & Knowledge Sharing' : 'Tech-Blog & Wissensverbreitung'}
-                    period={`2024 - ${t.present}`}
+                    period={`2022 - ${t.present}`}
                     subtitle={language === 'en' ? 'Open Source Educator' : 'Open-Source-Bildung'}
                     description={language === 'en'
                       ? 'Maintaining a technical blog to share knowledge about computer science topics, programming best practices, and emerging technologies.'
@@ -474,7 +477,7 @@ export default function CVPage() {
 
                   <Achievement
                     title="BoulderBuddy"
-                    period={`2024 - ${t.present}`}
+                    period={`2025 - ${t.present}`}
                     subtitle={language === 'en' ? 'Progressive Web App (Open Source)' : 'Progressive Web App (Open Source)'}
                     description={language === 'en'
                       ? 'Developing a free, open-source Progressive Web App to teach bouldering fundamentals through interactive lessons and personalized training plans.'
@@ -500,8 +503,9 @@ export default function CVPage() {
             <Section title={t.certificates} icon={<Award />} compact className="print:order-4">
               <Certificate
                 title="Deutschlandstipendium"
-                issuer={language === 'en' ? 'Germany Scholarship - Twice Awarded' : 'Deutschland-Stipendium - 2x vergeben'}
+                issuer="TU Darmstadt"
                 year="2021, 2023"
+                description={language === 'en' ? 'Germany Scholarship - Awarded twice' : 'Deutschland-Stipendium - 2x vergeben'}
               />
 
               <Certificate
@@ -543,8 +547,8 @@ export default function CVPage() {
               {advancedMode && (
                 <Certificate
                   title="Fitnesstrainer C Lizenz"
-                  issuer={language === 'en' ? 'Fitness Trainer License' : 'Fitnesstrainer-Lizenz'}
-                  year="2023"
+                  issuer={language === 'en' ? 'Hamburg Sports and Fitness Academy' : 'Hamburger Sport- und Fitnessakademie'}
+                  year="2022"
                 />
               )}
             </Section>
