@@ -186,25 +186,25 @@ export default function CVPage() {
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="cv-header bg-white dark:bg-slate-800 rounded-xl shadow-lg p-8 mb-6"
+          className="cv-header bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6 mb-4"
         >
-          <div className="flex flex-row gap-6 items-start print:p-4 print:pt-6 print:pb-6">
+          <div className="flex flex-row gap-5 items-start print:p-3 print:pt-4 print:pb-4">
             {/* Profile Picture */}
             <div className="flex-shrink-0">
               <img 
                 src="/src/cv/pictures/cv_profile_picture.jpeg" 
                 alt="Tarik Azzouzi" 
-                className="w-32 h-32 print:w-48 print:h-56 rounded-full print:rounded-lg object-cover border-4 border-blue-500 print:border-0 shadow-lg print:shadow-xl"
+                className="w-28 h-28 print:w-48 print:h-56 rounded-full print:rounded-lg object-cover border-4 border-blue-500 print:border-0 shadow-lg print:shadow-xl"
                 style={{ objectPosition: '50% 35%' }}
               />
             </div>
 
             {/* Header Info */}
             <div className="flex-1 min-w-0">
-              <h1 className="text-4xl md:text-5xl print:text-2xl font-bold text-slate-900 dark:text-white print:text-white mb-1 print:mb-0.5">
+              <h1 className="text-3xl md:text-4xl print:text-2xl font-bold text-slate-900 dark:text-white print:text-white mb-1 print:mb-0.5">
                 Tarik Azzouzi
               </h1>
-              <p className="text-xl print:text-base text-slate-600 dark:text-slate-300 print:text-blue-100 mb-3 print:mb-2">
+              <p className="text-lg print:text-base text-slate-600 dark:text-slate-300 print:text-blue-100 mb-2 print:mb-2">
                 {language === 'en' ? 'Working Student Software Developer & M.Sc. Computer Science Student at TU Darmstadt' : 'Werkstudent Software-Entwickler & M.Sc. Informatik Student an der TU Darmstadt'}
               </p>
               
@@ -946,10 +946,10 @@ export default function CVPage() {
             margin-left: -12mm !important;
             margin-right: -12mm !important;
             margin-top: 0 !important;
-            margin-bottom: 0.8rem !important;
+            margin-bottom: 0.5rem !important;
             width: calc(100% + 24mm) !important;
             max-width: none !important;
-            padding: 9mm 12mm 1rem 12mm !important;
+            padding: 6mm 12mm 0.7rem 12mm !important;
             border-radius: 0 0 1.2rem 1.2rem !important;
             background-image: linear-gradient(135deg, #0f172a 0%, #1e3a8a 20%, #2563eb 65%, #60a5fa 100%) !important;
             box-shadow: 0 12px 30px rgba(15, 23, 42, 0.28) !important;
@@ -987,13 +987,13 @@ export default function CVPage() {
           
           /* Compact header text */
           .cv-print-container .cv-header h1 {
-            font-size: 1.75rem !important;
-            margin-bottom: 0.15rem !important;
+            font-size: 1.6rem !important;
+            margin-bottom: 0.1rem !important;
           }
           
           .cv-print-container .cv-header p {
-            font-size: 0.9rem !important;
-            margin-bottom: 0.3rem !important;
+            font-size: 0.85rem !important;
+            margin-bottom: 0.25rem !important;
           }
           
           .cv-print-container .cv-header .text-sm {
@@ -1103,8 +1103,8 @@ export default function CVPage() {
           
           /* Professional profile picture - compact rectangular without border */
           .cv-print-container .cv-header img {
-            width: 135px !important;
-            height: 175px !important;
+            width: 120px !important;
+            height: 155px !important;
             border-radius: 0.5rem !important;
             border: none !important;
             box-shadow: 0 8px 16px rgba(0,0,0,0.25) !important;
