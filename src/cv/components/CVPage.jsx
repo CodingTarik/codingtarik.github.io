@@ -438,23 +438,21 @@ export default function CVPage() {
               />
 
               <Achievement
-                title="TUD.dll Hacking Team"
+                title={language === 'en' ? 'Cybersecurity & CTF Competitions' : 'Cybersecurity & CTF-Wettbewerbe'}
                 period="2021 - 2025"
-                description={language === 'en'
-                  ? 'Active member of TU Darmstadt\'s cybersecurity team, participating in CTF competitions.'
-                  : 'Aktives Mitglied des Cybersecurity-Teams der TU Darmstadt, Teilnahme an CTF-Wettbewerben.'}
+                subtitle={advancedMode ? (language === 'en' ? 'TUD.dll Hacking Team & CCC Wizards of Dos' : 'TUD.dll Hacking Team & CCC Wizards of Dos') : 'TUD.dll Hacking Team'}
+                description={advancedMode 
+                  ? (language === 'en'
+                    ? 'Active member of TU Darmstadt\'s cybersecurity team (TUD.dll) and the "Wizards of Dos" team from Chaos Computer Club Darmstadt. Participating in CTF competitions, solving security challenges and developing offensive security skills.'
+                    : 'Aktives Mitglied des Cybersecurity-Teams der TU Darmstadt (TUD.dll) und des "Wizards of Dos"-Teams vom Chaos Computer Club Darmstadt. Teilnahme an CTF-Wettbewerben, Lösen von Sicherheits-Challenges und Entwicklung von Offensive-Security-Fähigkeiten.')
+                  : (language === 'en'
+                    ? 'Active member of TU Darmstadt\'s cybersecurity team, participating in CTF competitions.'
+                    : 'Aktives Mitglied des Cybersecurity-Teams der TU Darmstadt, Teilnahme an CTF-Wettbewerben.')
+                }
               />
 
               {advancedMode && (
                 <>
-                  <Achievement
-                    title={language === 'en' ? 'CTF Competitions - "Wizards of Dos" Team' : 'CTF-Wettbewerbe - "Wizards of Dos"-Team'}
-                    period={`2023 - ${t.present}`}
-                    subtitle={language === 'en' ? 'Chaos Computer Club Darmstadt' : 'Chaos Computer Club Darmstadt'}
-                    description={language === 'en'
-                      ? 'Participating in Capture-The-Flag competitions as member of the "Wizards of Dos" team from Chaos Computer Club Darmstadt, solving security challenges and developing offensive security skills.'
-                      : 'Teilnahme an Capture-The-Flag-Wettbewerben im "Wizards of Dos"-Team vom Chaos Computer Club Darmstadt, Lösen von Sicherheits-Challenges und Entwicklung von Offensive-Security-Fähigkeiten.'}
-                  />
 
                   <Achievement
                     title={language === 'en' ? 'Volunteer Firefighter - Youth Fire Brigade' : 'Jugendfeuerwehr Eidengesäß'}
@@ -806,6 +804,9 @@ export default function CVPage() {
           /* Hide certificate verification links */
           .cv-print-container .certificate-component a {
             display: none !important;
+            visibility: hidden !important;
+            height: 0 !important;
+            overflow: hidden !important;
           }
           
           /* Hide nav and footer */
