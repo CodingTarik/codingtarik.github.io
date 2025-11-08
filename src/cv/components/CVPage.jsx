@@ -182,13 +182,6 @@ export default function CVPage() {
 
       {/* CV Content */}
       <div ref={cvRef} className="cv-print-container max-w-5xl mx-auto p-4 md:p-8 print:p-0">
-        {/* Print Header - Only visible on pages after first */}
-        <div className="hidden print:block print-page-header">
-          <div className="print-header-bar">
-            Tarik Azzouzi - {language === 'en' ? 'Curriculum Vitae' : 'Lebenslauf'}
-          </div>
-        </div>
-        
         {/* Header */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -439,15 +432,6 @@ export default function CVPage() {
               />
 
               <Achievement
-                title={language === 'en' ? 'Volunteer Firefighter - Youth Fire Brigade' : 'Jugendfeuerwehr Eidengesäß'}
-                period="2014 - 2021"
-                subtitle={language === 'en' ? 'Community Service' : 'Ehrenamt'}
-                description={language === 'en'
-                  ? 'Active member of the youth fire brigade, developing teamwork and emergency response skills.'
-                  : 'Aktives Mitglied der Jugendfeuerwehr mit Entwicklung von Teamfähigkeit und Einsatzbereitschaft.'}
-              />
-
-              <Achievement
                 title={language === 'en' ? 'Animal Manager - Tikki Hywood Foundation' : 'Tierverwaltung - Tikki Hywood Foundation'}
                 period={`2020 - ${t.present}`}
                 subtitle={language === 'en' ? 'Volunteer Developer (Wildlife Conservation NGO)' : 'Ehrenamtlicher Entwickler (Tierschutzorganisation)'}
@@ -472,6 +456,16 @@ export default function CVPage() {
 
               {advancedMode && (
                 <>
+
+                  <Achievement
+                    title={language === 'en' ? 'Volunteer Firefighter - Youth Fire Brigade' : 'Jugendfeuerwehr Eidengesäß'}
+                    period="2014 - 2021"
+                    subtitle={language === 'en' ? 'Community Service' : 'Ehrenamt'}
+                    description={language === 'en'
+                      ? 'Active member of the youth fire brigade, developing teamwork and emergency response skills.'
+                      : 'Aktives Mitglied der Jugendfeuerwehr mit Entwicklung von Teamfähigkeit und Einsatzbereitschaft.'}
+                  />
+
                   <Achievement
                     title={language === 'en' ? 'Technical Blog & Knowledge Sharing' : 'Tech-Blog & Wissensverbreitung'}
                     period={`2022 - ${t.present}`}
@@ -804,14 +798,6 @@ export default function CVPage() {
             margin: 0mm 0mm 10mm 0mm;
           }
           
-          @page :first {
-            margin-top: 0mm !important;
-          }
-          
-          @page :not(:first) {
-            margin-top: 15mm !important;
-          }
-          
           /* Force exact color printing */
           * {
             print-color-adjust: exact !important;
@@ -870,58 +856,6 @@ export default function CVPage() {
             margin: 0 !important;
             padding: 0 12mm 5mm 12mm !important;
             background: white !important;
-            position: relative !important;
-          }
-          
-          /* Professional print header bar - fixed at top, appears on all pages */
-          .print-page-header {
-            position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
-            right: 0 !important;
-            width: 100% !important;
-            z-index: 9998 !important;
-            display: block !important;
-          }
-          
-          .print-header-bar {
-            position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
-            right: 0 !important;
-            width: 100% !important;
-            height: 12mm !important;
-            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #3b82f6 100%) !important;
-            color: white !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            font-size: 0.75rem !important;
-            font-weight: 600 !important;
-            letter-spacing: 0.5px !important;
-            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.2) !important;
-            border-bottom: 2px solid rgba(15, 23, 42, 0.3) !important;
-            print-color-adjust: exact !important;
-            -webkit-print-color-adjust: exact !important;
-            z-index: 9999 !important;
-          }
-          
-          /* Main header on first page covers the print header with higher z-index */
-          .cv-print-container .cv-header {
-            position: relative !important;
-            z-index: 10000 !important;
-            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 20%, #2563eb 65%, #60a5fa 100%) !important;
-          }
-          
-          /* Ensure first page has no top margin */
-          @page :first {
-            margin-top: 0mm !important;
-          }
-          
-          /* Add top margin to pages after first - this shifts all content down */
-          /* Increased margin to ensure content doesn't get covered by the fixed header */
-          @page :not(:first) {
-            margin-top: 15mm !important;
           }
 
           /* Allow sections to break across pages, but keep header with first item */
@@ -977,49 +911,33 @@ export default function CVPage() {
             margin-top: 0.1rem !important;
           }
 
-          /* Elegant section styling with modern design */
+          /* Elegant section styling */
           .cv-print-container section {
-            padding: 0.6rem 0.75rem !important;
-            margin-bottom: 0.5rem !important;
-            border-radius: 0.65rem !important;
-            background: linear-gradient(135deg, #ffffff 0%, #f8fbff 50%, #f0f7ff 100%) !important;
-            border: 1.5px solid #c7d9f5 !important;
-            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.12), 0 2px 6px rgba(15, 23, 42, 0.06) !important;
-            position: relative !important;
-            overflow: visible !important;
-          }
-          
-          /* Modern accent bar on left side of sections */
-          .cv-print-container section::before {
-            content: '' !important;
-            position: absolute !important;
-            left: 0 !important;
-            top: 0 !important;
-            bottom: 0 !important;
-            width: 5px !important;
-            background: linear-gradient(180deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%) !important;
-            border-radius: 0.65rem 0 0 0.65rem !important;
+            padding: 0.45rem 0.65rem !important;
+            margin-bottom: 0.45rem !important;
+            border-radius: 0.55rem !important;
+            background: linear-gradient(180deg, #ffffff 0%, #f6f9ff 100%) !important;
+            border: 1px solid #d8e3f8 !important;
+            box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08) !important;
           }
 
-          /* Section headers with modern styling */
+          /* Section headers with accent line - more elegant */
           .cv-print-container section > div:first-child {
-            border-bottom: 2px solid transparent !important;
-            background: linear-gradient(90deg, #eff6ff 0%, transparent 100%) !important;
-            padding: 0.4rem 0.5rem !important;
-            margin: -0.6rem -0.75rem 0.5rem -0.75rem !important;
-            border-radius: 0.65rem 0.65rem 0 0 !important;
+            border-bottom: 1px solid #cbd5f5 !important;
+            padding-bottom: 0.35rem !important;
+            margin-bottom: 0.45rem !important;
             position: relative !important;
-            border-bottom: 2px solid #dbeafe !important;
           }
-          
-          /* Section header h2 styling */
-          .cv-print-container section h2 {
-            display: flex !important;
-            align-items: center !important;
-            color: #1e3a8a !important;
-            font-weight: 700 !important;
-            letter-spacing: 0.3px !important;
-            text-transform: none !important;
+
+          /* Add accent underline to section headers */
+          .cv-print-container section > div:first-child::after {
+            content: '' !important;
+            position: absolute !important;
+            bottom: -2px !important;
+            left: 0 !important;
+            width: 72px !important;
+            height: 2px !important;
+            background: linear-gradient(to right, #3b82f6, #60a5fa) !important;
           }
           
           /* Professional header with beautiful gradient - full width from top */
@@ -1213,39 +1131,34 @@ export default function CVPage() {
             margin-bottom: 0 !important;
           }
 
-          /* Modern card styling for entries with icons */
+          /* Card styling for entries */
           .cv-print-container .experience-card,
           .cv-print-container .education-card,
           .cv-print-container .achievement-component,
           .cv-print-container .certificate-component {
-            border-radius: 0.6rem !important;
-            border: 1.5px solid #e0e9f7 !important;
-            border-left: 6px solid #2563eb !important;
-            padding: 0.6rem 0.75rem !important;
-            background: linear-gradient(135deg, #fbfdff 0%, #f5f9ff 50%, #ffffff 100%) !important;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15), 0 2px 4px rgba(15, 23, 42, 0.08) !important;
-            position: relative !important;
-            margin-bottom: 0.45rem !important;
-          }
-          
-          /* Color-coded left borders with gradient */
-          .cv-print-container .experience-card {
-            border-left: 6px solid #10b981 !important;
-            background: linear-gradient(135deg, #fbfefb 0%, #f4fdf6 50%, #ffffff 100%) !important;
+            border-radius: 0.5rem !important;
+            border: 1px solid #dbe4f6 !important;
+            border-left: 5px solid #2563eb !important;
+            padding: 0.55rem 0.7rem !important;
+            background: linear-gradient(180deg, #f7faff 0%, #ffffff 90%) !important;
+            box-shadow: 0 6px 16px rgba(30, 64, 175, 0.12) !important;
           }
 
-          .cv-print-container .education-card {
-            border-left: 6px solid #a855f7 !important;
-            background: linear-gradient(135deg, #fefbff 0%, #faf5ff 50%, #ffffff 100%) !important;
+          .cv-print-container .experience-card {
+            border-left-color: #16a34a !important;
           }
-          
+
+          .cv-print-container .education-card,
           .cv-print-container .certificate-component {
-            border-left: 6px solid #f59e0b !important;
-            background: linear-gradient(135deg, #fffcf5 0%, #fef9f0 50%, #ffffff 100%) !important;
+            border-left-color: #8b5cf6 !important;
+          }
+
+          .cv-print-container .certificate-component {
+            background: linear-gradient(180deg, #f9f5ff 0%, #ffffff 90%) !important;
           }
 
           .cv-print-container .achievement-component {
-            border-left: 6px solid #3b82f6 !important;
+            border-left-color: #2563eb !important;
           }
 
           .cv-print-container .experience-card h3,
@@ -1253,25 +1166,20 @@ export default function CVPage() {
           .cv-print-container .achievement-component h3,
           .cv-print-container .certificate-component h4 {
             color: #0f172a !important;
-            font-weight: 700 !important;
-            display: flex !important;
-            align-items: center !important;
           }
 
-          /* Modern skill category boxes */
+          /* Skill category layout */
           .cv-print-container .skill-category {
             display: inline-block !important;
             width: 48% !important;
             margin-right: 2% !important;
-            margin-bottom: 0.35rem !important;
-            background: linear-gradient(135deg, #f8fbff 0%, #f0f7ff 50%, #ffffff 100%) !important;
-            border: 1.5px solid #c7d9f5 !important;
-            border-left: 4px solid #3b82f6 !important;
-            border-radius: 0.6rem !important;
-            padding: 0.5rem 0.6rem !important;
+            margin-bottom: 0.25rem !important;
+            background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%) !important;
+            border: 1px solid #dbe4f6 !important;
+            border-radius: 0.5rem !important;
+            padding: 0.45rem 0.55rem !important;
             vertical-align: top !important;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.12), 0 2px 4px rgba(15, 23, 42, 0.05) !important;
-            position: relative !important;
+            box-shadow: 0 4px 10px rgba(15, 23, 42, 0.06) !important;
           }
 
           .cv-print-container .skill-category:nth-child(2n) {
@@ -1279,19 +1187,8 @@ export default function CVPage() {
           }
 
           .cv-print-container .skill-category h4 {
-            margin-bottom: 0.4rem !important;
-            color: #1e40af !important;
-            font-weight: 700 !important;
-            font-size: 0.82rem !important;
-            display: flex !important;
-            align-items: center !important;
-          }
-          
-          .cv-print-container .skill-category h4::before {
-            content: '▶' !important;
-            color: #3b82f6 !important;
-            font-size: 0.6rem !important;
-            margin-right: 0.35rem !important;
+            margin-bottom: 0.35rem !important;
+            color: #1e3a8a !important;
           }
 
           .cv-print-container .skill-category .flex {
@@ -1299,59 +1196,40 @@ export default function CVPage() {
           }
 
           .cv-print-container .skill-category span {
-            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%) !important;
-            color: #1e40af !important;
+            background: #e0e7ff !important;
+            color: #1e3a8a !important;
             border-radius: 999px !important;
-            padding: 0.28rem 0.6rem !important;
-            border: 1px solid #93c5fd !important;
+            padding: 0.25rem 0.55rem !important;
+            border: none !important;
             font-weight: 600 !important;
-            font-size: 0.75rem !important;
-            box-shadow: 0 1px 3px rgba(59, 130, 246, 0.15) !important;
           }
 
-          /* Modern language cards with gradient */
+          /* Language cards */
           .cv-print-container .language-item {
-            border: 1.5px solid #c7d9f5 !important;
-            border-left: 4px solid #a855f7 !important;
-            border-radius: 0.55rem !important;
-            padding: 0.4rem 0.6rem !important;
-            background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 50%, #ffffff 100%) !important;
-            box-shadow: 0 4px 10px rgba(168, 85, 247, 0.12), 0 2px 4px rgba(15, 23, 42, 0.05) !important;
+            border: 1px solid #dbe4f6 !important;
+            border-radius: 0.45rem !important;
+            padding: 0.35rem 0.55rem !important;
+            background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%) !important;
+            box-shadow: 0 3px 8px rgba(15, 23, 42, 0.05) !important;
           }
 
           .cv-print-container .language-item + .language-item {
-            margin-top: 0.3rem !important;
-          }
-          
-          .cv-print-container .language-item span:first-child {
-            font-weight: 700 !important;
-            color: #6b21a8 !important;
-          }
-          
-          .cv-print-container .language-item span:last-child {
-            background: linear-gradient(135deg, #e9d5ff, #d8b4fe) !important;
-            color: #6b21a8 !important;
-            padding: 0.2rem 0.5rem !important;
-            border-radius: 999px !important;
-            font-size: 0.7rem !important;
-            font-weight: 600 !important;
-            border: 1px solid #c084fc !important;
+            margin-top: 0.2rem !important;
           }
 
-          /* Colorful hobby badges */
+          /* Hobby badges */
           .cv-print-container .hobby-item {
             display: inline-flex !important;
             align-items: center !important;
-            gap: 0.45rem !important;
+            gap: 0.5rem !important;
             width: 48% !important;
             margin-right: 2% !important;
-            margin-bottom: 0.3rem !important;
-            border: 1.5px solid #d1d5db !important;
-            border-left: 4px solid #f59e0b !important;
-            border-radius: 0.55rem !important;
-            padding: 0.4rem 0.6rem !important;
-            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 50%, #ffffff 100%) !important;
-            box-shadow: 0 3px 10px rgba(245, 158, 11, 0.15), 0 1px 3px rgba(15, 23, 42, 0.05) !important;
+            margin-bottom: 0.25rem !important;
+            border: 1px solid #e2e8f0 !important;
+            border-radius: 0.5rem !important;
+            padding: 0.4rem 0.55rem !important;
+            background: #ffffff !important;
+            box-shadow: 0 3px 8px rgba(15, 23, 42, 0.04) !important;
           }
 
           .cv-print-container .hobby-item:nth-child(2n) {
@@ -1359,18 +1237,7 @@ export default function CVPage() {
           }
 
           .cv-print-container .hobby-item .text-2xl {
-            font-size: 1.1rem !important;
-            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1)) !important;
-          }
-          
-          .cv-print-container .hobby-item h4 {
-            color: #92400e !important;
-            font-weight: 700 !important;
-          }
-          
-          .cv-print-container .hobby-item p {
-            color: #b45309 !important;
-            font-size: 0.7rem !important;
+            font-size: 0.95rem !important;
           }
  
           /* Compact hobby items */
@@ -1383,20 +1250,9 @@ export default function CVPage() {
             font-size: 0.95rem !important;
           }
           
-          /* Show and style icons in print for professional look */
+          /* Hide decorative icons in print for cleaner look */
           .cv-print-container section svg {
-            display: inline-block !important;
-            color: #3b82f6 !important;
-            width: 18px !important;
-            height: 18px !important;
-            margin-right: 0.5rem !important;
-          }
-          
-          /* Hide award icon in certificates when printing */
-          .cv-print-container .certificate-component svg,
-          .cv-print-container .certificate-component .print\:hidden {
             display: none !important;
-            visibility: hidden !important;
           }
           
           /* Professional date/period styling */
@@ -1572,6 +1428,7 @@ function Certificate({ title, issuer, year, link, description }) {
       <div className="flex items-start justify-between gap-2">
         <div className="flex-1">
           <div className="flex items-center gap-2">
+            <Award size={14} className="text-purple-500 print:text-blue-600 flex-shrink-0 print:hidden" />
             <h4 className="font-semibold text-slate-900 dark:text-white">{title}</h4>
           </div>
           <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">{issuer}</p>
