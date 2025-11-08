@@ -362,7 +362,7 @@ export default function CVPage() {
               <Education
                 degree="M.Sc. Computer Science"
                 institution="TU Darmstadt"
-                period={`2025 - ${language === 'en' ? 'Sept 2026' : 'Sept 2026'}`}
+                period={language === 'en' ? 'Apr 2025 - Sept 2026' : 'Apr 2025 - Sept 2026'}
                 description={language === 'en'
                   ? 'Focus: Software Engineering, AI, Cybersecurity. Thesis: "Design and Implementation of a Modular Plugin Framework for Retrieval-Augmented Generation using Model Context Protocol" (submitted October 29, 2025)'
                   : 'Schwerpunkt: Software Engineering, KI, Cybersecurity. Thesis: "Design und Implementierung eines modularen Plugin-Frameworks für Retrieval-Augmented Generation mittels Model Context Protocol" (abgegeben 29. Oktober 2025)'}
@@ -386,7 +386,7 @@ export default function CVPage() {
               <Education
                 degree="B.Sc. Computer Science"
                 institution="TU Darmstadt"
-                period="2021 - 2025"
+                period={language === 'en' ? 'Oct 2021 - Mar 2025' : 'Okt 2021 - März 2025'}
                 grade={language === 'en' ? 'Grade: 1.3' : 'Note: 1.3'}
                 description={language === 'en'
                   ? 'Thesis: "Secure Hybrid RAG Applications in Enterprises" - Grade: 1.0'
