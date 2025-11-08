@@ -786,8 +786,12 @@ export default function CVPage() {
             color-adjust: exact !important;
           }
 
+          body, .cv-print-container, .cv-print-container * {
+            font-family: 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif !important;
+          }
+ 
           /* Hide only action bar */
-          .print\\:hidden {
+          .print\:hidden {
             display: none !important;
           }
           
@@ -858,52 +862,53 @@ export default function CVPage() {
           .print\\:order-2 {
             order: 2 !important;
           }
-          
-          /* Very compact spacing for print */
+
+          /* Section spacing */
           .cv-print-container .space-y-6 > * + * {
-            margin-top: 0.15rem !important;
+            margin-top: 0.3rem !important;
           }
           
           .cv-print-container .space-y-4 > * + * {
-            margin-top: 0.15rem !important;
+            margin-top: 0.25rem !important;
           }
           
           .cv-print-container .space-y-3 > * + * {
-            margin-top: 0.1rem !important;
+            margin-top: 0.2rem !important;
           }
           
           .cv-print-container .space-y-2 > * + * {
-            margin-top: 0.1rem !important;
+            margin-top: 0.15rem !important;
           }
           
           .cv-print-container .space-y-1 > * + * {
-            margin-top: 0.05rem !important;
+            margin-top: 0.1rem !important;
           }
-          
-          /* Professional section styling */
+
+          /* Elegant section styling */
           .cv-print-container section {
-            padding: 0.3rem 0 !important;
-            margin-bottom: 0.25rem !important;
-            border-radius: 0 !important;
-            background: white !important;
-            box-shadow: none !important;
+            padding: 0.45rem 0.65rem !important;
+            margin-bottom: 0.45rem !important;
+            border-radius: 0.55rem !important;
+            background: linear-gradient(180deg, #ffffff 0%, #f6f9ff 100%) !important;
+            border: 1px solid #d8e3f8 !important;
+            box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08) !important;
           }
-          
+
           /* Section headers with accent line - more elegant */
           .cv-print-container section > div:first-child {
-            border-bottom: 2px solid #e2e8f0 !important;
-            padding-bottom: 0.3rem !important;
-            margin-bottom: 0.4rem !important;
+            border-bottom: 1px solid #cbd5f5 !important;
+            padding-bottom: 0.35rem !important;
+            margin-bottom: 0.45rem !important;
             position: relative !important;
           }
-          
+
           /* Add accent underline to section headers */
           .cv-print-container section > div:first-child::after {
             content: '' !important;
             position: absolute !important;
             bottom: -2px !important;
             left: 0 !important;
-            width: 60px !important;
+            width: 72px !important;
             height: 2px !important;
             background: linear-gradient(to right, #3b82f6, #60a5fa) !important;
           }
@@ -914,15 +919,14 @@ export default function CVPage() {
             margin-left: -12mm !important;
             margin-right: -12mm !important;
             margin-top: 0 !important;
-            margin-bottom: 0.5rem !important;
+            margin-bottom: 0.8rem !important;
             width: calc(100% + 24mm) !important;
             max-width: none !important;
-            padding: 8mm 12mm 0.8rem 12mm !important;
-            border-radius: 0 !important;
-            background-color: #1e40af !important;
-            background-image: linear-gradient(135deg, #0f172a 0%, #1e40af 25%, #3b82f6 60%, #60a5fa 100%) !important;
-            box-shadow: none !important;
-            border-bottom: 4px solid #000000 !important;
+            padding: 9mm 12mm 1rem 12mm !important;
+            border-radius: 0 0 1.2rem 1.2rem !important;
+            background-image: linear-gradient(135deg, #0f172a 0%, #1e3a8a 20%, #2563eb 65%, #60a5fa 100%) !important;
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.28) !important;
+            border-bottom: 5px solid rgba(15, 23, 42, 0.35) !important;
           }
           
           /* Force all child elements to have transparent background */
@@ -1091,10 +1095,124 @@ export default function CVPage() {
             gap: 0.1rem !important;
           }
 
+          .cv-print-container .print\:grid-cols-1 {
+            grid-template-columns: 2.2fr 1fr !important;
+            align-items: start !important;
+          }
+
           .cv-print-container .print\:mb-0 {
             margin-bottom: 0 !important;
           }
-          
+
+          /* Card styling for entries */
+          .cv-print-container .experience-card,
+          .cv-print-container .education-card,
+          .cv-print-container .achievement-component,
+          .cv-print-container .certificate-component {
+            border-radius: 0.5rem !important;
+            border: 1px solid #dbe4f6 !important;
+            border-left: 5px solid #2563eb !important;
+            padding: 0.55rem 0.7rem !important;
+            background: linear-gradient(180deg, #f7faff 0%, #ffffff 90%) !important;
+            box-shadow: 0 6px 16px rgba(30, 64, 175, 0.12) !important;
+          }
+
+          .cv-print-container .experience-card {
+            border-left-color: #16a34a !important;
+          }
+
+          .cv-print-container .education-card,
+          .cv-print-container .certificate-component {
+            border-left-color: #8b5cf6 !important;
+          }
+
+          .cv-print-container .certificate-component {
+            background: linear-gradient(180deg, #f9f5ff 0%, #ffffff 90%) !important;
+          }
+
+          .cv-print-container .achievement-component {
+            border-left-color: #2563eb !important;
+          }
+
+          .cv-print-container .experience-card h3,
+          .cv-print-container .education-card h3,
+          .cv-print-container .achievement-component h3,
+          .cv-print-container .certificate-component h4 {
+            color: #0f172a !important;
+          }
+
+          /* Skill category layout */
+          .cv-print-container .skill-category {
+            display: inline-block !important;
+            width: 48% !important;
+            margin-right: 2% !important;
+            margin-bottom: 0.25rem !important;
+            background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%) !important;
+            border: 1px solid #dbe4f6 !important;
+            border-radius: 0.5rem !important;
+            padding: 0.45rem 0.55rem !important;
+            vertical-align: top !important;
+            box-shadow: 0 4px 10px rgba(15, 23, 42, 0.06) !important;
+          }
+
+          .cv-print-container .skill-category:nth-child(2n) {
+            margin-right: 0 !important;
+          }
+
+          .cv-print-container .skill-category h4 {
+            margin-bottom: 0.35rem !important;
+            color: #1e3a8a !important;
+          }
+
+          .cv-print-container .skill-category .flex {
+            gap: 0.25rem !important;
+          }
+
+          .cv-print-container .skill-category span {
+            background: #e0e7ff !important;
+            color: #1e3a8a !important;
+            border-radius: 999px !important;
+            padding: 0.25rem 0.55rem !important;
+            border: none !important;
+            font-weight: 600 !important;
+          }
+
+          /* Language cards */
+          .cv-print-container .language-item {
+            border: 1px solid #dbe4f6 !important;
+            border-radius: 0.45rem !important;
+            padding: 0.35rem 0.55rem !important;
+            background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%) !important;
+            box-shadow: 0 3px 8px rgba(15, 23, 42, 0.05) !important;
+          }
+
+          .cv-print-container .language-item + .language-item {
+            margin-top: 0.2rem !important;
+          }
+
+          /* Hobby badges */
+          .cv-print-container .hobby-item {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 0.5rem !important;
+            width: 48% !important;
+            margin-right: 2% !important;
+            margin-bottom: 0.25rem !important;
+            border: 1px solid #e2e8f0 !important;
+            border-radius: 0.5rem !important;
+            padding: 0.4rem 0.55rem !important;
+            background: #ffffff !important;
+            box-shadow: 0 3px 8px rgba(15, 23, 42, 0.04) !important;
+          }
+
+          .cv-print-container .hobby-item:nth-child(2n) {
+            margin-right: 0 !important;
+          }
+
+          .cv-print-container .hobby-item .text-2xl {
+            font-size: 0.95rem !important;
+          }
+ 
           /* Compact hobby items */
           .cv-print-container [class*="flex items-center gap"] {
             gap: 0.3rem !important;
