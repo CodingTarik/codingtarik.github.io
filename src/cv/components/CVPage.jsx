@@ -182,6 +182,13 @@ export default function CVPage() {
 
       {/* CV Content */}
       <div ref={cvRef} className="cv-print-container max-w-5xl mx-auto p-4 md:p-8 print:p-0">
+        {/* Print Header - Only visible on pages after first */}
+        <div className="hidden print:block print-page-header">
+          <div className="print-header-bar">
+            Tarik Azzouzi - {language === 'en' ? 'Curriculum Vitae' : 'Lebenslauf'}
+          </div>
+        </div>
+        
         {/* Header */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -797,6 +804,14 @@ export default function CVPage() {
             margin: 0mm 0mm 10mm 0mm;
           }
           
+          @page :first {
+            margin-top: 0mm !important;
+          }
+          
+          @page :not(:first) {
+            margin-top: 15mm !important;
+          }
+          
           /* Force exact color printing */
           * {
             print-color-adjust: exact !important;
@@ -855,6 +870,58 @@ export default function CVPage() {
             margin: 0 !important;
             padding: 0 12mm 5mm 12mm !important;
             background: white !important;
+            position: relative !important;
+          }
+          
+          /* Professional print header bar - fixed at top, appears on all pages */
+          .print-page-header {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            width: 100% !important;
+            z-index: 9998 !important;
+            display: block !important;
+          }
+          
+          .print-header-bar {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            width: 100% !important;
+            height: 12mm !important;
+            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #3b82f6 100%) !important;
+            color: white !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-size: 0.75rem !important;
+            font-weight: 600 !important;
+            letter-spacing: 0.5px !important;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.2) !important;
+            border-bottom: 2px solid rgba(15, 23, 42, 0.3) !important;
+            print-color-adjust: exact !important;
+            -webkit-print-color-adjust: exact !important;
+            z-index: 9999 !important;
+          }
+          
+          /* Main header on first page covers the print header with higher z-index */
+          .cv-print-container .cv-header {
+            position: relative !important;
+            z-index: 10000 !important;
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 20%, #2563eb 65%, #60a5fa 100%) !important;
+          }
+          
+          /* Ensure first page has no top margin */
+          @page :first {
+            margin-top: 0mm !important;
+          }
+          
+          /* Add top margin to pages after first - this shifts all content down */
+          /* Increased margin to ensure content doesn't get covered by the fixed header */
+          @page :not(:first) {
+            margin-top: 15mm !important;
           }
 
           /* Allow sections to break across pages, but keep header with first item */
