@@ -446,7 +446,16 @@ export default function CVPage() {
               />
 
               {advancedMode && (
-                <div className="advanced-mode-print-hidden">
+                <>
+                  <Achievement
+                    title={language === 'en' ? 'CTF Competitions - "Wizards of Dos" Team' : 'CTF-Wettbewerbe - "Wizards of Dos"-Team'}
+                    period={`2023 - ${t.present}`}
+                    subtitle={language === 'en' ? 'Chaos Computer Club Darmstadt' : 'Chaos Computer Club Darmstadt'}
+                    description={language === 'en'
+                      ? 'Participating in Capture-The-Flag competitions as member of the "Wizards of Dos" team from Chaos Computer Club Darmstadt, solving security challenges and developing offensive security skills.'
+                      : 'Teilnahme an Capture-The-Flag-Wettbewerben im "Wizards of Dos"-Team vom Chaos Computer Club Darmstadt, Lösen von Sicherheits-Challenges und Entwicklung von Offensive-Security-Fähigkeiten.'}
+                  />
+
                   <Achievement
                     title={language === 'en' ? 'Volunteer Firefighter - Youth Fire Brigade' : 'Jugendfeuerwehr Eidengesäß'}
                     period="2014 - 2021"
@@ -482,7 +491,7 @@ export default function CVPage() {
                       ? 'Regular development of open-source applications including Smart-Home Manager, Smart Card Removal Reminder, and custom Minecraft Mod Launcher.'
                       : 'Regelmäßige Entwicklung von Open-Source-Anwendungen wie Smart-Home Manager, Smart Card Removal Reminder und einem Mod-Launcher für Minecraft.'}
                   />
-                </div>
+                </>
               )}
             </Section>
           </div>
@@ -578,7 +587,6 @@ export default function CVPage() {
               <Hobby icon="🤾" title="Handball" subtitle={language === 'en' ? 'Sports' : 'Sport'} />
               <Hobby icon="💻" title={language === 'en' ? 'Programming' : 'Programmieren'} subtitle={language === 'en' ? 'Passion' : 'Leidenschaft'} />
               <Hobby icon="🚩" title="Capture The Flag" subtitle="Cybersecurity" />
-              <Hobby icon="📚" title={language === 'en' ? 'Reading' : 'Lesen'} subtitle={language === 'en' ? 'Learning' : 'Lernen'} />
             </Section>
 
             {/* CV Info Box - Print Order 8 - Only visible in print */}
@@ -792,6 +800,11 @@ export default function CVPage() {
  
           /* Hide only action bar */
           .print\:hidden {
+            display: none !important;
+          }
+          
+          /* Hide certificate verification links */
+          .cv-print-container .certificate-component a {
             display: none !important;
           }
           
@@ -1278,11 +1291,6 @@ export default function CVPage() {
           .cv-print-container .flex {
             height: auto !important;
             min-height: 0 !important;
-          }
-
-          /* Hide advanced mode extras during print to prevent layout issues */
-          .cv-print-container .advanced-mode-print-hidden {
-            display: none !important;
           }
 
           /* Fix all p and span elements */
