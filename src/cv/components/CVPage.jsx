@@ -37,7 +37,7 @@ export default function CVPage() {
       education: 'Education',
       skills: 'Technical Skills',
       certificates: 'Certificates & Awards',
-      achievements: 'Key Achievements',
+      achievements: 'Achievements & Engagement',
       hobbies: 'Hobbies & Interests',
       languages: 'Languages',
       projects: 'Selected Projects',
@@ -45,10 +45,7 @@ export default function CVPage() {
       ongoing: 'ongoing',
       expected: 'expected',
       native: 'Native',
-      fluent: 'Fluent',
-      countriesVisited: 'Countries Visited',
-      countriesWantToVisit: 'Want to Visit',
-      currentlyLearning: 'Currently Learning'
+      fluent: 'Fluent'
     },
     de: {
       title: 'Lebenslauf',
@@ -61,7 +58,7 @@ export default function CVPage() {
       education: 'Ausbildung',
       skills: 'Technische Fähigkeiten',
       certificates: 'Zertifikate & Auszeichnungen',
-      achievements: 'Wichtige Erfolge',
+      achievements: 'Erfolge & Engagement',
       hobbies: 'Hobbys & Interessen',
       languages: 'Sprachen',
       projects: 'Ausgewählte Projekte',
@@ -69,10 +66,7 @@ export default function CVPage() {
       ongoing: 'laufend',
       expected: 'voraussichtlich',
       native: 'Muttersprache',
-      fluent: 'Fließend',
-      countriesVisited: 'Besuchte Länder',
-      countriesWantToVisit: 'Reiseziele',
-      currentlyLearning: 'Lerne gerade'
+      fluent: 'Fließend'
     }
   };
 
@@ -299,7 +293,7 @@ export default function CVPage() {
         {/* Professional Summary - Only for Print */}
         <div className="hidden print:block">
           <Section title={language === 'en' ? 'Professional Summary' : 'Professionelle Zusammenfassung'} icon={<Briefcase />}>
-            <p className="text-sm leading-tight">
+            <p className="text-xs leading-snug">
               {language === 'en' 
                 ? 'Full-Stack Developer & AI Engineer specializing in RAG platforms, AI agents, and secure implementations. Master\'s student at TU Darmstadt. Active TUD.dll Hacking Team member.'
                 : 'Full-Stack Entwickler & KI-Ingenieur mit Spezialisierung auf RAG-Plattformen, KI-Agenten und sichere Implementierungen. Masterstudent an der TU Darmstadt. Aktives TUD.dll Hacking Team Mitglied.'}
@@ -308,9 +302,9 @@ export default function CVPage() {
         </div>
 
         {/* Two Column Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 print:gap-2 print:grid-cols-1">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 print:gap-0 print:grid-cols-1">
           {/* Left Column */}
-          <div className="lg:col-span-2 space-y-6 print:space-y-2 print:order-1">
+          <div className="lg:col-span-2 space-y-6 print:space-y-1 print:order-1">
             {/* Professional Experience - Print Order 1 */}
             <Section title={t.experience} icon={<Briefcase />}>
               <Experience
@@ -346,11 +340,20 @@ export default function CVPage() {
               <Experience
                 title={language === 'en' ? 'Internship - IT Department' : 'Praktikum - IT-Abteilung'}
                 company="DoIT Solutions GmbH, Gelnhausen"
-                period="2017"
+                period="2019"
                 description={language === 'en'
                   ? 'Completed four-day immersive program focused on career and study orientation. Gained foundational insights into enterprise IT operations and software development lifecycle.'
                   : 'Abschluss eines viertägigen Programms zur Berufs- und Studienorientierung. Grundlegende Einblicke in IT-Betrieb und Software-Entwicklungszyklus.'}
                 skills={['Active Directory', 'Windows Server', 'PowerShell']}
+              />
+
+              <Experience
+                title={language === 'en' ? 'Vocational Internship - IT Systems Electronics' : 'Betriebspraktikum - IT-Systemelektroniker'}
+                company="Elektrotechnik Neis Gesellschaft für Haustechnik mbH"
+                period="2017"
+                description={language === 'en'
+                  ? 'Two-week vocational internship gaining practical experience in IT systems electronics and building services technology.'
+                  : 'Zweiwöchiges Betriebspraktikum mit praktischen Erfahrungen in IT-Systemelektronik und Gebäudetechnik.'}
               />
             </Section>
 
@@ -406,7 +409,7 @@ export default function CVPage() {
             </Section>
 
             {/* Key Achievements - Print Order 3 */}
-            <Section title={t.achievements} icon={<Award />} className="print:order-3">
+            <Section title={t.achievements} icon={<Award />} className="print:order-3 print:mb-0">
               <Achievement
                 title={language === 'en' ? 'Modular Plugin Framework for RAG' : 'Modulares Plugin-Framework für RAG'}
                 period="2025"
@@ -428,10 +431,10 @@ export default function CVPage() {
               <Achievement
                 title={language === 'en' ? 'Animal Manager - Tikki Hywood Foundation' : 'Tierverwaltung - Tikki Hywood Foundation'}
                 period="2022 - 2023"
-                subtitle={language === 'en' ? 'Volunteer Developer' : 'Ehrenamtlicher Entwickler'}
+                subtitle={language === 'en' ? 'Volunteer Developer (Wildlife Conservation NGO)' : 'Ehrenamtlicher Entwickler (Tierschutzorganisation)'}
                 description={language === 'en'
-                  ? 'Built custom animal management system for pangolin conservation with centralized data synchronization.'
-                  : 'Entwicklung eines Tierverwaltungssystems für Schuppentierschutz mit zentralisierter Datensynchronisation.'}
+                  ? 'Built custom animal management system for wildlife conservation organization focused on pangolin rescue and rehabilitation with centralized data synchronization.'
+                  : 'Entwicklung eines Tierverwaltungssystems für Tierschutzorganisation mit Fokus auf Schuppentier-Rettung und -Rehabilitation mit zentralisierter Datensynchronisation.'}
               />
 
               <Achievement
@@ -441,11 +444,51 @@ export default function CVPage() {
                   ? 'Active member of TU Darmstadt\'s cybersecurity team, participating in CTF competitions.'
                   : 'Aktives Mitglied des Cybersecurity-Teams der TU Darmstadt, Teilnahme an CTF-Wettbewerben.'}
               />
+
+              {advancedMode && (
+                <div className="advanced-mode-print-hidden">
+                  <Achievement
+                    title={language === 'en' ? 'Volunteer Firefighter - Youth Fire Brigade' : 'Jugendfeuerwehr Eidengesäß'}
+                    period="2014 - 2021"
+                    subtitle={language === 'en' ? 'Community Service' : 'Ehrenamt'}
+                    description={language === 'en'
+                      ? 'Active member of the youth fire brigade, developing teamwork and emergency response skills.'
+                      : 'Aktives Mitglied der Jugendfeuerwehr mit Entwicklung von Teamfähigkeit und Einsatzbereitschaft.'}
+                  />
+
+                  <Achievement
+                    title={language === 'en' ? 'Technical Blog & Knowledge Sharing' : 'Tech-Blog & Wissensverbreitung'}
+                    period={`2024 - ${t.present}`}
+                    subtitle={language === 'en' ? 'Open Source Educator' : 'Open-Source-Bildung'}
+                    description={language === 'en'
+                      ? 'Maintaining a technical blog to share knowledge about computer science topics, programming best practices, and emerging technologies.'
+                      : 'Betreibe einen Tech-Blog zur Verbreitung von Wissen zu Informatik-Themen, Programmier-Best-Practices und neuen Technologien.'}
+                  />
+
+                  <Achievement
+                    title="BoulderBuddy"
+                    period={`2024 - ${t.present}`}
+                    subtitle={language === 'en' ? 'Progressive Web App (Open Source)' : 'Progressive Web App (Open Source)'}
+                    description={language === 'en'
+                      ? 'Developing a free, open-source Progressive Web App to teach bouldering fundamentals through interactive lessons and personalized training plans.'
+                      : 'Entwicklung einer kostenlosen, quelloffenen Progressive Web App zum interaktiven Erlernen der Bouldering-Grundlagen mit personalisierten Trainingsplänen.'}
+                  />
+
+                  <Achievement
+                    title={language === 'en' ? 'Open Source Development' : 'Open-Source-Entwicklung'}
+                    period={`2018 - ${t.present}`}
+                    subtitle={language === 'en' ? 'Various Projects' : 'Verschiedene Projekte'}
+                    description={language === 'en'
+                      ? 'Regular development of open-source applications including Smart-Home Manager, Smart Card Removal Reminder, and custom Minecraft Mod Launcher.'
+                      : 'Regelmäßige Entwicklung von Open-Source-Anwendungen wie Smart-Home Manager, Smart Card Removal Reminder und einem Mod-Launcher für Minecraft.'}
+                  />
+                </div>
+              )}
             </Section>
           </div>
 
           {/* Right Column */}
-          <div className="space-y-6 print:space-y-2 print:order-2">
+          <div className="space-y-6 print:space-y-1 print:order-2">
             {/* Certificates - Print Order 4 */}
             <Section title={t.certificates} icon={<Award />} compact className="print:order-4">
               <Certificate
@@ -539,61 +582,29 @@ export default function CVPage() {
             </Section>
 
             {/* CV Info Box - Print Order 8 - Only visible in print */}
-            <div className="hidden print:block print:order-8 mt-6 p-4 bg-gradient-to-r from-blue-50 to-sky-50 border-l-4 border-blue-500 rounded-lg">
-              <div className="flex items-start gap-3">
-                <div className="flex-shrink-0 mt-1">
-                  <Globe className="w-5 h-5 text-blue-600" />
+            <div className="hidden print:block print:order-8 mt-3 p-2.5 bg-gradient-to-r from-blue-50 to-sky-50 border-l-4 border-blue-500 rounded-lg">
+              <div className="flex items-start gap-2">
+                <div className="flex-shrink-0 mt-0.5">
+                  <Globe className="w-4 h-4 text-blue-600" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-sm font-semibold text-slate-900 mb-1">
+                  <h3 className="text-xs font-semibold text-slate-900 mb-0.5">
                     {language === 'en' 
                       ? 'This CV was created with a custom web application' 
                       : 'Dieser Lebenslauf wurde mit einer selbst entwickelten Webanwendung erstellt'}
                   </h3>
-                  <p className="text-xs text-slate-700 leading-relaxed">
+                  <p className="text-xs text-slate-700 leading-tight">
                     {language === 'en'
                       ? 'This CV is also available online in both German and English at:'
                       : 'Dieser Lebenslauf ist auch online sowohl auf Deutsch als auch auf Englisch verfügbar unter:'}
                   </p>
-                  <p className="text-xs font-mono text-blue-700 mt-1 font-semibold">
+                  <p className="text-xs font-mono text-blue-700 mt-0.5 font-semibold">
                     codingtarik.github.io/#/cv
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Advanced Mode Content */}
-            {advancedMode && (
-              <>
-                <Section title={t.countriesVisited} icon={<MapPin />} compact>
-                  <div className="flex flex-wrap gap-2">
-                    {['🇩🇪 Germany', '🇱🇻 Latvia', '🇫🇮 Finland', '🇿🇼 Zimbabwe', '🇿🇦 South Africa', '🇦🇹 Austria', '🇨🇭 Switzerland', '🇫🇷 France', '🇮🇹 Italy'].map(country => (
-                      <span key={country} className="text-xs px-2 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded">
-                        {country}
-                      </span>
-                    ))}
-                  </div>
-                </Section>
-
-                <Section title={t.countriesWantToVisit} icon={<MapPin />} compact>
-                  <div className="flex flex-wrap gap-2">
-                    {['🇯🇵 Japan', '🇰🇷 South Korea', '🇺🇸 USA', '🇨🇦 Canada', '🇳🇿 New Zealand'].map(country => (
-                      <span key={country} className="text-xs px-2 py-1 bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded">
-                        {country}
-                      </span>
-                    ))}
-                  </div>
-                </Section>
-
-                <Section title={t.currentlyLearning} icon={<Code />} compact>
-                  <ul className="text-sm space-y-1 text-slate-600 dark:text-slate-400">
-                    <li>• {language === 'en' ? 'Advanced AI Agent Architectures' : 'Fortgeschrittene KI-Agenten-Architekturen'}</li>
-                    <li>• {language === 'en' ? 'Rust Programming' : 'Rust-Programmierung'}</li>
-                    <li>• {language === 'en' ? 'Korean Language' : 'Koreanische Sprache'}</li>
-                  </ul>
-                </Section>
-              </>
-            )}
           </div>
         </div>
       </div>
@@ -765,7 +776,7 @@ export default function CVPage() {
           /* Page Setup - no top margin for blue header */
           @page {
             size: A4;
-            margin: 0mm 0mm 15mm 0mm;
+            margin: 0mm 0mm 10mm 0mm;
           }
           
           /* Force exact color printing */
@@ -789,7 +800,7 @@ export default function CVPage() {
           html {
             margin: 0 !important;
             padding: 0 !important;
-            height: 100% !important;
+            height: auto !important;
             background: white !important;
           }
           
@@ -797,21 +808,22 @@ export default function CVPage() {
             margin: 0 !important;
             padding: 0 !important;
             width: 100% !important;
-            height: 100% !important;
+            height: auto !important;
             background: white !important;
           }
           
           /* Main container - clean white */
           body > div {
             background: white !important;
-            min-height: 100vh !important;
+            min-height: 0 !important;
+            height: auto !important;
           }
 
           /* CV Container - clean professional layout with side margins */
           .cv-print-container {
             max-width: 100% !important;
             margin: 0 !important;
-            padding: 0 12mm 0 12mm !important;
+            padding: 0 12mm 5mm 12mm !important;
             background: white !important;
           }
 
@@ -849,25 +861,29 @@ export default function CVPage() {
           
           /* Very compact spacing for print */
           .cv-print-container .space-y-6 > * + * {
-            margin-top: 0.4rem !important;
+            margin-top: 0.15rem !important;
           }
           
           .cv-print-container .space-y-4 > * + * {
-            margin-top: 0.3rem !important;
+            margin-top: 0.15rem !important;
           }
           
           .cv-print-container .space-y-3 > * + * {
-            margin-top: 0.25rem !important;
+            margin-top: 0.1rem !important;
           }
           
           .cv-print-container .space-y-2 > * + * {
-            margin-top: 0.2rem !important;
+            margin-top: 0.1rem !important;
+          }
+          
+          .cv-print-container .space-y-1 > * + * {
+            margin-top: 0.05rem !important;
           }
           
           /* Professional section styling */
           .cv-print-container section {
-            padding: 0.5rem 0 !important;
-            margin-bottom: 0.6rem !important;
+            padding: 0.3rem 0 !important;
+            margin-bottom: 0.25rem !important;
             border-radius: 0 !important;
             background: white !important;
             box-shadow: none !important;
@@ -876,8 +892,8 @@ export default function CVPage() {
           /* Section headers with accent line - more elegant */
           .cv-print-container section > div:first-child {
             border-bottom: 2px solid #e2e8f0 !important;
-            padding-bottom: 0.4rem !important;
-            margin-bottom: 0.6rem !important;
+            padding-bottom: 0.3rem !important;
+            margin-bottom: 0.4rem !important;
             position: relative !important;
           }
           
@@ -898,10 +914,10 @@ export default function CVPage() {
             margin-left: -12mm !important;
             margin-right: -12mm !important;
             margin-top: 0 !important;
-            margin-bottom: 0.8rem !important;
-            width: 100vw !important;
+            margin-bottom: 0.5rem !important;
+            width: calc(100% + 24mm) !important;
             max-width: none !important;
-            padding: 10mm 12mm 1rem 12mm !important;
+            padding: 8mm 12mm 0.8rem 12mm !important;
             border-radius: 0 !important;
             background-color: #1e40af !important;
             background-image: linear-gradient(135deg, #0f172a 0%, #1e40af 25%, #3b82f6 60%, #60a5fa 100%) !important;
@@ -978,8 +994,8 @@ export default function CVPage() {
           .cv-print-container p,
           .cv-print-container span,
           .cv-print-container div {
-            font-size: 0.85rem !important;
-            line-height: 1.4 !important;
+            font-size: 0.82rem !important;
+            line-height: 1.35 !important;
             color: #334155 !important;
           }
           
@@ -1016,40 +1032,42 @@ export default function CVPage() {
           .cv-print-container [class*="border-l-4"] {
             border: none !important;
             border-left: 4px solid #3b82f6 !important;
-            padding: 0.6rem 0.8rem !important;
-            margin-bottom: 0.6rem !important;
+            padding: 0.4rem 0.6rem !important;
+            margin-bottom: 0.4rem !important;
             border-radius: 0.375rem !important;
             background: #ffffff !important;
             box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 0 0 1px rgba(0,0,0,0.02) !important;
             position: relative !important;
+            height: auto !important;
+            min-height: 0 !important;
+            max-height: none !important;
+            display: block !important;
+            overflow: visible !important;
           }
           
           /* Add subtle left accent gradient */
           .cv-print-container [class*="border-l-4"]::before {
-            content: '' !important;
-            position: absolute !important;
-            left: 0 !important;
-            top: 0 !important;
-            bottom: 0 !important;
-            width: 4px !important;
-            background: linear-gradient(to bottom, #3b82f6 0%, #60a5fa 100%) !important;
-            border-radius: 0.375rem 0 0 0.375rem !important;
+            content: none !important;
+            display: none !important;
           }
           
-          /* Subtle background for items - enhanced with gradients */
+          /* Subtle background for items - simplified for print */
           .cv-print-container [class*="border-blue"] {
-            background: linear-gradient(to right, #f8fafc 0%, #ffffff 100%) !important;
+            background: #ffffff !important;
             border-color: #e2e8f0 !important;
+            height: auto !important;
           }
           
           .cv-print-container [class*="border-green"] {
-            background: linear-gradient(to right, #f0fdf4 0%, #ffffff 100%) !important;
+            background: #ffffff !important;
             border-color: #d1fae5 !important;
+            height: auto !important;
           }
           
           .cv-print-container [class*="border-purple"] {
-            background: linear-gradient(to right, #faf5ff 0%, #ffffff 100%) !important;
+            background: #ffffff !important;
             border-color: #e9d5ff !important;
+            height: auto !important;
           }
           
           /* Professional profile picture - compact rectangular without border */
@@ -1064,18 +1082,27 @@ export default function CVPage() {
           }
           
           /* Reduce gap in grid */
-          .cv-print-container .print\\:gap-2 {
-            gap: 0.3rem !important;
+          .cv-print-container .print\:gap-0 {
+            gap: 0 !important;
+          }
+
+          .cv-print-container .print\:gap-1,
+          .cv-print-container .print\:gap-2 {
+            gap: 0.1rem !important;
+          }
+
+          .cv-print-container .print\:mb-0 {
+            margin-bottom: 0 !important;
           }
           
           /* Compact hobby items */
           .cv-print-container [class*="flex items-center gap"] {
-            gap: 0.4rem !important;
+            gap: 0.3rem !important;
           }
           
           /* Smaller icons/emojis */
           .cv-print-container .text-2xl {
-            font-size: 1rem !important;
+            font-size: 0.95rem !important;
           }
           
           /* Hide decorative icons in print for cleaner look */
@@ -1097,12 +1124,65 @@ export default function CVPage() {
           
           /* Professional spacing between entries */
           .cv-print-container .space-y-4 > * + * {
-            margin-top: 0.5rem !important;
+            margin-top: 0.3rem !important;
           }
           
           /* Ensure consistent text color */
           .cv-print-container * {
             color: inherit !important;
+          }
+          
+          /* Fix for advanced mode content */
+          .cv-print-container .space-y-4,
+          .cv-print-container .space-y-6 {
+            height: auto !important;
+            min-height: 0 !important;
+            max-height: none !important;
+          }
+          
+          /* Fix for all divs inside cv-print-container */
+          .cv-print-container div {
+            height: auto !important;
+            min-height: 0 !important;
+            max-height: none !important;
+            overflow: visible !important;
+          }
+          
+          /* Ensure sections don't cause infinite pages */
+          .cv-print-container section,
+          .cv-print-container section > div {
+            page-break-inside: auto !important;
+            height: auto !important;
+            min-height: 0 !important;
+          }
+          
+          /* Fix flex containers */
+          .cv-print-container .flex {
+            height: auto !important;
+            min-height: 0 !important;
+          }
+
+          /* Hide advanced mode extras during print to prevent layout issues */
+          .cv-print-container .advanced-mode-print-hidden {
+            display: none !important;
+          }
+
+          /* Fix all p and span elements */
+          .cv-print-container p,
+          .cv-print-container span,
+          .cv-print-container h1,
+          .cv-print-container h2,
+          .cv-print-container h3,
+          .cv-print-container h4 {
+            height: auto !important;
+            min-height: 0 !important;
+            max-height: none !important;
+          }
+
+          /* Force flex to block inside problematic components */
+          .cv-print-container .achievement-component .flex,
+          .cv-print-container .certificate-component .flex {
+            display: block !important;
           }
         }
       `}</style>
@@ -1118,7 +1198,7 @@ function Section({ title, icon, children, compact = false, className = '' }) {
         <span className="text-blue-500 print:hidden">{icon}</span>
         {title}
       </h2>
-      <div className={compact ? 'space-y-3 print:space-y-1' : 'space-y-4 print:space-y-2'}>
+      <div className={compact ? 'space-y-3 print:space-y-1' : 'space-y-4 print:space-y-1'}>
         {children}
       </div>
     </section>
@@ -1127,7 +1207,7 @@ function Section({ title, icon, children, compact = false, className = '' }) {
 
 function Achievement({ title, period, subtitle, description }) {
   return (
-    <div className="border-l-4 border-blue-500 pl-4 print:pl-3">
+    <div className="achievement-component border-l-4 border-blue-500 pl-4 print:pl-3">
       <div className="flex justify-between items-start mb-1">
         <h3 className="font-bold text-slate-900 dark:text-white text-base print:text-sm">{title}</h3>
         <span className="text-sm print:text-xs text-slate-500 whitespace-nowrap ml-2">{period}</span>
@@ -1204,7 +1284,7 @@ function SkillCategory({ title, skills }) {
 
 function Certificate({ title, issuer, year, link, description }) {
   return (
-    <div className="text-sm border-l-4 border-purple-500 print:border-blue-500 pl-4 print:pl-3 py-2 print:py-1 bg-gradient-to-r from-purple-50 to-transparent dark:from-purple-900/20 print:from-blue-50 print:to-transparent rounded-r-lg print:rounded-r-md">
+    <div className="certificate-component text-sm border-l-4 border-purple-500 print:border-blue-500 pl-4 print:pl-3 py-2 print:py-1 bg-gradient-to-r from-purple-50 to-transparent dark:from-purple-900/20 print:from-blue-50 print:to-transparent rounded-r-lg print:rounded-r-md">
       <div className="flex items-start justify-between gap-2">
         <div className="flex-1">
           <div className="flex items-center gap-2">
