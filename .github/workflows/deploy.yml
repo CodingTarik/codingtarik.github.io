@@ -38,11 +38,52 @@ jobs:
 
       - name: Verify build output
         run: |
+          echo "=== Build Output Verification ==="
           ls -la dist/
-          test -f dist/.nojekyll || echo "Warning: .nojekyll file not found"
-          test -f dist/index.html || (echo "Error: index.html not found" && exit 1)
-          test -f dist/icon.svg || (echo "Error: icon.svg not found" && exit 1)
-          test -f dist/manifest.json || (echo "Error: manifest.json not found" && exit 1)
+          echo ""
+          echo "=== Checking for required files ==="
+          test -f dist/.nojekyll || (echo "ERROR: .nojekyll file not found" && exit 1)
+          test -f dist/index.html || (echo "ERROR: index.html not found" && exit 1)
+          test -f dist/icon.svg || (echo "ERROR: icon.svg not found" && exit 1)
+          test -f dist/manifest.json || (echo "ERROR: manifest.json not found" && exit 1)
+          echo ""
+          echo "=== Checking index.html content ==="
+          if grep -q "main.jsx" dist/index.html; then
+            echo "ERROR: index.html still contains main.jsx reference!"
+            exit 1
+          fi
+          if ! grep -q "assets/index-" dist/index.html; then
+            echo "ERROR: index.html does not contain built assets reference!"
+            exit 1
+          fi
+          echo "✓ index.html looks correct"
+          echo ""
+          echo "=== Checking JavaScript files ==="
+          JS_FILES=$(find dist/assets -name "*.js" 2>/dev/null | wc -l)
+          if [ "$JS_FILES" -eq 0 ]; then
+            echo "ERROR: No JavaScript files found in dist/assets/"
+            exit 1
+          fi
+          echo "✓ Found $JS_FILES JavaScript file(s)"
+          echo ""
+          echo "Build verification complete ✓"
+
+      - name: Final verification
+        run: |
+          echo "=== Final check before deployment ==="
+          echo "Contents of dist/index.html (first 10 lines):"
+          head -10 dist/index.html
+          echo ""
+          echo "Checking for main.jsx reference:"
+          if grep -q "main.jsx" dist/index.html; then
+            echo "❌ CRITICAL: dist/index.html contains main.jsx!"
+            cat dist/index.html
+            exit 1
+          else
+            echo "✓ No main.jsx reference found"
+          fi
+          echo ""
+          echo "All checks passed ✓"
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
