@@ -28,10 +28,6 @@ const MarkdownCodeBlock = ({ children }) => {
     };
   
     return (
-      // --- 3. Der Container ---
-      // 'relative' für die Positionierung der Buttons
-      // 'group' damit die Buttons beim Hovern über den Block erscheinen
-      // Styling (bg-card, etc.) kommt von Ihren 'pre'-Props
       <div className="relative group bg-card text-text rounded-lg border border-border my-6 shadow-lg">
         
         {/* --- 4. Obere Leiste (Sprache + Kopier-Button) --- */}
@@ -70,8 +66,6 @@ const MarkdownCodeBlock = ({ children }) => {
         <SyntaxHighlighter
           language={language.toLowerCase()}
           style={vscDarkPlus}
-          // WICHTIG: Überschreiben Sie den Hintergrund des Themes,
-          // damit Ihr 'bg-card' vom Container durchscheint.
           customStyle={{
             background: 'transparent',
           }}
