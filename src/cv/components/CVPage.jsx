@@ -192,7 +192,7 @@ export default function CVPage() {
             {/* Profile Picture */}
             <div className="flex-shrink-0">
               <img 
-                src="/src/cv/pictures/cv_profile_picture.jpeg" 
+                src="/pictures/cv/cv_profile_picture.jpeg" 
                 alt="Tarik Azzouzi" 
                 className="w-28 h-28 print:w-48 print:h-56 rounded-full print:rounded-lg object-cover border-4 border-blue-500 print:border-0 shadow-lg print:shadow-xl"
                 style={{ objectPosition: '50% 35%' }}

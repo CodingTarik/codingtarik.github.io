@@ -126,7 +126,7 @@ export default function BlogSidebar({
         >
           <div className="w-full h-full rounded-full overflow-hidden bg-card">
             <img 
-              src="/src/blog/pictures/profile/profile.jpeg" 
+              src="/pictures/blog/profile/profile.jpeg" 
               alt="Tarik Azzouzi" 
               className="w-full h-full object-cover scale-125 -translate-y-4"
             />
