@@ -3,9 +3,9 @@ import Markdown from 'markdown-to-jsx';
 import { useTheme } from '../../learnbuddy/context/ThemeContext';
 import { 
   Copy, Check, Code2, Eye, 
-  Info as InfoIcon, // HIER IST DER FIX
-  AlertTriangle as AlertTriangleIcon, // HIER IST DER FIX
-  XCircle as XCircleIcon, // HIER IST DER FIX
+  Info as InfoIcon,
+  AlertTriangle as AlertTriangleIcon,
+  XCircle as XCircleIcon,
   ChevronDown, Youtube, ArrowUpDown 
 } from 'lucide-react';
 import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
@@ -33,8 +33,10 @@ import {
   useReactTable, 
   getCoreRowModel, 
   getSortedRowModel, 
-  flexRender, 
+  flexRender 
 } from '@tanstack/react-table';
+
+import { themes } from 'prism-react-renderer';
 
 import ts from 'react-syntax-highlighter/dist/esm/languages/prism/typescript';
 import js from 'react-syntax-highlighter/dist/esm/languages/prism/javascript';
@@ -153,9 +155,9 @@ const findCodeElement = (node) => {
 
 const Callout = ({ children, type = 'info' }) => {
   const icons = {
-    info: <InfoIcon size={18} />, // HIER IST DER FIX
-    warning: <AlertTriangleIcon size={18} />, // HIER IST DER FIX
-    alert: <XCircleIcon size={18} />, // HIER IST DER FIX
+    info: <InfoIcon size={18} />,
+    warning: <AlertTriangleIcon size={18} />,
+    alert: <XCircleIcon size={18} />,
   };
   const styles = {
     info: 'border-l-primary bg-primary/5 text-text',
@@ -272,25 +274,47 @@ const Tabs = ({ children }) => {
   );
 };
 
+// =========================================================================
+// HIER IST FIX 1 (Tab)
+// =========================================================================
 const Tab = ({ children }) => {
-  const child = React.Children.only(children);
-  if (child && child.type.name === 'MarkdownCodeBlock') {
+  // Entferne React.Children.only, da es zu streng ist.
+  const childrenArray = React.Children.toArray(children);
+  
+  // Prüfe, ob das erste (und hoffentlich einzige) Kind ein CodeBlock ist.
+  const isSingleCodeBlock = 
+      childrenArray.length > 0 && // Sicherstellen, dass Kinder vorhanden sind
+      React.isValidElement(childrenArray[0]) &&
+      childrenArray[0].type.name === 'MarkdownCodeBlock';
+
+  if (isSingleCodeBlock) {
+    const child = childrenArray[0];
+    // Klone nur das CodeBlock-Element und entferne seine Ränder/Schatten
     return React.cloneElement(child, {
       ...child.props,
       className: 'shadow-none border-none my-0 rounded-none overflow-hidden', 
       isTabbed: true 
     });
   }
+  
+  // Fallback für normalen Text oder gemischten Inhalt
   return <div className="p-4">{children}</div>;
 };
 
+// =========================================================================
+// HIER IST FIX 2 (LiveCodeBlock)
+// =========================================================================
 const LiveCodeBlock = ({ codeString }) => {
   const { isDark } = useTheme();
-  const theme = isDark ? modifiedOneDark : modifiedOneLight;
+  const theme = isDark ? themes.dracula : themes.github;
 
   return (
     <LiveProvider code={codeString} theme={theme} noInline={false}>
-      <div className="not-prose relative bg-card text-text rounded-lg border border-border my-6 shadow-lg overflow-hidden">
+      <div 
+        className="not-prose relative text-text rounded-lg border border-border my-6 shadow-lg overflow-hidden"
+        // Wende die Hintergrundfarbe des Themes manuell auf den Container an
+        style={{ backgroundColor: theme.plain.backgroundColor }} 
+      >
         <div className="p-4 border-b border-border min-h-[100px]">
           <LivePreview />
         </div>
@@ -302,7 +326,7 @@ const LiveCodeBlock = ({ codeString }) => {
               lineHeight: '1.6',
               padding: '1rem', 
               outline: 'none',
-              background: 'transparent',
+              // Der Hintergrund wird vom 'theme' auf dem Provider geerbt
             }} 
           />
         </div>
