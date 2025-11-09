@@ -1,5 +1,55 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Markdown from 'markdown-to-jsx';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism'; 
+
+const MarkdownCodeBlock = ({ children }) => {
+    // ... (der gesamte Code aus Schritt 2)
+    const codeElement = React.Children.only(children);
+    const codeString = codeElement.props.children.toString().trim();
+    const className = codeElement.props.className || '';
+    const languageMatch = /language-(\w+)/.exec(className);
+    const language = languageMatch ? languageMatch[1] : '';
+    const [isCopied, setIsCopied] = useState(false);
+  
+    const handleCopy = () => {
+      navigator.clipboard.writeText(codeString).then(() => {
+        setIsCopied(true);
+        setTimeout(() => setIsCopied(false), 2000);
+      }).catch(err => {
+        console.error("Fehler beim Kopieren des Codes: ", err);
+      });
+    };
+    
+    return (
+      <div className="relative group bg-card text-text rounded-lg border border-border my-6">
+        <button
+          onClick={handleCopy}
+          className="absolute top-2 right-2 p-1.5 rounded-md bg-border text-text opacity-0 group-hover:opacity-100 transition-opacity focus:opacity-100 outline-none focus:ring-2 focus:ring-primary"
+          aria-label="Code kopieren"
+        >
+          {isCopied ? (
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+            </svg>
+          ) : (
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"/>
+              <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zM8 2h1v1H8zM7 1.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
+            </svg>
+          )}
+        </button>
+        <SyntaxHighlighter
+          language={language}
+          style={vscDarkPlus}
+          PreTag="pre"
+          className="!p-4 !m-0 overflow-x-auto scrollbar-thin !bg-transparent"
+        >
+          {codeString}
+        </SyntaxHighlighter>
+      </div>
+    );
+  };
 
 /**
  * Shared component for rendering blog post markdown content
@@ -21,10 +71,7 @@ export default function BlogPostContent({ content }) {
             
             // Pre blocks - code blocks
             pre: {
-              component: 'pre',
-              props: {
-                className: 'bg-card text-text p-4 rounded-lg overflow-x-auto scrollbar-thin border border-border',
-              },
+              component: MarkdownCodeBlock,
             },
             
             // Headings
