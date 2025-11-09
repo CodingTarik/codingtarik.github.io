@@ -59,7 +59,7 @@ function AppContent() {
   const { language } = useLanguage();
   
   // App view state (blog vs learnbuddy vs admin)
-  const [appView, setAppView] = useState('learnbuddy'); // 'blog', 'learnbuddy', or 'admin'
+  const [appView, setAppView] = useState('blog'); // 'blog', 'learnbuddy', or 'admin'
   
   // Navigation state
   const [currentPage, setCurrentPage] = useState('home');
@@ -187,6 +187,12 @@ function AppContent() {
         }
         return;
       } else if (hash !== '#/cv' && hash !== '#/privacy' && hash !== '#/imprint') {
+        // If no hash or empty hash, default to blog
+        if (!hash || hash === '' || hash === '#') {
+          setAppView('blog');
+          window.location.hash = '#/blog';
+          return;
+        }
         setAppView('learnbuddy');
       }
       
@@ -242,8 +248,8 @@ function AppContent() {
           setCurrentPage(hash.replace('#/', ''));
           return;
         }
-        // Default redirect to learnbuddy
-        window.location.hash = `#/learnbuddy/${activeBuddy}/home`;
+        // Default redirect to blog
+        window.location.hash = '#/blog';
         return;
       }
     };
