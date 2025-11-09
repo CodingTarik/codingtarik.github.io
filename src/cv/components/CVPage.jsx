@@ -225,7 +225,7 @@ export default function CVPage() {
                     <div className="flex items-center gap-1.5">
                       <MapPin size={12} className="flex-shrink-0" />
                       <span className="truncate">
-                        <span className="font-medium">{language === 'en' ? 'Address:' : 'Adresse:'}</span> {printData.address}
+                        {printData.address}
                       </span>
                     </div>
                   )}
