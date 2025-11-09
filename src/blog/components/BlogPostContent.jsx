@@ -112,64 +112,50 @@ const findCodeElement = (node) => {
   return null;
 };
 
-/**
- * Mermaid diagram component with toggle between code and diagram view
- */
 const MermaidBlock = ({ codeString }) => {
   const { isDark } = useTheme();
   const [viewMode, setViewMode] = useState('diagram'); // 'diagram' or 'code'
   const [isCopied, setIsCopied] = useState(false);
   const mermaidRef = useRef(null);
-  const [mermaidId] = useState(() => `mermaid-${Math.random().toString(36).substr(2, 9)}`);
+  // Stelle sicher, dass die ID für mermaid.render() gültig ist (keine Zahlen am Anfang)
+  const [mermaidId] = useState(() => `mermaid-svg-${Math.random().toString(36).substr(2, 9)}`);
 
   // Initialize and render Mermaid diagram
   useEffect(() => {
+    // Nur rendern, wenn wir im Diagramm-Modus sind und der Ref existiert
     if (viewMode === 'diagram' && mermaidRef.current && codeString) {
-      // Initialize Mermaid with theme
+      
+      // 1. Mermaid mit dem richtigen Theme initialisieren
       mermaid.initialize({
         startOnLoad: false,
         theme: isDark ? 'dark' : 'default',
         securityLevel: 'loose',
       });
 
-      // Clear previous content
+      // 2. mermaid.render() verwenden. 
+      // Dies ist eine asynchrone Funktion, die { svg, bindFunctions } zurückgibt.
+      // Sie rendert den SVG-Code im Speicher, ohne DOM-Hacks.
+      mermaid.render(mermaidId, codeString)
+        .then(({ svg }) => {
+          // 3. Den gerenderten SVG-String sicher in den ref einfügen
+          if (mermaidRef.current) {
+            mermaidRef.current.innerHTML = svg;
+          }
+        })
+        .catch((err) => {
+          // 4. Fehler abfangen und anzeigen
+          console.error('Mermaid rendering error:', err);
+          if (mermaidRef.current) {
+            mermaidRef.current.innerHTML = `<div class="text-red-500 p-4 text-sm">Error rendering diagram: ${err.message}</div>`;
+          }
+        });
+        
+    } else if (mermaidRef.current) {
+      // Aufräumen: Wenn wir zur Code-Ansicht wechseln, den SVG leeren
       mermaidRef.current.innerHTML = '';
-
-      // Create a unique ID for this diagram
-      const diagramId = `mermaid-diagram-${mermaidId}`;
-      
-      // Create a temporary container with the mermaid class
-      const tempContainer = document.createElement('div');
-      tempContainer.id = diagramId;
-      tempContainer.className = 'mermaid';
-      tempContainer.textContent = codeString;
-      
-      // Append to a hidden container first
-      const hiddenContainer = document.createElement('div');
-      hiddenContainer.style.display = 'none';
-      document.body.appendChild(hiddenContainer);
-      hiddenContainer.appendChild(tempContainer);
-      
-      // Render the diagram
-      mermaid.run({
-        nodes: [tempContainer],
-      }).then(() => {
-        if (mermaidRef.current && tempContainer.innerHTML) {
-          mermaidRef.current.innerHTML = tempContainer.innerHTML;
-        }
-        // Clean up
-        document.body.removeChild(hiddenContainer);
-      }).catch((err) => {
-        console.error('Mermaid rendering error:', err);
-        if (mermaidRef.current) {
-          mermaidRef.current.innerHTML = `<div class="text-red-500 p-4 text-sm">Error rendering diagram: ${err.message}</div>`;
-        }
-        // Clean up on error
-        if (document.body.contains(hiddenContainer)) {
-          document.body.removeChild(hiddenContainer);
-        }
-      });
     }
+    
+    // Die Abhängigkeiten sind korrekt
   }, [codeString, viewMode, isDark, mermaidId]);
 
   const handleCopy = async () => {
