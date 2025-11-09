@@ -32,7 +32,17 @@ jobs:
         run: npm ci
 
       - name: Build
+        env:
+          BASE_URL: '/'
         run: npm run build
+
+      - name: Verify build output
+        run: |
+          ls -la dist/
+          test -f dist/.nojekyll || echo "Warning: .nojekyll file not found"
+          test -f dist/index.html || (echo "Error: index.html not found" && exit 1)
+          test -f dist/icon.svg || (echo "Error: icon.svg not found" && exit 1)
+          test -f dist/manifest.json || (echo "Error: manifest.json not found" && exit 1)
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
