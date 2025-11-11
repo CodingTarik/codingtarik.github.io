@@ -27,7 +27,8 @@ PHASE 1: DIE FUNDAMENTE DER KÜCHE (Woche 1-6)
   - Gemüse/Fleisch vorschneiden
   - Werkzeuge bereitlegen
 □ Arbeitsplatz-Organisation (Sauberes Brett, Abfallschüssel, feuchtes Tuch unterm Brett)
-□ **Praktische Übung:** Wähle ein einfaches Rezept (z.B. Tomatensauce). Führe ein komplettes "Mise en Place" durch, BEVOR du den Herd anmachst. Alle Zutaten müssen geschnitten und abgewogen bereitstehen.
+□ **Praktische Übung 1:** Wähle ein einfaches Rezept (z.B. Tomatensauce). Führe ein komplettes "Mise en Place" durch, BEVOR du den Herd anmachst. Alle Zutaten müssen geschnitten und abgewogen bereitstehen.
+□ **Praktische Übung 2:** Bereite eine komplette Mise en Place für ein 3-Gänge-Menü vor. Organisiere alle Zutaten in beschrifteten Schüsseln und stelle sie in der Reihenfolge des Rezepts bereit.
 
 ### MODUL 1.3: SICHERHEIT & HYGIENE
 ────────────────────────────────────────────────
@@ -54,6 +55,7 @@ PHASE 1: DIE FUNDAMENTE DER KÜCHE (Woche 1-6)
 □ Koch-Vokabular (Basis)
   - Anschwitzen, Anbraten, Ablöschen, Reduzieren, Simmern (Köcheln), Blanchieren
   - **NEU:** Gratinieren (Überbacken), Montieren (mit Butter binden), Sautieren (Schwenken)
+□ **Praktische Übung:** Nimm ein unbekanntes Rezept. Lies es komplett durch. Markiere alle Begriffe, die du nicht kennst. Schlage sie nach. Stelle dir vor, wie jeder Schritt aussehen wird, bevor du kochst.
 
 ### MODUL 1.5: AUSRÜSTUNG & GERÄTE-KUNDE
 ──────────────────────────────────────────
@@ -67,7 +69,8 @@ PHASE 1: DIE FUNDAMENTE DER KÜCHE (Woche 1-6)
   - Umluft/Heißluft (Ventilator, 20°C niedriger einstellen)
   - Grillfunktion (Starke Hitze nur von oben)
   - Vorheizen: Wann und warum?
-□ **Praktische Übung:** Identifiziere die Funktionen deines eigenen Ofens. Backe einfache Aufback-Brötchen einmal mit O/U-Hitze und einmal mit Umluft. Beobachte den Unterschied.
+□ **Praktische Übung 1:** Identifiziere die Funktionen deines eigenen Ofens. Backe einfache Aufback-Brötchen einmal mit O/U-Hitze und einmal mit Umluft. Beobachte den Unterschied.
+□ **Praktische Übung 2:** Teste verschiedene Pfannenmaterialien: Brate das gleiche Gericht (z.B. Spiegelei) in einer beschichteten Pfanne, einer Edelstahlpfanne und einer Gusseisenpfanne. Beobachte die Unterschiede in Hitzeleitung und Anbratverhalten.
 
 ### MODUL 1.6: DIE SPEISEKAMMER (NEU!)
 ──────────────────────────────────
@@ -120,29 +123,52 @@ PHASE 2: FUNDAMENTALE KOCHTECHNIKEN (Woche 7-16)
 ### MODUL 2.3: GEMÜSE-VORBEREITUNG
 ──────────────────────────────────
 □ **Brokkoli verarbeiten:** (Dein Wunsch!) Röschen trennen, Strunk schälen und würfeln (ist essbar!).
+□ **Blumenkohl verarbeiten:** Ähnlich wie Brokkoli, Röschen trennen, Strunk verwerten.
+□ **Spargel vorbereiten:** Weißer Spargel schälen (von unten nach oben), grüner Spargel nur holzige Enden abschneiden.
+□ **Tomaten häuten:** Kreuz einschneiden, kurz blanchieren, Haut abziehen.
+□ **Paprika entkernen:** Deckel abschneiden, Kerngehäuse entfernen, in Streifen/Würfel schneiden.
 □ Salat waschen & trocknen (Salatschleuder)
 □ Lauch putzen (Sand entfernen!)
 □ Pilze bürsten (nicht wässern)
 □ Knoblauch (hacken vs. pressen - Unterschied im Geschmack)
-□ **Praktische Übung:** Putze einen Lauch gründlich und schneide ihn in feine Ringe.
+□ **Kartoffeln schälen & schneiden:** Verschiedene Schnittformen (Stifte, Scheiben, Würfel)
+□ **Zucchini vorbereiten:** Waschen, Enden abschneiden, in Scheiben/Stifte schneiden
+□ **Praktische Übung 1:** Putze einen Lauch gründlich und schneide ihn in feine Ringe.
+□ **Praktische Übung 2:** **Verarbeite einen kompletten Brokkoli:** Trenne die Röschen, schäle den Strunk und schneide ihn in gleichmäßige Würfel. Koche beides getrennt und vergleiche die Garzeiten.
+□ **Praktische Übung 3:** Häute 3 Tomaten mit der Blanchier-Methode. Schneide sie dann in Würfel für eine Sauce.
+□ **Praktische Übung 4:** Bereite 5 verschiedene Gemüsesorten vor (z.B. Paprika, Zucchini, Karotte, Zwiebel, Knoblauch) und schneide sie alle in gleichmäßige Würfel (Brunoise).
 
 ### MODUL 2.4: DIE 5 TROCKENEN HITZEARTEN (BRÄUNUNG)
 ──────────────────────────────────
 □ 1. **Braten (Pfanne / Sauté):** Hohe Hitze, wenig Fett. Ziel: Röstaromen (Maillard-Reaktion).
+  - **Wichtig:** Pfanne muss heiß sein, bevor Fett rein kommt!
+  - **Wichtig:** Nicht zu viel auf einmal (sonst dämpft es statt zu braten)
 □ 2. **Rösten (Ofen):** Mittlere bis hohe Hitze, trockene Luft. Ziel: Karamellisierung, tiefer Geschmack.
+  - **Trick:** Einmal wenden für gleichmäßige Bräunung
 □ 3. **Grillen:** Sehr hohe Hitze, Strahlung. (siehe Phase 6)
 □ 4. **Frittieren:** Garen in heißem Fett (160-180°C).
+  - **Wichtig:** Fett muss heiß genug sein (Test: Brotkrume bräunt in 30 Sek)
+  - **Wichtig:** Nicht zu viel auf einmal (Temperatur fällt)
 □ 5. **Backen:** Trockene Hitze im Ofen. (siehe Modul 3.4)
-□ **Praktische Übung:** Schneide Wurzelgemüse (Karotten, Pastinaken, Kartoffeln) in Stücke, mariniere sie mit Öl und Salz und röste sie bei 200°C Umluft, bis sie gebräunt und weich sind.
+□ **Praktische Übung 1:** Schneide Wurzelgemüse (Karotten, Pastinaken, Kartoffeln) in Stücke, mariniere sie mit Öl und Salz und röste sie bei 200°C Umluft, bis sie gebräunt und weich sind.
+□ **Praktische Übung 2:** Brate Hähnchenbrust: Erhitze die Pfanne richtig heiß, gib Öl rein, lege das Fleisch ein. Lasse es 3-4 Min braten, ohne zu bewegen, bis es sich löst. Wende es einmal.
+□ **Praktische Übung 3:** Frittiere Pommes: Erhitze Öl auf 170°C, frittiere in kleinen Portionen, bis sie goldbraun sind. Lass sie auf Küchenpapier abtropfen.
+□ **Praktische Übung 4:** Brate Zwiebeln an: Erst bei mittlerer Hitze glasig werden lassen, dann Hitze erhöhen und karamellisieren (10-15 Min).
 
 ### MODUL 2.5: DIE 3 FEUCHTEN HITZEARTEN (ZARTHEIT)
 ──────────────────────────────────
 □ 1. **Kochen (Sieden):** Garen in kochender Flüssigkeit (100°C). (Für Nudeln, Kartoffeln).
+  - **Wichtig:** Erst salzen, wenn Wasser kocht (schneller!)
 □ 2. **Simmern (Köcheln):** Garen knapp unter dem Siedepunkt (ca. 85-95°C). **Wichtiger als Kochen!** (Für Suppen, Eintöpfe, Schmorgerichte).
+  - **Erkennung:** Leichtes Blubbern, keine großen Blasen
 □ 3. **Dämpfen / Dünsten:**
   - **Dämpfen (Dampfgarren):** (Dein Wunsch!) Garen nur im heißen Wasserdampf (Siebeinsatz, Dampfgarer). Sehr schonend, erhält Nährstoffe & Farbe.
   - **Dünsten:** Garen in wenig eigener oder zugegebener Flüssigkeit (z.B. Zwiebeln anschwitzen).
-□ **Praktische Übung:** Dämpfe Brokkoliröschen in einem Topf mit Siebeinsatz, bis sie "al dente" (bissfest) und leuchtend grün sind.
+□ **Blanchieren:** Kurzes Kochen (1-2 Min), dann abschrecken (erhält Farbe, macht zart)
+□ **Praktische Übung 1:** Dämpfe Brokkoliröschen in einem Topf mit Siebeinsatz, bis sie "al dente" (bissfest) und leuchtend grün sind.
+□ **Praktische Übung 2:** Blanchiere grüne Bohnen: 2 Minuten kochen, dann in Eiswasser abschrecken. Vergleiche Farbe und Textur mit ungeblanchierten Bohnen.
+□ **Praktische Übung 3:** Koche eine Suppe: Lasse sie einmal richtig kochen, dann reduziere auf Simmern. Beobachte den Unterschied in Geschmack und Konsistenz.
+□ **Praktische Übung 4:** Dünste Zwiebeln in wenig Butter/Öl, bis sie glasig sind (nicht braun!). Das ist die Basis für viele Gerichte.
 
 ### MODUL 2.6: NIEDRIGTEMPERATUR-TECHNIKEN (NEU!)
 ──────────────────────────────────
@@ -153,26 +179,54 @@ PHASE 2: FUNDAMENTALE KOCHTECHNIKEN (Woche 7-16)
 ### MODUL 2.7: GRUNDNAHRUNGSMITTEL KOCHEN
 ──────────────────────────────────
 □ **Nudeln:** Großer Topf, viel Wasser. **Salzwasser MUSS "wie Meerwasser" schmecken.** "Al dente" kochen.
+  - **Wichtig:** Nudeln NICHT mit Öl im Wasser kochen (verhindert, dass Sauce haftet!)
+  - **Wichtig:** Nudelwasser aufheben für Saucen!
 □ **Reis:** Quellmethode (1 Teil Reis, 1.5-2 Teile Wasser, simmern bis Wasser weg ist) vs. Wassermethode (wie Nudeln).
+  - **Basmatireis:** Vorher waschen (Stärke entfernen), 1:1.5 Verhältnis
+  - **Risotto-Reis:** Ständig rühren, nach und nach Flüssigkeit zugeben
 □ **Kartoffeln:** Festkochend vs. Mehlig. Kalt ansetzen! Pellkartoffeln (mit Schale) vs. Salzkartoffeln (ohne).
+  - **Kartoffeln kochen:** Kalt ansetzen, salzen, 20-30 Min je nach Größe
+  - **Kartoffeln garen:** Dämpfen (schonender, mehr Nährstoffe)
 □ **Hülsenfrüchte:** Linsen (direkt kochen) vs. Bohnen/Kichererbsen (einweichen!).
-□ **Praktische Übung:** Koche Pasta "al dente". Schmecke das Nudelwasser VORHER ab. Koche Reis nach der Quellmethode, ohne dass er anbrennt.
+  - **Einweichen:** 12-24 Stunden, Wasser wechseln
+  - **Kochen:** Ohne Salz (wird später hart), mit Lorbeer/Kümmel (weniger blähend)
+□ **Quinoa:** Vorher waschen (Bitterstoffe!), 1:2 Verhältnis, 15 Min köcheln
+□ **Bulgur:** Einweichen in heißem Wasser (1:2), 10-15 Min quellen lassen
+□ **Praktische Übung 1:** Koche Pasta "al dente". Schmecke das Nudelwasser VORHER ab. Hebe 1 Tasse Nudelwasser auf und verwende es für eine Tomatensauce.
+□ **Praktische Übung 2:** Koche Basmatireis nach der Quellmethode perfekt (körnig, nicht matschig).
+□ **Praktische Übung 3:** Koche Kartoffeln auf 3 Arten: Pellkartoffeln, Salzkartoffeln, gedämpfte Kartoffeln. Vergleiche Geschmack und Textur.
+□ **Praktische Übung 4:** Weiche Kichererbsen über Nacht ein. Koche sie am nächsten Tag (ohne Salz!) bis sie weich sind.
+□ **Praktische Übung 5:** Koche Quinoa perfekt (alle Körner aufgeplatzt, kein bitterer Geschmack).
 
 ### MODUL 2.8: EIER-TECHNIKEN (BASIS)
 ──────────────────────────────────
 □ **Eier kochen (Die Minuten-Frage):** (Dein Wunsch!)
   - In kochendes Wasser geben (Größe M): 5 Min (sehr weich), 6-7 Min (wachsweich), 10 Min (**hart gekocht**).
   - Abschrecken (Stoppt den Garprozess, hilft beim Schälen).
+  - **Trick:** Ältere Eier lassen sich besser schälen!
 □ **Braten (Spiegelei):** Sunny Side Up (nur von unten) vs. Over Easy (gewendet).
 □ **Rühren (Rührei):** Low & Slow (cremig, mit Butter) vs. High & Fast (flockig).
-□ **Praktische Übung:** **Koche ein Ei genau 6 Minuten (wachsweich) und ein Ei 10 Minuten (hart).** Mache an einem anderen Tag ein cremiges Rührei, ohne dass es trocken wird.
+  - **Geheimnis:** Vom Herd nehmen, BEVOR es fertig ist (Nachgaren!)
+□ **Omelett:** Französisch (cremig, nicht gebräunt) vs. Amerikanisch (gebräunt, gefaltet)
+□ **Eier trennen:** Eigelb von Eiweiß trennen (3 Methoden: Eierschale, Hand, Trichter)
+□ **Eier aufschlagen:** Sauberes Aufschlagen ohne Schalenstücke
+□ **Praktische Übung 1:** **Koche 3 Eier: eines 5 Minuten, eines 7 Minuten, eines 10 Minuten.** Schäle alle und vergleiche die Konsistenz.
+□ **Praktische Übung 2:** Mache ein cremiges Rührei nach der "Low & Slow"-Methode. Nimm es vom Herd, bevor es fertig aussieht.
+□ **Praktische Übung 3:** Brate ein perfektes Spiegelei mit knusprigem Rand und flüssigem Eigelb.
+□ **Praktische Übung 4:** Trenne 3 Eier sauber (Eigelb und Eiweiß). Verwende das Eigelb für eine Sauce, das Eiweiß für Meringue.
+□ **Praktische Übung 5:** Mache ein französisches Omelett: cremig, nicht gebräunt, gefaltet.
 
 ### MODUL 2.9: ABSCHMECKEN & AROMEN-BALANCE
 ──────────────────────────────────
 □ Die 5 Geschmäcksrichtungen: Süß, Sauer, Salzig, Bitter, Umami
 □ Das "Geschmacks-Dreieck": **Salz, Säure, Fett** (Was fehlt, wenn es "langweilig" schmeckt?)
 □ Kräuter & Gewürze (Frisch vs. Getrocknet, Harte Kräuter mitkochen, Weiche am Ende).
-□ **Praktische Übung:** Mache eine einfache Tomatensauce (nur Tomaten, Zwiebeln). Schmecke sie ab. Füge nur Salz hinzu -> probieren. Füge Prise Zucker hinzu -> probieren. Füge Spritzer Zitrone/Essig hinzu -> probieren. Füge einen Schuss Olivenöl hinzu -> probieren. Verstehe, wie sich der Geschmack ändert.
+  - **Harte Kräuter:** Rosmarin, Thymian, Lorbeer (mitkochen)
+  - **Weiche Kräuter:** Basilikum, Petersilie, Koriander (am Ende)
+□ **Abschmecken-Technik:** Immer probieren, kleine Mengen hinzufügen, erneut probieren
+□ **Praktische Übung 1:** Mache eine einfache Tomatensauce (nur Tomaten, Zwiebeln). Schmecke sie ab. Füge nur Salz hinzu -> probieren. Füge Prise Zucker hinzu -> probieren. Füge Spritzer Zitrone/Essig hinzu -> probieren. Füge einen Schuss Olivenöl hinzu -> probieren. Verstehe, wie sich der Geschmack ändert.
+□ **Praktische Übung 2:** Mache eine einfache Gemüsesuppe. Schmecke sie systematisch ab: Was fehlt? Salz? Säure? Fett? Süße? Passe sie an, bis sie perfekt schmeckt.
+□ **Praktische Übung 3:** Koche das gleiche Gericht (z.B. Pasta) 3x: einmal ohne Kräuter, einmal mit getrockneten Kräutern (mitkochen), einmal mit frischen Kräutern (am Ende). Vergleiche den Geschmack.
 
 ═══════════════════════════════════════════════════════════════════════════════
 PHASE 3: KERNKOMPETENZEN & ZUBEREITUNGEN (Woche 17-30)
@@ -181,24 +235,45 @@ PHASE 3: KERNKOMPETENZEN & ZUBEREITUNGEN (Woche 17-30)
 ### MODUL 3.1: FLEISCHZUBEREITUNG
 ─────────────────────────────────
 □ Fleischqualitäten erkennen (Marmorierung, Farbe)
+□ **Fleisch auftauen:** Im Kühlschrank (langsam, sicher), NICHT bei Raumtemperatur!
+□ **Fleisch trocken tupfen:** Vor dem Braten (bessere Bräunung!)
 □ **Kurzbraten (Steak, Kotelett):** Scharf anbraten, Hitze reduzieren. Kerntemperatur messen (Digitalthermometer!). **Ruhezeit (essenziell!)**
+  - **Garstufen:** Rare (50°C), Medium-Rare (54°C), Medium (58°C), Well-Done (65°C+)
 □ **Schmoren (Gulasch, Braten):** Für zähere Stücke. Anbraten (Röstaromen) -> Ablöschen -> Mit Flüssigkeit bedecken -> Simmern (lange Zeit).
 □ Hähnchen (Im Ganzen braten, Brust vs. Keule - unterschiedliche Garzeiten).
-□ **Praktische Übung:** Brate ein Steak Medium-Rare (54°C Kerntemperatur) mithilfe eines Thermometers. Lasse es 5 Minuten ruhen, bevor du es anschneidest.
+  - **Hähnchenbrust:** 65-70°C Kerntemperatur
+  - **Hähnchenkeule:** 75-80°C (dunkleres Fleisch braucht mehr Hitze)
+□ **Hackfleisch braten:** Gut durchbraten (keine rosa Stellen!)
+□ **Praktische Übung 1:** Brate ein Steak Medium-Rare (54°C Kerntemperatur) mithilfe eines Thermometers. Lasse es 5 Minuten ruhen, bevor du es anschneidest. Vergleiche mit einem sofort angeschnittenen Steak.
+□ **Praktische Übung 2:** Brate Hähnchenbrust: Tupfe sie trocken, würze sie, brate sie scharf an, reduziere Hitze, gare bis 65°C. Lasse ruhen.
+□ **Praktische Übung 3:** Mache ein Schmorgericht (z.B. Gulasch): Brate das Fleisch scharf an, löse mit Flüssigkeit ab, schmore 2-3 Stunden bei niedriger Hitze, bis es zart ist.
+□ **Praktische Übung 4:** Brate Hackfleisch perfekt: Zerbrösele es in der Pfanne, brate es durch, bis es durchgebräunt ist (keine rosa Stellen).
 
 ### MODUL 3.2: FISCH & MEERESFRÜCHTE
 ──────────────────────────────────
 □ Frische erkennen (Augen, Kiemen, Geruch)
+  - **Frischer Fisch:** Klare Augen, rote Kiemen, kein starker Geruch
 □ **Fisch filetieren:** (Dein Wunsch!) Rundfisch (z.B. Forelle) vs. Plattfisch.
+□ **Fisch vorbereiten:** Schuppen, ausnehmen, filetieren
 □ Garmethoden: Auf der Haut braten (Haut MUSS trocken sein), Dämpfen, Pochieren.
-□ **Praktische Übung:** Kaufe ein Lachsfilet mit Haut. Brate es auf der Hautseite in einer Edelstahlpfanne knusprig.
+  - **Wichtig:** Fisch nicht überkochen (wird trocken, zäh)
+  - **Faustregel:** 10 Min pro 2,5cm Dicke bei 200°C
+□ **Garnelen vorbereiten:** Köpfe entfernen, Panzer entfernen, Darm entfernen (Rücken aufschneiden)
+□ **Praktische Übung 1:** Kaufe ein Lachsfilet mit Haut. Tupfe die Haut trocken, würze sie, brate es auf der Hautseite in einer Edelstahlpfanne knusprig (3-4 Min), wende es, brate 1-2 Min auf der anderen Seite.
+□ **Praktische Übung 2:** Dämpfe einen ganzen Fisch (z.B. Forelle) mit Zitrone und Kräutern, bis das Fleisch undurchsichtig ist.
+□ **Praktische Übung 3:** Pochiere ein Fischfilet in aromatisiertem Wasser (70-80°C), bis es gar ist.
+□ **Praktische Übung 4:** Bereite Garnelen vor: Entferne Köpfe, Panzer und Darm. Brate sie kurz scharf an (2-3 Min pro Seite).
 
 ### MODUL 3.3: SUPPEN & FONDS (DIE BASIS)
 ──────────────────────────────────
 □ Was ist ein Fond? (Brühe vs. Fond)
 □ Heller Fond (Geflügel, Gemüse) vs. Dunkler Fond (Rind - Knochen rösten)
 □ Klare Suppen (Basis: Fond) vs. Gebundene Suppen (Püreesuppen, Cremesuppen)
-□ **Praktische Übung:** Koche einen einfachen Gemüsefond aus Abschnitten (Zwiebelschalen, Karottenschalen, Sellerie). Mache daraus eine Kartoffel-Lauch-Püreesuppe.
+□ **Suppe aufwärmen:** Langsam, nicht kochen (Aromen verflüchtigen sich)
+□ **Praktische Übung 1:** Koche einen einfachen Gemüsefond aus Abschnitten (Zwiebelschalen, Karottenschalen, Sellerie). Mache daraus eine Kartoffel-Lauch-Püreesuppe.
+□ **Praktische Übung 2:** Koche einen Hühnerfond: Röste Hühnerknochen/Flügel an, löse mit Wasser ab, füge Gemüse hinzu, köchle 2-3 Stunden, seihe ab.
+□ **Praktische Übung 3:** Mache eine klare Gemüsesuppe: Koche einen Fond, seihe ihn ab, füge frische Gemüsewürfel hinzu, köchle kurz, schmecke ab.
+□ **Praktische Übung 4:** Mache eine Cremesuppe: Koche Gemüse im Fond, püriere es, binde mit Sahne, schmecke ab, garniere.
 
 ### MODUL 3.4: SAUCEN & BINDEN (TECHNIK)
 ──────────────────────────────────
