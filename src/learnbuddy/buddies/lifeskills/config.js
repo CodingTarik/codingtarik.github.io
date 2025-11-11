@@ -1,4 +1,4 @@
-import { Lightbulb, CheckSquare, BookOpen } from 'lucide-react';
+import { Lightbulb, CheckSquare, BookOpen, Timer, Clock, Target, Brain } from 'lucide-react';
 import LifeSkillsHomePage from './components/LifeSkillsHomePage';
 
 export const lifeskillsBuddyConfig = {
@@ -25,16 +25,34 @@ export const lifeskillsBuddyConfig = {
   
   customTabs: [
     {
+      id: 'pomodoro',
+      name: { en: 'Pomodoro', de: 'Pomodoro' },
+      icon: Timer,
+      component: 'PomodoroTimer'
+    },
+    {
+      id: 'timeaudit',
+      name: { en: 'Time Audit', de: 'Zeitanalyse' },
+      icon: Clock,
+      component: 'TimeAudit'
+    },
+    {
       id: 'habits',
       name: { en: 'Habits', de: 'Gewohnheiten' },
       icon: CheckSquare,
       component: 'HabitTracker'
     },
     {
-      id: 'journal',
-      name: { en: 'Journal', de: 'Tagebuch' },
-      icon: BookOpen,
-      component: 'LifeJournal'
+      id: 'goals',
+      name: { en: 'Goals', de: 'Ziele' },
+      icon: Target,
+      component: 'GoalTracker'
+    },
+    {
+      id: 'reflection',
+      name: { en: 'Reflection', de: 'Reflexion' },
+      icon: Brain,
+      component: 'ReflectionTool'
     }
   ],
   

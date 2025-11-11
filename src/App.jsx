@@ -30,6 +30,13 @@ import ReadingLibrary from './learnbuddy/buddies/english/components/ReadingLibra
 import VocabularyPage from './learnbuddy/buddies/english/components/VocabularyPage';
 import VideoPlayerPage from './learnbuddy/buddies/english/components/VideoPlayerPage';
 
+// LifeSkills-specific components
+import PomodoroTimer from './learnbuddy/buddies/lifeskills/components/PomodoroTimer';
+import TimeAudit from './learnbuddy/buddies/lifeskills/components/TimeAudit';
+import HabitTracker from './learnbuddy/buddies/lifeskills/components/HabitTracker';
+import GoalTracker from './learnbuddy/buddies/lifeskills/components/GoalTracker';
+import ReflectionTool from './learnbuddy/buddies/lifeskills/components/ReflectionTool';
+
 // Blog Components
 import BlogPage from './blog/components/BlogPage';
 import PostDetail from './blog/components/PostDetail';
@@ -369,6 +376,19 @@ function AppContent() {
           </div>
         </div>
       );
+    } else if (activeBuddy === 'lifeskills') {
+      // LifeSkills components
+      if (tabId === 'pomodoro') {
+        return <PomodoroTimer />;
+      } else if (tabId === 'timeaudit') {
+        return <TimeAudit />;
+      } else if (tabId === 'habits') {
+        return <HabitTracker />;
+      } else if (tabId === 'goals') {
+        return <GoalTracker />;
+      } else if (tabId === 'reflection') {
+        return <ReflectionTool />;
+      }
     }
     // Default for other buddies
     return (

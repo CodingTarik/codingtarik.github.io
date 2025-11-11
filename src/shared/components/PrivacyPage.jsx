@@ -112,7 +112,7 @@ export default function PrivacyPage() {
           <h2>7. Contact</h2>
           <p>
             If you have any questions about data protection, you can contact us at any time:<br />
-            Email: your.email@example.com
+            Email: BlogCodingTarik@web.de
           </p>
         </div>
       </div>

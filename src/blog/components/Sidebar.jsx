@@ -27,7 +27,7 @@ export default function Sidebar({ onPostClick, onBackToLearnBuddy }) {
     {
       icon: Mail,
       label: 'Email',
-      url: 'mailto:your.email@example.com', // TODO: Hier deine Email einfügen
+      url: 'mailto:BlogCodingTarik@web.de', // TODO: Hier deine Email einfügen
       color: 'hover:text-red-500'
     }
   ];
