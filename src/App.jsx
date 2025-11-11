@@ -36,6 +36,7 @@ import TimeAudit from './learnbuddy/buddies/lifeskills/components/TimeAudit';
 import HabitTracker from './learnbuddy/buddies/lifeskills/components/HabitTracker';
 import GoalTracker from './learnbuddy/buddies/lifeskills/components/GoalTracker';
 import ReflectionTool from './learnbuddy/buddies/lifeskills/components/ReflectionTool';
+import DayPlanner from './learnbuddy/buddies/lifeskills/components/DayPlanner';
 
 // Blog Components
 import BlogPage from './blog/components/BlogPage';
@@ -388,6 +389,8 @@ function AppContent() {
         return <GoalTracker />;
       } else if (tabId === 'reflection') {
         return <ReflectionTool />;
+      } else if (tabId === 'dayplanner') {
+        return <DayPlanner />;
       }
     }
     // Default for other buddies

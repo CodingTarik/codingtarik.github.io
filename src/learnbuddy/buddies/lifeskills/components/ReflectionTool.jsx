@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Trash2, Edit2, Save, X, Brain, Calendar, ChevronLeft, ChevronRight, TrendingUp, BarChart3 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../../../context/LanguageContext';
 import { useTheme } from '../../../context/ThemeContext';
 import {
@@ -585,10 +586,13 @@ function ReflectionTool() {
 
           {/* Sections */}
           <div className="space-y-6">
-            {sections.map((section) => (
-              <div
+            {sections.map((section, idx) => (
+              <motion.div
                 key={section.id}
-                className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-xl p-5 border border-purple-200 dark:border-purple-800"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.1 }}
+                className="bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50 dark:from-purple-900/20 dark:via-pink-900/20 dark:to-rose-900/20 rounded-xl p-5 border-2 border-purple-300 dark:border-purple-700 shadow-lg hover:shadow-xl transition-shadow"
               >
                 <h3 className="text-lg font-bold text-stone-800 dark:text-stone-100 mb-4">
                   {section.title}
@@ -618,7 +622,7 @@ function ReflectionTool() {
                     </div>
                   ))}
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
 
@@ -844,13 +848,17 @@ function ReflectionTool() {
       <div className="space-y-4">
         {reflections
           .sort((a, b) => new Date(b.weekStart || b.timestamp) - new Date(a.weekStart || a.timestamp))
-          .map((reflection) => {
+          .map((reflection, index) => {
             const weekStartDate = reflection.weekStart ? new Date(reflection.weekStart) : new Date(reflection.timestamp);
             const weekEndDate = getWeekEnd(weekStartDate);
             return (
-              <div
+              <motion.div
                 key={reflection.id}
-                className="bg-white dark:bg-stone-800 rounded-xl p-6 border border-stone-200 dark:border-stone-700 shadow-md hover:shadow-lg transition-all cursor-pointer"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ scale: 1.02, y: -4 }}
+                className="bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50 dark:from-purple-900/20 dark:via-pink-900/20 dark:to-rose-900/20 rounded-xl p-6 border-2 border-purple-200 dark:border-purple-700 shadow-lg hover:shadow-2xl transition-all cursor-pointer"
                 onClick={() => setSelectedReflection(selectedReflection === reflection.id ? null : reflection.id)}
               >
                 <div className="flex items-start justify-between">
@@ -885,10 +893,21 @@ function ReflectionTool() {
                         })}
                       </div>
                     )}
-                    {selectedReflection === reflection.id && (
-                      <div className="mt-4 space-y-4">
-                        {sections.map((section) => (
-                          <div key={section.id} className="border-l-4 border-purple-500 pl-4">
+                    <AnimatePresence>
+                      {selectedReflection === reflection.id && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          className="mt-4 space-y-4"
+                        >
+                          {sections.map((section) => (
+                            <motion.div
+                              key={section.id}
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              className="border-l-4 border-purple-500 pl-4 bg-white dark:bg-stone-800 rounded-lg p-3 shadow-sm"
+                            >
                             <h4 className="font-semibold text-stone-800 dark:text-stone-100 mb-2">
                               {section.title}
                             </h4>
@@ -908,10 +927,11 @@ function ReflectionTool() {
                                 );
                               })}
                             </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
+                            </motion.div>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
                   <div className="flex gap-2 ml-4">
                     <button
@@ -934,7 +954,7 @@ function ReflectionTool() {
                     </button>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         {reflections.length === 0 && (

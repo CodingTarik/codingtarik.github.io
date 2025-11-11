@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Trash2, Edit2, Save, X, Target, CheckCircle2, Circle, Flag, Calendar } from 'lucide-react';
+import { Plus, Trash2, Edit2, Save, X, Target, CheckCircle2, Circle, Flag, Calendar, Trophy, Star, Award, Zap } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../../../context/LanguageContext';
 import {
   loadGoals,
@@ -267,24 +268,63 @@ function GoalTracker() {
 
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-        <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-2xl p-6 border border-green-200 dark:border-green-800">
-          <div className="text-3xl font-bold text-green-600 dark:text-green-400">{activeGoals.length}</div>
-          <div className="text-sm text-stone-600 dark:text-stone-400 mt-1">
-            {language === 'en' ? 'Active Goals' : 'Aktive Ziele'}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          whileHover={{ scale: 1.05 }}
+          className="bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 dark:from-green-900/20 dark:via-emerald-900/20 dark:to-teal-900/20 rounded-2xl p-6 border-2 border-green-300 dark:border-green-700 shadow-lg hover:shadow-xl transition-all"
+        >
+          <div className="flex items-center gap-3 mb-2">
+            <div className="p-2 bg-green-100 dark:bg-green-900/40 rounded-lg">
+              <Target size={24} className="text-green-600 dark:text-green-400" />
+            </div>
+            <div className="text-sm font-semibold text-stone-700 dark:text-stone-300">
+              {language === 'en' ? 'Active Goals' : 'Aktive Ziele'}
+            </div>
           </div>
-        </div>
-        <div className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 rounded-2xl p-6 border border-blue-200 dark:border-blue-800">
-          <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">{completedGoals.length}</div>
-          <div className="text-sm text-stone-600 dark:text-stone-400 mt-1">
-            {language === 'en' ? 'Completed' : 'Abgeschlossen'}
+          <div className="text-4xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400 bg-clip-text text-transparent">
+            {activeGoals.length}
           </div>
-        </div>
-        <div className="bg-gradient-to-br from-yellow-50 to-amber-50 dark:from-yellow-900/20 dark:to-amber-900/20 rounded-2xl p-6 border border-yellow-200 dark:border-yellow-800">
-          <div className="text-3xl font-bold text-yellow-600 dark:text-yellow-400">{pausedGoals.length}</div>
-          <div className="text-sm text-stone-600 dark:text-stone-400 mt-1">
-            {language === 'en' ? 'Paused' : 'Pausiert'}
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          whileHover={{ scale: 1.05 }}
+          className="bg-gradient-to-br from-blue-50 via-cyan-50 to-sky-50 dark:from-blue-900/20 dark:via-cyan-900/20 dark:to-sky-900/20 rounded-2xl p-6 border-2 border-blue-300 dark:border-blue-700 shadow-lg hover:shadow-xl transition-all"
+        >
+          <div className="flex items-center gap-3 mb-2">
+            <div className="p-2 bg-blue-100 dark:bg-blue-900/40 rounded-lg">
+              <CheckCircle2 size={24} className="text-blue-600 dark:text-blue-400" />
+            </div>
+            <div className="text-sm font-semibold text-stone-700 dark:text-stone-300">
+              {language === 'en' ? 'Completed' : 'Abgeschlossen'}
+            </div>
           </div>
-        </div>
+          <div className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-blue-400 dark:to-cyan-400 bg-clip-text text-transparent">
+            {completedGoals.length}
+          </div>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          whileHover={{ scale: 1.05 }}
+          className="bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50 dark:from-yellow-900/20 dark:via-amber-900/20 dark:to-orange-900/20 rounded-2xl p-6 border-2 border-yellow-300 dark:border-yellow-700 shadow-lg hover:shadow-xl transition-all"
+        >
+          <div className="flex items-center gap-3 mb-2">
+            <div className="p-2 bg-yellow-100 dark:bg-yellow-900/40 rounded-lg">
+              <Circle size={24} className="text-yellow-600 dark:text-yellow-400" />
+            </div>
+            <div className="text-sm font-semibold text-stone-700 dark:text-stone-300">
+              {language === 'en' ? 'Paused' : 'Pausiert'}
+            </div>
+          </div>
+          <div className="text-4xl font-bold bg-gradient-to-r from-yellow-600 to-amber-600 dark:from-yellow-400 dark:to-amber-400 bg-clip-text text-transparent">
+            {pausedGoals.length}
+          </div>
+        </motion.div>
       </div>
 
       {/* Add/Edit Form */}
@@ -558,43 +598,68 @@ function GoalTracker() {
 
       {/* Goals List */}
       <div className="space-y-4">
-        {[...activeGoals, ...pausedGoals, ...completedGoals].map((goal) => {
+        {[...activeGoals, ...pausedGoals, ...completedGoals].map((goal, index) => {
           const daysLeft = goal.targetDate
             ? Math.ceil((new Date(goal.targetDate) - new Date()) / (1000 * 60 * 60 * 24))
             : null;
 
+          // Calculate completion percentage for milestones
+          const completedMilestones = goal.milestones?.filter(m => m.completed).length || 0;
+          const totalMilestones = goal.milestones?.length || 0;
+          const milestoneProgress = totalMilestones > 0 ? (completedMilestones / totalMilestones) * 100 : 0;
+
           return (
-            <div
+            <motion.div
               key={goal.id}
-              className={`bg-white dark:bg-stone-800 rounded-xl p-6 border-2 ${
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              whileHover={{ scale: 1.02, y: -4 }}
+              className={`bg-gradient-to-br ${
                 goal.status === 'active'
-                  ? 'border-green-300 dark:border-green-700'
+                  ? 'from-green-50 via-emerald-50 to-teal-50 dark:from-green-900/20 dark:via-emerald-900/20 dark:to-teal-900/20 border-green-300 dark:border-green-700'
                   : goal.status === 'completed'
-                  ? 'border-blue-300 dark:border-blue-700'
-                  : 'border-yellow-300 dark:border-yellow-700'
-              } shadow-md hover:shadow-lg transition-all`}
+                  ? 'from-blue-50 via-cyan-50 to-sky-50 dark:from-blue-900/20 dark:via-cyan-900/20 dark:to-sky-900/20 border-blue-300 dark:border-blue-700'
+                  : 'from-yellow-50 via-amber-50 to-orange-50 dark:from-yellow-900/20 dark:via-amber-900/20 dark:to-orange-900/20 border-yellow-300 dark:border-yellow-700'
+              } rounded-xl p-6 border-2 shadow-lg hover:shadow-2xl transition-all`}
             >
               <div className="flex items-start justify-between mb-4">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
-                    <Target
-                      size={24}
-                      className={`${
-                        goal.status === 'active'
-                          ? 'text-green-500'
-                          : goal.status === 'completed'
-                          ? 'text-blue-500'
-                          : 'text-yellow-500'
-                      }`}
-                    />
-                    <h3 className="text-xl font-bold text-stone-800 dark:text-stone-100">
+                    <motion.div
+                      animate={goal.status === 'completed' ? { rotate: [0, 10, -10, 0] } : {}}
+                      transition={{ duration: 0.5 }}
+                    >
+                      <Target
+                        size={28}
+                        className={`${
+                          goal.status === 'active'
+                            ? 'text-green-500'
+                            : goal.status === 'completed'
+                            ? 'text-blue-500'
+                            : 'text-yellow-500'
+                        }`}
+                      />
+                    </motion.div>
+                    <h3 className="text-xl font-bold bg-gradient-to-r from-stone-800 to-stone-600 dark:from-stone-100 dark:to-stone-300 bg-clip-text text-transparent">
                       {goal.title}
                     </h3>
-                    <span
-                      className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(goal.status)} text-white`}
+                    <motion.span
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(goal.status)} text-white shadow-sm`}
                     >
                       {getStatusText(goal.status)}
-                    </span>
+                    </motion.span>
+                    {goal.status === 'completed' && (
+                      <motion.div
+                        initial={{ scale: 0, rotate: -180 }}
+                        animate={{ scale: 1, rotate: 0 }}
+                        className="ml-auto"
+                      >
+                        <Trophy size={20} className="text-yellow-500" />
+                      </motion.div>
+                    )}
                   </div>
                   {goal.description && (
                     <p className="text-stone-600 dark:text-stone-400 mb-2">{goal.description}</p>
@@ -675,19 +740,41 @@ function GoalTracker() {
               {/* Progress Bar */}
               <div className="mb-4">
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm font-medium text-stone-700 dark:text-stone-300">
+                  <span className="text-sm font-semibold text-stone-700 dark:text-stone-300">
                     {language === 'en' ? 'Progress' : 'Fortschritt'}
                   </span>
-                  <span className="text-sm font-bold text-stone-800 dark:text-stone-100">
+                  <span className="text-sm font-bold bg-gradient-to-r from-yellow-600 to-amber-600 dark:from-yellow-400 dark:to-amber-400 bg-clip-text text-transparent">
                     {goal.progress}%
                   </span>
                 </div>
-                <div className="w-full bg-stone-200 dark:bg-stone-700 rounded-full h-3 overflow-hidden">
-                  <div
-                    className="h-full rounded-full transition-all duration-500 bg-gradient-to-r from-yellow-500 to-amber-500"
-                    style={{ width: `${goal.progress}%` }}
+                <div className="w-full bg-stone-200 dark:bg-stone-700 rounded-full h-4 overflow-hidden shadow-inner">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: `${goal.progress}%` }}
+                    transition={{ duration: 1, ease: "easeOut" }}
+                    className="h-full bg-gradient-to-r from-yellow-500 via-amber-500 to-orange-500 rounded-full shadow-lg"
                   />
                 </div>
+                {totalMilestones > 0 && (
+                  <div className="mt-2">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-xs text-stone-600 dark:text-stone-400">
+                        {language === 'en' ? 'Milestones' : 'Meilensteine'}: {completedMilestones}/{totalMilestones}
+                      </span>
+                      <span className="text-xs font-semibold text-stone-600 dark:text-stone-400">
+                        {Math.round(milestoneProgress)}%
+                      </span>
+                    </div>
+                    <div className="w-full bg-stone-200 dark:bg-stone-700 rounded-full h-2 overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: `${milestoneProgress}%` }}
+                        transition={{ duration: 0.8, delay: 0.3 }}
+                        className="h-full bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full"
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Progress Controls */}
@@ -732,15 +819,23 @@ function GoalTracker() {
 
               {/* Milestones */}
               {goal.milestones && goal.milestones.length > 0 && (
-                <div className="mt-4 pt-4 border-t border-stone-200 dark:border-stone-700">
-                  <h4 className="text-sm font-semibold text-stone-700 dark:text-stone-300 mb-2">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="mt-4 pt-4 border-t border-stone-200 dark:border-stone-700"
+                >
+                  <h4 className="text-sm font-semibold text-stone-700 dark:text-stone-300 mb-2 flex items-center gap-2">
+                    <Flag size={16} className="text-stone-500" />
                     {language === 'en' ? 'Milestones' : 'Meilensteine'}
                   </h4>
                   <div className="space-y-2">
-                    {goal.milestones.map((milestone) => (
-                      <div
+                    {goal.milestones.map((milestone, idx) => (
+                      <motion.div
                         key={milestone.id}
-                        className="flex items-center gap-2 text-sm bg-stone-50 dark:bg-stone-700/50 rounded-lg p-2"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: idx * 0.1 }}
+                        className="flex items-center gap-2 text-sm bg-white dark:bg-stone-800 rounded-lg p-2 border border-stone-200 dark:border-stone-700 shadow-sm hover:shadow-md transition-shadow"
                       >
                         <button
                           onClick={() => handleToggleMilestone(milestone.id, goal.id)}
@@ -792,12 +887,12 @@ function GoalTracker() {
                             <Calendar size={14} />
                           </button>
                         )}
-                      </div>
+                      </motion.div>
                     ))}
                   </div>
-                </div>
+                </motion.div>
               )}
-            </div>
+            </motion.div>
           );
         })}
         {goals.length === 0 && (

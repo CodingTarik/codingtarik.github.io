@@ -1,0 +1,334 @@
+═══════════════════════════════════════════════════════════════════════════════
+🍳 **DER KÜCHEN-KOMPASS - KOMPLETTES CURRICULUM VOM ANFÄNGER ZUM HOBBYKOCH**
+═══════════════════════════════════════════════════════════════════════════════
+
+**Version:** 2.0 (Extrem ausführliche Version mit Praxisübungen)
+**Zielgruppe:** Absolute Anfänger bis ambitionierte Hobbyköche
+**Empfohlene Dauer:** 12-18 Monate für alle Lektionen (bei regelmäßigem Üben)
+
+═══════════════════════════════════════════════════════════════════════════════
+PHASE 1: DIE FUNDAMENTE DER KÜCHE (Woche 1-6)
+═══════════════════════════════════════════════════════════════════════════════
+
+### MODUL 1.1: EINFÜHRUNG & PHILOSOPHIE
+──────────────────────────────────
+□ Was ist Kochen? (Handwerk, Kreativität, Notwendigkeit)
+□ Die Küche als Arbeitsplatz (Kalte Zone, Heiße Zone)
+□ Philosophie des Kochens (Respekt vor dem Lebensmittel, Saisonalität, Regionalität)
+□ **Praktische Übung:** Gehe über einen Wochenmarkt und identifiziere 5 Gemüsesorten, die gerade Saison haben.
+
+### MODUL 1.2: DAS FUNDAMENT: MISE EN PLACE
+───────────────────────────────────────────
+□ Was ist "Mise en Place"? (Alles an seinem Platz)
+□ Warum es die wichtigste Regel ist (Stressreduktion, Effizienz)
+□ Praktische Umsetzung
+  - **Rezept komplett durchlesen! (Der häufigste Fehler)**
+  - Zutaten abwiegen & bereitstellen (Schüsseln)
+  - Gemüse/Fleisch vorschneiden
+  - Werkzeuge bereitlegen
+□ Arbeitsplatz-Organisation (Sauberes Brett, Abfallschüssel, feuchtes Tuch unterm Brett)
+□ **Praktische Übung:** Wähle ein einfaches Rezept (z.B. Tomatensauce). Führe ein komplettes "Mise en Place" durch, BEVOR du den Herd anmachst. Alle Zutaten müssen geschnitten und abgewogen bereitstehen.
+
+### MODUL 1.3: SICHERHEIT & HYGIENE
+────────────────────────────────────────────────
+□ **Persönliche Sicherheit:**
+  - Schnittverletzungen vermeiden (siehe Modul 2.1)
+  - Brandverletzungen: Umgang mit heißen Töpfen (nur trockene Lappen!)
+  - **Der Ernstfall: Fettbrand. NIE mit Wasser löschen!** (Deckel drauf, Luft entziehen)
+  - Dampfverbrennungen (Deckel vom Körper weg öffnen)
+  - Sicherer Umgang mit Geräten (Mixer, Pürierstab)
+□ **Lebensmittelsicherheit (HACCP-Grundlagen):**
+  - Hände waschen (Wann, wie, warum)
+  - **Kreuzkontamination (Die größte Gefahr!):**
+    - Rohes Geflügel/Fleisch/Fisch vs. Gemüse/Gegartes
+    - Separate Schneidebretter (Farbsysteme)
+  - **Die Temperatur-Gefahrenzone (4°C - 60°C):** Warum Lebensmittel schnell gekühlt oder heiß gehalten werden müssen.
+  - Richtiges Auftauen (Im Kühlschrank, nicht bei Raumtemperatur)
+  - Richtiges Kühlen von Resten (Schnell abkühlen lassen)
+
+### MODUL 1.4: REZEPTE LESEN & SPRACHE VERSTEHEN
+────────────────────────────────────
+□ Anatomie eines Rezepts (Zutatenliste, Schritte, Zeitangaben)
+□ Maßeinheiten & Umrechnungen (Gramm, Milliliter, EL, TL)
+□ **Warum eine Waage genauer ist als Tassen** (besonders beim Backen!)
+□ Koch-Vokabular (Basis)
+  - Anschwitzen, Anbraten, Ablöschen, Reduzieren, Simmern (Köcheln), Blanchieren
+  - **NEU:** Gratinieren (Überbacken), Montieren (mit Butter binden), Sautieren (Schwenken)
+
+### MODUL 1.5: AUSRÜSTUNG & GERÄTE-KUNDE
+──────────────────────────────────────────
+□ Die 3 wichtigsten Messer (Kochmesser, Officemesser, Sägemesser)
+□ Töpfe & Pfannen (Materialien: Edelstahl, Gusseisen, Beschichtet - Vor- & Nachteile)
+□ Wichtige Kleingeräte (Waage!, Messbecher, Schneidebretter, Schüsseln, Sieb)
+□ **Das "kleine" Werkzeug:** Sparschäler (Y-Form vs. Längsschäler), Reibe (Microplane, Vierkantreibe), Knoblauchpresse, Zitruspresse, Schneebesen, Pfannenwender.
+□ **Grundlagen Herdplatte:** Gas (direkt), Elektro (träge), Induktion (schnell)
+□ **Grundlagen Backofen:**
+  - Ober-/Unterhitze (Standard, Hitze von oben/unten)
+  - Umluft/Heißluft (Ventilator, 20°C niedriger einstellen)
+  - Grillfunktion (Starke Hitze nur von oben)
+  - Vorheizen: Wann und warum?
+□ **Praktische Übung:** Identifiziere die Funktionen deines eigenen Ofens. Backe einfache Aufback-Brötchen einmal mit O/U-Hitze und einmal mit Umluft. Beobachte den Unterschied.
+
+### MODUL 1.6: DIE SPEISEKAMMER (NEU!)
+──────────────────────────────────
+□ Was man *immer* da haben sollte (Basis-Vorrathaltung)
+□ **Trockenware:** Mehl (Typ 405, 550), Zucker (Raffiniert, Puder), Reis, Nudeln, Linsen
+□ **Geschmacksträger:** Salz (Jodiert, Meersalz), Pfeffer (ganze Körner!), Brühe (Pulver, Glas)
+□ **Säure:** Essig (Weißwein, Rotwein, Balsamico), Zitronen
+□ **Fette:** Olivenöl (kaltgepresst), Rapsöl (raffiniert/Bratöl)
+□ **Konserven:** Gehackte Tomaten, Kichererbsen, Bohnen, Thunfisch
+□ **Aromaten:** Zwiebeln, Knoblauch, Senf, Tomatenmark, Honig
+
+### MODUL 1.7: MILCHPRODUKTE & FETTE (DEIN WUNSCH)
+──────────────────────────────────
+□ Was ist der Unterschied? (Fettgehalt, Herstellung)
+□ **Milch:** Frischmilch, H-Milch, Fettstufen (0.1% bis 3.8%)
+□ **Sahne (Rahm):**
+  - **Schlagsahne (Süße Sahne):** min. 30% Fett. Funktion: Aufschlagen (Volumen), Binden von Saucen (Fettträger).
+  - **Saure Sahne:** 10% Fett, gesäuert. Funktion: Kalte Küche, Dips (nicht kochfest!)
+  - **Schmand:** 20-29% Fett, gesäuert. Funktion: Kochfest für Saucen, Backen.
+  - **Crème fraîche:** min. 30% Fett, gesäuert. Funktion: Luxuriös, kochfest, für Saucen & Dips.
+□ **Butter:** Süßrahm vs. Sauerrahm. **Butterschmalz/Ghee:** Reines Butterfett, hoch erhitzbar.
+□ **Joghurt:** (3.5%, 10% "Griechisch") Funktion: Dips, Marinaden (Säure macht Fleisch zart).
+□ **Quark:** (Magerstufe bis 40%) Funktion: Backen, Dips, Süßspeisen.
+□ **Käse (Überblick):** Frischkäse, Weichkäse, Hartkäse (z.B. Parmesan als Würze).
+□ **Praktische Übung:** Schlage kalte Schlagsahne mit einem Handmixer steif. Beobachte die Phasen (flüssig -> cremig -> steif -> Butter).
+
+═══════════════════════════════════════════════════════════════════════════════
+PHASE 2: FUNDAMENTALE KOCHTECHNIKEN (Woche 7-16)
+═══════════════════════════════════════════════════════════════════════════════
+
+### MODUL 2.1: MESSERFERTIGKEITEN (DAS A&O)
+──────────────────────────────────────────
+□ Die richtige Haltung des Messers (Pinch Grip)
+□ Die Haltung der Führungshand (**Krallengriff!**)
+□ Die 3 Grundbewegungen (Wiegeschnitt, Druck-/Zugschnitt, Hacken)
+□ Die 5 klassischen Schnittformen (Julienne/Streifen, Brunoise/Würfel, Mirepoix/grobe Würfel)
+□ **Praktische Übung (Dein Wunsch):**
+  - **1. Apfel:** **Schäle einen Apfel** mit dem Officemesser. Viertle ihn, entferne das Kerngehäuse und schneide ihn in gleichmäßige Würfel.
+  - **2. Zwiebel:** Schneide eine Zwiebel in feine Brunoise (Würfel), ohne den Strunk komplett abzutrennen.
+  - **3. Karotte:** Schneide eine Karotte in Julienne (feine Streifen).
+  - **4. Kräuter:** Hacke einen Bund Petersilie im Wiegeschnitt (nicht zerquetschen).
+
+### MODUL 2.2: MESSERPFLEGE
+──────────────────────────────────
+□ Schärfe = Sicherheit! (Ein stumpfes Messer rutscht ab)
+□ Unterschied Wetzstahl (hält scharf) vs. Schleifstein (macht scharf)
+□ Reinigung & Lagerung (**NIE in die Spülmaschine!**)
+□ **Praktische Übung:** Lerne, ein Messer sicher am Wetzstahl abzuziehen (5x pro Seite vor dem Kochen).
+
+### MODUL 2.3: GEMÜSE-VORBEREITUNG
+──────────────────────────────────
+□ **Brokkoli verarbeiten:** (Dein Wunsch!) Röschen trennen, Strunk schälen und würfeln (ist essbar!).
+□ Salat waschen & trocknen (Salatschleuder)
+□ Lauch putzen (Sand entfernen!)
+□ Pilze bürsten (nicht wässern)
+□ Knoblauch (hacken vs. pressen - Unterschied im Geschmack)
+□ **Praktische Übung:** Putze einen Lauch gründlich und schneide ihn in feine Ringe.
+
+### MODUL 2.4: DIE 5 TROCKENEN HITZEARTEN (BRÄUNUNG)
+──────────────────────────────────
+□ 1. **Braten (Pfanne / Sauté):** Hohe Hitze, wenig Fett. Ziel: Röstaromen (Maillard-Reaktion).
+□ 2. **Rösten (Ofen):** Mittlere bis hohe Hitze, trockene Luft. Ziel: Karamellisierung, tiefer Geschmack.
+□ 3. **Grillen:** Sehr hohe Hitze, Strahlung. (siehe Phase 6)
+□ 4. **Frittieren:** Garen in heißem Fett (160-180°C).
+□ 5. **Backen:** Trockene Hitze im Ofen. (siehe Modul 3.4)
+□ **Praktische Übung:** Schneide Wurzelgemüse (Karotten, Pastinaken, Kartoffeln) in Stücke, mariniere sie mit Öl und Salz und röste sie bei 200°C Umluft, bis sie gebräunt und weich sind.
+
+### MODUL 2.5: DIE 3 FEUCHTEN HITZEARTEN (ZARTHEIT)
+──────────────────────────────────
+□ 1. **Kochen (Sieden):** Garen in kochender Flüssigkeit (100°C). (Für Nudeln, Kartoffeln).
+□ 2. **Simmern (Köcheln):** Garen knapp unter dem Siedepunkt (ca. 85-95°C). **Wichtiger als Kochen!** (Für Suppen, Eintöpfe, Schmorgerichte).
+□ 3. **Dämpfen / Dünsten:**
+  - **Dämpfen (Dampfgarren):** (Dein Wunsch!) Garen nur im heißen Wasserdampf (Siebeinsatz, Dampfgarer). Sehr schonend, erhält Nährstoffe & Farbe.
+  - **Dünsten:** Garen in wenig eigener oder zugegebener Flüssigkeit (z.B. Zwiebeln anschwitzen).
+□ **Praktische Übung:** Dämpfe Brokkoliröschen in einem Topf mit Siebeinsatz, bis sie "al dente" (bissfest) und leuchtend grün sind.
+
+### MODUL 2.6: NIEDRIGTEMPERATUR-TECHNIKEN (NEU!)
+──────────────────────────────────
+□ **Pochieren:** Garen in heißer, nicht kochender Flüssigkeit (ca. 70-80°C). Für Empfindliches.
+□ **Konfieren:** Langsames Garen in Fett bei niedriger Temperatur (z.B. Knoblauch in Öl, Ente).
+□ **Praktische Übung:** Pochiere ein Ei ("Verlorenes Ei") in Essigwasser.
+
+### MODUL 2.7: GRUNDNAHRUNGSMITTEL KOCHEN
+──────────────────────────────────
+□ **Nudeln:** Großer Topf, viel Wasser. **Salzwasser MUSS "wie Meerwasser" schmecken.** "Al dente" kochen.
+□ **Reis:** Quellmethode (1 Teil Reis, 1.5-2 Teile Wasser, simmern bis Wasser weg ist) vs. Wassermethode (wie Nudeln).
+□ **Kartoffeln:** Festkochend vs. Mehlig. Kalt ansetzen! Pellkartoffeln (mit Schale) vs. Salzkartoffeln (ohne).
+□ **Hülsenfrüchte:** Linsen (direkt kochen) vs. Bohnen/Kichererbsen (einweichen!).
+□ **Praktische Übung:** Koche Pasta "al dente". Schmecke das Nudelwasser VORHER ab. Koche Reis nach der Quellmethode, ohne dass er anbrennt.
+
+### MODUL 2.8: EIER-TECHNIKEN (BASIS)
+──────────────────────────────────
+□ **Eier kochen (Die Minuten-Frage):** (Dein Wunsch!)
+  - In kochendes Wasser geben (Größe M): 5 Min (sehr weich), 6-7 Min (wachsweich), 10 Min (**hart gekocht**).
+  - Abschrecken (Stoppt den Garprozess, hilft beim Schälen).
+□ **Braten (Spiegelei):** Sunny Side Up (nur von unten) vs. Over Easy (gewendet).
+□ **Rühren (Rührei):** Low & Slow (cremig, mit Butter) vs. High & Fast (flockig).
+□ **Praktische Übung:** **Koche ein Ei genau 6 Minuten (wachsweich) und ein Ei 10 Minuten (hart).** Mache an einem anderen Tag ein cremiges Rührei, ohne dass es trocken wird.
+
+### MODUL 2.9: ABSCHMECKEN & AROMEN-BALANCE
+──────────────────────────────────
+□ Die 5 Geschmäcksrichtungen: Süß, Sauer, Salzig, Bitter, Umami
+□ Das "Geschmacks-Dreieck": **Salz, Säure, Fett** (Was fehlt, wenn es "langweilig" schmeckt?)
+□ Kräuter & Gewürze (Frisch vs. Getrocknet, Harte Kräuter mitkochen, Weiche am Ende).
+□ **Praktische Übung:** Mache eine einfache Tomatensauce (nur Tomaten, Zwiebeln). Schmecke sie ab. Füge nur Salz hinzu -> probieren. Füge Prise Zucker hinzu -> probieren. Füge Spritzer Zitrone/Essig hinzu -> probieren. Füge einen Schuss Olivenöl hinzu -> probieren. Verstehe, wie sich der Geschmack ändert.
+
+═══════════════════════════════════════════════════════════════════════════════
+PHASE 3: KERNKOMPETENZEN & ZUBEREITUNGEN (Woche 17-30)
+═══════════════════════════════════════════════════════════════════════════════
+
+### MODUL 3.1: FLEISCHZUBEREITUNG
+─────────────────────────────────
+□ Fleischqualitäten erkennen (Marmorierung, Farbe)
+□ **Kurzbraten (Steak, Kotelett):** Scharf anbraten, Hitze reduzieren. Kerntemperatur messen (Digitalthermometer!). **Ruhezeit (essenziell!)**
+□ **Schmoren (Gulasch, Braten):** Für zähere Stücke. Anbraten (Röstaromen) -> Ablöschen -> Mit Flüssigkeit bedecken -> Simmern (lange Zeit).
+□ Hähnchen (Im Ganzen braten, Brust vs. Keule - unterschiedliche Garzeiten).
+□ **Praktische Übung:** Brate ein Steak Medium-Rare (54°C Kerntemperatur) mithilfe eines Thermometers. Lasse es 5 Minuten ruhen, bevor du es anschneidest.
+
+### MODUL 3.2: FISCH & MEERESFRÜCHTE
+──────────────────────────────────
+□ Frische erkennen (Augen, Kiemen, Geruch)
+□ **Fisch filetieren:** (Dein Wunsch!) Rundfisch (z.B. Forelle) vs. Plattfisch.
+□ Garmethoden: Auf der Haut braten (Haut MUSS trocken sein), Dämpfen, Pochieren.
+□ **Praktische Übung:** Kaufe ein Lachsfilet mit Haut. Brate es auf der Hautseite in einer Edelstahlpfanne knusprig.
+
+### MODUL 3.3: SUPPEN & FONDS (DIE BASIS)
+──────────────────────────────────
+□ Was ist ein Fond? (Brühe vs. Fond)
+□ Heller Fond (Geflügel, Gemüse) vs. Dunkler Fond (Rind - Knochen rösten)
+□ Klare Suppen (Basis: Fond) vs. Gebundene Suppen (Püreesuppen, Cremesuppen)
+□ **Praktische Übung:** Koche einen einfachen Gemüsefond aus Abschnitten (Zwiebelschalen, Karottenschalen, Sellerie). Mache daraus eine Kartoffel-Lauch-Püreesuppe.
+
+### MODUL 3.4: SAUCEN & BINDEN (TECHNIK)
+──────────────────────────────────
+□ Die 5 "Mutter-Saucen" (Béchamel, Velouté, Espagnole, Tomate, Hollandaise)
+□ **Techniken zum Binden von Saucen:**
+  - **Mehlschwitze (Roux):** Fett + Mehl anschwitzen (Hell, Blond, Braun). Basis für Béchamel.
+  - **Stärke:** Speisestärke/Mondamin (in KALT_em Wasser anrühren!)
+  - **Montieren:** Mit kalter Butter binden (macht Sauce glänzend, nicht kochen!)
+  - **Reduktion:** Einkochen (intensiviert Geschmack, bindet leicht)
+  - **Liaison:** Eigelb & Sahne (Vorsicht, darf nicht kochen!)
+□ Emulsionen (Kalt: Vinaigrette, Mayonnaise; Warm: Hollandaise)
+□ **Praktische Übung:** Stelle eine Béchamel-Sauce her (für Lasagne). Mache eine Vinaigrette (Senf als Emulgator).
+
+### MODUL 3.5: BACKEN (MASSIV ERWEITERT, DEIN WUNSCH)
+──────────────────────────────────
+□ **Teil A: Grundlagen & Zutaten**
+  - Unterschied Kochen (Handwerk) vs. Backen (Chemie!) - Genauigkeit ist Pflicht!
+  - **Mehl-Typen:** 405 (Kekse, Kuchen), 550 (Helles Brot, Pizza), 1050 (Mischbrot), Vollkorn. (Zahl = Mineralstoffgehalt)
+  - **Triebmittel:** Backpulver (chemisch, sofort), Natron (braucht Säure), Hefe (biologisch, braucht Zeit/Wärme).
+□ **Teil B: Schnelle Teige (Chemische Lockerung)**
+  - **Rührteig:** (Kuchen, Muffins) - Reihenfolge: Fett/Zucker schaumig, Eier einzeln, Mehl/Backpulver unterheben.
+  - **Mürbeteig:** (Kekse, Quiche) - 1:2:3 (Zucker:Butter:Mehl). Kalte Butter, schnell verarbeiten (nicht kneten!), kühlen.
+  - **Praktische Übung (Dein Wunsch):** **Stelle einen Mürbeteig her, kühle ihn, rolle ihn aus und backe Butterplätzchen.**
+□ **Teil C: Hefeteige (Biologische Lockerung)**
+  - Hefe (Frisch vs. Trocken) - Hefe "füttern" (Zucker, lauwarme Milch).
+  - Der Prozess: Kneten (Gluten-Entwicklung!), 1. Ruhe (Gehen lassen), Formen, 2. Ruhe (Stückgare), Backen.
+  - **Praktische Übung:** Backe einen einfachen Hefezopf oder ein Blech Pizza.
+□ **Teil D: Brot backen (Grundlagen)**
+  - Unterschied zu Kuchen (Mehlsorten, Hydration, Salzgehalt)
+  - Technik: "No-Knead-Bread" (Brot ohne Kneten im gusseisernen Topf).
+  - Was ist "Schwaden"? (Dampf im Ofen für Kruste)
+  - Sauerteig (Ausblick: Die Königsklasse)
+  - **Praktische Übung:** Backe ein einfaches "No-Knead-Bread" (Topfbrot).
+
+═══════════════════════════════════════════════════════════════════════════════
+PHASE 4: THEORIE & KREATIVITÄT (Woche 31-40)
+═══════════════════════════════════════════════════════════════════════════════
+
+### MODUL 4.1: ERNÄHRUNGSTHEORIE
+──────────────────────────────────
+□ **Was sind Kalorien?** (Energie-Einheit)
+□ **Was sind Makronährstoffe?** (Kohlenhydrate, Proteine, Fette)
+□ Was sind Mikronährstoffe? (Vitamine, Mineralstoffe)
+□ Eine Nährwerttabelle lesen lernen.
+
+### MODUL 4.2: LEBENSMITTELWISSENSCHAFT (WARUM?)
+──────────────────────────────────
+□ Die Maillard-Reaktion (Warum Gebratenes schmeckt)
+□ Karamellisierung (Zucker bräunen)
+□ **Was macht Salz im Wasser?** (Geschmack, Siedepunkt, Osmose)
+□ **Ölarten & Rauchpunkte:** (Kaltgepresst/Nativ für Salate, Raffiniert zum Braten).
+□ **Praktische Übung:** Bräune Butter in einer Pfanne, bis sie riecht wie Kekse ("Nussbutter"). Beobachte die Maillard-Reaktion.
+
+### MODUL 4.3: AROMENAUFBAU (FORTGESCHRITTEN)
+──────────────────────────────────
+□ **Marinieren:** (Dein Wunsch!)
+  - Zweck 1: Geschmack (Öl-Basis + Aromen)
+  - Zweck 2: Zartmachen (Säure-Basis: Joghurt, Essig, Zitrone)
+□ **Rubs** (Trockenmarinaden)
+□ **Panieren (Die "Panierstraße"):** (NEU!)
+  - Reihenfolge: Mehl -> Verquirltes Ei -> Paniermehl
+  - Warum? Mehl trocknet, Ei klebt, Paniermehl haftet am Ei.
+□ **Praktische Übung:** Mariniere Hähnchenbrust über Nacht in Joghurt+Gewürzen. **Paniere ein Schnitzel** korrekt in der Panierstraße und brate es in Butterschmalz.
+
+### MODUL 4.4: LAGERUNG & HALTBARKEIT
+──────────────────────────────────
+□ **Der Kühlschrank:** Die Klimazonen (Unten kalt für Fleisch, Gemüsefach feucht)
+□ **Vorratskammer:** Was gehört NICHT in den Kühlschrank? (Tomaten, Kartoffeln, Zwiebeln, Brot)
+□ **Einfrieren:** Was geht gut? Was geht schlecht? (Gefrierbrand vermeiden)
+□ **Konservierungsmethoden (Überblick):** Einmachen, Pökeln, Einlegen (Säure/Öl), Fermentieren.
+
+═══════════════════════════════════════════════════════════════════════════════
+PHASE 5: KÜCHEN-MANAGEMENT & GASTGEBER SEIN (Woche 41-48)
+═══════════════════════════════════════════════════════
+
+### MODUL 5.1: TIMING & STRESSMANAGEMENT
+──────────────────────────────────
+□ Der "Schlachtplan" für ein Menü (Rückwärts planen!)
+□ Was kann man vorbereiten? (Mise en Place für ein ganzes Menü)
+□ Multitasking (Timer benutzen!)
+□ **Praktische Übung:** Plane ein 3-Gänge-Menü (z.B. Tomatensuppe, Hähnchen mit Ofengemüse, Mousse au Chocolat) mit einem exakten Zeitplan, wann du was vorbereitest und kochst.
+
+### MODUL 5.2: PRÄSENTATION & ANRICHTEN
+──────────────────────────────────
+□ Warum das Auge mitisst (Der richtige Teller, Höhe bauen, Garnieren, sauberer Rand)
+
+### MODUL 5.3: FEHLERBEHEBUNG (RETTUNGS-TECHNIKEN)
+──────────────────────────────────
+□ Sauce zu salzig (Verdünnen, mit Sahne/Fett strecken, Kartoffel-Mythos)
+□ Sauce zu dünn (Reduzieren, mit Stärke binden, montieren)
+□ Fleisch übergart (In Sauce schneiden, als Ragout verwenden)
+
+### MODUL 5.4: GÄSTE BEWIRTEN
+──────────────────────────────────
+□ Menüplanung (Diäten abfragen, Schmorgerichte sind ideal für Gäste)
+□ **Goldene Regel: Nichts zum ersten Mal für Gäste kochen!**
+
+═══════════════════════════════════════════════════════════════════════════════
+PHASE 6: SPEZIALISIERUNG & WELTKÜCHEN (Woche 49+)
+═══════════════════════════════════════════════════════════════════════════════
+
+### MODUL 6.1: GRILLEN & OUTDOOR-KOCHEN
+──────────────────────────────────
+□ **Grillen:** (Dein Wunsch!)
+  - **Direktes Grillen:** (Hohe Hitze, direkt über der Kohle - für Steaks, Burger)
+  - **Indirektes Grillen:** (Mittlere Hitze, neben der Kohle - für Hähnchen, Braten)
+  - Holzkohle vs. Gas
+□ **Praktische Übung:** Grille ein Steak (direkt) und einen Maiskolben (indirekt).
+
+### MODUL 6.2: EINFÜHRUNG IN WELTKÜCHEN
+──────────────────────────────────
+□ **Italienisch:** Die Kunst der Pasta (Carbonara, Risotto-Technik)
+□ **Asiatisch:** Die Wok-Technik (Pfannenrühren), Aromen-Basis (Soja, Ingwer, Sesamöl)
+□ **Mexikanisch:** Aromen-Balance (Salsa, Guacamole)
+
+### MODUL 6.3: SPEZIAL-DISZIPLINEN (AUSBLICK)
+──────────────────────────────────
+□ Sous-Vide (Niedrigtemperatur-Garen im Vakuum)
+□ Fermentation (Sauerkraut, Sauerteig)
+□ Pâtisserie (Fortgeschrittenes Backen)
+
+### MODUL 6.4: DIE EIGENE KOCH-PHILOSOPHIE
+──────────────────────────────────
+□ Intuitives Kochen (ohne Rezept, "Kühlschrank-Kochen")
+□ Eigene Rezepte entwickeln
+
+═══════════════════════════════════════════════════════════════════════════════
+(Ressourcen & Checkliste wie in der Vorversion)
+═══════════════════════════════════════════════════════════════════════════════
+
+Das ist nun ein sehr robuster Plan. Er deckt alles ab, von der Definition von Sahne bis zum Backen von Brot und gibt dir für fast jeden Schritt eine konkrete Aufgabe.
+
+Möchtest du, dass ich zu einem dieser Module (z.B. "Phase 2") eine detaillierte Wochen-Checkliste erstelle?

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Play, Pause, RotateCcw, Settings, X, Save, BarChart3, Clock, CheckCircle2 } from 'lucide-react';
+import { Play, Pause, RotateCcw, Settings, X, Save, BarChart3, Clock, CheckCircle2, Flame, Star, Trophy, Award } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../../../context/LanguageContext';
 import {
   loadPomodoroSessions,
@@ -199,29 +200,124 @@ function PomodoroTimer() {
         </div>
       </div>
 
-      {/* Stats Panel */}
-      {showStats && (
-        <div className="mb-6 bg-gradient-to-br from-yellow-50 to-amber-50 dark:from-yellow-900/20 dark:to-amber-900/20 rounded-2xl p-6 border border-yellow-200 dark:border-yellow-800">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-yellow-600 dark:text-yellow-400">{stats.totalSessions}</div>
-              <div className="text-sm text-stone-600 dark:text-stone-400">{language === 'en' ? 'Total Sessions' : 'Sessions gesamt'}</div>
+      {/* Stats Panel with Gamification */}
+      <AnimatePresence>
+        {showStats && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="mb-6 bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50 dark:from-yellow-900/20 dark:via-amber-900/20 dark:to-orange-900/20 rounded-2xl p-6 border-2 border-yellow-300 dark:border-yellow-700 shadow-xl"
+          >
+            {/* Gamification Stats */}
+            <div className="mb-6 bg-gradient-to-r from-yellow-100 to-amber-100 dark:from-yellow-900/40 dark:to-amber-900/40 rounded-xl p-4 border border-yellow-300 dark:border-yellow-700">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-3">
+                  <div className="relative">
+                    <Star size={32} className="text-yellow-500 fill-yellow-500" />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span className="text-xs font-bold text-yellow-900">{stats.level}</span>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold text-stone-800 dark:text-stone-100">
+                      {language === 'en' ? 'Level' : 'Level'} {stats.level}
+                    </div>
+                    <div className="text-xs text-stone-600 dark:text-stone-400">
+                      {stats.totalXP} XP
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Flame size={20} className="text-orange-500" />
+                  <div>
+                    <div className="text-sm font-semibold text-stone-800 dark:text-stone-100">
+                      {stats.streak} {language === 'en' ? 'day streak' : 'Tage'}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="w-full bg-stone-200 dark:bg-stone-700 rounded-full h-3 overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${(stats.xpForCurrentLevel / stats.xpForNextLevel) * 100}%` }}
+                  transition={{ duration: 0.5 }}
+                  className="h-full bg-gradient-to-r from-yellow-500 to-amber-500 rounded-full"
+                />
+              </div>
+              <div className="text-xs text-stone-600 dark:text-stone-400 mt-1 text-center">
+                {stats.xpForCurrentLevel} / {stats.xpForNextLevel} XP {language === 'en' ? 'to next level' : 'zum nächsten Level'}
+              </div>
             </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-yellow-600 dark:text-yellow-400">{stats.completedSessions}</div>
-              <div className="text-sm text-stone-600 dark:text-stone-400">{language === 'en' ? 'Completed' : 'Abgeschlossen'}</div>
+
+            {/* Achievements */}
+            {stats.achievements && stats.achievements.length > 0 && (
+              <div className="mb-6">
+                <h3 className="text-sm font-semibold text-stone-700 dark:text-stone-300 mb-2 flex items-center gap-2">
+                  <Trophy size={16} className="text-yellow-600" />
+                  {language === 'en' ? 'Achievements' : 'Erfolge'}
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {stats.achievements.map((achievement) => (
+                    <motion.div
+                      key={achievement.id}
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      whileHover={{ scale: 1.1 }}
+                      className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-stone-800 rounded-lg border border-yellow-300 dark:border-yellow-700 shadow-sm"
+                    >
+                      <span className="text-lg">{achievement.icon}</span>
+                      <span className="text-xs font-medium text-stone-700 dark:text-stone-300">
+                        {achievement.name[language]}
+                      </span>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Basic Stats */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.1 }}
+                className="text-center bg-white dark:bg-stone-800 rounded-xl p-4 border border-yellow-200 dark:border-yellow-800 shadow-sm"
+              >
+                <div className="text-3xl font-bold text-yellow-600 dark:text-yellow-400">{stats.totalSessions}</div>
+                <div className="text-sm text-stone-600 dark:text-stone-400">{language === 'en' ? 'Total Sessions' : 'Sessions gesamt'}</div>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2 }}
+                className="text-center bg-white dark:bg-stone-800 rounded-xl p-4 border border-yellow-200 dark:border-yellow-800 shadow-sm"
+              >
+                <div className="text-3xl font-bold text-green-600 dark:text-green-400">{stats.completedSessions}</div>
+                <div className="text-sm text-stone-600 dark:text-stone-400">{language === 'en' ? 'Completed' : 'Abgeschlossen'}</div>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.3 }}
+                className="text-center bg-white dark:bg-stone-800 rounded-xl p-4 border border-yellow-200 dark:border-yellow-800 shadow-sm"
+              >
+                <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">{Math.floor(stats.totalMinutes / 60)}h</div>
+                <div className="text-sm text-stone-600 dark:text-stone-400">{language === 'en' ? 'Total Time' : 'Gesamtzeit'}</div>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.4 }}
+                className="text-center bg-white dark:bg-stone-800 rounded-xl p-4 border border-yellow-200 dark:border-yellow-800 shadow-sm"
+              >
+                <div className="text-3xl font-bold text-purple-600 dark:text-purple-400">{stats.todaySessions}</div>
+                <div className="text-sm text-stone-600 dark:text-stone-400">{language === 'en' ? 'Today' : 'Heute'}</div>
+              </motion.div>
             </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-yellow-600 dark:text-yellow-400">{Math.floor(stats.totalMinutes / 60)}h</div>
-              <div className="text-sm text-stone-600 dark:text-stone-400">{language === 'en' ? 'Total Time' : 'Gesamtzeit'}</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-yellow-600 dark:text-yellow-400">{stats.todaySessions}</div>
-              <div className="text-sm text-stone-600 dark:text-stone-400">{language === 'en' ? 'Today' : 'Heute'}</div>
-            </div>
-          </div>
-        </div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Settings Panel */}
       {showSettings && (
@@ -369,12 +465,28 @@ function PomodoroTimer() {
       )}
 
       {/* Timer Display */}
-      <div className="relative mb-8">
+      <motion.div 
+        className="relative mb-8"
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5 }}
+      >
         {/* Tomato Animation */}
         <div className="flex justify-center mb-8">
-          <div className="relative">
+          <motion.div 
+            className="relative"
+            animate={isRunning ? { 
+              scale: [1, 1.05, 1],
+              rotate: [0, 2, -2, 0]
+            } : {}}
+            transition={{ 
+              duration: 2,
+              repeat: isRunning ? Infinity : 0,
+              ease: "easeInOut"
+            }}
+          >
             {/* Tomato SVG */}
-            <svg width="200" height="200" viewBox="0 0 200 200" className={`transition-transform duration-300 ${isRunning ? 'animate-pulse' : ''}`}>
+            <svg width="200" height="200" viewBox="0 0 200 200" className="drop-shadow-2xl">
               {/* Tomato body */}
               <ellipse cx="100" cy="120" rx="70" ry="80" fill="#ef4444" className="drop-shadow-lg" />
               <ellipse cx="100" cy="120" rx="60" ry="70" fill="#f87171" />
@@ -410,7 +522,7 @@ function PomodoroTimer() {
                 opacity="0.3"
               />
             </svg>
-          </div>
+          </motion.div>
         </div>
 
         {/* Timer Text */}
@@ -433,41 +545,54 @@ function PomodoroTimer() {
         </div>
 
         {/* Controls */}
-        <div className="flex justify-center gap-4">
+        <motion.div 
+          className="flex justify-center gap-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+        >
           {!isRunning && !isPaused && (
-            <button
+            <motion.button
               onClick={handleStart}
-              className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-3 px-8 rounded-full transition-all transform hover:scale-105 flex items-center gap-2 shadow-lg"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-600 hover:to-amber-600 text-white font-semibold py-3 px-8 rounded-full transition-all flex items-center gap-2 shadow-xl"
             >
               <Play size={24} />
               {language === 'en' ? 'Start' : 'Starten'}
-            </button>
+            </motion.button>
           )}
           {isRunning && (
-            <button
+            <motion.button
               onClick={handlePause}
-              className="bg-amber-500 hover:bg-amber-600 text-white font-semibold py-3 px-8 rounded-full transition-all transform hover:scale-105 flex items-center gap-2 shadow-lg"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold py-3 px-8 rounded-full transition-all flex items-center gap-2 shadow-xl"
             >
               <Pause size={24} />
               {language === 'en' ? 'Pause' : 'Pausieren'}
-            </button>
+            </motion.button>
           )}
           {isPaused && (
             <>
-              <button
+              <motion.button
                 onClick={handleResume}
-                className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-3 px-8 rounded-full transition-all transform hover:scale-105 flex items-center gap-2 shadow-lg"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-600 hover:to-amber-600 text-white font-semibold py-3 px-8 rounded-full transition-all flex items-center gap-2 shadow-xl"
               >
                 <Play size={24} />
                 {language === 'en' ? 'Resume' : 'Fortsetzen'}
-              </button>
-              <button
+              </motion.button>
+              <motion.button
                 onClick={handleReset}
-                className="bg-stone-500 hover:bg-stone-600 text-white font-semibold py-3 px-8 rounded-full transition-all transform hover:scale-105 flex items-center gap-2 shadow-lg"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-gradient-to-r from-stone-500 to-stone-600 hover:from-stone-600 hover:to-stone-700 text-white font-semibold py-3 px-8 rounded-full transition-all flex items-center gap-2 shadow-xl"
               >
                 <RotateCcw size={24} />
                 {language === 'en' ? 'Reset' : 'Zurücksetzen'}
-              </button>
+              </motion.button>
             </>
           )}
           {(isRunning || isPaused) && (
@@ -478,8 +603,8 @@ function PomodoroTimer() {
               {language === 'en' ? 'Skip' : 'Überspringen'}
             </button>
           )}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* Recent Sessions */}
       {sessions.length > 0 && (

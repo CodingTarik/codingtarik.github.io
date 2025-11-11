@@ -1,4 +1,4 @@
-import { Lightbulb, CheckSquare, BookOpen, Timer, Clock, Target, Brain } from 'lucide-react';
+import { Lightbulb, CheckSquare, BookOpen, Timer, Clock, Target, Brain, Calendar } from 'lucide-react';
 import LifeSkillsHomePage from './components/LifeSkillsHomePage';
 
 export const lifeskillsBuddyConfig = {
@@ -53,6 +53,12 @@ export const lifeskillsBuddyConfig = {
       name: { en: 'Reflection', de: 'Reflexion' },
       icon: Brain,
       component: 'ReflectionTool'
+    },
+    {
+      id: 'dayplanner',
+      name: { en: 'Day Planner', de: 'Tagesplan' },
+      icon: Calendar,
+      component: 'DayPlanner'
     }
   ],
   

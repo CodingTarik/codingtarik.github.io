@@ -58,6 +58,54 @@ export const getPomodoroStats = () => {
   const sessions = loadPomodoroSessions();
   const completed = sessions.filter(s => s.completed);
   
+  // Calculate streak
+  const sortedCompleted = completed
+    .map(s => new Date(s.timestamp).toDateString())
+    .filter((date, index, self) => self.indexOf(date) === index)
+    .sort((a, b) => new Date(b) - new Date(a));
+  
+  let streak = 0;
+  const today = new Date().toDateString();
+  let checkDate = new Date();
+  
+  for (let i = 0; i < sortedCompleted.length; i++) {
+    const dateStr = checkDate.toDateString();
+    if (sortedCompleted.includes(dateStr)) {
+      streak++;
+      checkDate.setDate(checkDate.getDate() - 1);
+    } else {
+      break;
+    }
+  }
+  
+  // Calculate XP and Level
+  const totalXP = completed.length * 10; // 10 XP per completed pomodoro
+  let level = 1;
+  let xpForCurrentLevel = 0;
+  let xpForNextLevel = 100;
+  
+  for (let l = 1; l <= 100; l++) {
+    const xpNeeded = l === 1 ? 0 : 100 * Math.pow(1.5, l - 2);
+    const xpForLevel = l === 1 ? 100 : 100 * Math.pow(1.5, l - 1);
+    
+    if (totalXP >= xpNeeded && totalXP < xpNeeded + xpForLevel) {
+      level = l;
+      xpForCurrentLevel = totalXP - xpNeeded;
+      xpForNextLevel = xpForLevel;
+      break;
+    }
+  }
+  
+  // Calculate achievements
+  const achievements = [];
+  if (streak >= 3) achievements.push({ id: 'streak_3', name: { en: 'Getting Started', de: 'Erste Schritte' }, icon: '🔥' });
+  if (streak >= 7) achievements.push({ id: 'streak_7', name: { en: 'Week Warrior', de: 'Wochenkrieger' }, icon: '💪' });
+  if (streak >= 30) achievements.push({ id: 'streak_30', name: { en: 'Monthly Master', de: 'Monatsmeister' }, icon: '👑' });
+  if (completed.length >= 10) achievements.push({ id: 'pomodoro_10', name: { en: 'First 10', de: 'Erste 10' }, icon: '🎯' });
+  if (completed.length >= 50) achievements.push({ id: 'pomodoro_50', name: { en: 'Half Century', de: 'Halbes Jahrhundert' }, icon: '⭐' });
+  if (completed.length >= 100) achievements.push({ id: 'pomodoro_100', name: { en: 'Centurion', de: 'Zenturio' }, icon: '🏆' });
+  if (completed.length >= 500) achievements.push({ id: 'pomodoro_500', name: { en: 'Pomodoro Master', de: 'Pomodoro Meister' }, icon: '🌟' });
+  
   return {
     totalSessions: sessions.length,
     completedSessions: completed.length,
@@ -72,7 +120,13 @@ export const getPomodoroStats = () => {
       const weekAgo = new Date();
       weekAgo.setDate(weekAgo.getDate() - 7);
       return date >= weekAgo;
-    }).length
+    }).length,
+    streak,
+    level,
+    totalXP,
+    xpForCurrentLevel,
+    xpForNextLevel,
+    achievements
   };
 };
 
@@ -543,5 +597,74 @@ export const deleteReflection = (reflectionId) => {
   const reflections = loadReflections();
   const filtered = reflections.filter(r => r.id !== reflectionId);
   saveReflections(filtered);
+};
+
+// === DAY PLANNER ===
+const DAY_PLANNER_KEY = 'lifeskills_day_planner';
+
+// Get week key from date (Monday of the week)
+export const getWeekKey = (date = new Date()) => {
+  const d = new Date(date);
+  const day = d.getDay();
+  const diff = d.getDate() - day + (day === 0 ? -6 : 1); // Monday as start
+  const monday = new Date(d.setDate(diff));
+  return monday.toISOString().split('T')[0];
+};
+
+export const saveDayPlans = (plans) => {
+  localStorage.setItem(DAY_PLANNER_KEY, JSON.stringify(plans));
+};
+
+export const loadDayPlans = () => {
+  const data = localStorage.getItem(DAY_PLANNER_KEY);
+  return data ? JSON.parse(data) : {};
+};
+
+export const updateDayPlan = (dayOfWeek, slots, weekKey = null) => {
+  const plans = loadDayPlans();
+  const week = weekKey || getWeekKey();
+  
+  if (!plans[week]) {
+    plans[week] = {};
+  }
+  plans[week][dayOfWeek] = slots;
+  saveDayPlans(plans);
+  return plans[week][dayOfWeek];
+};
+
+export const getDayPlan = (dayOfWeek, weekKey = null) => {
+  const plans = loadDayPlans();
+  const week = weekKey || getWeekKey();
+  
+  // If current week has no data, try to get from a previous week (template)
+  if (!plans[week] || !plans[week][dayOfWeek]) {
+    // Find the most recent week with data for this day
+    const allWeeks = Object.keys(plans).sort().reverse();
+    for (const w of allWeeks) {
+      if (plans[w] && plans[w][dayOfWeek] && plans[w][dayOfWeek].length > 0) {
+        // Copy the template to current week
+        if (!plans[week]) {
+          plans[week] = {};
+        }
+        plans[week][dayOfWeek] = JSON.parse(JSON.stringify(plans[w][dayOfWeek]));
+        saveDayPlans(plans);
+        return plans[week][dayOfWeek];
+      }
+    }
+    return [];
+  }
+  return plans[week][dayOfWeek];
+};
+
+export const getWeekPlan = (weekKey = null) => {
+  const plans = loadDayPlans();
+  const week = weekKey || getWeekKey();
+  
+  return plans[week] || {};
+};
+
+export const getAllWeeks = () => {
+  const plans = loadDayPlans();
+  return Object.keys(plans).sort().reverse();
 };
 

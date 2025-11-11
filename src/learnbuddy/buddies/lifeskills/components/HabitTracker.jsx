@@ -6,6 +6,7 @@ import {
   Bike, Moon, Sun, Utensils, Shirt, GraduationCap, Briefcase,
   Home, Car, Plane, Camera, Paintbrush, Palette, Lightbulb
 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../../../context/LanguageContext';
 import {
   loadHabits,
@@ -467,7 +468,11 @@ function HabitTracker() {
 
       {/* Calendar View */}
       {viewMode === 'calendar' && (
-        <div className="bg-white dark:bg-stone-800 rounded-2xl p-6 border border-stone-200 dark:border-stone-700 shadow-lg">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white dark:bg-stone-800 rounded-2xl p-6 border-2 border-stone-200 dark:border-stone-700 shadow-xl"
+        >
           {/* Calendar Navigation */}
           <div className="flex justify-between items-center mb-4">
             <button
@@ -611,12 +616,16 @@ function HabitTracker() {
             </table>
           </div>
           </div>
-        </div>
+        </motion.div>
       )}
 
       {/* Month View */}
       {viewMode === 'month' && (
-        <div className="bg-white dark:bg-stone-800 rounded-2xl p-6 border border-stone-200 dark:border-stone-700 shadow-lg">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white dark:bg-stone-800 rounded-2xl p-6 border-2 border-stone-200 dark:border-stone-700 shadow-xl"
+        >
           {/* Month Navigation */}
           <div className="flex justify-between items-center mb-6">
             <button
@@ -753,22 +762,26 @@ function HabitTracker() {
               </table>
             </div>
           </div>
-        </div>
+        </motion.div>
       )}
 
       {/* List View */}
       {viewMode === 'list' && (
         <div className="space-y-4">
-          {habits.map((habit) => {
+          {habits.map((habit, index) => {
             const stats = getHabitStats(habit.id);
             const gamification = getGamificationStats(habit.id);
             const logged = isHabitLogged(habit.id, selectedDate);
             const isValid = isDateValidForHabit(habit, selectedDate);
             const IconComponent = getIconComponent(habit.icon);
             return (
-              <div
+              <motion.div
                 key={habit.id}
-                className="bg-white dark:bg-stone-800 rounded-xl p-6 border border-stone-200 dark:border-stone-700 shadow-md hover:shadow-lg transition-all"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ scale: 1.02, y: -4 }}
+                className="bg-gradient-to-br from-yellow-50 via-amber-50 to-orange-50 dark:from-yellow-900/20 dark:via-amber-900/20 dark:to-orange-900/20 rounded-xl p-6 border-2 border-yellow-200 dark:border-yellow-800 shadow-lg hover:shadow-2xl transition-all"
               >
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
@@ -794,28 +807,39 @@ function HabitTracker() {
                       </div>
                     </div>
                     {/* Gamification Stats */}
-                    <div className="mt-4 mb-4 bg-gradient-to-r from-yellow-50 to-amber-50 dark:from-yellow-900/20 dark:to-amber-900/20 rounded-lg p-3 border border-yellow-200 dark:border-yellow-800">
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className="mt-4 mb-4 bg-gradient-to-r from-yellow-50 via-amber-50 to-orange-50 dark:from-yellow-900/20 dark:via-amber-900/20 dark:to-orange-900/20 rounded-xl p-4 border-2 border-yellow-300 dark:border-yellow-700 shadow-md"
+                    >
                       <div className="flex items-center justify-between mb-2">
                         <div className="flex items-center gap-2">
-                          <Star size={18} className="text-yellow-500" />
-                          <span className="text-sm font-bold text-stone-800 dark:text-stone-100">
+                          <motion.div
+                            animate={{ rotate: [0, 10, -10, 0] }}
+                            transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                          >
+                            <Star size={20} className="text-yellow-500 fill-yellow-500" />
+                          </motion.div>
+                          <span className="text-sm font-bold bg-gradient-to-r from-yellow-600 to-amber-600 dark:from-yellow-400 dark:to-amber-400 bg-clip-text text-transparent">
                             {language === 'en' ? 'Level' : 'Level'} {gamification.level}
                           </span>
                         </div>
-                        <span className="text-xs text-stone-600 dark:text-stone-400">
+                        <span className="text-xs font-semibold text-stone-600 dark:text-stone-400">
                           {gamification.totalXP} XP
                         </span>
                       </div>
-                      <div className="w-full bg-stone-200 dark:bg-stone-700 rounded-full h-2 overflow-hidden">
-                        <div
-                          className="h-full bg-gradient-to-r from-yellow-500 to-amber-500 rounded-full transition-all duration-500"
-                          style={{ width: `${gamification.progress}%` }}
+                      <div className="w-full bg-stone-200 dark:bg-stone-700 rounded-full h-3 overflow-hidden shadow-inner">
+                        <motion.div
+                          initial={{ width: 0 }}
+                          animate={{ width: `${gamification.progress}%` }}
+                          transition={{ duration: 1, ease: "easeOut" }}
+                          className="h-full bg-gradient-to-r from-yellow-500 via-amber-500 to-orange-500 rounded-full shadow-lg"
                         />
                       </div>
-                      <div className="text-xs text-stone-600 dark:text-stone-400 mt-1">
+                      <div className="text-xs text-stone-600 dark:text-stone-400 mt-1 text-center">
                         {gamification.xpForCurrentLevel} / {gamification.xpForNextLevel} XP {language === 'en' ? 'to next level' : 'zum nächsten Level'}
                       </div>
-                    </div>
+                    </motion.div>
                     
                     {/* Achievements */}
                     {gamification.achievements.length > 0 && (
@@ -823,16 +847,20 @@ function HabitTracker() {
                         {gamification.achievements.map((achievement, idx) => {
                           const AchievementIcon = achievement.icon;
                           return (
-                            <div
+                            <motion.div
                               key={idx}
-                              className="flex items-center gap-1 px-2 py-1 rounded-lg bg-stone-100 dark:bg-stone-700"
-                              style={{ borderLeft: `3px solid ${achievement.color}` }}
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              transition={{ delay: idx * 0.1 }}
+                              whileHover={{ scale: 1.1 }}
+                              className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-white dark:bg-stone-800 border-2 shadow-sm"
+                              style={{ borderColor: achievement.color }}
                             >
-                              <AchievementIcon size={14} style={{ color: achievement.color }} />
-                              <span className="text-xs font-medium text-stone-700 dark:text-stone-300">
+                              <AchievementIcon size={16} style={{ color: achievement.color }} />
+                              <span className="text-xs font-semibold text-stone-700 dark:text-stone-300">
                                 {achievement.name[language]}
                               </span>
-                            </div>
+                            </motion.div>
                           );
                         })}
                       </div>
@@ -903,7 +931,7 @@ function HabitTracker() {
                     </button>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
           {habits.length === 0 && (

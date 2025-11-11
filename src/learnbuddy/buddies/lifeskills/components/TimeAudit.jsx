@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Clock, Trash2, Edit2, Save, X, PieChart, TrendingUp, Calendar } from 'lucide-react';
+import { Plus, Clock, Trash2, Edit2, Save, X, PieChart, TrendingUp, Calendar, Target, Trophy, Award, Star } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../../../context/LanguageContext';
 import {
   loadTimeAuditEntries,
@@ -356,101 +357,130 @@ function TimeAudit() {
 
       {/* Stats Overview */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-        <div className="bg-gradient-to-br from-yellow-50 to-amber-50 dark:from-yellow-900/20 dark:to-amber-900/20 rounded-2xl p-6 border border-yellow-200 dark:border-yellow-800">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-blue-900/20 dark:via-indigo-900/20 dark:to-purple-900/20 rounded-2xl p-6 border-2 border-blue-300 dark:border-blue-700 shadow-lg hover:shadow-xl transition-shadow"
+        >
           <div className="flex items-center gap-3 mb-2">
-            <Clock size={24} className="text-yellow-600 dark:text-yellow-400" />
-            <div className="text-sm text-stone-600 dark:text-stone-400">
+            <div className="p-2 bg-blue-100 dark:bg-blue-900/40 rounded-lg">
+              <Clock size={24} className="text-blue-600 dark:text-blue-400" />
+            </div>
+            <div className="text-sm font-semibold text-stone-700 dark:text-stone-300">
               {language === 'en' ? 'Total Time' : 'Gesamtzeit'}
             </div>
           </div>
-          <div className="text-3xl font-bold text-stone-800 dark:text-stone-100">
+          <div className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
             {stats.totalHours}h
           </div>
           <div className="text-sm text-stone-600 dark:text-stone-400 mt-1">
             {language === 'en' ? 'Last' : 'Letzte'} {timeRange} {language === 'en' ? 'days' : 'Tage'}
           </div>
-        </div>
-        <div className="bg-gradient-to-br from-yellow-50 to-amber-50 dark:from-yellow-900/20 dark:to-amber-900/20 rounded-2xl p-6 border border-yellow-200 dark:border-yellow-800">
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 dark:from-green-900/20 dark:via-emerald-900/20 dark:to-teal-900/20 rounded-2xl p-6 border-2 border-green-300 dark:border-green-700 shadow-lg hover:shadow-xl transition-shadow"
+        >
           <div className="flex items-center gap-3 mb-2">
-            <PieChart size={24} className="text-yellow-600 dark:text-yellow-400" />
-            <div className="text-sm text-stone-600 dark:text-stone-400">
+            <div className="p-2 bg-green-100 dark:bg-green-900/40 rounded-lg">
+              <PieChart size={24} className="text-green-600 dark:text-green-400" />
+            </div>
+            <div className="text-sm font-semibold text-stone-700 dark:text-stone-300">
               {language === 'en' ? 'Categories' : 'Kategorien'}
             </div>
           </div>
-          <div className="text-3xl font-bold text-stone-800 dark:text-stone-100">
+          <div className="text-4xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 dark:to-emerald-400 bg-clip-text text-transparent">
             {Object.keys(stats.byCategory).length}
           </div>
           <div className="text-sm text-stone-600 dark:text-stone-400 mt-1">
             {language === 'en' ? 'Active categories' : 'Aktive Kategorien'}
           </div>
-        </div>
-        <div className="bg-gradient-to-br from-yellow-50 to-amber-50 dark:from-yellow-900/20 dark:to-amber-900/20 rounded-2xl p-6 border border-yellow-200 dark:border-yellow-800">
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50 dark:from-purple-900/20 dark:via-pink-900/20 dark:to-rose-900/20 rounded-2xl p-6 border-2 border-purple-300 dark:border-purple-700 shadow-lg hover:shadow-xl transition-shadow"
+        >
           <div className="flex items-center gap-3 mb-2">
-            <TrendingUp size={24} className="text-yellow-600 dark:text-yellow-400" />
-            <div className="text-sm text-stone-600 dark:text-stone-400">
+            <div className="p-2 bg-purple-100 dark:bg-purple-900/40 rounded-lg">
+              <TrendingUp size={24} className="text-purple-600 dark:text-purple-400" />
+            </div>
+            <div className="text-sm font-semibold text-stone-700 dark:text-stone-300">
               {language === 'en' ? 'Entries' : 'Einträge'}
             </div>
           </div>
-          <div className="text-3xl font-bold text-stone-800 dark:text-stone-100">
+          <div className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
             {stats.totalEntries}
           </div>
           <div className="text-sm text-stone-600 dark:text-stone-400 mt-1">
             {language === 'en' ? 'Total entries' : 'Einträge gesamt'}
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {/* Time Range Selector */}
       <div className="mb-6 flex gap-2">
         {[1, 7, 30, 90].map((days) => (
-          <button
+          <motion.button
             key={days}
             onClick={() => setTimeRange(days)}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             className={`px-4 py-2 rounded-lg font-medium transition-colors ${
               timeRange === days
-                ? 'bg-yellow-500 text-white'
+                ? 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-lg'
                 : 'bg-stone-100 dark:bg-stone-700 text-stone-700 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-600'
             }`}
           >
             {days === 1
               ? language === 'en' ? 'Today' : 'Heute'
               : `${days} ${language === 'en' ? 'days' : 'Tage'}`}
-          </button>
+          </motion.button>
         ))}
       </div>
 
       {/* View Mode Toggle */}
       <div className="mb-6 flex gap-2">
-        <button
+        <motion.button
           onClick={() => setViewMode('list')}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           className={`px-4 py-2 rounded-lg font-medium transition-colors ${
             viewMode === 'list'
-              ? 'bg-yellow-500 text-white'
+              ? 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-lg'
               : 'bg-stone-100 dark:bg-stone-700 text-stone-700 dark:text-stone-300'
           }`}
         >
           {language === 'en' ? 'List View' : 'Listenansicht'}
-        </button>
-        <button
+        </motion.button>
+        <motion.button
           onClick={() => setViewMode('chart')}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           className={`px-4 py-2 rounded-lg font-medium transition-colors ${
             viewMode === 'chart'
-              ? 'bg-yellow-500 text-white'
+              ? 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-lg'
               : 'bg-stone-100 dark:bg-stone-700 text-stone-700 dark:text-stone-300'
           }`}
         >
           {language === 'en' ? 'Category Chart' : 'Kategorien-Diagramm'}
-        </button>
-        <button
+        </motion.button>
+        <motion.button
           onClick={() => setViewMode('daily')}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           className={`px-4 py-2 rounded-lg font-medium transition-colors ${
             viewMode === 'daily'
-              ? 'bg-yellow-500 text-white'
+              ? 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-lg'
               : 'bg-stone-100 dark:bg-stone-700 text-stone-700 dark:text-stone-300'
           }`}
         >
           {language === 'en' ? '24h Circle' : '24h Kreis'}
-        </button>
+        </motion.button>
       </div>
 
       {/* Add/Edit Form */}
@@ -911,12 +941,16 @@ function TimeAudit() {
               cutoff.setDate(cutoff.getDate() - timeRange);
               return entryDate >= cutoff;
             })
-            .map((entry) => {
+            .map((entry, index) => {
               const categoryInfo = getCategoryInfo(entry.category);
               return (
-                <div
+                <motion.div
                   key={entry.id}
-                  className="bg-white dark:bg-stone-800 rounded-xl p-4 border border-stone-200 dark:border-stone-700 shadow-md hover:shadow-lg transition-all"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.05 }}
+                  whileHover={{ scale: 1.02, y: -4 }}
+                  className="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-blue-900/20 dark:via-indigo-900/20 dark:to-purple-900/20 rounded-xl p-4 border-2 border-blue-200 dark:border-blue-800 shadow-lg hover:shadow-2xl transition-all"
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
@@ -969,7 +1003,7 @@ function TimeAudit() {
                       </button>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               );
             })}
           {entries.filter((entry) => {
