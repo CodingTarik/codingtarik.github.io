@@ -1,5 +1,6 @@
-import { Lightbulb, CheckSquare, BookOpen, Timer, Clock, Target, Brain, Calendar } from 'lucide-react';
+import { Lightbulb, CheckSquare, BookOpen, Timer, Clock, Target, Brain, Calendar, Sparkles } from 'lucide-react';
 import LifeSkillsHomePage from './components/LifeSkillsHomePage';
+import { lessons, getLessonById, getNextLesson } from './data/lessons';
 
 export const lifeskillsBuddyConfig = {
   id: 'lifeskills',
@@ -16,9 +17,9 @@ export const lifeskillsBuddyConfig = {
   },
   homePage: LifeSkillsHomePage,
   lessons: {
-    data: [],
-    getLessonById: () => null,
-    getNextLesson: () => null
+    data: lessons,
+    getLessonById: getLessonById,
+    getNextLesson: getNextLesson
   },
   
   sharedTabs: ['home', 'lessons', 'plan'],
