@@ -331,6 +331,30 @@ Die Doppelhebe ist die Schlüsseltechnik:
 - **Ablenkung:** Sprich während der Doppelhebe, um von deinen Handbewegungen abzulenken.
 - **Selbstvertrauen:** Tu so, als wärst du wirklich überrascht, wenn ihre Karte oben erscheint!`
   },
+  task: {
+    en: {
+      title: 'Master the Card to the Top Trick',
+      description: 'Learn the double lift technique and perform the complete trick smoothly.',
+      checklist: [
+        { text: 'Practice gripping two cards together as one 20 times' },
+        { text: 'Practice the double lift technique until it looks natural' },
+        { text: 'Practice the secret setup (holding 2 cards, placing selected card on top)' },
+        { text: 'Perform the complete trick 5 times with a practice partner' },
+        { text: 'Practice your timing and misdirection during the double lift' }
+      ]
+    },
+    de: {
+      title: 'Meistere den Karte-nach-oben Trick',
+      description: 'Lerne die Doppelhebe-Technik und führe den kompletten Trick reibungslos durch.',
+      checklist: [
+        { text: 'Übe, zwei Karten zusammen als eine zu greifen, 20 Mal' },
+        { text: 'Übe die Doppelhebe-Technik, bis sie natürlich aussieht' },
+        { text: 'Übe das heimliche Setup (2 Karten halten, ausgewählte Karte oben platzieren)' },
+        { text: 'Führe den kompletten Trick 5 Mal mit einem Übungspartner durch' },
+        { text: 'Übe dein Timing und deine Ablenkung während der Doppelhebe' }
+      ]
+    }
+  },
   exercises: [
     {
       id: 'practice-double-lift',
@@ -354,6 +378,44 @@ Die Doppelhebe ist die Schlüsseltechnik:
         de: 'Führe den kompletten "Karte nach oben" Trick 5 Mal mit einem Übungspartner durch.'
       }
     }
-  ]
+  ],
+  notes: {
+    en: [
+      {
+        front: 'What is a double lift?',
+        back: 'A technique where you lift two cards together as if they were one single card. This is the key to the "Card to the Top" trick.'
+      },
+      {
+        front: 'How do you grip two cards together?',
+        back: 'Use your right thumb to grip the top two cards together from the right edge. Lift them as one.'
+      },
+      {
+        front: 'Where is the selected card positioned?',
+        back: 'The selected card is placed on top of two cards you\'re holding together, making it the second card from the top (but it appears to be on top when you do the double lift).'
+      },
+      {
+        front: 'What is the secret setup?',
+        back: 'While the spectator looks at their card, you secretly take two cards from the top and hold them as one, then place their selected card on top of these two cards.'
+      }
+    ],
+    de: [
+      {
+        front: 'Was ist eine Doppelhebe?',
+        back: 'Eine Technik, bei der du zwei Karten zusammen als eine einzige Karte hebst. Dies ist der Schlüssel zum "Karte nach oben" Trick.'
+      },
+      {
+        front: 'Wie greifst du zwei Karten zusammen?',
+        back: 'Verwende deinen rechten Daumen, um die oberen zwei Karten zusammen vom rechten Rand zu greifen. Hebe sie als eine.'
+      },
+      {
+        front: 'Wo ist die ausgewählte Karte positioniert?',
+        back: 'Die ausgewählte Karte wird auf zwei Karten platziert, die du zusammen hältst, wodurch sie die zweite Karte von oben ist (aber sie erscheint oben, wenn du die Doppelhebe machst).'
+      },
+      {
+        front: 'Was ist das heimliche Setup?',
+        back: 'Während der Zuschauer seine Karte ansieht, nimmst du heimlich zwei Karten von oben und hältst sie als eine, dann platzierst du ihre ausgewählte Karte auf diese zwei Karten.'
+      }
+    ]
+  }
 };
 

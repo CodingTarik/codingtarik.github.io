@@ -1,6 +1,7 @@
 // Magic Tricks Lessons
 import { memoryCardTrick } from '../lessons/magic-tricks/memory-card-trick.js';
 import { cardToTop } from '../lessons/magic-tricks/card-to-top.js';
+import { coinBehindEar } from '../lessons/magic-tricks/coin-behind-ear.js';
 
 // Combine all lessons
 export const lessons = [
@@ -15,6 +16,12 @@ export const lessons = [
     category: cardToTop.category,
     categoryTitle: cardToTop.categoryTitle,
     ...cardToTop
+  },
+  {
+    id: coinBehindEar.id,
+    category: coinBehindEar.category,
+    categoryTitle: coinBehindEar.categoryTitle,
+    ...coinBehindEar
   }
 ];
 

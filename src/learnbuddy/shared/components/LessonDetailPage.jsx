@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ChevronLeft, Save, Target, CheckCircle, ArrowRight } from 'lucide-react';
 import LessonContent from './LessonContent';
 import Quiz from './Quiz';
+import Flashcards from './Flashcards';
 import { useLanguage } from '../../context/LanguageContext';
 import { isLessonComplete, markLessonComplete, markLessonIncomplete } from '../../utils/sessionStorage';
 
@@ -14,6 +15,7 @@ function LessonDetailPage({ lesson, onBack, onSaveTask, onGoToNextLesson }) {
   const content = lesson.content?.[language] || lesson.content?.en || lesson.content;
   const task = lesson.task?.[language] || lesson.task?.en || lesson.task;
   const quiz = lesson.quiz?.[language] || lesson.quiz?.en || lesson.quiz;
+  const notes = lesson.notes?.[language] || lesson.notes?.en || lesson.notes;
   const categoryTitle = lesson.categoryTitle?.[language] || lesson.categoryTitle?.en || lesson.category;
   
   const [isComplete, setIsComplete] = useState(false);
@@ -117,6 +119,13 @@ function LessonDetailPage({ lesson, onBack, onSaveTask, onGoToNextLesson }) {
 
       {/* Quiz Section */}
       {quiz && <Quiz questions={quiz} />}
+
+      {/* Flashcards Section */}
+      {notes && (
+        <div className="bg-white dark:bg-stone-800 rounded-lg shadow-md p-6 mb-6">
+          <Flashcards notes={notes} />
+        </div>
+      )}
 
       {/* Mark as Complete Button */}
       <div className="mt-8">

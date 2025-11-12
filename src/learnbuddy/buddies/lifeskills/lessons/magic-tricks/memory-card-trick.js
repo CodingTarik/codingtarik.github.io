@@ -307,6 +307,30 @@ Der Trick funktioniert, weil:
 - **Ablenkung:** Während du ihre Karte "findest", tue so, als würdest du ihre Gedanken lesen oder Intuition verwenden.
 - **Übung:** Je reibungsloser deine Handhabung, desto magischer wird es erscheinen!`
   },
+  task: {
+    en: {
+      title: 'Practice the Memory Card Trick',
+      description: 'Master the memory technique and perform the trick smoothly without revealing the secret.',
+      checklist: [
+        { text: 'Memorize the bottom card of a deck 10 times' },
+        { text: 'Practice placing a selected card on top of your key card smoothly' },
+        { text: 'Practice finding the selected card after shuffling' },
+        { text: 'Perform the complete trick 10 times' },
+        { text: 'Practice your presentation and misdirection' }
+      ]
+    },
+    de: {
+      title: 'Übe den Gedächtnis-Kartentrick',
+      description: 'Meistere die Gedächtnistechnik und führe den Trick reibungslos durch, ohne das Geheimnis zu verraten.',
+      checklist: [
+        { text: 'Merke dir die unterste Karte eines Decks 10 Mal' },
+        { text: 'Übe, eine ausgewählte Karte reibungslos auf deine Schlüsselkarte zu platzieren' },
+        { text: 'Übe, die ausgewählte Karte nach dem Mischen zu finden' },
+        { text: 'Führe den kompletten Trick 10 Mal durch' },
+        { text: 'Übe deine Präsentation und Ablenkung' }
+      ]
+    }
+  },
   exercises: [
     {
       id: 'practice-memory-trick',
@@ -319,6 +343,44 @@ Der Trick funktioniert, weil:
         de: 'Übe diesen Trick 10 Mal. Konzentriere dich darauf, die ausgewählte Karte reibungslos auf deine Schlüsselkarte zu platzieren.'
       }
     }
-  ]
+  ],
+  notes: {
+    en: [
+      {
+        front: 'What is the key card?',
+        back: 'The bottom card of the deck that you memorize before performing the trick. It acts as a marker to locate the selected card.'
+      },
+      {
+        front: 'Where do you place the selected card?',
+        back: 'You secretly place it directly on top of your memorized key card when they put it back in the deck.'
+      },
+      {
+        front: 'How do you find the selected card?',
+        back: 'After shuffling (keeping the bottom card in place), look for the card directly above your key card - that\'s their selection!'
+      },
+      {
+        front: 'What is misdirection?',
+        back: 'Acting as if you\'re reading their mind or using intuition while "finding" their card, to distract from the real method.'
+      }
+    ],
+    de: [
+      {
+        front: 'Was ist die Schlüsselkarte?',
+        back: 'Die unterste Karte des Decks, die du dir vor der Vorführung merkst. Sie fungiert als Marker, um die ausgewählte Karte zu lokalisieren.'
+      },
+      {
+        front: 'Wo platzierst du die ausgewählte Karte?',
+        back: 'Du platzierst sie heimlich direkt auf deine gemerkte Schlüsselkarte, wenn sie sie zurück ins Deck legen.'
+      },
+      {
+        front: 'Wie findest du die ausgewählte Karte?',
+        back: 'Nach dem Mischen (die unterste Karte bleibt an Ort und Stelle) suche nach der Karte direkt über deiner Schlüsselkarte - das ist ihre Auswahl!'
+      },
+      {
+        front: 'Was ist Ablenkung?',
+        back: 'So zu tun, als würdest du ihre Gedanken lesen oder Intuition verwenden, während du ihre Karte "findest", um von der echten Methode abzulenken.'
+      }
+    ]
+  }
 };
 
