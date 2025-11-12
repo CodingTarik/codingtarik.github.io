@@ -4,7 +4,7 @@ Absolut. Hier ist das vollständige, kombinierte "GymBuddy Curriculum" mit der d
 **GYMBUDDY - KOMPLETTES CURRICULUM FÜR KRAFT- & MUSKELAUFBAU**
 ═══════════════════════════════════════════════════════════════════════════════
 
-Version: 1.1
+Version: 2.0
 Zielgruppe: Absolute Anfänger bis mittleres Niveau
 Empfohlene Dauer: 6-12 Monate für alle Kernlektionen
 
@@ -725,24 +725,155 @@ Empfohlene Dauer: 6-12 Monate für alle Kernlektionen
 **MODUL 5.2: DEHNUNG, WARM-UP & COOL-DOWN**
 ──────────────────────────────────────────
 □ **1. Warm-Up (Vor dem Training - ESSENTIELL!)**
-  - **Ziel:** Puls erhöhen, Gelenke schmieren, Muskeln aktivieren.
-  - **Phase 1 (Allgemein, 5 Min):** Rudergerät, Seilspringen, Hampelmänner.
-  - **Phase 2 (Dynamisches Dehnen, 5 Min):** Armkreisen, Beinpendel, Hüftrotationen ("Cat-Cow", "World's Greatest Stretch"). *Kein statisches Dehnen!*
-  - **Phase 3 (Spezifisch):** Aufwärmsätze der ersten Übung (z.B. nur Stange, dann 40%, 60% etc.).
-□ **2. Cool-Down (Nach dem Training - Optional)**
-  - **Ziel:** Regeneration einleiten, Beweglichkeit verbessern.
-  - **Statisches Dehnen:** Dehnung halten (30-60 Sek.). Fokus auf die trainierten Muskeln (Brust, Lats, Quads).
-  - **Foam Rolling (Faszienrolle):** Kann Muskelkater reduzieren und Verspannungen lösen.
+  - **Ziel:** Puls erhöhen, Gelenke schmieren, Muskeln aktivieren, Verletzungen vorbeugen.
+  - **Phase 1 (Allgemein, 5 Min):** Puls erhöhen, Körper aufwärmen.
+    * Rudergerät (leicht, 3-5 Min)
+    * Seilspringen (2-3 Min)
+    * Hampelmänner (30 Sek on, 30 Sek off, 3 Runden)
+    * Leichtes Laufen auf der Stelle
+  - **Phase 2 (Dynamisches Dehnen, 5 Min):** Beweglichkeit & Mobilität.
+    * Armkreisen (vorwärts/rückwärts, 10x jede Richtung)
+    * Beinpendel (vorwärts/rückwärts, seitlich, 10x jede Richtung)
+    * Hüftrotationen ("Cat-Cow", 10x)
+    * "World's Greatest Stretch" (5x pro Seite)
+    * Rumpf-Rotationen (10x jede Seite)
+    * Kniebeugen ohne Gewicht (10x)
+    * *Kein statisches Dehnen vor dem Training (reduziert Kraft!)*
+  - **Phase 3 (Spezifisch, 5-10 Min):** Aufwärmsätze der ersten Übung.
+    * **Beispiel Bankdrücken:**
+      - Nur Stange (20kg): 10 Reps
+      - 40% Arbeitsgewicht: 5 Reps
+      - 60% Arbeitsgewicht: 3 Reps
+      - 80% Arbeitsgewicht: 1 Rep
+      - Dann Arbeits-Sätze
+    * **Beispiel Kniebeuge:**
+      - Bodyweight: 10 Reps
+      - 50% Arbeitsgewicht: 5 Reps
+      - 70% Arbeitsgewicht: 3 Reps
+      - Dann Arbeits-Sätze
+  - **Gesamt-Dauer:** 15-20 Minuten (lohnt sich!)
+
+□ **2. Cool-Down (Nach dem Training - Optional, aber empfohlen)**
+  - **Ziel:** Regeneration einleiten, Beweglichkeit verbessern, Muskelkater reduzieren.
+  - **Statisches Dehnen (5-10 Min):**
+    * Dehnung halten (30-60 Sek.), nicht wippen!
+    * Fokus auf die trainierten Muskeln:
+      - Brust-Training: Brust-Dehnung (Arm gegen Wand)
+      - Rücken-Training: Lat-Dehnung (über Kopf hängen)
+      - Bein-Training: Quad-Dehnung, Hamstring-Dehnung, Waden-Dehnung
+    * **Wichtig:** Nicht zu aggressiv! Leichtes Ziehen, kein Schmerz.
+  - **Foam Rolling (Faszienrolle, 5-10 Min):**
+    * Kann Muskelkater reduzieren und Verspannungen lösen.
+    * **Wie?** Langsam über verspannte Bereiche rollen (30-60 Sek pro Bereich).
+    * **Fokus:** Oberschenkel (vorne/hinten), Waden, Rücken, Brust.
+    * **Wann?** Nach dem Training oder an Ruhetagen.
+  - **Leichtes Cardio (Optional, 5 Min):**
+    * Leichtes Gehen auf dem Laufband
+    * Leichtes Radfahren
+    * Hilft bei Recovery (Durchblutung).
+
+**MODUL 5.4: VERLETZUNGSPRÄVENTION & REHABILITATION**
+──────────────────────────────────────────────────────
+□ **Häufigste Verletzungen im Krafttraining:**
+  - **Schulter:** Impingement, Rotatorenmanschette (bei Bankdrücken, Überkopfdrücken)
+  - **Unterer Rücken:** Bandscheiben, Zerrungen (bei Kreuzheben, Kniebeugen)
+  - **Knie:** Meniskus, Patellasehne (bei Kniebeugen, Beinpresse)
+  - **Ellenbogen:** Tennisarm, Golferarm (bei vielen Arm-Übungen)
+  - **Handgelenk:** Überlastung (bei vielen Druck-Übungen)
+
+□ **Prävention:**
+  - **Technik > Gewicht!** Immer perfekte Form, auch bei leichten Gewichten.
+  - **Progressive Overload langsam:** Nicht zu schnell steigern (max. 2,5-5kg pro Woche bei Grundübungen).
+  - **Aufwärmen:** Immer! (siehe Modul 5.2)
+  - **Antagonisten trainieren:** Push/Pull-Balance (z.B. Face Pulls bei viel Bankdrücken).
+  - **Mobilität:** Regelmäßiges Dehnen & Mobility-Work (siehe Modul 5.2).
+  - **Deload-Wochen:** Alle 4-8 Wochen (siehe Modul 3.3).
+  - **Höre auf deinen Körper:** Schmerz ≠ Muskelkater! Bei Schmerz: Pause!
+
+□ **Was tun bei Verletzung?**
+  - **Akut (plötzlicher Schmerz):** PECH-Regel (Pause, Eis, Compression, Hochlagern).
+  - **Bei anhaltendem Schmerz:** Arzt aufsuchen (Orthopäde, Sportmediziner).
+  - **Physiotherapie:** Sehr hilfreich für Rehabilitation & Prävention.
+  - **Alternative Training:** Verletzte Körperpartie schonen, andere Bereiche weiter trainieren (wenn möglich).
+
+□ **Rehabilitation:**
+  - **Schrittweise Rückkehr:** Nicht zu schnell wieder voll belasten!
+  - **Leichte Gewichte:** Start mit 50% des vorherigen Gewichts.
+  - **Fokus auf Technik:** Perfekte Form ist jetzt noch wichtiger.
+  - **Mobilität:** Spezifische Übungen für verletzte Region (vom Physio empfohlen).
+
+**MODUL 5.5: CARDIO-INTEGRATION**
+─────────────────────────────────
+□ **Warum Cardio beim Krafttraining?**
+  - **Herzgesundheit:** Krafttraining allein ist nicht genug für kardiovaskuläre Fitness.
+  - **Recovery:** Leichtes Cardio fördert Durchblutung & Regeneration.
+  - **Kalorienverbrauch:** Hilft bei Fettabbau (aber Ernährung ist wichtiger!).
+  - **Ausdauer:** Bessere Performance bei längeren Trainingseinheiten.
+
+□ **Cardio-Arten:**
+  - **LISS (Low Intensity Steady State):** Leichtes, konstantes Tempo (z.B. 30-60 Min Laufen, Radfahren).
+    * **Wann?** An Ruhetagen oder nach Krafttraining.
+    * **Intensität:** 60-70% max. Herzfrequenz (noch sprechen können).
+  - **HIIT (High Intensity Interval Training):** Kurze, intensive Intervalle (z.B. 30 Sek Sprint, 90 Sek Pause, 5-10 Runden).
+    * **Wann?** An separaten Tagen oder nach Krafttraining (wenn noch Energie).
+    * **Vorsicht:** Kann Recovery beeinträchtigen, nicht zu oft!
+  - **Steady State Cardio:** Mittlere Intensität (z.B. 20-30 Min Joggen).
+
+□ **Wie viel Cardio?**
+  - **Anfänger:** 2-3x pro Woche, 20-30 Min (LISS).
+  - **Fortgeschritten:** 2-4x pro Woche, 20-45 Min (je nach Ziel).
+  - **Bei Fettabbau:** Mehr Cardio kann helfen (aber Ernährung ist wichtiger!).
+  - **Bei Muskelaufbau:** Weniger Cardio (2-3x pro Woche), um Recovery nicht zu beeinträchtigen.
+
+□ **Cardio & Muskelaufbau:**
+  - **Mythos:** "Cardio killt Gains" - FALSCH! (bei moderatem Volumen).
+  - **Realität:** Zu viel Cardio kann Recovery beeinträchtigen, aber moderates Cardio ist ok.
+  - **Empfehlung:** 2-3x pro Woche, 20-30 Min LISS = optimal für die meisten.
+
+□ **Timing:**
+  - **Vor Krafttraining:** Leichtes Aufwärmen (5-10 Min) ist ok, aber kein intensives Cardio.
+  - **Nach Krafttraining:** Leichtes Cardio (10-20 Min) kann Recovery fördern.
+  - **An Ruhetagen:** Perfekt für längeres Cardio (30-60 Min).
+  - **Separate Sessions:** Wenn möglich, Cardio & Krafttraining trennen (bessere Recovery).
 
 **MODUL 5.3: MINDSET & KONSISTENZ**
 ───────────────────────────────────
 □ **Konsistenz > Intensität:** Lieber 3x pro Woche zu 80% trainieren als 1x zu 120% und dann eine Woche ausfallen.
+  - **80% der Zeit perfekt > 100% der Zeit unperfekt.**
+  - **Realistische Ziele:** 3-4x pro Woche ist besser als 6x pro Woche für 2 Wochen, dann Burnout.
 □ **"Gymtimidation" (Angst im Studio):**
-  - Realität: Die meisten Leute sind auf sich selbst fokussiert.
-  - Die "Starken" respektieren jeden, der auftaucht und arbeitet.
-  - Trage Kopfhörer und fokussiere dich auf deinen Plan.
-□ **Geduld:** Muskelaufbau ist ein Marathon, kein Sprint. Erwarte sichtbare Änderungen in Monaten, nicht Tagen.
-□ **Mind-Muscle-Connection:** Lerne, den Zielmuskel zu spüren. Denke beim Rudern an den Rücken, nicht nur an den Arm.
+  - **Realität:** Die meisten Leute sind auf sich selbst fokussiert (nicht auf dich!).
+  - **Die "Starken" respektieren jeden, der auftaucht und arbeitet** (sie waren auch mal Anfänger).
+  - **Trage Kopfhörer** und fokussiere dich auf deinen Plan (Musik kann motivieren!).
+  - **Frag nach Hilfe:** Die meisten helfen gerne (Technik-Tipps, Spotting).
+  - **Jeder fängt klein an:** Niemand wurde stark geboren.
+□ **Geduld:** Muskelaufbau ist ein Marathon, kein Sprint.
+  - **Realistische Erwartungen:**
+    * Sichtbare Änderungen: 2-3 Monate
+    * Deutliche Änderungen: 6-12 Monate
+    * Transformative Änderungen: 1-2+ Jahre
+  - **Prozess > Ergebnis:** Fokus auf Training, Ernährung, Schlaf - Ergebnisse kommen automatisch.
+  - **Plateaus sind normal:** Jeder hat sie, wichtig ist dranzubleiben.
+□ **Mind-Muscle-Connection:** Lerne, den Zielmuskel zu spüren.
+  - **Beispiel:** Beim Rudern an den Rücken denken, nicht nur an den Arm.
+  - **Wie üben?** Leichte Gewichte, langsame, kontrollierte Bewegungen, fühlen wo es brennt.
+  - **Visualisierung:** Stelle dir vor, wie der Muskel arbeitet.
+  - **Warum wichtig?** Bessere Technik = bessere Ergebnisse = weniger Verletzungen.
+□ **Motivation vs. Disziplin:**
+  - **Motivation:** Kommt und geht (nicht darauf verlassen!).
+  - **Disziplin:** Gehe auch wenn du keine Lust hast (das ist der Unterschied!).
+  - **Gewohnheiten bilden:** Nach 3-4 Wochen wird Training zur Gewohnheit (leichter!).
+  - **Routine:** Gleiche Zeit, gleicher Ort = weniger Entscheidungsmüdigkeit.
+□ **Umgang mit Rückschlägen:**
+  - **Krankheit:** Pause machen, nicht "durchtrainieren" (schlecht für Recovery).
+  - **Verletzung:** Alternative Übungen, Physio, langsam zurückkommen.
+  - **Plateaus:** Deload-Woche, Plan ändern, Geduld.
+  - **Fehltage:** Nicht aufgeben! Ein Tag ist kein Versagen, zurück zum Plan.
+□ **Social Media & Realität:**
+  - **Vergleiche dich nicht mit anderen** (genetische Unterschiede, Erfahrung, Zeit).
+  - **Fokus auf deine eigene Progression** (Logbuch zeigt Fortschritt!).
+  - **Social Media zeigt nur Highlights** (nicht die harte Arbeit, Fehlschläge, Plateaus).
+  - **Inspiration ja, Vergleich nein!**
 
 ═══════════════════════════════════════════════════════════════════════════════
 **PHASE 6: SPEZIALISIERUNG: CALISTHENICS (TRAINING MIT EIGENGEWICHT)**
