@@ -3,11 +3,15 @@ import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/Page/TextLayer.css';
 import { 
   X, ChevronLeft, ChevronRight, BookMarked, Languages, 
-  Save, Trash2, ZoomIn, ZoomOut, ArrowLeft, AlertCircle, Copy 
+  Save, Trash2, ZoomIn, ZoomOut, ArrowLeft, AlertCircle, Copy,
+  ChevronDown, ChevronUp, Plus, Check
 } from 'lucide-react';
 import { useLanguage } from '../../../context/LanguageContext';
 import { useSettings } from '../../../context/SettingsContext';
 import { translateWithChatGPT } from '../../../utils/chatgpt';
+import { getDecks } from '../utils/deckStorage';
+import { addCardLocally, getCachedCards, setCachedCards } from '../utils/vocabularyCache';
+import toast from 'react-hot-toast';
 
 // Set up PDF.js worker to use local file from public folder
 pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
@@ -24,15 +28,22 @@ function PDFReader({ book, onClose, onUpdate }) {
   const [buttonPosition, setButtonPosition] = useState({ x: 0, y: 0 });
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [translatedText, setTranslatedText] = useState('');
+  const [pureTranslation, setPureTranslation] = useState('');
+  const [additionalInfo, setAdditionalInfo] = useState('');
   const [isTranslating, setIsTranslating] = useState(false);
   const [translationError, setTranslationError] = useState('');
   const [currentPage, setCurrentPage] = useState(book.currentPage || 1);
   const [copyFeedback, setCopyFeedback] = useState('');
+  const [expandedTranslations, setExpandedTranslations] = useState(new Set());
+  const [decks, setDecks] = useState([]);
+  const [showDeckSelector, setShowDeckSelector] = useState(null); // word/sentence id for which to show selector
+  const [addedToDecks, setAddedToDecks] = useState(new Map()); // Map of item id -> array of deck ids
   
   const containerRef = useRef(null);
   const pageRefs = useRef({});
   const lastTouchDistance = useRef(null);
   const [highlightedItemId, setHighlightedItemId] = useState(null);
+  const translationBoxRef = useRef(null);
 
   // Update book progress
   useEffect(() => {
@@ -155,6 +166,18 @@ function PDFReader({ book, onClose, onUpdate }) {
     }
   }
 
+  // Load decks on mount and refresh when needed
+  useEffect(() => {
+    const loadDecks = () => {
+      const loadedDecks = getDecks();
+      setDecks(loadedDecks);
+    };
+    loadDecks();
+    // Refresh decks periodically (in case decks are added in another tab)
+    const interval = setInterval(loadDecks, 2000);
+    return () => clearInterval(interval);
+  }, []);
+
   // Handle text selection
   useEffect(() => {
     const handleSelection = () => {
@@ -176,6 +199,8 @@ function PDFReader({ book, onClose, onUpdate }) {
       } else {
         setShowTranslateButton(false);
         setTranslatedText('');
+        setPureTranslation('');
+        setAdditionalInfo('');
         setTranslationError('');
       }
     };
@@ -200,7 +225,8 @@ function PDFReader({ book, onClose, onUpdate }) {
 
     // Get user's native language from settings
     const nativeLanguage = englishSettings.nativeLanguage || 'de';
-    const detailLevel = englishSettings.translationDetail || 'normal';
+    // Use 'detailed' mode for reading to get structured translations with examples
+    const detailLevel = 'detailed';
 
     try {
       const result = await translateWithChatGPT(
@@ -211,6 +237,8 @@ function PDFReader({ book, onClose, onUpdate }) {
       );
       
       setTranslatedText(result.translation);
+      setPureTranslation(result.pureTranslation || result.translation);
+      setAdditionalInfo(result.additionalInfo || '');
     } catch (error) {
       console.error('Translation error:', error);
       setTranslationError(error.message);
@@ -224,7 +252,9 @@ function PDFReader({ book, onClose, onUpdate }) {
     const newItem = {
       id: Date.now(),
       text: selectedText,
-      translation: withTranslation ? translatedText : '',
+      translation: withTranslation ? (pureTranslation || translatedText) : '',
+      fullTranslation: withTranslation ? translatedText : '',
+      additionalInfo: withTranslation ? additionalInfo : '',
       page: currentPage,
       timestamp: new Date().toISOString(),
       type: isWord ? 'word' : 'sentence'
@@ -245,7 +275,64 @@ function PDFReader({ book, onClose, onUpdate }) {
     setShowTranslateButton(false);
     setSelectedText('');
     setTranslatedText('');
+    setPureTranslation('');
+    setAdditionalInfo('');
     setTranslationError('');
+  };
+
+  const toggleTranslationExpansion = (itemId) => {
+    const newExpanded = new Set(expandedTranslations);
+    if (newExpanded.has(itemId)) {
+      newExpanded.delete(itemId);
+    } else {
+      newExpanded.add(itemId);
+    }
+    setExpandedTranslations(newExpanded);
+  };
+
+  const handleAddToDeck = async (item, deckId) => {
+    const deck = decks.find(d => d.id === deckId);
+    if (!deck) return;
+
+    // Ensure deck has cached cards
+    let cached = getCachedCards(deckId);
+    if (!cached) {
+      // Initialize empty cache if needed
+      setCachedCards(deckId, []);
+      cached = getCachedCards(deckId);
+    }
+
+    const newCard = {
+      word: item.text,
+      translation: item.translation || item.pureTranslation || '',
+      explanation: item.additionalInfo || '',
+      ratingGeneral: 0
+    };
+
+    const success = addCardLocally(deckId, newCard);
+    
+    if (success) {
+      // Update addedToDecks map
+      const currentDecks = addedToDecks.get(item.id) || [];
+      if (!currentDecks.includes(deckId)) {
+        setAddedToDecks(new Map(addedToDecks.set(item.id, [...currentDecks, deckId])));
+      }
+      
+      toast.success(
+        language === 'de' 
+          ? `"${item.text}" zu "${deck.name}" hinzugefügt!` 
+          : `"${item.text}" added to "${deck.name}"!`,
+        { icon: '✅', duration: 2000 }
+      );
+      setShowDeckSelector(null);
+    } else {
+      toast.error(
+        language === 'de' 
+          ? 'Fehler beim Hinzufügen' 
+          : 'Error adding to deck',
+        { duration: 2000 }
+      );
+    }
   };
 
   const deleteItem = (itemId, type) => {
@@ -351,40 +438,132 @@ function PDFReader({ book, onClose, onUpdate }) {
                 📝 {language === 'de' ? 'Wörter' : 'Words'} ({book.savedWords.length})
               </h3>
               <div className="space-y-2">
-                {book.savedWords.map(word => (
-                  <div
-                    key={word.id}
-                    className={`bg-stone-50 dark:bg-stone-700 rounded-lg p-3 hover:shadow-md transition-all cursor-pointer group ${
-                      highlightedItemId === word.id ? 'animate-highlight' : ''
-                    }`}
-                    onClick={() => jumpToPage(word.page, word.id)}
-                  >
-                    <div className="flex items-start justify-between gap-2">
-                      <div className="flex-1">
-                        <p className="font-semibold text-stone-800 dark:text-stone-200">
-                          {word.text}
-                        </p>
-                        {word.translation && (
-                          <p className="text-xs text-stone-600 dark:text-stone-400 mt-1">
-                            {word.translation}
+                {book.savedWords.map(word => {
+                  const displayTranslation = word.pureTranslation || word.translation || '';
+                  const hasAdditionalInfo = word.additionalInfo || (word.fullTranslation && word.fullTranslation !== displayTranslation);
+                  const isExpanded = expandedTranslations.has(word.id);
+                  
+                  return (
+                    <div
+                      key={word.id}
+                      className={`bg-stone-50 dark:bg-stone-700 rounded-lg p-3 hover:shadow-md transition-all group ${
+                        highlightedItemId === word.id ? 'animate-highlight' : ''
+                      }`}
+                    >
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="flex-1">
+                          <p 
+                            className="font-semibold text-stone-800 dark:text-stone-200 cursor-pointer"
+                            onClick={() => jumpToPage(word.page, word.id)}
+                          >
+                            {word.text}
                           </p>
-                        )}
-                        <p className="text-xs text-stone-500 dark:text-stone-500 mt-1">
-                          {language === 'de' ? 'Seite' : 'Page'} {word.page}
-                        </p>
+                          {displayTranslation && (
+                            <div className="mt-1">
+                              <p className="text-xs font-semibold text-stone-700 dark:text-stone-300">
+                                {displayTranslation}
+                              </p>
+                              {hasAdditionalInfo && (
+                                <>
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      toggleTranslationExpansion(word.id);
+                                    }}
+                                    className="mt-1 text-xs text-rose-500 hover:text-rose-600 dark:text-rose-400 dark:hover:text-rose-300 flex items-center gap-1"
+                                  >
+                                    {isExpanded ? (
+                                      <>
+                                        <ChevronUp size={12} />
+                                        {language === 'de' ? 'Weniger' : 'Less'}
+                                      </>
+                                    ) : (
+                                      <>
+                                        <ChevronDown size={12} />
+                                        {language === 'de' ? 'Mehr' : 'More'}
+                                      </>
+                                    )}
+                                  </button>
+                                  {isExpanded && (
+                                    <div className="mt-1 pt-1 border-t border-stone-300 dark:border-stone-600 text-xs text-stone-600 dark:text-stone-400 whitespace-pre-wrap">
+                                      {word.additionalInfo || (word.fullTranslation && word.fullTranslation !== displayTranslation ? word.fullTranslation : '')}
+                                    </div>
+                                  )}
+                                </>
+                              )}
+                            </div>
+                          )}
+                          <p className="text-xs text-stone-500 dark:text-stone-500 mt-1">
+                            {language === 'de' ? 'Seite' : 'Page'} {word.page}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (decks.length > 0) {
+                                setShowDeckSelector(showDeckSelector === word.id ? null : word.id);
+                              } else {
+                                toast.error(
+                                  language === 'de' 
+                                    ? 'Keine Decks vorhanden. Erstelle zuerst ein Deck in der Vokabel-Seite.' 
+                                    : 'No decks available. Please create a deck in the Vocabulary page first.',
+                                  { duration: 4000 }
+                                );
+                              }
+                            }}
+                            className="text-rose-500 hover:text-rose-600 transition-colors relative"
+                            title={language === 'de' ? 'Zu Deck hinzufügen' : 'Add to deck'}
+                          >
+                            {addedToDecks.has(word.id) && addedToDecks.get(word.id).length > 0 ? (
+                              <Check size={16} className="text-green-500" />
+                            ) : (
+                              <Plus size={16} />
+                            )}
+                          </button>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              deleteItem(word.id, 'word');
+                            }}
+                            className="text-red-500 hover:text-red-600 transition-colors"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
                       </div>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          deleteItem(word.id, 'word');
-                        }}
-                        className="opacity-0 group-hover:opacity-100 transition-opacity text-red-500 hover:text-red-600"
-                      >
-                        <Trash2 size={16} />
-                      </button>
+                      {showDeckSelector === word.id && decks.length > 0 && (
+                        <div className="mt-2 pt-2 border-t border-stone-300 dark:border-stone-600" onClick={(e) => e.stopPropagation()}>
+                          <p className="text-xs text-stone-600 dark:text-stone-400 mb-2">
+                            {language === 'de' ? 'Zu Deck hinzufügen:' : 'Add to deck:'}
+                          </p>
+                          <div className="flex flex-col gap-1 max-h-40 overflow-y-auto">
+                            {decks.map(deck => {
+                              const isAdded = addedToDecks.get(word.id)?.includes(deck.id);
+                              return (
+                                <button
+                                  key={deck.id}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleAddToDeck(word, deck.id);
+                                  }}
+                                  className={`text-left px-2 py-1 text-xs rounded transition-colors flex items-center justify-between ${
+                                    isAdded 
+                                      ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300' 
+                                      : 'bg-stone-200 dark:bg-stone-600 hover:bg-stone-300 dark:hover:bg-stone-500'
+                                  }`}
+                                >
+                                  <span>{deck.name}</span>
+                                  {isAdded && <Check size={12} />}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           )}
@@ -396,40 +575,130 @@ function PDFReader({ book, onClose, onUpdate }) {
                 💬 {language === 'de' ? 'Sätze' : 'Sentences'} ({book.savedSentences.length})
               </h3>
               <div className="space-y-2">
-                {book.savedSentences.map(sentence => (
-                  <div
-                    key={sentence.id}
-                    className={`bg-stone-50 dark:bg-stone-700 rounded-lg p-3 hover:shadow-md transition-all cursor-pointer group ${
-                      highlightedItemId === sentence.id ? 'animate-highlight' : ''
-                    }`}
-                    onClick={() => jumpToPage(sentence.page, sentence.id)}
-                  >
-                    <div className="flex items-start justify-between gap-2">
-                      <div className="flex-1">
-                        <p className="text-sm text-stone-800 dark:text-stone-200">
-                          "{sentence.text}"
-                        </p>
-                        {sentence.translation && (
-                          <p className="text-xs text-stone-600 dark:text-stone-400 mt-1">
-                            {sentence.translation}
+                {book.savedSentences.map(sentence => {
+                  const displayTranslation = sentence.pureTranslation || sentence.translation || '';
+                  const hasAdditionalInfo = sentence.additionalInfo || (sentence.fullTranslation && sentence.fullTranslation !== displayTranslation);
+                  const isExpanded = expandedTranslations.has(sentence.id);
+                  
+                  return (
+                    <div
+                      key={sentence.id}
+                      className={`bg-stone-50 dark:bg-stone-700 rounded-lg p-3 hover:shadow-md transition-all cursor-pointer group ${
+                        highlightedItemId === sentence.id ? 'animate-highlight' : ''
+                      }`}
+                      onClick={() => jumpToPage(sentence.page, sentence.id)}
+                    >
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="flex-1">
+                          <p className="text-sm text-stone-800 dark:text-stone-200">
+                            "{sentence.text}"
                           </p>
-                        )}
-                        <p className="text-xs text-stone-500 dark:text-stone-500 mt-1">
-                          {language === 'de' ? 'Seite' : 'Page'} {sentence.page}
-                        </p>
+                          {displayTranslation && (
+                            <div className="mt-1">
+                              <p className="text-xs font-semibold text-stone-700 dark:text-stone-300">
+                                {displayTranslation}
+                              </p>
+                              {hasAdditionalInfo && (
+                                <>
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      toggleTranslationExpansion(sentence.id);
+                                    }}
+                                    className="mt-1 text-xs text-rose-500 hover:text-rose-600 dark:text-rose-400 dark:hover:text-rose-300 flex items-center gap-1"
+                                  >
+                                    {isExpanded ? (
+                                      <>
+                                        <ChevronUp size={12} />
+                                        {language === 'de' ? 'Weniger' : 'Less'}
+                                      </>
+                                    ) : (
+                                      <>
+                                        <ChevronDown size={12} />
+                                        {language === 'de' ? 'Mehr' : 'More'}
+                                      </>
+                                    )}
+                                  </button>
+                                  {isExpanded && (
+                                    <div className="mt-1 pt-1 border-t border-stone-300 dark:border-stone-600 text-xs text-stone-600 dark:text-stone-400 whitespace-pre-wrap">
+                                      {sentence.additionalInfo || (sentence.fullTranslation && sentence.fullTranslation !== displayTranslation ? sentence.fullTranslation : '')}
+                                    </div>
+                                  )}
+                                </>
+                              )}
+                            </div>
+                          )}
+                          <p className="text-xs text-stone-500 dark:text-stone-500 mt-1">
+                            {language === 'de' ? 'Seite' : 'Page'} {sentence.page}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (decks.length > 0) {
+                                setShowDeckSelector(showDeckSelector === sentence.id ? null : sentence.id);
+                              } else {
+                                toast.error(
+                                  language === 'de' 
+                                    ? 'Keine Decks vorhanden. Erstelle zuerst ein Deck in der Vokabel-Seite.' 
+                                    : 'No decks available. Please create a deck in the Vocabulary page first.',
+                                  { duration: 4000 }
+                                );
+                              }
+                            }}
+                            className="text-rose-500 hover:text-rose-600 transition-colors relative"
+                            title={language === 'de' ? 'Zu Deck hinzufügen' : 'Add to deck'}
+                          >
+                            {addedToDecks.has(sentence.id) && addedToDecks.get(sentence.id).length > 0 ? (
+                              <Check size={16} className="text-green-500" />
+                            ) : (
+                              <Plus size={16} />
+                            )}
+                          </button>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              deleteItem(sentence.id, 'sentence');
+                            }}
+                            className="text-red-500 hover:text-red-600 transition-colors"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
                       </div>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          deleteItem(sentence.id, 'sentence');
-                        }}
-                        className="opacity-0 group-hover:opacity-100 transition-opacity text-red-500 hover:text-red-600"
-                      >
-                        <Trash2 size={16} />
-                      </button>
+                      {showDeckSelector === sentence.id && decks.length > 0 && (
+                        <div className="mt-2 pt-2 border-t border-stone-300 dark:border-stone-600" onClick={(e) => e.stopPropagation()}>
+                          <p className="text-xs text-stone-600 dark:text-stone-400 mb-2">
+                            {language === 'de' ? 'Zu Deck hinzufügen:' : 'Add to deck:'}
+                          </p>
+                          <div className="flex flex-col gap-1 max-h-40 overflow-y-auto">
+                            {decks.map(deck => {
+                              const isAdded = addedToDecks.get(sentence.id)?.includes(deck.id);
+                              return (
+                                <button
+                                  key={deck.id}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleAddToDeck(sentence, deck.id);
+                                  }}
+                                  className={`text-left px-2 py-1 text-xs rounded transition-colors flex items-center justify-between ${
+                                    isAdded 
+                                      ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300' 
+                                      : 'bg-stone-200 dark:bg-stone-600 hover:bg-stone-300 dark:hover:bg-stone-500'
+                                  }`}
+                                >
+                                  <span>{deck.name}</span>
+                                  {isAdded && <Check size={12} />}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           )}
@@ -575,81 +844,195 @@ function PDFReader({ book, onClose, onUpdate }) {
       </div>
 
       {/* Floating Translate Button */}
-      {showTranslateButton && (
-        <div
-          className="fixed z-50"
-          style={{
-            left: `${buttonPosition.x}px`,
-            top: `${buttonPosition.y}px`,
-            transform: 'translate(-50%, calc(-100% - 12px))'
-          }}
-        >
-          <div className="bg-white dark:bg-stone-800 rounded-xl shadow-2xl border-2 border-rose-500 p-3 flex flex-col gap-2 max-w-md min-w-[280px]">
-            {!translatedText && !translationError ? (
-              <>
-                <div className="flex gap-2">
-                  <button
-                    onClick={translateText}
-                    disabled={isTranslating}
-                    className="flex-1 px-4 py-2.5 bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white rounded-lg transition-all text-sm font-semibold flex items-center justify-center gap-2 shadow-md hover:shadow-lg transform hover:scale-105"
+      {showTranslateButton && (() => {
+        // Calculate position to prevent overflow
+        const viewportHeight = window.innerHeight;
+        const viewportWidth = window.innerWidth;
+        const padding = 12;
+        const boxHeight = 250; // Estimated max box height
+        const boxWidth = 320; // Estimated box width
+        
+        let top = buttonPosition.y;
+        let left = buttonPosition.x;
+        let transform = 'translate(-50%, calc(-100% - 12px))';
+        
+        // Try to position above first
+        const spaceAbove = top - padding;
+        const spaceBelow = viewportHeight - top - padding;
+        
+        if (spaceAbove >= boxHeight) {
+          // Enough space above - position above
+          transform = 'translate(-50%, calc(-100% - 12px))';
+          // Ensure it doesn't go above viewport
+          if (top - boxHeight - padding < 0) {
+            top = boxHeight + padding;
+          }
+        } else if (spaceBelow >= boxHeight) {
+          // Enough space below - position below
+          transform = 'translate(-50%, 12px)';
+          // Ensure it doesn't go below viewport
+          if (top + boxHeight + padding > viewportHeight) {
+            top = viewportHeight - boxHeight - padding;
+          }
+        } else {
+          // Not enough space either way - position in available space
+          if (spaceAbove > spaceBelow) {
+            // More space above - position above but constrain
+            transform = 'translate(-50%, calc(-100% - 12px))';
+            top = Math.max(boxHeight + padding, Math.min(viewportHeight - padding, top));
+          } else {
+            // More space below - position below but constrain
+            transform = 'translate(-50%, 12px)';
+            top = Math.max(padding, Math.min(viewportHeight - boxHeight - padding, top));
+          }
+        }
+        
+        // Constrain horizontal position
+        const halfWidth = boxWidth / 2;
+        if (left - halfWidth < padding) {
+          left = halfWidth + padding;
+          // Adjust transform if needed
+          if (transform.includes('translate(-50%')) {
+            transform = transform.replace('translate(-50%', 'translate(0');
+          }
+        } else if (left + halfWidth > viewportWidth - padding) {
+          left = viewportWidth - halfWidth - padding;
+          // Adjust transform if needed
+          if (transform.includes('translate(-50%')) {
+            transform = transform.replace('translate(-50%', 'translate(-100%');
+          }
+        }
+        
+        // Final constraint to ensure box stays within viewport
+        const maxTop = viewportHeight - padding;
+        const minTop = padding;
+        top = Math.max(minTop, Math.min(maxTop, top));
+        
+        // Calculate max height to ensure box stays within viewport
+        let maxHeight = 400;
+        if (transform.includes('calc(-100%')) {
+          // Positioned above - limit by space above
+          maxHeight = Math.min(maxHeight, top - padding);
+        } else if (transform.includes('12px')) {
+          // Positioned below - limit by space below
+          maxHeight = Math.min(maxHeight, viewportHeight - top - padding);
+        } else {
+          // Centered or other - use available space
+          maxHeight = Math.min(maxHeight, Math.min(spaceAbove, spaceBelow));
+        }
+        maxHeight = Math.max(150, maxHeight); // Minimum height
+        
+        return (
+          <div
+            ref={translationBoxRef}
+            className="fixed z-50"
+            style={{
+              left: `${left}px`,
+              top: `${top}px`,
+              transform: transform,
+              maxHeight: `${maxHeight}px`
+            }}
+          >
+            <div className="bg-white dark:bg-stone-800 rounded-xl shadow-2xl border-2 border-rose-500 p-3 flex flex-col gap-2 max-w-md min-w-[280px] overflow-y-auto" style={{ maxHeight: `${maxHeight}px` }}>
+              {!translatedText && !translationError ? (
+                <>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={translateText}
+                      disabled={isTranslating}
+                      className="flex-1 px-4 py-2.5 bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white rounded-lg transition-all text-sm font-semibold flex items-center justify-center gap-2 shadow-md hover:shadow-lg transform hover:scale-105"
+                    >
+                      <Languages size={18} />
+                      {isTranslating 
+                        ? (language === 'de' ? 'Übersetze...' : 'Translating...') 
+                        : (language === 'de' ? 'Übersetzen' : 'Translate')
+                      }
+                    </button>
+                    <button
+                      onClick={() => saveSelection(false)}
+                      className="flex-1 px-4 py-2.5 bg-gradient-to-r from-stone-500 to-stone-600 hover:from-stone-600 hover:to-stone-700 text-white rounded-lg transition-all text-sm font-semibold flex items-center justify-center gap-2 shadow-md hover:shadow-lg transform hover:scale-105"
+                    >
+                      <Save size={18} />
+                      {language === 'de' ? 'Speichern' : 'Save'}
+                    </button>
+                  </div>
+                  <div className="text-xs text-center text-stone-500 dark:text-stone-400 px-2">
+                    {language === 'de' ? 'oder einfach speichern →' : 'or just save →'}
+                  </div>
+                </>
+              ) : translationError ? (
+                <>
+                  <div className="bg-red-100 dark:bg-red-900/30 border border-red-500 px-4 py-3 rounded-lg flex items-start gap-2 text-sm">
+                    <AlertCircle size={18} className="flex-shrink-0 mt-0.5 text-red-600 dark:text-red-400" />
+                    <div className="flex-1">
+                      <div className="font-semibold mb-1 text-red-800 dark:text-red-300">
+                        {language === 'de' ? 'Fehler' : 'Error'}
+                      </div>
+                      <div className="text-xs text-red-700 dark:text-red-400">{translationError}</div>
+                    </div>
+                  </div>
+                  <a
+                    href="#/settings"
+                    className="px-4 py-2.5 bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white rounded-lg transition-all text-sm font-semibold text-center shadow-md"
+                    onClick={() => {
+                      window.getSelection().removeAllRanges();
+                      setShowTranslateButton(false);
+                    }}
                   >
-                    <Languages size={18} />
-                    {isTranslating 
-                      ? (language === 'de' ? 'Übersetze...' : 'Translating...') 
-                      : (language === 'de' ? 'Übersetzen' : 'Translate')
-                    }
-                  </button>
+                    {language === 'de' ? '⚙️ Zu Einstellungen' : '⚙️ Go to Settings'}
+                  </a>
+                </>
+              ) : (
+                <>
+                  <div className="px-4 py-3 text-sm bg-stone-50 dark:bg-stone-700 text-stone-800 dark:text-stone-200 rounded-lg border border-stone-200 dark:border-stone-600 leading-relaxed">
+                    <div className="font-semibold mb-1">{pureTranslation || translatedText}</div>
+                    {additionalInfo && (
+                      <>
+                        <button
+                          onClick={() => {
+                            const isExpanded = expandedTranslations.has('current');
+                            if (isExpanded) {
+                              expandedTranslations.delete('current');
+                            } else {
+                              expandedTranslations.add('current');
+                            }
+                            setExpandedTranslations(new Set(expandedTranslations));
+                          }}
+                          className="mt-2 text-xs text-rose-500 hover:text-rose-600 dark:text-rose-400 dark:hover:text-rose-300 flex items-center gap-1"
+                        >
+                          {expandedTranslations.has('current') ? (
+                            <>
+                              <ChevronUp size={14} />
+                              {language === 'de' ? 'Weniger anzeigen' : 'Show less'}
+                            </>
+                          ) : (
+                            <>
+                              <ChevronDown size={14} />
+                              {language === 'de' ? 'Mehr anzeigen' : 'Show more'}
+                            </>
+                          )}
+                        </button>
+                        {expandedTranslations.has('current') && (
+                          <div className="mt-2 pt-2 border-t border-stone-300 dark:border-stone-600 text-xs text-stone-600 dark:text-stone-400 whitespace-pre-wrap">
+                            {additionalInfo}
+                          </div>
+                        )}
+                      </>
+                    )}
+                  </div>
                   <button
-                    onClick={() => saveSelection(false)}
-                    className="flex-1 px-4 py-2.5 bg-gradient-to-r from-stone-500 to-stone-600 hover:from-stone-600 hover:to-stone-700 text-white rounded-lg transition-all text-sm font-semibold flex items-center justify-center gap-2 shadow-md hover:shadow-lg transform hover:scale-105"
+                    onClick={() => saveSelection(true)}
+                    className="px-4 py-2.5 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white rounded-lg transition-all text-sm font-semibold flex items-center justify-center gap-2 shadow-md hover:shadow-lg transform hover:scale-105"
                   >
                     <Save size={18} />
-                    {language === 'de' ? 'Speichern' : 'Save'}
+                    {language === 'de' ? 'Mit Übersetzung speichern' : 'Save with translation'}
                   </button>
-                </div>
-                <div className="text-xs text-center text-stone-500 dark:text-stone-400 px-2">
-                  {language === 'de' ? 'oder einfach speichern →' : 'or just save →'}
-                </div>
-              </>
-            ) : translationError ? (
-              <>
-                <div className="bg-red-100 dark:bg-red-900/30 border border-red-500 px-4 py-3 rounded-lg flex items-start gap-2 text-sm">
-                  <AlertCircle size={18} className="flex-shrink-0 mt-0.5 text-red-600 dark:text-red-400" />
-                  <div className="flex-1">
-                    <div className="font-semibold mb-1 text-red-800 dark:text-red-300">
-                      {language === 'de' ? 'Fehler' : 'Error'}
-                    </div>
-                    <div className="text-xs text-red-700 dark:text-red-400">{translationError}</div>
-                  </div>
-                </div>
-                <a
-                  href="#/settings"
-                  className="px-4 py-2.5 bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white rounded-lg transition-all text-sm font-semibold text-center shadow-md"
-                  onClick={() => {
-                    window.getSelection().removeAllRanges();
-                    setShowTranslateButton(false);
-                  }}
-                >
-                  {language === 'de' ? '⚙️ Zu Einstellungen' : '⚙️ Go to Settings'}
-                </a>
-              </>
-            ) : (
-              <>
-                <div className="px-4 py-3 text-sm bg-stone-50 dark:bg-stone-700 text-stone-800 dark:text-stone-200 rounded-lg max-h-48 overflow-y-auto border border-stone-200 dark:border-stone-600 leading-relaxed">
-                  {translatedText}
-                </div>
-                <button
-                  onClick={() => saveSelection(true)}
-                  className="px-4 py-2.5 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white rounded-lg transition-all text-sm font-semibold flex items-center justify-center gap-2 shadow-md hover:shadow-lg transform hover:scale-105"
-                >
-                  <Save size={18} />
-                  {language === 'de' ? 'Mit Übersetzung speichern' : 'Save with translation'}
-                </button>
-              </>
-            )}
+                </>
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
 
       {/* Custom CSS for text layer */}
       <style>{`

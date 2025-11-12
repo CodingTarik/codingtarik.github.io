@@ -41,10 +41,16 @@ export async function translateWithChatGPT(text, targetLanguage, apiKey, detailL
       break;
     
     case 'detailed':
-      userPrompt = `Translate this English text to ${targetLanguageName}. Provide:
-1. The translation
-2. A brief explanation of key words or idioms (if any)
-3. Alternative translations (if applicable)
+      userPrompt = `Translate this English text to ${targetLanguageName}. Provide a comprehensive translation with the following structure:
+
+1. **Translation**: The main translation(s) - if multiple meanings exist, list them separated by " / "
+2. **Explanation**: A brief explanation of the word/phrase, its meanings, and usage
+3. **Example Sentences**: Provide 2-3 example sentences showing the word/phrase in context. Format each example as:
+   - English sentence
+   - ${targetLanguageName} translation of that sentence
+4. **Notes**: Any additional hints, alternative translations, or important usage information
+
+Format your response clearly with these sections. For single words, provide detailed information about all meanings and usages.
 
 English text: "${text}"`;
       break;
@@ -75,7 +81,7 @@ English text: "${text}"`;
           }
         ],
         temperature: 0.3, // Lower temperature for more consistent translations
-        max_tokens: 500
+        max_tokens: detailLevel === 'detailed' ? 1000 : 500
       })
     });
 
@@ -94,10 +100,61 @@ English text: "${text}"`;
     }
 
     const data = await response.json();
-    const translation = data.choices[0].message.content.trim();
+    const fullTranslation = data.choices[0].message.content.trim();
+
+    // Parse translation to separate pure translation from additional info
+    let pureTranslation = fullTranslation;
+    let additionalInfo = '';
+    
+    if (detailLevel === 'detailed') {
+      // Parse structured detailed translation
+      // Look for "Translation:" or "**Translation**:" pattern
+      const translationMatch = fullTranslation.match(/(?:\*\*)?Translation(?:\*\*)?:\s*(.+?)(?:\n\n|\n(?=\*\*)?(?:Explanation|Example|Notes):|$)/is);
+      if (translationMatch) {
+        pureTranslation = translationMatch[1].trim();
+        // Everything after the translation section is additional info
+        const translationEnd = translationMatch[0].length;
+        additionalInfo = fullTranslation.substring(translationMatch.index + translationEnd).trim();
+      } else {
+        // Fallback: try to extract first meaningful line
+        const lines = fullTranslation.split('\n');
+        for (const line of lines) {
+          const trimmed = line.trim();
+          if (trimmed && !trimmed.match(/^(?:\*\*)?(?:Translation|Explanation|Example|Notes):/i)) {
+            pureTranslation = trimmed;
+            const firstLineIndex = fullTranslation.indexOf(trimmed);
+            additionalInfo = fullTranslation.substring(firstLineIndex + trimmed.length).trim();
+            break;
+          }
+        }
+      }
+    } else if (detailLevel === 'normal') {
+      // Try to extract pure translation (usually the first line or before any numbered list)
+      const lines = fullTranslation.split('\n');
+      const firstLine = lines[0].trim();
+      
+      // Check if it looks like a simple translation (no numbers, no colons after first line)
+      if (firstLine && !firstLine.match(/^\d+\./) && !firstLine.includes(':')) {
+        pureTranslation = firstLine;
+        
+        // Everything after the first line is additional info
+        if (lines.length > 1) {
+          additionalInfo = lines.slice(1).join('\n').trim();
+        }
+      } else {
+        // If it starts with numbered list or has structure, try to extract first part
+        const match = fullTranslation.match(/^([^0-9:]+?)(?:\n|$)/);
+        if (match) {
+          pureTranslation = match[1].trim();
+          additionalInfo = fullTranslation.substring(match[0].length).trim();
+        }
+      }
+    }
 
     return {
-      translation,
+      translation: fullTranslation,
+      pureTranslation: pureTranslation,
+      additionalInfo: additionalInfo,
       detailLevel,
       model: 'gpt-4o-mini'
     };
