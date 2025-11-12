@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Upload, Play, Pause, Volume2, VolumeX, Maximize, Star, Copy, Trash2, ArrowLeft, FileVideo, Subtitles, Check, Search, Download, Film, Globe, X, AlertCircle, ExternalLink } from 'lucide-react';
+import { Upload, Play, Pause, Volume2, VolumeX, Maximize, Star, Copy, Trash2, ArrowLeft, FileVideo, Subtitles, Check, Search, Download, Film, Globe, X, AlertCircle, ExternalLink, Plus } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useLanguage } from '../../../context/LanguageContext';
 import { parseSubtitle, findCurrentSubtitle, formatTime, mergeSubtitles } from '../utils/subtitleParser';
+import { getDecks } from '../utils/deckStorage';
+import { addCardLocally, getCachedCards, setCachedCards } from '../utils/vocabularyCache';
 import { 
   saveVideo, 
   getAllVideos, 
@@ -59,6 +61,7 @@ function VideoPlayerPage() {
 
   // Player state
   const videoRef = useRef(null);
+  const videoContainerRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -75,9 +78,145 @@ function VideoPlayerPage() {
   const [favorites, setFavorites] = useState([]);
   const [favoritedIds, setFavoritedIds] = useState(new Set());
 
+  // Deck management
+  const [decks, setDecks] = useState([]);
+  const [showDeckSelector, setShowDeckSelector] = useState(null); // favorite id for which to show selector
+  const [addedToDecks, setAddedToDecks] = useState(new Map()); // Map of favorite id -> array of deck ids
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  // Subtitle position (draggable)
+  const [subtitlePosition, setSubtitlePosition] = useState(() => {
+    const saved = localStorage.getItem('video_subtitle_position');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        return { x: 0, y: 0, bottom: 40 };
+      }
+    }
+    return { x: 0, y: 0, bottom: 40 };
+  });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const subtitleRef = useRef(null);
+
   useEffect(() => {
     loadVideos();
+    loadDecks();
+    
+    // Refresh decks periodically (in case decks are added in another tab)
+    const interval = setInterval(loadDecks, 2000);
+    
+    // Listen for fullscreen changes
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    
+    return () => {
+      clearInterval(interval);
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+    };
   }, []);
+
+  const loadDecks = () => {
+    const loadedDecks = getDecks();
+    setDecks(loadedDecks);
+  };
+
+  // Save subtitle position to localStorage
+  const saveSubtitlePosition = (position) => {
+    localStorage.setItem('video_subtitle_position', JSON.stringify(position));
+    setSubtitlePosition(position);
+  };
+
+  // Handle drag start
+  const handleDragStart = (e) => {
+    // Don't drag if clicking on button or its children
+    if (e.target.closest('button') || e.target.tagName === 'BUTTON') {
+      return;
+    }
+    e.preventDefault();
+    setIsDragging(true);
+    const rect = subtitleRef.current?.getBoundingClientRect();
+    const containerRect = videoContainerRef.current?.getBoundingClientRect();
+    if (rect && containerRect) {
+      setDragStart({
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top
+      });
+    }
+  };
+
+  // Handle drag
+  const handleDrag = (e) => {
+    if (!isDragging || !videoContainerRef.current || !subtitleRef.current) return;
+    
+    const containerRect = videoContainerRef.current.getBoundingClientRect();
+    const subtitleRect = subtitleRef.current.getBoundingClientRect();
+    
+    // Calculate new position
+    let x = e.clientX - containerRect.left - dragStart.x;
+    let y = e.clientY - containerRect.top - dragStart.y;
+    
+    // Constrain to container bounds
+    const maxX = containerRect.width - subtitleRect.width;
+    const maxY = containerRect.height - subtitleRect.height;
+    
+    const constrainedX = Math.max(0, Math.min(x, maxX));
+    const constrainedY = Math.max(0, Math.min(y, maxY));
+    
+    saveSubtitlePosition({
+      x: constrainedX,
+      y: constrainedY,
+      bottom: null // Clear bottom when using x/y positioning
+    });
+  };
+
+  // Handle drag end
+  const handleDragEnd = () => {
+    setIsDragging(false);
+  };
+
+  // Add mouse event listeners for dragging
+  useEffect(() => {
+    if (isDragging) {
+      const handleMouseMove = (e) => {
+        if (!videoContainerRef.current || !subtitleRef.current) return;
+        
+        const containerRect = videoContainerRef.current.getBoundingClientRect();
+        const subtitleRect = subtitleRef.current.getBoundingClientRect();
+        
+        // Calculate new position
+        let x = e.clientX - containerRect.left - dragStart.x;
+        let y = e.clientY - containerRect.top - dragStart.y;
+        
+        // Constrain to container bounds
+        const maxX = containerRect.width - subtitleRect.width;
+        const maxY = containerRect.height - subtitleRect.height;
+        
+        const constrainedX = Math.max(0, Math.min(x, maxX));
+        const constrainedY = Math.max(0, Math.min(y, maxY));
+        
+        saveSubtitlePosition({
+          x: constrainedX,
+          y: constrainedY,
+          bottom: null
+        });
+      };
+      const handleMouseUp = () => {
+        setIsDragging(false);
+      };
+      
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+      
+      return () => {
+        document.removeEventListener('mousemove', handleMouseMove);
+        document.removeEventListener('mouseup', handleMouseUp);
+      };
+    }
+  }, [isDragging, dragStart]);
 
   const loadVideos = async () => {
     try {
@@ -401,11 +540,11 @@ function VideoPlayerPage() {
   };
 
   const toggleFullscreen = () => {
-    if (videoRef.current) {
+    if (videoContainerRef.current) {
       if (document.fullscreenElement) {
         document.exitFullscreen();
       } else {
-        videoRef.current.requestFullscreen();
+        videoContainerRef.current.requestFullscreen();
       }
     }
   };
@@ -473,6 +612,51 @@ function VideoPlayerPage() {
     toast.success(language === 'en' ? 'Copied to clipboard!' : 'In Zwischenablage kopiert!', { icon: '📋' });
   };
 
+  const handleAddToDeck = async (fav, deckId) => {
+    const deck = decks.find(d => d.id === deckId);
+    if (!deck) return;
+
+    // Ensure deck has cached cards
+    let cached = getCachedCards(deckId);
+    if (!cached) {
+      // Initialize empty cache if needed
+      setCachedCards(deckId, []);
+      cached = getCachedCards(deckId);
+    }
+
+    const newCard = {
+      word: fav.primaryText,
+      translation: fav.secondaryText || '',
+      explanation: '',
+      ratingGeneral: 0
+    };
+
+    const success = addCardLocally(deckId, newCard);
+    
+    if (success) {
+      // Update addedToDecks map
+      const currentDecks = addedToDecks.get(fav.id) || [];
+      if (!currentDecks.includes(deckId)) {
+        setAddedToDecks(new Map(addedToDecks.set(fav.id, [...currentDecks, deckId])));
+      }
+      
+      toast.success(
+        language === 'de' 
+          ? `"${fav.primaryText}" zu "${deck.name}" hinzugefügt!` 
+          : `"${fav.primaryText}" added to "${deck.name}"!`,
+        { icon: '✅', duration: 2000 }
+      );
+      setShowDeckSelector(null);
+    } else {
+      toast.error(
+        language === 'de' 
+          ? 'Fehler beim Hinzufügen' 
+          : 'Error adding to deck',
+        { duration: 2000 }
+      );
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -517,30 +701,62 @@ function VideoPlayerPage() {
               favorites.map((fav) => (
                 <div
                   key={fav.id}
-                  className="bg-stone-700 rounded-lg p-3 hover:bg-stone-600 transition-colors cursor-pointer"
-                  onClick={() => jumpToTime(fav.timestamp)}
+                  className="bg-stone-700 rounded-lg p-3 hover:bg-stone-600 transition-colors"
                 >
                   <div className="flex items-start justify-between mb-2">
-                    <span className="text-xs text-stone-400">{formatTime(fav.timestamp)}</span>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        deleteFavorite(fav.id).then(() => {
-                          setFavorites(favorites.filter(f => f.id !== fav.id));
-                          setFavoritedIds(prev => {
-                            const newSet = new Set(prev);
-                            newSet.delete(fav.subtitleId);
-                            return newSet;
-                          });
-                        });
-                      }}
-                      className="text-stone-400 hover:text-red-400 transition-colors"
+                    <span 
+                      className="text-xs text-stone-400 cursor-pointer hover:text-stone-300"
+                      onClick={() => jumpToTime(fav.timestamp)}
                     >
-                      <Trash2 size={14} />
-                    </button>
+                      {formatTime(fav.timestamp)}
+                    </span>
+                    <div className="flex items-center gap-1">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (decks.length > 0) {
+                            setShowDeckSelector(showDeckSelector === fav.id ? null : fav.id);
+                          } else {
+                            toast.error(
+                              language === 'de' 
+                                ? 'Keine Decks vorhanden. Erstelle zuerst ein Deck in der Vokabel-Seite.' 
+                                : 'No decks available. Please create a deck in the Vocabulary page first.',
+                              { duration: 4000 }
+                            );
+                          }
+                        }}
+                        className="text-rose-500 hover:text-rose-600 transition-colors relative"
+                        title={language === 'de' ? 'Zu Deck hinzufügen' : 'Add to deck'}
+                      >
+                        {addedToDecks.has(fav.id) && addedToDecks.get(fav.id).length > 0 ? (
+                          <Check size={14} className="text-green-500" />
+                        ) : (
+                          <Plus size={14} />
+                        )}
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          deleteFavorite(fav.id).then(() => {
+                            setFavorites(favorites.filter(f => f.id !== fav.id));
+                            setFavoritedIds(prev => {
+                              const newSet = new Set(prev);
+                              newSet.delete(fav.subtitleId);
+                              return newSet;
+                            });
+                          });
+                        }}
+                        className="text-stone-400 hover:text-red-400 transition-colors"
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                    </div>
                   </div>
                   
-                  <div className="space-y-2">
+                  <div 
+                    className="space-y-2 cursor-pointer"
+                    onClick={() => jumpToTime(fav.timestamp)}
+                  >
                     <div className="flex items-start gap-2">
                       <p className="text-sm flex-1">{fav.primaryText}</p>
                       <button
@@ -569,6 +785,36 @@ function VideoPlayerPage() {
                       </div>
                     )}
                   </div>
+                  
+                  {showDeckSelector === fav.id && decks.length > 0 && (
+                    <div className="mt-2 pt-2 border-t border-stone-600" onClick={(e) => e.stopPropagation()}>
+                      <p className="text-xs text-stone-400 mb-2">
+                        {language === 'de' ? 'Zu Deck hinzufügen:' : 'Add to deck:'}
+                      </p>
+                      <div className="flex flex-col gap-1 max-h-40 overflow-y-auto">
+                        {decks.map(deck => {
+                          const isAdded = addedToDecks.get(fav.id)?.includes(deck.id);
+                          return (
+                            <button
+                              key={deck.id}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleAddToDeck(fav, deck.id);
+                              }}
+                              className={`text-left px-2 py-1 text-xs rounded transition-colors flex items-center justify-between ${
+                                isAdded 
+                                  ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300' 
+                                  : 'bg-stone-600 hover:bg-stone-500'
+                              }`}
+                            >
+                              <span>{deck.name}</span>
+                              {isAdded && <Check size={12} />}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))
             )}
@@ -577,12 +823,15 @@ function VideoPlayerPage() {
 
         {/* Video Player */}
         <div className="flex-1 flex flex-col">
-          {/* Video */}
-          <div className="relative flex-1 bg-black flex items-center justify-center">
+          {/* Video Container - this will be fullscreened */}
+          <div 
+            ref={videoContainerRef}
+            className="relative flex-1 bg-black flex items-center justify-center video-container-fullscreen"
+          >
             <video
               ref={videoRef}
               src={currentVideo.videoUrl}
-              className="max-w-full max-h-full"
+              className="max-w-full max-h-full w-full h-full object-contain"
               onTimeUpdate={handleTimeUpdate}
               onLoadedMetadata={handleLoadedMetadata}
               onPlay={() => setIsPlaying(true)}
@@ -591,15 +840,28 @@ function VideoPlayerPage() {
 
             {/* Subtitle Overlay */}
             {currentSubtitle && (
-              <div className="absolute bottom-32 left-0 right-0 flex flex-col items-center gap-2 px-4">
+              <div 
+                ref={subtitleRef}
+                className={`absolute flex flex-col items-center gap-2 px-4 z-10 pointer-events-none cursor-move ${
+                  isDragging ? 'select-none' : ''
+                }`}
+                style={{
+                  left: subtitlePosition.bottom === null ? `${subtitlePosition.x}px` : '50%',
+                  top: subtitlePosition.bottom === null ? `${subtitlePosition.y}px` : 'auto',
+                  bottom: subtitlePosition.bottom !== null ? `${subtitlePosition.bottom}px` : 'auto',
+                  transform: subtitlePosition.bottom === null ? 'none' : 'translateX(-50%)',
+                  transition: isDragging ? 'none' : 'none'
+                }}
+                onMouseDown={handleDragStart}
+              >
                 {/* Primary Subtitle (English) */}
-                <div className="bg-black/80 text-white px-6 py-3 rounded-lg text-xl font-semibold text-center max-w-4xl">
+                <div className={`${isFullscreen ? 'bg-black/60' : 'bg-black/80'} text-white px-6 py-3 rounded-lg text-xl font-semibold text-center max-w-4xl pointer-events-auto`}>
                   {currentSubtitle.primaryText}
                 </div>
                 
                 {/* Secondary Subtitle (Translation) */}
                 {currentSubtitle.secondaryText && (
-                  <div className="bg-stone-800/80 text-stone-200 px-6 py-2 rounded-lg text-lg text-center max-w-4xl">
+                  <div className={`${isFullscreen ? 'bg-stone-800/60' : 'bg-stone-800/80'} text-stone-200 px-6 py-2 rounded-lg text-lg text-center max-w-4xl pointer-events-auto`}>
                     {currentSubtitle.secondaryText}
                   </div>
                 )}
@@ -607,10 +869,10 @@ function VideoPlayerPage() {
                 {/* Favorite Button */}
                 <button
                   onClick={toggleFavorite}
-                  className={`p-2 rounded-full transition-all ${
+                  className={`p-2 rounded-full transition-all pointer-events-auto ${
                     favoritedIds.has(currentSubtitle.id)
                       ? 'bg-yellow-500 text-white'
-                      : 'bg-stone-700/80 text-stone-300 hover:bg-stone-600/80'
+                      : `${isFullscreen ? 'bg-stone-700/60' : 'bg-stone-700/80'} text-stone-300 hover:bg-stone-600/80`
                   }`}
                   title={language === 'en' ? 'Add to favorites' : 'Zu Favoriten hinzufügen'}
                 >
@@ -1111,6 +1373,28 @@ function VideoPlayerPage() {
           ))}
         </div>
       )}
+
+      {/* Fullscreen Video CSS */}
+      <style>{`
+        .video-container-fullscreen:fullscreen {
+          width: 100vw;
+          height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: black;
+        }
+        
+        .video-container-fullscreen:fullscreen video {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+        
+        .video-container-fullscreen:fullscreen::backdrop {
+          background: black;
+        }
+      `}</style>
     </div>
   );
 }
