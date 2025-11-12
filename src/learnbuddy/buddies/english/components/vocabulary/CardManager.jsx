@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Edit, Trash2, ArrowLeft, Save, X, Search, Download, Upload, RefreshCw, AlertCircle } from 'lucide-react';
+import { Plus, Edit, Trash2, ArrowLeft, Save, X, Search, Download, Upload, RefreshCw, AlertCircle, Copy, Check } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useLanguage } from '../../../../context/LanguageContext';
 import { fetchCardsFromSheet, addCardToSheet, updateCardInSheet, deleteCardFromSheet } from '../../utils/googleSheetsAPI';
@@ -25,6 +25,7 @@ function CardManager({ deck, onBack }) {
   const [editingCard, setEditingCard] = useState(null);
   const [isAdding, setIsAdding] = useState(false);
   const [pendingCount, setPendingCount] = useState(0);
+  const [copied, setCopied] = useState(false);
   const [formData, setFormData] = useState({
     word: '',
     translation: '',
@@ -252,6 +253,34 @@ function CardManager({ deck, onBack }) {
     card.translation.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const copyToRemNote = async () => {
+    if (!cards || cards.length === 0) return;
+
+    // Format for RemNote: Use >> separator for forward flashcards
+    // Format: "Word >> Translation" (one per line)
+    const remNoteFormat = cards
+      .map(card => `${card.word} >> ${card.translation}`)
+      .join('\n');
+
+    try {
+      await navigator.clipboard.writeText(remNoteFormat);
+      setCopied(true);
+      toast.success(
+        language === 'en' 
+          ? `Copied ${cards.length} cards to clipboard for RemNote!` 
+          : `${cards.length} Karteikarten für RemNote in Zwischenablage kopiert!`
+      );
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy:', err);
+      toast.error(
+        language === 'en' 
+          ? 'Failed to copy to clipboard' 
+          : 'Kopieren in Zwischenablage fehlgeschlagen'
+      );
+    }
+  };
+
   return (
     <div className="max-w-6xl mx-auto">
       {/* Header */}
@@ -279,6 +308,24 @@ function CardManager({ deck, onBack }) {
         </div>
         
         <div className="flex items-center gap-2">
+          <button
+            onClick={copyToRemNote}
+            disabled={cards.length === 0}
+            className="flex items-center gap-2 px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white font-bold rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            title={language === 'en' ? 'Copy all cards to clipboard for RemNote' : 'Alle Karteikarten für RemNote kopieren'}
+          >
+            {copied ? (
+              <>
+                <Check size={18} />
+                <span>{language === 'en' ? 'Copied!' : 'Kopiert!'}</span>
+              </>
+            ) : (
+              <>
+                <Copy size={18} />
+                <span>{language === 'en' ? 'Copy to RemNote' : 'Zu RemNote kopieren'}</span>
+              </>
+            )}
+          </button>
           <button
             onClick={() => handleSync(false)}
             disabled={syncing}

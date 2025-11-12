@@ -17,6 +17,7 @@ import {
   Share2, Youtube, Instagram, Lightbulb
 } from 'lucide-react';
 import { InteractiveWelcome } from './InteractiveWelcome';
+import YouTubeEmbed from './YouTubeEmbed';
 
 // Grammar game components (dynamic import to avoid issues)
 let GrammarGame = null;
@@ -31,9 +32,31 @@ function LessonContent({ content, components = {} }) {
     <div className="prose prose-stone dark:prose-invert max-w-none">
       <Markdown
         options={{
+          forceBlock: true,
+          disableParsingRawHTML: false,
           overrides: {
             // Allow div and other html elements to be rendered
-            div: { component: 'div' },
+            div: { 
+              component: 'div'
+            },
+            iframe: { 
+              component: (props) => {
+                // Handle both camelCase and lowercase attributes
+                const frameBorderValue = props.frameBorder || props.frameborder || 0;
+                const allowFullScreen = props.allowFullScreen !== undefined ? props.allowFullScreen : (props.allowfullscreen !== undefined ? props.allowfullscreen : true);
+                const className = props.className || props.class || '';
+                return (
+                  <iframe
+                    src={props.src}
+                    title={props.title}
+                    frameBorder={frameBorderValue}
+                    allow={props.allow}
+                    allowFullScreen={allowFullScreen}
+                    className={className}
+                  />
+                );
+              }
+            },
             h3: {
               component: 'h3',
               props: {
@@ -122,6 +145,7 @@ function LessonContent({ content, components = {} }) {
             Lightbulb: { component: Lightbulb },
             // Interactive Components
             InteractiveWelcome: { component: InteractiveWelcome },
+            YouTubeEmbed: { component: YouTubeEmbed },
             // Special handler for GamePlaceholder
             GamePlaceholder: {
               component: ({ id }) => {

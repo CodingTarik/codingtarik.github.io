@@ -29,6 +29,8 @@ import GrammarLevels from './learnbuddy/buddies/english/components/GrammarLevels
 import ReadingLibrary from './learnbuddy/buddies/english/components/ReadingLibrary';
 import VocabularyPage from './learnbuddy/buddies/english/components/VocabularyPage';
 import VideoPlayerPage from './learnbuddy/buddies/english/components/VideoPlayerPage';
+import WritingPage from './learnbuddy/buddies/english/components/WritingPage';
+import SpeakingPage from './learnbuddy/buddies/english/components/SpeakingPage';
 
 // LifeSkills-specific components
 import PomodoroTimer from './learnbuddy/buddies/lifeskills/components/PomodoroTimer';
@@ -361,6 +363,10 @@ function AppContent() {
         return <ReadingLibrary />;
       } else if (tabId === 'listening') {
         return <VideoPlayerPage />;
+      } else if (tabId === 'writing') {
+        return <WritingPage />;
+      } else if (tabId === 'speaking') {
+        return <SpeakingPage />;
       }
       // Other English tabs coming soon
       return (

@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { RefreshCw, ChevronLeft, ChevronRight, Check } from 'lucide-react';
+import { RefreshCw, ChevronLeft, ChevronRight, Check, Copy, BookOpen } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
+import toast from 'react-hot-toast';
 
 function Quiz({ questions }) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   if (!questions || questions.length === 0) {
     return null;
@@ -37,6 +39,34 @@ function Quiz({ questions }) {
     setIsFlipped(false);
     setIsComplete(false);
   };
+
+  const copyToRemNote = async () => {
+    if (!questions || questions.length === 0) return;
+
+    // Format for RemNote: Use >> separator for forward flashcards
+    // Format: "Question >> Answer" (one per line)
+    const remNoteFormat = questions
+      .map(q => `${q.question} >> ${q.answer}`)
+      .join('\n');
+
+    try {
+      await navigator.clipboard.writeText(remNoteFormat);
+      setCopied(true);
+      toast.success(
+        language === 'en' 
+          ? `Copied ${questions.length} questions to clipboard for RemNote!` 
+          : `${questions.length} Fragen für RemNote in Zwischenablage kopiert!`
+      );
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy:', err);
+      toast.error(
+        language === 'en' 
+          ? 'Failed to copy to clipboard' 
+          : 'Kopieren in Zwischenablage fehlgeschlagen'
+      );
+    }
+  };
   
   if (isComplete) {
     return (
@@ -61,7 +91,26 @@ function Quiz({ questions }) {
 
   return (
     <div className="bg-gradient-to-br from-teal-50 to-orange-50 dark:from-teal-900/20 dark:to-orange-900/20 rounded-lg shadow-md p-6 border-2 border-teal-500 dark:border-teal-700 mt-8">
-      <h2 className="text-xl font-bold text-stone-800 dark:text-stone-100 mb-4">{t('knowledgeCheck')}</h2>
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-xl font-bold text-stone-800 dark:text-stone-100">{t('knowledgeCheck')}</h2>
+        <button
+          onClick={copyToRemNote}
+          className="flex items-center gap-2 px-3 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded-lg transition-colors text-sm font-semibold"
+          title={language === 'en' ? 'Copy all questions to clipboard for RemNote' : 'Alle Fragen für RemNote kopieren'}
+        >
+          {copied ? (
+            <>
+              <Check size={16} />
+              <span>{language === 'en' ? 'Copied!' : 'Kopiert!'}</span>
+            </>
+          ) : (
+            <>
+              <Copy size={16} />
+              <span>{language === 'en' ? 'Copy to RemNote' : 'Zu RemNote kopieren'}</span>
+            </>
+          )}
+        </button>
+      </div>
       
       <div className="perspective-1000">
         <div 

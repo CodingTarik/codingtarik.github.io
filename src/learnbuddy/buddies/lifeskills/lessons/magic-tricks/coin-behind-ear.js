@@ -150,6 +150,12 @@ The trick uses a simple technique called the "French Drop" or "Palm Transfer". Y
 
 #### The French Drop
 
+Watch this video to see the French Drop technique in action:
+
+<YouTubeEmbed videoId="EZ0C2wh5IyE" title="French Drop Tutorial" />
+
+Key points to remember:
+
 - **Timing is everything:** The transfer must happen smoothly during the "throwing" motion.
 - **Natural movement:** Don't make the transfer obvious - let your hands come together naturally.
 - **Misdirection:** Your eyes and the "throwing" motion should draw attention away from the transfer.
@@ -307,6 +313,12 @@ Der Trick verwendet eine einfache Technik namens "French Drop" oder "Palm Transf
 ### Schlüsseltechniken
 
 #### Der French Drop
+
+Schaue dir dieses Video an, um die French-Drop-Technik in Aktion zu sehen:
+
+<YouTubeEmbed videoId="EZ0C2wh5IyE" title="French Drop Tutorial" />
+
+Wichtige Punkte zum Merken:
 
 - **Timing ist alles:** Die Übertragung muss während der "Wurf"-Bewegung reibungslos erfolgen.
 - **Natürliche Bewegung:** Mache die Übertragung nicht offensichtlich - lass deine Hände natürlich zusammenkommen.
