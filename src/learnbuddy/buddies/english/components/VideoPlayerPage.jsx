@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Upload, Play, Pause, Volume2, VolumeX, Maximize, Star, Copy, Trash2, ArrowLeft, FileVideo, Subtitles, Check, Search, Download, Film, Globe, X, AlertCircle, ExternalLink, Plus } from 'lucide-react';
+import { Upload, Play, Pause, Volume2, VolumeX, Maximize, Star, Copy, Trash2, ArrowLeft, FileVideo, Subtitles, Check, Search, Download, Film, Globe, X, AlertCircle, ExternalLink, Plus, Film as FilmIcon } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useLanguage } from '../../../context/LanguageContext';
 import { parseSubtitle, findCurrentSubtitle, formatTime, mergeSubtitles } from '../utils/subtitleParser';
@@ -83,6 +83,7 @@ function VideoPlayerPage() {
   const [showDeckSelector, setShowDeckSelector] = useState(null); // favorite id for which to show selector
   const [addedToDecks, setAddedToDecks] = useState(new Map()); // Map of favorite id -> array of deck ids
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isCinemaMode, setIsCinemaMode] = useState(false);
 
   // Subtitle position (draggable)
   const [subtitlePosition, setSubtitlePosition] = useState(() => {
@@ -118,6 +119,88 @@ function VideoPlayerPage() {
       document.removeEventListener('fullscreenchange', handleFullscreenChange);
     };
   }, []);
+
+  // Toggle cinema mode - hide/show header and bottom navigation directly
+  useEffect(() => {
+    const hideElements = () => {
+      // Find header (GlobalHeader) - it's a div with fixed top-0
+      const header = Array.from(document.querySelectorAll('div')).find(
+        el => el.classList.contains('fixed') && 
+              el.classList.contains('top-0') && 
+              el.classList.contains('left-0') &&
+              el.classList.contains('right-0') &&
+              (el.classList.contains('bg-white') || el.classList.contains('bg-stone-900'))
+      );
+      
+      // Find bottom navigation - it's a nav with fixed bottom-0
+      const bottomNav = Array.from(document.querySelectorAll('nav')).find(
+        el => el.classList.contains('fixed') && 
+              el.classList.contains('bottom-0') && 
+              el.classList.contains('left-0') &&
+              el.classList.contains('right-0') &&
+              (el.classList.contains('bg-white') || el.classList.contains('bg-stone-900'))
+      );
+
+      if (header) {
+        if (isCinemaMode) {
+          header.style.display = 'none';
+          header.setAttribute('data-cinema-hidden', 'true');
+        } else {
+          header.style.display = '';
+          header.removeAttribute('data-cinema-hidden');
+        }
+      }
+
+      if (bottomNav) {
+        if (isCinemaMode) {
+          bottomNav.style.display = 'none';
+          bottomNav.setAttribute('data-cinema-hidden', 'true');
+        } else {
+          bottomNav.style.display = '';
+          bottomNav.removeAttribute('data-cinema-hidden');
+        }
+      }
+
+      // Adjust main content padding
+      const mainContent = document.querySelector('.flex-1.pt-16.pb-20');
+      if (mainContent) {
+        if (isCinemaMode) {
+          mainContent.style.paddingTop = '0';
+          mainContent.style.paddingBottom = '0';
+        } else {
+          mainContent.style.paddingTop = '';
+          mainContent.style.paddingBottom = '';
+        }
+      }
+    };
+
+    // Call immediately and also after a short delay
+    hideElements();
+    const timeoutId = setTimeout(hideElements, 100);
+    
+    // Also watch for DOM changes
+    const observer = new MutationObserver(hideElements);
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: false
+    });
+    
+    return () => {
+      clearTimeout(timeoutId);
+      observer.disconnect();
+      // Restore elements on cleanup
+      document.querySelectorAll('[data-cinema-hidden="true"]').forEach(el => {
+        el.style.display = '';
+        el.removeAttribute('data-cinema-hidden');
+      });
+      const mainContent = document.querySelector('.flex-1.pt-16.pb-20');
+      if (mainContent) {
+        mainContent.style.paddingTop = '';
+        mainContent.style.paddingBottom = '';
+      }
+    };
+  }, [isCinemaMode]);
 
   const loadDecks = () => {
     const loadedDecks = getDecks();
@@ -928,8 +1011,21 @@ function VideoPlayerPage() {
                 <button
                   onClick={toggleFullscreen}
                   className="text-stone-300 hover:text-white transition-colors"
+                  title={language === 'en' ? 'Fullscreen' : 'Vollbild'}
                 >
                   <Maximize size={20} />
+                </button>
+
+                <button
+                  onClick={() => setIsCinemaMode(!isCinemaMode)}
+                  className={`transition-colors ${
+                    isCinemaMode 
+                      ? 'text-rose-500 hover:text-rose-400' 
+                      : 'text-stone-300 hover:text-white'
+                  }`}
+                  title={language === 'en' ? 'Cinema Mode' : 'Kino-Modus'}
+                >
+                  <FilmIcon size={20} />
                 </button>
               </div>
             </div>
@@ -1393,6 +1489,41 @@ function VideoPlayerPage() {
         
         .video-container-fullscreen:fullscreen::backdrop {
           background: black;
+        }
+
+        /* Cinema Mode - Hide Header and Bottom Navigation */
+        body.cinema-mode div.fixed.top-0,
+        body.cinema-mode nav.fixed.bottom-0,
+        body.cinema-mode .cinema-mode-active > div:first-child,
+        body.cinema-mode .cinema-mode-active > nav:last-child {
+          display: none !important;
+          visibility: hidden !important;
+          opacity: 0 !important;
+          height: 0 !important;
+          overflow: hidden !important;
+        }
+
+        /* Adjust padding when cinema mode is active */
+        body.cinema-mode .flex-1.pt-16.pb-20,
+        body.cinema-mode .cinema-mode-active > .flex-1 {
+          padding-top: 0 !important;
+          padding-bottom: 0 !important;
+        }
+
+        /* Make video player take full height in cinema mode */
+        body.cinema-mode .flex.h-screen {
+          height: 100vh !important;
+          margin-top: 0 !important;
+        }
+
+        /* Ensure video container uses full viewport in cinema mode */
+        body.cinema-mode .flex.h-screen.bg-stone-900 {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          z-index: 40;
         }
       `}</style>
     </div>
