@@ -1,0 +1,858 @@
+Absolut. Hier ist das vollständige, kombinierte "GymBuddy Curriculum" mit der detaillierten Übungsbibliothek, wie gewünscht ohne Bild-Platzhalter.
+
+═══════════════════════════════════════════════════════════════════════════════
+**GYMBUDDY - KOMPLETTES CURRICULUM FÜR KRAFT- & MUSKELAUFBAU**
+═══════════════════════════════════════════════════════════════════════════════
+
+Version: 1.1
+Zielgruppe: Absolute Anfänger bis mittleres Niveau
+Empfohlene Dauer: 6-12 Monate für alle Kernlektionen
+
+═══════════════════════════════════════════════════════════════════════════════
+**PHASE 1: GRUNDLAGEN & ERSTE SCHRITTE (Woche 1-4)**
+═══════════════════════════════════════════════════════════════════════════════
+
+**MODUL 1.1: EINFÜHRUNG & ZIELSETZUNG**
+──────────────────────────────────
+□ Was ist Krafttraining? (Und was ist es nicht?)
+  - Definition: Widerstandstraining zur Stärkung der Muskulatur
+  - Ziele: Muskelaufbau (Hypertrophie), Maximalkraft (Powerlifting), Kraftausdauer, Ästhetik (Bodybuilding), Gesundheit
+  - Mythen: "Frauen werden zu muskulös", "Gewichte sind schlecht für Gelenke"
+□ Warum Krafttraining?
+  - Physisch: Stärkere Knochen, besserer Stoffwechsel, Haltungsverbesserung, Verletzungsprävention
+  - Mental: Disziplin, Stressabbau, Selbstbewusstsein
+□ Trainingsarten verstehen
+  - Klassisches Bodybuilding (Fokus auf Muskelwachstum & Ästhetik)
+  - Powerlifting (Fokus auf Maximalkraft: Kniebeuge, Bankdrücken, Kreuzheben)
+  - CrossFit (Kombination aus Gewichtheben, Gymnastik, Ausdauer)
+  - Calisthenics (Training mit Eigengewicht - siehe Phase 6)
+
+**MODUL 1.2: SICHERHEIT & STUDIO-ETIKETTE**
+───────────────────────────────────────────
+□ Das Wichtigste: Verletzungsprävention
+  - **Technik > Gewicht!** Das Ego an der Tür lassen.
+  - Immer aufwärmen (siehe Modul 5.2)
+  - Höre auf deinen Körper: Schmerz (stechend, plötzlich) vs. Muskelkater (dumpf, verzögert)
+  - Bei Schmerz: Training abbrechen, nicht "durchbeißen".
+□ Richtiges "Failen" (Gewicht sicher ablegen)
+  - Bankdrücken: "Roll of Shame" (Langhantel auf Bauch/Hüfte abrollen) oder Sicherheitsablagen nutzen
+  - Kniebeuge: Gewicht kontrolliert nach hinten abwerfen (im Rack!)
+□ Spotting - Den Partner sichern
+  - Wann spotten? (Bankdrücken, Kniebeuge – wenn kein Rack)
+  - Kommunikation: Wie viele Wiederholungen sind geplant? Wann eingreifen?
+  - Nicht die Hantel hochreißen, sondern nur leicht unterstützen.
+□ Studio-Etikette (Die ungeschriebenen Regeln)
+  - Gewichte nach Benutzung zurückräumen.
+  - Geräte mit Handtuch benutzen und ggf. desinfizieren.
+  - Keine Sätze "campieren" (Handy-Pausen auf dem Gerät).
+  - Frage höflich: "Wie viele Sätze hast du noch?" oder "Können wir uns abwechseln?"
+  - Sicherheits-Clips an der Langhantel nutzen.
+
+**MODUL 1.3: FUNDAMENTALES VOKABULAR (DAS GYM-ABC)**
+───────────────────────────────────────────
+□ **Wiederholung (Rep):** Die einmalige Ausführung einer Übung (z.B. 1x Bankdrücken hoch und runter).
+□ **Satz (Set):** Eine Gruppe von Wiederholungen ohne Pause (z.B. 3 Sätze à 10 Wiederholungen = 3x10).
+□ **Pause:** Die Erholungszeit zwischen den Sätzen (z.B. 60-180 Sekunden).
+□ **Intensität:** Wie schwer das Gewicht im Verhältnis zu deiner Maximalkraft ist (oft in % der 1RM angegeben).
+□ **Volumen:** Die Gesamtbelastung (Sätze x Wiederholungen x Gewicht).
+□ **Frequenz:** Wie oft du eine Muskelgruppe oder Übung pro Woche trainierst.
+□ **Progressive Overload:** Das Kernprinzip des Fortschritts (siehe Modul 3.2).
+□ **ROM (Range of Motion):** Der volle Bewegungsumfang einer Übung.
+□ **Konzentrisch:** Die Muskelverkürzung (das Drücken/Ziehen des Gewichts).
+□ **Exzentrisch:** Die Muskelverlängerung (das kontrollierte Ablassen des Gewichts).
+□ **Compound (Verbundübung):** Trainiert mehrere Gelenke/Muskeln gleichzeitig (z.B. Kniebeuge).
+□ **Isolation (Isolationsübung):** Trainiert nur ein Gelenk/Muskel (z.B. Bizeps Curl).
+
+**MODUL 1.4: BASIS-ANATOMIE (DEINE MUSKEL-LANDKARTE)**
+───────────────────────────────────────────
+□ **Oberkörper (Push):**
+  - **Pectoralis** (Brustmuskel): Für Drückbewegungen (Bankdrücken).
+  - **Deltoideus** (Schulter): Vordere, seitliche, hintere Anteile (Überkopfdrücken, Seitheben).
+  - **Triceps** (Armstrecker): Rückseite des Oberarms (Dips, Trizepsdrücken).
+□ **Oberkörper (Pull):**
+  - **Latissimus Dorsi ("Lats"):** Großer Rückenmuskel, für "Breite" (Klimmzüge, Latzug).
+  - **Trapezius ("Traps"):** Nacken/oberer Rücken (Kreuzheben, Shrugs).
+  - **Rhomboiden/Hintere Schulter:** Zwischen den Schulterblättern (Rudern).
+  - **Biceps** (Armbeuger): Vorderseite des Oberarms (Curls).
+□ **Unterkörper:**
+  - **Quadriceps ("Quads"):** Oberschenkel-Vorderseite (Kniebeuge, Beinstrecker).
+  - **Hamstrings:** Oberschenkel-Rückseite (Kreuzheben, Beinbeuger).
+  - **Gluteus** (Gesäßmuskel): Der stärkste Muskel (Kniebeuge, Kreuzheben, Hip Thrusts).
+  - **Waden:** Unterschenkel-Rückseite (Wadenheben).
+□ **Rumpf (Core):**
+  - **Rectus Abdominis** (Bauchmuskeln): "Sixpack" (Crunches).
+  - **Obliques** (Seitliche Bauchmuskeln): Rotation (Russian Twist).
+  - **Transversus/Core-Stabilität:** Tief liegende Muskeln (Planks, alle Grundübungen).
+
+**MODUL 1.5: AUSRÜSTUNG (WAS BRAUCHT MAN WIRKLICH?)**
+───────────────────────────────────────────
+□ **Must-Haves:**
+  - Bequeme Sportkleidung & Handtuch.
+  - Schuhe mit flacher, fester Sohle (z.B. Chucks, Vans) für Kniebeugen/Kreuzheben (keine Jogging-Schuhe!).
+  - Wasserflasche.
+□ **Optional (Nice-to-Have für Fortgeschrittene):**
+  - **Gewichthebergürtel:** Stützt den Rumpf bei sehr schweren Sätzen (Kniebeuge/Kreuzheben). *Lernt es erst ohne!*
+  - **Zughilfen:** Helfen bei Griffkraft-Limitierung (z.B. schweres Rudern, Kreuzheben).
+  - **Kreide (Chalk):** Für besseren Grip (flüssig oder Pulver, falls im Studio erlaubt).
+  - **Knie-Stulpen (Sleeves):** Wärmen das Gelenk (keine Bandagen!).
+
+═══════════════════════════════════════════════════════════════════════════════
+**PHASE 2 (ERWEITERT): DIE GROSSE ÜBUNGS-BIBLIOTHEK**
+═══════════════════════════════════════════════════════════════════════════════
+*Dies ist ein Nachschlagewerk der gängigsten und effektivsten Übungen, sortiert nach der primären Zielmuskulatur. Lerne, diese Übungen mit perfekter Technik auszuführen, bevor du das Gewicht steigerst.*
+
+---
+
+**MODUL 2.1: BRUST (PEKTORALIS)**
+──────────────────────────────────
+*Funktion: Drücken des Arms nach vorne und zur Körpermitte.*
+
+□ **Flachbank (Gesamte Brust, Fokus auf mittleren Anteil)**
+  - **Langhantel-Bankdrücken (Flat Barbell Bench Press):** Die Königsdisziplin für rohe Druckkraft. *Technik-Fokus: Schulterblätter zurückziehen, Füße fest am Boden, Stange auf die Brustwarzen.*
+  - **Kurzhantel-Bankdrücken (Flat Dumbbell Bench Press):** Erlaubt mehr Bewegungsradius (ROM) und gleicht Dysbalancen aus.
+  - **Liegestütze (Push-ups):** Die beste Eigengewichts-Brustübung. Varianten: Breit, Eng (Trizeps), Erhöht (leichter).
+
+□ **Schrägbank (Oberer Anteil der Brust)**
+  - **Langhantel-Schrägbankdrücken (Incline Barbell Press):** Ziel: Obere Brustfasern. Bank auf 15-30 Grad einstellen.
+  - **Kurzhantel-Schrägbankdrücken (Incline Dumbbell Press):** Für viele die beste Übung für die obere Brust, da die Schultern natürlicher rotieren können.
+
+□ **Negativbank & Dips (Unterer Anteil der Brust)**
+  - **Negativ-Bankdrücken (Decline Bench Press):** (LH oder KH) Fokussiert die unteren Brustfasern.
+  - **Dips (Vorgebeugt):** Am Barren. Oberkörper nach vorne lehnen, Ellenbogen leicht nach außen.
+
+□ **Isolations- & Maschinenübungen (Fokus auf Dehnung & Kontraktion)**
+  - **Fliegende (Dumbbell Flys):** (Flachbank, Schrägbank) Fokus auf die Dehnung der Brust. *Achtung: Nicht zu schwer, Schulterrisiko.*
+  - **Cable Crossovers (Kabelzug über Kreuz):** Ermöglicht konstante Spannung. Von oben (untere Brust), von unten (obere Brust) oder mittig.
+  - **Butterfly / Pec-Deck (Maschine):** Isolationsübung, super für "Pump" am Ende.
+  - **Brustpresse (Sitzend, Maschine):** Geführte Bewegung, gut für Anfänger oder als Ergänzung.
+
+---
+
+**MODUL 2.2: RÜCKEN (LATISSIMUS, TRAPEZIUS, RHOMBOIDEN)**
+─────────────────────────────────────────────
+*Funktion: Ziehen des Arms zum Körper (vertikal oder horizontal).*
+
+□ **Vertikales Ziehen (Fokus auf "Breite" / Latissimus)**
+  - **Klimmzüge (Pull-ups / Chin-ups):** König der Rückenübungen. Obergriff (Pull-up) = mehr Lat. Untergriff (Chin-up) = mehr Bizeps-Hilfe.
+  - **Latzug (Lat Pulldown Machine):** Die Maschinen-Alternative zum Klimmzug. Varianten: Breiter Griff, enger Griff, V-Griff, neutraler Griff.
+  - **Einarmiger Latzug (Kabel oder Maschine):** Gut für die Isolierung eines Lats.
+
+□ **Horizontales Ziehen (Fokus auf "Dichte" / Rhomboiden, Trapezius)**
+  - **Langhantel-Rudern (Vorgebeugt / Pendlay Row):** Massen-Bauer für den oberen Rücken. *Technik-Fokus: Rücken absolut gerade halten!*
+  - **Kurzhantel-Rudern (Einarmig / Dumbbell Row):** Auf Bank abstützen, erlaubt schwere Gewichte und große ROM.
+  - **T-Bar Rudern (T-Bar Row):** (Mit Griff oder "Landmine") Erlaubt eine neutrale Griffposition.
+  - **Rudern am Kabelzug (Sitzend / Seated Cable Row):** Mit V-Griff (eng, Fokus Dichte) oder Stange (breit, Fokus oberer Rücken).
+  - **Rudern an der Maschine (Sitzend / Machine Row):** Brustgestützt (Chest-Supported) = schont den unteren Rücken.
+
+□ **Unterer Rücken & Nacken**
+  - **Kreuzheben (Deadlift):** (Konventionell, Sumo) Die ultimative Ganzkörperübung mit Fokus auf die gesamte "hintere Kette" (Rücken, Gluteus, Hamstrings).
+  - **Rumänisches Kreuzheben (Romanian Deadlift - RDL):** Siehe Beine (Fokus Hamstrings), aber trainiert auch den Rückenstrecker isometrisch.
+  - **Hyperextensions / Back Extensions:** Am 45-Grad-Gerät. Trainiert den Rückenstrecker.
+  - **Shrugs (Achselzucken):** (LH oder KH) Für den oberen Nacken/Trapezius.
+
+---
+
+**MODUL 2.3: SCHULTERN (DELTOIDEUS)**
+─────────────────────────────────────────────
+*Funktion: Heben des Arms (vorne, seitlich, hinten).*
+
+□ **Vordere Schulter (Anterior Deltoid)**
+  - **Überkopfdrücken (Overhead Press / Military Press):** (LH oder KH, stehend oder sitzend) Die Grundübung für Schulterkraft.
+  - **Schulterdrücken an der Maschine:** Geführte Alternative.
+  - **Frontheben (Front Raises):** (KH, Scheibe oder Kabel) Isolationsübung. *Oft unnötig, da bei allem Drücken mittrainiert.*
+
+□ **Seitliche Schulter (Lateral Deltoid) - Für "breite" Schultern!**
+  - **Seitheben (Dumbbell Lateral Raises):** Die wichtigste Übung für Schulterbreite. *Technik-Fokus: Ellenbogen führt, nicht das Handgelenk.*
+  - **Seitheben am Kabel (Cable Lateral Raises):** Einarmig, konstante Spannung.
+  - **Seitheben an der Maschine (Lateral Raise Machine):** Strikte Isolation.
+
+□ **Hintere Schulter (Posterior Deltoid) - Wichtig für Haltung & Schultergesundheit!**
+  - **Vorgebeugtes Seitheben (Bent-over Dumbbell Raises):** Oberkörper fast waagerecht, "Reverse Flys".
+  - **Reverse Flys an der Maschine / Pec-Deck Reverse:** Einfacher zu isolieren als frei.
+  - **Face Pulls:** Am Kabelzug mit Seil. Zieht zum Gesicht, Ellenbogen hoch. Essentiell für Schultergesundheit!
+
+---
+
+**MODUL 2.4: BEINE (QUADS, HAMSTRINGS, GLUTEUS, WADEN)**
+────────────────────────────────────────────────────
+
+□ **Quadriceps (Oberschenkel-Vorderseite)**
+  - **Langhantel-Kniebeuge (Barbell Back Squat):** Die Grundübung für Beinkraft. (High-Bar vs. Low-Bar Position).
+  - **Frontkniebeuge (Front Squat):** Hantel vor der Brust. Extrem Quad-lastig, fordert den Rumpf.
+  - **Beinpresse (Leg Press):** Maschine. Erlaubt hohes Volumen ohne Belastung des unteren Rückens.
+  - **Ausfallschritte (Lunges):** (KH, LH oder Gehend) Trainiert Quads, Gluteus und Balance.
+  - **Bulgarische Split Squats (Bulgarian Split Squats):** Einbeinig, hinterer Fuß erhöht. Brutal effektiv.
+  - **Beinstrecker (Leg Extensions):** Reine Isolationsübung für den Quadrizeps.
+  - **Goblet Squat (Kelch-Kniebeuge):** Perfekt für Anfänger. Kurzhantel vor der Brust halten.
+
+□ **Hamstrings (Oberschenkel-Rückseite) & Gluteus (Gesäß)**
+  - **Rumänisches Kreuzheben (Romanian Deadlift - RDL):** (LH oder KH) Fokus auf Hamstring-Dehnung. Rücken bleibt gerade, Knie fast gestreckt.
+  - **Gestrecktes Kreuzheben (Straight-Leg Deadlift - SLDL):** Ähnlich RDL, aber Beine bleiben komplett gestreckt (mehr Dehnung).
+  - **Beinbeuger (Leg Curls):** (Liegend, sitzend oder stehend) Isolationsübung für die Hamstrings.
+  - **Hip Thrusts:** (LH oder Maschine) Die beste Übung zur direkten Isolation des Gluteus.
+  - **Good Mornings:** (LH) Ähnlich RDL, aber Hantel im Nacken. *Hohes Verletzungsrisiko, nur für Fortgeschrittene.*
+
+□ **Waden (Gastrocnemius & Soleus)**
+  - **Wadenheben Stehend (Standing Calf Raises):** (Maschine, in Multipresse oder frei) Trainiert den Gastrocnemius (oberer Wadenkopf).
+  - **Wadenheben Sitzend (Seated Calf Raises):** (Maschine) Knie gebeugt. Trainiert den Soleus (tiefer Wadenmuskel).
+
+---
+
+**MODUL 2.5: ARME (BIZEPS, TRIZEPS, UNTERARME)**
+─────────────────────────────────────────────
+
+□ **Trizeps (Armstrecker - ca. 2/3 der Armmasse!)**
+  - **Enges Bankdrücken (Close-Grip Bench Press):** Grundübung für Trizeps-Masse.
+  - **Dips (Aufrecht):** Am Barren oder Bank. Oberkörper bleibt aufrecht, Ellenbogen eng am Körper.
+  - **Trizepsdrücken am Kabelzug (Cable Pushdowns):** Mit Seil (Fokus äußerer Kopf) oder Stange (Fokus langer Kopf).
+  - **French Press / Skullcrushers:** (SZ-Stange oder KH, liegend) Starke Dehnung für den langen Kopf.
+  - **Overhead Extensions:** (KH oder Seil) Ebenfalls für den langen Kopf.
+
+□ **Bizeps (Armbeuger)**
+  - **Langhantel-Curls (Barbell Curls):** (Gerade Stange oder SZ-Stange) Massen-Bauer für den Bizeps.
+  - **Kurzhantel-Curls (Dumbbell Curls):** (Stehend oder sitzend, alternierend oder beidseitig) Erlaubt Supination (Eindrehen des Handgelenks).
+  - **Schrägbank Kurzhantel-Curls (Incline Dumbbell Curls):** Sitzen auf Schrägbank, Arme hängen senkrecht. Maximale Dehnung des Bizeps.
+  - **Hammer Curls:** (KH) Neutraler Griff. Trainiert Bizeps und Brachialis (für "dickere" Arme).
+  - **Konzentrations-Curls (Concentration Curls):** Sitzend, Ellenbogen am Oberschenkel. Reine Isolation.
+  - **Preacher Curls:** (Maschine oder SZ-Stange) Isoliert den Bizeps, indem die Schulter blockiert wird.
+
+□ **Unterarme (Griffkraft)**
+  - **Handgelenks-Curls (Wrist Curls):** (Unter- und Obergriff)
+  - **Farmer's Walk:** (Schwere KH oder Trap-Bar) Gehen für maximale Griffkraft.
+  - *(Wird bei allen schweren Zug- und Halteübungen mittrainiert!)*
+
+---
+
+**MODUL 2.6: RUMPF (CORE: BAUCH, SEITEN, STABILITÄT)**
+────────────────────────────────────────────────
+
+□ **Gerade Bauchmuskeln (Rectus Abdominis)**
+  - **Crunches:** Klassiker. *Fokus: Nur oberen Rücken einrollen, nicht den Nacken reißen.*
+  - **Crunches am Kabel (Cable Crunshes):** Ermöglicht Widerstand und Progression.
+  - **Beinheben (Leg Raises):** (Liegend oder hängend) Fokus auf den unteren Bauchanteil.
+  - **Ab-Wheel (Bauchroller):** Extrem effektive Anti-Extensions-Übung für den gesamten Rumpf.
+
+□ **Seitliche Bauchmuskeln (Obliques)**
+  - **Russian Twists:** (Mit Gewicht oder Eigengewicht) Rotationsübung.
+  - **Seit-Plank (Side Plank):** Statisches Halten.
+  - **Wood Chops (Holzhacken am Kabel):** Diagonale Rotationsübung.
+  - **Seitliches Oberkörperbeugen (Side Bends):** (Mit KH) *Vorsicht: Kann die Taille "breiter" machen.*
+
+□ **Stabilisierender Rumpf (Ganzkörper-Spannung)**
+  - **Plank / Unterarmstütz:** Die Basis-Übung. *Fokus: Becken kippen, Po anspannen, kein Hohlkreuz.*
+  - **Pallof Press:** Anti-Rotations-Übung am Kabelzug. Zieht seitlich am Körper, du hältst dagegen.
+  - *(Der Rumpf wird bei Kniebeugen, Kreuzheben und Überkopfdrücken massiv mittrainiert!)*
+
+═══════════════════════════════════════════════════════════════════════════════
+**PHASE 3: TRAININGSPLANUNG & PROGRESSION (Woche 13-24)**
+═══════════════════════════════════════════════════════════════════════════════
+
+**MODUL 3.1: TRAININGSPLAN GESTALTEN (SPLITS)**
+─────────────────────────────────────────────
+□ **Ziel: Frequenz vs. Volumen.** Jede Muskelgruppe sollte idealerweise 2x pro Woche trainiert werden.
+□ **Option 1: Ganzkörper-Plan (GK)**
+  - **Für wen?** Absolute Anfänger (2-3x pro Woche).
+  - **Wie?** Jede Trainingseinheit besteht aus Übungen für den ganzen Körper.
+  - **Konkreter Beispiel-Plan (3x/Woche):**
+    * Tag 1, 3, 5:
+      - Kniebeuge: 3x8-10
+      - Bankdrücken: 3x8-10
+      - Rudern (Kabel oder KH): 3x8-10
+      - Überkopfdrücken: 3x8-10
+      - Kreuzheben: 2x5 (nur 1-2x pro Woche!)
+      - Plank: 3x30-60 Sek
+  - **Progression:** Woche für Woche Gewicht oder Wiederholungen steigern.
+  - **Dauer:** 60-75 Minuten pro Session.
+
+□ **Option 2: Oberkörper / Unterkörper (OK/UK)**
+  - **Für wen?** Fortgeschrittene Anfänger (4x pro Woche).
+  - **Wie?** Tag 1: OK, Tag 2: UK, Tag 3: Pause, Tag 4: OK, Tag 5: UK.
+  - **Konkreter Beispiel-Plan:**
+    * **OK-Tag:**
+      - Bankdrücken: 4x6-8
+      - Schrägbank KH: 3x10-12
+      - Klimmzüge/Latzug: 4x6-10
+      - Rudern (KH einarmig): 3x10-12
+      - Überkopfdrücken: 3x8-10
+      - Seitheben: 3x12-15
+      - Trizeps Pushdowns: 3x10-12
+      - Bizeps Curls: 3x10-12
+    * **UK-Tag:**
+      - Kniebeuge: 4x6-8
+      - Rumänisches Kreuzheben: 3x8-10
+      - Beinpresse: 3x12-15
+      - Beinbeuger: 3x10-12
+      - Hip Thrusts: 3x12-15
+      - Wadenheben: 4x12-15
+      - Crunches: 3x15-20
+
+□ **Option 3: Push / Pull / Legs (PPL)**
+  - **Für wen?** Mittleres Niveau (3-6x pro Woche).
+  - **Wie?** Tag 1: Push, Tag 2: Pull, Tag 3: Legs, Tag 4: Pause, dann wiederholen.
+  - **Konkreter Beispiel-Plan:**
+    * **Push-Tag (Brust, Schulter, Trizeps):**
+      - Bankdrücken: 4x6-8
+      - Schrägbank KH: 3x10-12
+      - Dips: 3x8-12
+      - Überkopfdrücken: 4x6-8
+      - Seitheben: 4x12-15
+      - Face Pulls: 3x15-20
+      - Trizeps Pushdowns: 3x10-12
+      - Overhead Extensions: 3x10-12
+    * **Pull-Tag (Rücken, Bizeps):**
+      - Kreuzheben: 3x5 (nur 1x pro Woche!)
+      - Klimmzüge: 4x6-10
+      - Latzug: 3x10-12
+      - Rudern (KH einarmig): 4x8-10
+      - Rudern am Kabel: 3x10-12
+      - Face Pulls: 3x15-20
+      - Bizeps Curls: 4x10-12
+      - Hammer Curls: 3x10-12
+    * **Legs-Tag (Beine, Waden, Core):**
+      - Kniebeuge: 4x6-8
+      - Rumänisches Kreuzheben: 3x8-10
+      - Beinpresse: 3x12-15
+      - Beinbeuger: 3x10-12
+      - Beinstrecker: 3x12-15
+      - Hip Thrusts: 3x12-15
+      - Wadenheben: 4x15-20
+      - Plank: 3x60 Sek
+      - Crunches: 3x15-20
+
+□ **Option 4: Bodybuilding-Splits (z.B. 3er/4er/5er)**
+  - **Für wen?** Fortgeschrittene (Fokus Ästhetik, 4-6x pro Woche).
+  - **Wie?** Jede Muskelgruppe 1x pro Woche, aber mit sehr hohem Volumen.
+  - **Beispiel 4er-Split:**
+    * Tag 1: Brust + Trizeps
+    * Tag 2: Rücken + Bizeps
+    * Tag 3: Beine + Waden
+    * Tag 4: Schultern + Bauch
+    * Tag 5-7: Wiederholen oder Pause
+  - **Nachteil:** Geringe Frequenz (1x pro Woche pro Muskelgruppe), daher nur für sehr fortgeschrittene Athleten mit hohem Volumen pro Session.
+
+□ **Option 5: Upper/Lower 2x (4x pro Woche)**
+  - **Für wen?** Sehr effizient für Fortgeschrittene Anfänger bis Mittelstufe.
+  - **Wie?** OK/UK, aber jede Muskelgruppe 2x pro Woche.
+  - **Beispiel:**
+    * Mo: Upper A (Fokus Drücken)
+    * Di: Lower A (Fokus Quads)
+    * Mi: Pause
+    * Do: Upper B (Fokus Ziehen)
+    * Fr: Lower B (Fokus Hamstrings/Glutes)
+    * Sa/So: Pause
+
+**MODUL 3.2: PROGRESSIVE OVERLOAD (DER SCHLÜSSEL ZUM AUFBAU!)**
+─────────────────────────────────────────────────────────────
+□ **Definition:** Um stärker zu werden oder Muskeln aufzubauen, muss der Trainingsreiz *mit der Zeit* gesteigert werden. Der Körper passt sich nur an, wenn er muss.
+□ **Wie steigern? (Die 5 Methoden)**
+  - **1. Gewicht steigern (Intensity):** Der Klassiker. Wenn 3x8 Reps mit 50kg schaffst, versuche 52,5kg.
+  - **2. Wiederholungen steigern (Volume):** Wenn 50kg für 8 Reps schaffst, versuche beim nächsten Mal 9 Reps mit 50kg.
+  - **3. Sätze steigern (Volume):** Statt 3x8, mache 4x8 mit demselben Gewicht.
+  - **4. Pausen verkürzen (Density):** Statt 120 Sek. Pause nur 90 Sek. (Eher für Kraftausdauer).
+  - **5. Technik verbessern (Efficiency):** Bessere ROM oder Mind-Muscle-Connection.
+
+**MODUL 3.3: INTENSITÄT STEUERN (WIE SCHWER IST SCHWER GENUG?)**
+─────────────────────────────────────────────────────────────
+□ **Hypertrophie-Bereich:** Meist wird 6-15 Wiederholungen pro Satz empfohlen.
+  - **6-8 Reps:** Fokus auf Kraft & Hypertrophie (schwere Grundübungen)
+  - **8-12 Reps:** Klassischer Hypertrophie-Bereich (optimal für Muskelaufbau)
+  - **12-15 Reps:** Höheres Volumen, mehr "Pump" (Isolationsübungen)
+  - **15+ Reps:** Kraftausdauer (weniger effektiv für Masse)
+□ **RIR (Reps in Reserve):**
+  - "Wie viele Wiederholungen hättest du *noch* geschafft?"
+  - Für Muskelaufbau: Trainiere meist mit **1-3 RIR**. (Du hörst auf, wenn du noch 1-3 saubere Reps im Tank hättest).
+  - **RIR 0 = Muskelversagen:** Nur selten, bei Isolationsübungen, am Ende des Trainings.
+  - **RIR 1-2:** Optimal für Hypertrophie bei Grundübungen
+  - **RIR 3-4:** Für schwere Sätze oder wenn du mehrere Sätze machst
+□ **Deload-Woche:**
+  - Alle 4-8 Wochen. Eine Woche mit stark reduziertem Volumen/Intensität (z.B. 50% der Sätze, 50% des Gewichts).
+  - Essentiell für langfristige Regeneration (Gelenke, Sehnen, Nervensystem).
+  - **Wann?** Wenn du dich müde fühlst, Gewichte nicht mehr steigern kannst, oder Schmerzen auftreten.
+  - **Wie?** Gleiche Übungen, aber weniger Gewicht und/oder weniger Sätze.
+
+**MODUL 3.5: ERWEITERTE TRAININGSMETHODEN (FÜR FORTGESCHRITTENE)**
+─────────────────────────────────────────────────────────────
+□ **Supersets:**
+  - Zwei Übungen hintereinander ohne Pause (spart Zeit, erhöht Intensität).
+  - **Beispiel:** Bizeps Curls → Trizeps Pushdowns (Antagonisten-Superset).
+  - **Vorsicht:** Kann Erschöpfung erhöhen, daher nicht bei schweren Grundübungen!
+□ **Drop Sets:**
+  - Satz bis zum Versagen, dann sofort Gewicht reduzieren und weiter machen.
+  - **Beispiel:** Latzug 60kg bis Versagen → sofort 50kg → sofort 40kg.
+  - Sehr intensiv! Nur 1-2x pro Training, am Ende einer Übung.
+□ **Rest-Pause:**
+  - Satz bis Versagen, kurze Pause (15-30 Sek), dann weitere Reps bis Versagen.
+  - **Beispiel:** Bankdrücken 8 Reps → 20 Sek Pause → 3 weitere Reps → 20 Sek Pause → 2 weitere Reps.
+□ **Pyramiden-Sätze:**
+  - Gewicht steigern, Wiederholungen reduzieren (oder umgekehrt).
+  - **Beispiel:** 12 Reps @ 40kg → 10 Reps @ 45kg → 8 Reps @ 50kg → 6 Reps @ 55kg.
+□ **Giant Sets:**
+  - 3-4 Übungen für dieselbe Muskelgruppe hintereinander ohne Pause.
+  - **Beispiel (Brust):** Bankdrücken → Schrägbank → Fliegende → Dips.
+  - Extrem intensiv! Nur für Fortgeschrittene.
+□ **Tempo-Training:**
+  - Kontrollierte Bewegungsgeschwindigkeit (z.B. 3 Sek runter, 1 Sek hoch).
+  - **Beispiel:** "3-1-2-0" = 3 Sek exzentrisch, 1 Sek Pause unten, 2 Sek konzentrisch, 0 Sek Pause oben.
+  - Erhöht Time Under Tension (TUT), sehr effektiv für Hypertrophie.
+□ **Cluster Sets:**
+  - Satz in Mini-Sätze aufteilen mit kurzen Pausen dazwischen.
+  - **Beispiel:** 5 Reps → 30 Sek Pause → 5 Reps → 30 Sek Pause → 5 Reps (statt 15 Reps am Stück).
+  - Ermöglicht mehr Volumen mit schwereren Gewichten.
+
+**MODUL 3.4: DAS TRAININGS-LOGBUCH**
+───────────────────────────────────
+□ Warum? Du kannst nicht steigern, was du nicht misst.
+□ Was eintragen?
+  - Datum, Übung, Gewicht, Sätze, Wiederholungen.
+  - Notizen (z.B. "fühlte sich leicht an", "RIR 2", "Schulter etwas schmerzhaft").
+  - Körpergewicht (morgens, nüchtern).
+  - Schlafqualität (1-10).
+  - Energie-Level (1-10).
+□ Ziel: Im nächsten Training die Zahlen vom letzten Mal (leicht) überbieten (Progressive Overload!).
+□ **Apps empfehlen:** Strong, Hevy, Jefit (kostenlos), TrainHeroic (kostenpflichtig).
+
+**MODUL 3.6: PERIODISIERUNG (LANGFRISTIGE PLANUNG)**
+───────────────────────────────────────────────────
+□ **Was ist Periodisierung?** Strukturierte Planung des Trainings über Wochen/Monate, um Plateaus zu vermeiden.
+□ **Lineare Periodisierung:**
+  - Gewicht steigt kontinuierlich, Wiederholungen sinken.
+  - **Beispiel:** Woche 1-4: 4x10 @ 60kg → Woche 5-8: 4x8 @ 70kg → Woche 9-12: 4x6 @ 80kg.
+  - Gut für Anfänger, die noch linear Fortschritte machen.
+□ **Undulierende Periodisierung (Wöchentlich):**
+  - Verschiedene Intensitäten innerhalb einer Woche.
+  - **Beispiel:** Mo (schwer, 4x6) → Mi (mittel, 4x8) → Fr (leicht, 4x10).
+  - Sehr effektiv für Fortgeschrittene!
+□ **Block-Periodisierung:**
+  - Verschiedene Phasen mit verschiedenen Zielen.
+  - **Phase 1 (4-6 Wochen):** Kraft (3-5 Reps, schwer)
+  - **Phase 2 (4-6 Wochen):** Hypertrophie (8-12 Reps, mittel)
+  - **Phase 3 (2-4 Wochen):** Deload (50% Volumen)
+□ **Reverse Periodisierung:**
+  - Start mit hohem Volumen, Ende mit hoher Intensität.
+  - Gut für Wettkampf-Vorbereitung (Powerlifting).
+
+**MODUL 3.7: WISSENSCHAFT DES MUSKELAUFBAUS (HYPERTROPHIE)**
+───────────────────────────────────────────────────────────
+□ **Was ist Hypertrophie?** Die Vergrößerung der Muskelzellen durch Training.
+□ **Die 3 Mechanismen der Hypertrophie:**
+  - **1. Mechanische Spannung:** Schwere Gewichte = mehr Spannung = mehr Wachstum.
+  - **2. Metabolischer Stress:** "Pump", Laktat-Anstieg, Muskelversagen.
+  - **3. Muskelschäden:** Mikro-Risse in den Muskelfasern (reparieren = Wachstum).
+□ **Optimales Volumen pro Muskelgruppe:**
+  - **Anfänger:** 10-12 Sätze pro Woche pro Muskelgruppe.
+  - **Fortgeschritten:** 12-18 Sätze pro Woche.
+  - **Sehr fortgeschritten:** 18-22+ Sätze (aber mit Deloads!).
+  - **Mehr ist nicht immer besser!** Zu viel Volumen = Übertraining.
+□ **Muskelfasertypen:**
+  - **Typ I (Slow-Twitch):** Ausdauer, reagieren auf hohe Wiederholungen (15+).
+  - **Typ IIa (Fast-Twitch):** Hypertrophie, reagieren auf 8-12 Reps.
+  - **Typ IIx (Fast-Twitch):** Maximalkraft, reagieren auf 1-6 Reps.
+  - **Fazit:** Trainiere verschiedene Wiederholungsbereiche für optimales Wachstum!
+□ **Time Under Tension (TUT):**
+  - Wie lange der Muskel unter Spannung steht.
+  - **Optimal für Hypertrophie:** 40-70 Sekunden pro Satz.
+  - **Beispiel:** 10 Reps à 3 Sek = 30 Sek TUT (zu kurz!). 10 Reps à 5 Sek = 50 Sek (optimal!).
+□ **Protein-Synthese:**
+  - Nach dem Training erhöht sich die Muskel-Protein-Synthese für 24-48 Stunden.
+  - Daher: Trainiere jede Muskelgruppe 2-3x pro Woche für maximale Stimulation!
+
+═══════════════════════════════════════════════════════════════════════════════
+**PHASE 4: ERNÄHRUNG FÜR MUSKELAUFBAU (KONTINUIERLICH)**
+═══════════════════════════════════════════════════════════════════════════════
+
+**MODUL 4.1: KALORIENBILANZ – DER HAUPTFAKTOR**
+─────────────────────────────────────────────
+□ **Grundumsatz (BMR) berechnen:**
+  - **Männer:** BMR = 88,362 + (13,397 × Gewicht in kg) + (4,799 × Größe in cm) - (5,677 × Alter)
+  - **Frauen:** BMR = 447,593 + (9,247 × Gewicht in kg) + (3,098 × Größe in cm) - (4,330 × Alter)
+  - **Gesamtumsatz (TDEE):** BMR × Aktivitätsfaktor
+    * 1,2 = wenig/sitzend
+    * 1,375 = leicht aktiv (1-3x Sport/Woche)
+    * 1,55 = moderat aktiv (3-5x Sport/Woche)
+    * 1,725 = sehr aktiv (6-7x Sport/Woche)
+    * 1,9 = extrem aktiv (2x täglich)
+  - **Online-Rechner:** Viele kostenlose Tools (z.B. tdeecalculator.net)
+  - **Wichtig:** TDEE ist eine Schätzung! Beobachte dein Gewicht über 2-3 Wochen und passe an.
+
+□ **Muskelaufbau (Bulk):** Du brauchst einen leichten Kalorienüberschuss (ca. 200-500 kcal mehr als TDEE).
+  - **Langsamer Bulk:** +200-300 kcal (weniger Fett, langsamerer Aufbau)
+  - **Moderater Bulk:** +300-500 kcal (ausgewogen, empfohlen)
+  - **Dirty Bulk:** +500-1000 kcal (schneller Aufbau, aber viel Fett - nicht empfohlen!)
+  - **Empfehlung:** Langsamer bis moderater Bulk für beste Ergebnisse!
+  - Du kannst keine Muskeln aus Luft bauen - Kalorienüberschuss ist essentiell!
+  - **Gewichtszunahme:** 0,25-0,5kg pro Monat ist realistisch (davon ~50% Muskel, 50% Fett als Anfänger).
+
+□ **Fettabbau (Cut):** Du brauchst ein Kaloriendefizit (ca. 300-500 kcal weniger als TDEE).
+  - **Aggressiver Cut:** -500-750 kcal (schneller Fettabbau, aber Muskelverlust möglich)
+  - **Moderater Cut:** -300-500 kcal (ausgewogen, Muskelmasse erhalten, empfohlen)
+  - **Vorsicht:** Zu aggressiv = Muskelverlust, Hormon-Probleme, Müdigkeit, Plateaus!
+  - **Gewichtsverlust:** 0,5-1kg pro Woche ist realistisch (mehr = meist Wasser/Muskel).
+  - **Cut-Dauer:** Maximal 12-16 Wochen, dann Pause oder Erhaltung.
+
+□ **Erhaltung/Body Recomposition:** Kalorienbilanz = TDEE (0 kcal Differenz).
+  - Als Anfänger kannst du gleichzeitig Muskeln aufbauen und Fett verlieren (bei Erhaltungskalorien!).
+  - Fortgeschrittene: Schwerer, daher meist Bulk/Cut-Zyklen.
+  - **Wann?** Nach einem Cut (Reverse Dieting: langsam Kalorien erhöhen) oder als Pause zwischen Bulk/Cut.
+
+□ **Kalorien tracken:**
+  - **Apps:** MyFitnessPal, Yazio, Cronometer, MacroFactor (sehr präzise!)
+  - **Wiegen:** Lebensmittel wiegen für Genauigkeit (Küchenwaage!)
+  - **Woche 1-2:** Tracken, um ein Gefühl zu bekommen
+  - **Danach:** Intuitiv essen oder weiter tracken (Präferenz, aber Tracking ist genauer)
+  - **Flexibilität:** 80/20-Regel - 80% der Zeit präzise, 20% flexibel (Social Events, etc.)
+
+**MODUL 4.2: MAKRONÄHRSTOFFE (DIE BAUSTEINE)**
+─────────────────────────────────────────────
+□ **1. Protein (Eiweiß):**
+  - **Wofür?** Baustoff für Muskelreparatur und -wachstum. Jede Zelle braucht Protein!
+  - **Wie viel?** Ziel: **1.6 - 2.2 Gramm pro kg Körpergewicht** pro Tag.
+    * Anfänger/Moderat: 1.6-1.8g/kg
+    * Fortgeschritten: 1.8-2.0g/kg
+    * Sehr aktiv/Cut: 2.0-2.2g/kg
+  - **Beispiel (80kg Mann):** 80 × 2.0 = 160g Protein pro Tag.
+  - **Aufteilung:** 4-6 Mahlzeiten à 30-40g Protein (optimal für Protein-Synthese).
+  - **Quellen (pro 100g):**
+    * Hähnchenbrust: ~30g
+    * Rindfleisch: ~25g
+    * Lachs: ~20g
+    * Eier: ~13g (pro Ei ~6g)
+    * Quark (Magerquark): ~12g
+    * Hülsenfrüchte: ~20g (Linsen, Kichererbsen)
+    * Tofu: ~15g
+    * Protein-Pulver: ~20-25g pro Portion
+  - **Vollständige vs. unvollständige Proteine:**
+    * Tierische Quellen = vollständig (alle essentiellen Aminosäuren)
+    * Pflanzliche Quellen = kombinieren (z.B. Reis + Bohnen)
+
+□ **2. Kohlenhydrate (Carbs):**
+  - **Wofür?** Energie! Der Treibstoff für dein Training und Gehirn.
+  - **Wie viel?** Rest nach Protein & Fett (meist 40-50% der Kalorien).
+  - **Beispiel (2500 kcal, 160g Protein, 80g Fett):**
+    * Protein: 160g × 4 = 640 kcal
+    * Fett: 80g × 9 = 720 kcal
+    * Carbs: (2500 - 640 - 720) / 4 = 285g
+  - **Einfache vs. komplexe Carbs:**
+    * **Einfach (schnell):** Obst, Honig, Zucker (gut vor/nach Training)
+    * **Komplex (langsam):** Haferflocken, Vollkornreis, Süßkartoffeln, Quinoa (gut für Sättigung)
+  - **Quellen (pro 100g gekocht):**
+    * Haferflocken: ~60g Carbs
+    * Reis (weiß): ~28g
+    * Süßkartoffel: ~20g
+    * Nudeln: ~25g
+    * Quinoa: ~22g
+    * Banane: ~23g
+  - **Timing:** Mehr Carbs ums Training herum (vor/nach) für Energie & Recovery.
+
+□ **3. Fette (Fats):**
+  - **Wofür?** Hormonproduktion (Testosteron!), Gelenkgesundheit, Aufnahme von fettlöslichen Vitaminen (A, D, E, K), Zellmembranen.
+  - **Wie viel?** Ziel: ca. **0.8 - 1.2 Gramm pro kg Körpergewicht** (20-30% der Kalorien).
+  - **Beispiel (80kg):** 80 × 1.0 = 80g Fett pro Tag.
+  - **Gesättigte vs. ungesättigte Fette:**
+    * **Ungesättigt (gesund):** Avocado, Nüsse, Olivenöl, fetter Fisch (Omega-3!)
+    * **Gesättigt (moderat):** Rindfleisch, Butter, Kokosöl (nicht übertreiben)
+    * **Transfette:** Vermeiden! (Fertiggerichte, Frittiertes)
+  - **Quellen (pro 100g):**
+    * Avocado: ~15g Fett
+    * Nüsse (Mandeln): ~50g
+    * Olivenöl: ~100g (1 EL = ~14g)
+    * Lachs: ~12g (plus Omega-3!)
+    * Eier: ~10g (pro Ei)
+    * Erdnussbutter: ~50g
+  - **Omega-3:** Essentiell! Fisch (Lachs, Makrele) oder Algen-Öl (vegan).
+
+□ **Mikronährstoffe (Vitamine & Mineralien):**
+  - **Wichtig für Athleten:**
+    * **Magnesium:** Muskel-Funktion, Schlaf (Nüsse, Samen, dunkle Schokolade)
+    * **Zink:** Testosteron, Immunsystem (Fleisch, Hülsenfrüchte)
+    * **Eisen:** Sauerstofftransport (rotes Fleisch, Spinat)
+    * **Kalzium:** Knochen (Milchprodukte, grünes Gemüse)
+    * **Vitamin D:** Knochen, Immunsystem (Sonne, fetter Fisch, Supplement)
+  - **Lösung:** Abwechslungsreiche Ernährung + ggf. Multivitamin (nicht zwingend nötig bei guter Ernährung).
+
+**MODUL 4.3: TIMING & HYDRATION**
+─────────────────────────────────
+□ **Pre-Workout (1-2h vorher):**
+  - **Ziel:** Energie für Training, keine volle Mahlzeit im Magen.
+  - **Was essen?** Kohlenhydrate (schnell verfügbar) + etwas Protein.
+  - **Beispiele:**
+    * Banane + Kaffee
+    * Haferflocken (50g) + Whey (1 Scoop) + Banane
+    * Toast mit Erdnussbutter + Honig
+    * Reiswaffeln + Protein-Riegel
+  - **Timing:** 1-2h vorher (je nachdem, wie schnell du verdauest).
+  - **Koffein:** 200-400mg (1-2 Tassen Kaffee) 30-60 Min vorher für Performance-Boost.
+
+□ **Während des Trainings:**
+  - **Wasser:** Regelmäßig trinken (alle 15-20 Min ein paar Schlucke).
+  - **Bei langen Sessions (>90 Min):** Elektrolyt-Getränk oder BCAA (optional, nicht zwingend).
+
+□ **Post-Workout (innerhalb von 2h nachher):**
+  - **"Anaboles Fenster" ist überbewertet**, ABER: Dein Körper braucht jetzt Baustoffe.
+  - **Ziel:** Protein für Reparatur + Kohlenhydrate für Glykogen-Auffüllung.
+  - **Beispiele:**
+    * Hähnchen (150g) + Reis (150g) + Gemüse
+    * Lachs + Süßkartoffel + Brokkoli
+    * Protein-Shake + Banane + Haferflocken
+    * Quark + Obst + Honig
+  - **Timing:** Innerhalb von 2h optimal, aber nicht kritisch (wenn du regelmäßig isst).
+
+□ **Mahlzeiten-Frequenz:**
+  - **3-6 Mahlzeiten pro Tag** (Präferenz, nicht zwingend).
+  - **Mehrere kleine Mahlzeiten:** Kann Appetit kontrollieren, konstanter Blutzucker.
+  - **Wenige große Mahlzeiten:** Kann praktischer sein, weniger Meal Prep.
+  - **Wichtig:** Gesamt-Kalorien & Makros sind wichtiger als Timing!
+
+□ **Hydration:**
+  - **Warum wichtig?** Dehydrierung = massiver Kraftverlust, schlechte Recovery, Kopfschmerzen.
+  - **Wie viel?** 2-4 Liter Wasser am Tag (mehr an Trainingstagen, bei Hitze, bei hohem Protein).
+  - **Faustregel:** 30-40ml pro kg Körpergewicht.
+  - **Beispiel (80kg):** 80 × 35ml = 2,8 Liter.
+  - **Urin-Farbe:** Hellgelb = gut hydriert, dunkelgelb = mehr trinken!
+  - **Elektrolyte:** Bei viel Schwitzen (Salz, Kalium, Magnesium) - z.B. durch abwechslungsreiche Ernährung.
+
+**MODUL 4.5: MEAL PREP & PRAKTISCHE ERNÄHRUNG**
+───────────────────────────────────────────────
+□ **Warum Meal Prep?** Spart Zeit, Geld, hilft bei Zielen (keine spontanen schlechten Entscheidungen).
+□ **Grundlagen:**
+  - **Wann?** Sonntag für die ganze Woche (oder 2x pro Woche).
+  - **Was vorbereiten?** Protein-Quellen, Carbs, Gemüse (roh oder vorgekocht).
+  - **Aufbewahrung:** Kühlschrank (3-4 Tage) oder Gefrierfach (länger).
+
+□ **Beispiel Meal Prep (für 80kg Mann, ~2500 kcal):**
+  - **Frühstück (jeden Tag):**
+    * 100g Haferflocken + 1 Scoop Whey + 1 Banane + 20g Nüsse = ~600 kcal, 40g Protein
+  - **Mittagessen (vorgekocht):**
+    * 200g Hähnchen + 200g Reis + 200g Brokkoli = ~650 kcal, 60g Protein
+  - **Snack:**
+    * 200g Quark + 100g Beeren = ~200 kcal, 25g Protein
+  - **Abendessen:**
+    * 150g Lachs + 150g Süßkartoffel + Gemüse = ~500 kcal, 35g Protein
+  - **Post-Workout (nach Training):**
+    * Protein-Shake + Banane = ~300 kcal, 25g Protein
+  - **Gesamt:** ~2250 kcal, 185g Protein (anpassbar!)
+
+□ **Einfache, gesunde Rezepte:**
+  - **Hähnchen & Reis:** Hähnchen würzen, backen (180°C, 25 Min), Reis kochen, Gemüse dämpfen.
+  - **Lachs & Süßkartoffel:** Lachs würzen, backen (200°C, 15 Min), Süßkartoffel backen (200°C, 45 Min).
+  - **Protein-Pancakes:** 2 Eier + 1 Scoop Whey + 1 Banane + Haferflocken → mixen, braten.
+  - **Protein-Smoothie:** 1 Scoop Whey + 1 Banane + 30g Haferflocken + 200ml Milch + Spinat (unsichtbar!).
+
+□ **Budget-Tipps:**
+  - **Günstige Protein-Quellen:** Eier, Hähnchen (ganz kaufen), Thunfisch, Hülsenfrüchte, Quark.
+  - **Günstige Carbs:** Reis, Haferflocken, Kartoffeln, Nudeln.
+  - **Saisonal kaufen:** Gemüse & Obst saisonal = günstiger & frischer.
+  - **Bulk kaufen:** Reis, Haferflocken, Nüsse in großen Packungen.
+
+□ **Essen gehen & Social Events:**
+  - **Strategie:** Vorher essen (Protein-reich), dann beim Restaurant gesunde Optionen wählen.
+  - **Auswählen:** Gegrilltes Fleisch/Fisch, Gemüse, Reis/Kartoffeln statt Pommes.
+  - **Alkohol:** Kalorienreich (7 kcal/g), hemmt Muskelaufbau, reduziert Testosteron. Moderation!
+  - **Cheat Meal:** 1x pro Woche ist ok (mental wichtig!), aber nicht übertreiben.
+
+**MODUL 4.4: SINNVOLLE SUPPLEMENTS**
+───────────────────────────────────
+□ **Wichtig:** Supplements ergänzen eine gute Ernährung, ersetzen sie nicht!
+□ **Die "Big 3" (Sinnvoll & Evidenz-basiert):**
+  - **1. Protein-Pulver (Whey/Casein/Vegan):**
+    * **Wofür?** Hilft, das Protein-Ziel zu erreichen (Convenience).
+    * **Wann?** Post-Workout, zwischen Mahlzeiten, wenn Protein-Ziel nicht erreicht wird.
+    * **Wie viel?** 1-2 Scoops pro Tag (20-50g Protein).
+    * **Typen:**
+      - Whey (Molke): Schnell verfügbar, post-workout optimal
+      - Casein: Langsam verfügbar, vor dem Schlaf (optional)
+      - Vegan (Erbsen, Reis, Hanf): Für Veganer, ähnlich effektiv
+    * **Es ist "Nahrung", kein Wundermittel!** Kein Muss, wenn du genug Protein isst.
+  
+  - **2. Kreatin (Monohydrat):**
+    * **Wofür?** Erhöht Kraftreserven (ATP), kann Kraft & Muskelaufbau um 5-10% steigern.
+    * **Wie viel?** 3-5g täglich (jeden Tag, nicht nur Trainingstage).
+    * **Loading-Phase:** Optional (20g/Tag für 5-7 Tage, dann 3-5g), aber nicht nötig.
+    * **Wann?** Egal wann (morgens, abends, vor/nach Training - egal!).
+    * **Mit was?** Mit Wasser, Saft, oder im Protein-Shake.
+    * **Nebenwirkungen:** Kann Wassereinlagerung verursachen (normal, nicht schlimm).
+    * **Best-erforschtes Supplement!** Sehr sicher, sehr effektiv.
+  
+  - **3. Vitamin D3:**
+    * **Wofür?** Knochen, Immunsystem, Testosteron (bei Mangel).
+    * **Wie viel?** 2000-4000 IE täglich (besonders im Winter, wenn wenig Sonne).
+    * **Wann testen?** Bluttest beim Arzt (25-OH-Vitamin-D), dann supplementieren wenn nötig.
+    * **Mit was?** Mit fetthaltiger Mahlzeit (bessere Aufnahme).
+
+□ **Optional (aber sinnvoll):**
+  - **Omega-3 (Fischöl/Algen-Öl):**
+    * **Wofür?** Entzündungshemmung, Herzgesundheit, Gelenke.
+    * **Wie viel?** 1-2g EPA+DHA täglich (wenn wenig fetter Fisch gegessen wird).
+    * **Vegan:** Algen-Öl statt Fischöl.
+  
+  - **Magnesium:**
+    * **Wofür?** Muskel-Funktion, Schlaf, Recovery.
+    * **Wie viel?** 300-400mg täglich (wenn wenig Nüsse, Samen, dunkle Schokolade).
+    * **Typ:** Magnesium-Citrat oder -Glycinat (bessere Aufnahme).
+  
+  - **Zink:**
+    * **Wofür?** Testosteron, Immunsystem, Wundheilung.
+    * **Wie viel?** 10-15mg täglich (wenn wenig Fleisch, Hülsenfrüchte).
+    * **Vorsicht:** Nicht über 40mg/Tag (kann Kupfer-Mangel verursachen).
+
+□ **Meist unnötig (aber oft beworben):**
+  - **BCAAs:** Sind in normalem Protein enthalten (Whey hat alle BCAAs!). Nur sinnvoll, wenn du fasted trainierst.
+  - **Testo-Booster:** Meist wirkungslos (außer bei medizinischem Mangel, dann Arzt!).
+  - **Fatburner:** Meist Koffein + Placebo. Kaloriendefizit ist wichtiger!
+  - **Glutamin:** Meist unnötig (ausreichend in normaler Ernährung).
+  - **Pre-Workout:** Meist teures Koffein + Placebo. Kaffee tut's auch!
+  - **HMB:** Kaum Evidenz für Muskelaufbau.
+
+□ **Supplement-Stack für Anfänger:**
+  - **Minimal:** Protein-Pulver (wenn nötig) + Kreatin
+  - **Optimal:** Protein + Kreatin + Vitamin D3 + Omega-3
+  - **Fortgeschritten:** + Magnesium + Zink (wenn nötig)
+
+□ **Wo kaufen?**
+  - **Qualität:** Auf Zertifizierungen achten (z.B. Informed Choice, NSF).
+  - **Günstig:** MyProtein, Bulk, ESN (Deutschland).
+  - **Vorsicht:** Billige No-Name-Produkte können verunreinigt sein!
+
+═══════════════════════════════════════════════════════════════════════════════
+**PHASE 5: REGENERATION & MOBILITÄT (KONTINUIERLICH)**
+═══════════════════════════════════════════════════════════════════════════════
+
+**MODUL 5.1: SCHLAF – DAS WICHTIGSTE RECOVERY-TOOL**
+──────────────────────────────────────────────
+□ Warum? Im Schlaf repariert der Körper Muskeln und schüttet Wachstumshormone aus.
+□ Ziel: 7-9 Stunden qualitativ hochwertiger Schlaf pro Nacht.
+□ Schlechter Schlaf = schlechtes Training, schlechter Aufbau.
+
+**MODUL 5.2: DEHNUNG, WARM-UP & COOL-DOWN**
+──────────────────────────────────────────
+□ **1. Warm-Up (Vor dem Training - ESSENTIELL!)**
+  - **Ziel:** Puls erhöhen, Gelenke schmieren, Muskeln aktivieren.
+  - **Phase 1 (Allgemein, 5 Min):** Rudergerät, Seilspringen, Hampelmänner.
+  - **Phase 2 (Dynamisches Dehnen, 5 Min):** Armkreisen, Beinpendel, Hüftrotationen ("Cat-Cow", "World's Greatest Stretch"). *Kein statisches Dehnen!*
+  - **Phase 3 (Spezifisch):** Aufwärmsätze der ersten Übung (z.B. nur Stange, dann 40%, 60% etc.).
+□ **2. Cool-Down (Nach dem Training - Optional)**
+  - **Ziel:** Regeneration einleiten, Beweglichkeit verbessern.
+  - **Statisches Dehnen:** Dehnung halten (30-60 Sek.). Fokus auf die trainierten Muskeln (Brust, Lats, Quads).
+  - **Foam Rolling (Faszienrolle):** Kann Muskelkater reduzieren und Verspannungen lösen.
+
+**MODUL 5.3: MINDSET & KONSISTENZ**
+───────────────────────────────────
+□ **Konsistenz > Intensität:** Lieber 3x pro Woche zu 80% trainieren als 1x zu 120% und dann eine Woche ausfallen.
+□ **"Gymtimidation" (Angst im Studio):**
+  - Realität: Die meisten Leute sind auf sich selbst fokussiert.
+  - Die "Starken" respektieren jeden, der auftaucht und arbeitet.
+  - Trage Kopfhörer und fokussiere dich auf deinen Plan.
+□ **Geduld:** Muskelaufbau ist ein Marathon, kein Sprint. Erwarte sichtbare Änderungen in Monaten, nicht Tagen.
+□ **Mind-Muscle-Connection:** Lerne, den Zielmuskel zu spüren. Denke beim Rudern an den Rücken, nicht nur an den Arm.
+
+═══════════════════════════════════════════════════════════════════════════════
+**PHASE 6: SPEZIALISIERUNG: CALISTHENICS (TRAINING MIT EIGENGEWICHT)**
+═══════════════════════════════════════════════════════════════════════════════
+*Calisthenics (von dir "Cathelethics" genannt) ist eine fantastische Ergänzung oder Alternative, die auf relativer Kraft basiert.*
+
+**MODUL 6.1: WAS IST CALISTHENICS?**
+──────────────────────────────────
+□ Definition: Krafttraining, das primär das eigene Körpergewicht als Widerstand nutzt.
+□ Fokus: Relative Kraft (Kraft im Verhältnis zum Körpergewicht), Körperkontrolle, Mobilität.
+□ Vorteil: Überall machbar (Ringe, Barren, Boden).
+
+**MODUL 6.2: DIE PROGRESSIONEN (DER SCHLÜSSEL IN CALISTHENICS)**
+───────────────────────────────────────────────────────────
+□ Im Gym steigerst du Gewicht (Progressive Overload). Bei Calisthenics änderst du den *Hebel*.
+□ **Beispiel Progression Liegestütze (Push-up):**
+  - 1. Wand-Liegestütze
+  - 2. Erhöhte Liegestütze (Hände auf Box)
+  - 3. Normale Liegestütze
+  - 4. Diamant-Liegestütze
+  - 5. Archer Push-ups
+  - 6. Einarmige Liegestütze (One-Arm Push-up)
+□ **Beispiel Progression Klimmzüge (Pull-up):**
+  - 1. Aushängen (Dead Hangs)
+  - 2. Negative Klimmzüge (Hochspringen, langsam ablassen)
+  - 3. Klimmzüge mit Widerstandsband
+  - 4. Normale Klimmzüge
+  - 5. L-Sit Klimmzüge
+  - 6. Einarmige Klimmzüge (One-Arm Pull-up)
+
+**MODUL 6.3: DIE "BIG 5" & STATISCHE SKILLS**
+─────────────────────────────────────────────
+□ **Dynamische Übungen:**
+  - **Push-ups** (Liegestütze - siehe oben)
+  - **Pull-ups** (Klimmzüge - siehe oben)
+  - **Dips** (Am Barren oder Ringen)
+  - **Squats** (Pistol Squats, Shrimp Squats)
+  - **Leg Raises** (Hängend, für den Core)
+□ **Statische Skills (Ziele für Fortgeschrittene):**
+  - **L-Sit:** Am Boden oder Barren, Beine 90° gestreckt halten. (Massiver Core!)
+  - **Handstand:** Erst an der Wand, dann freistehend.
+  - **Front Lever:** Waagerecht unter der Stange hängen.
+  - **Planche:** Waagerechter "Liegestütz in der Luft".
+
+**MODUL 6.4: HYBRID-TRAINING (GYM + CALISTHENICS)**
+──────────────────────────────────────────────
+□ Das Beste aus beiden Welten:
+  - Nutze schwere Grundübungen (Gym) für absolute Kraft (Kniebeuge, Kreuzheben).
+  - Nutze Calisthenics (Eigengewicht) für relative Kraft und Skills (Klimmzüge, Dips, Handstand).
+  - Beispiel PPL-Hybrid:
+    - **Push:** Bankdrücken, Überkopfdrücken, Dips, Handstand-Push-ups.
+    - **Pull:** Kreuzheben, Klimmzüge, Rudern, Front Lever Training.
+    - **Legs:** Kniebeuge, Ausfallschritte, Pistol Squats.
+
+═══════════════════════════════════════════════════════════════════════════════
+**ZUSÄTZLICHE RESSOURCEN**
+═══════════════════════════════════════════════════════════════════════════════
+
+**BÜCHER (LESENSWERT)**
+───────────────────
+□ "Starting Strength" - Mark Rippetoe (Fokus auf Grundübungen)
+□ "Bigger Leaner Stronger" - Michael Matthews (Guter Allround-Guide)
+□ "Die Fitness-Fibel" - Sjard Roscher (Umfassend, Deutsch)
+
+**YOUTUBE-KANÄLE (SEHR EMPFOHLEN)**
+───────────────────
+□ Jeff Nippard (Wissenschaftlich fundiert, Hypertrophie)
+□ Athlean-X (Technik & Verletzungsprävention)
+□ Renaissance Periodization (Dr. Mike Israetel - Sehr tiefgehend zu Training/Ernährung)
+□ Calisthenicmovement (Für Calisthenics-Einstieg)
+□ FitnessFAQs (Calisthenics & Hybrid)
+
+**APPS & WEBSITES**
+───────────────────
+□ **Log-Apps:** Strong, Hevy (Unbedingt nutzen!)
+□ **Ernährung:** MyFitnessPal, Yazio (Kalorien tracken)
+□ **Website:** Examine.com (Für evidenzbasierte Supplement-Infos)
+□ **Reddit:** r/fitness, r/bodyweightfitness, r/weightroom
+
+═══════════════════════════════════════════════════════════════════════════════
+**PROGRESSIVE SKILL-CHECKLISTE**
+═══════════════════════════════════════════════════════════════════════════════
+
+**ANFÄNGER (Monat 1-3)**
+────────────────────
+□ Kennt die Studio-Etikette.
+□ Wärmt sich vor jedem Training auf.
+□ Führt ein Trainings-Logbuch.
+□ Beherrscht die Technik von: Goblet Squat, Liegestütze, Rudern am Kabel, Latzug, Plank.
+□ Versteht das Konzept "Progressive Overload".
+□ Konzentriert sich auf das Erreichen des Protein-Ziels.
+
+**FORTGESCHRITTENER ANFÄNGER (Monat 4-6)**
+─────────────────────────────────────
+□ Trainiert konsistent 2-3x pro Woche.
+□ Beherrscht die Technik von: Langhantel-Kniebeuge, Bankdrücken, Rumänisches Kreuzheben.
+□ Kann erste freie Klimmzüge (oder nutzt Negative).
+□ Folgt einem festen Plan (GK oder OK/UK).
+□ Steigert die Gewichte/Wiederholungen im Logbuch sichtbar.
+
+**MITTELSTUFE (Monat 7-12+)**
+────────────────────────
+□ Trainiert konsistent 3-4x pro Woche.
+□ Beherrscht alle 5 Grundbewegungsmuster (Squat, Hinge, Push, Pull, Core) sicher.
+□ Versteht RIR und trainiert nah am Muskelversagen.
+□ Integriert Deload-Wochen zur Regeneration.
+□ Hat die Grundlagen der Ernährung (Kalorien & Makros) verstanden.
+□ Beginnt mit Calisthenics-Skills (z.B. L-Sit Training).
+
+═══════════════════════════════════════════════════════════════════════════════
+**ENDE DES CURRICULUMS**
+═══════════════════════════════════════════════════════════════════════════════
+
