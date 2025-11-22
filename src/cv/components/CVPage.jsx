@@ -363,6 +363,7 @@ export default function CVPage() {
                 degree="M.Sc. Computer Science"
                 institution="TU Darmstadt"
                 period={language === 'en' ? 'Apr 2025 - Sept 2026' : 'Apr 2025 - Sept 2026'}
+                grade={language === 'en' ? 'Current Grade: 1.0' : 'Aktuelle Note: 1.0'}
                 description={language === 'en'
                   ? 'Focus: Software Engineering, AI, Cybersecurity. Thesis: "Design and Implementation of a Modular Plugin Framework for Retrieval-Augmented Generation using Model Context Protocol" (submitted October 29, 2025)'
                   : 'Schwerpunkt: Software Engineering, KI, Cybersecurity. Thesis: "Design und Implementierung eines modularen Plugin-Frameworks für Retrieval-Augmented Generation mittels Model Context Protocol" (abgegeben 29. Oktober 2025)'}

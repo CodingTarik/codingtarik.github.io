@@ -408,3 +408,4 @@ export function getAllSpeakingCategories() {
   return [...new Set(speakingTopics.map(topic => topic.category))];
 }
 
+
