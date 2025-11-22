@@ -1,5 +1,7 @@
-import { Footprints, MapPin, Trophy } from 'lucide-react';
+import { Footprints, MapPin, Trophy, Calculator } from 'lucide-react';
 import RunHomePage from './components/RunHomePage';
+import RunTools from './components/RunTools';
+import { lessons, getLessonById, getNextLesson } from './data/lessons';
 
 export const runBuddyConfig = {
   id: 'run',
@@ -16,25 +18,19 @@ export const runBuddyConfig = {
   },
   homePage: RunHomePage,
   lessons: {
-    data: [],
-    getLessonById: () => null,
-    getNextLesson: () => null
+    data: lessons,
+    getLessonById: getLessonById,
+    getNextLesson: getNextLesson
   },
   
   sharedTabs: ['home', 'lessons', 'plan'],
   
   customTabs: [
     {
-      id: 'routes',
-      name: { en: 'Routes', de: 'Routen' },
-      icon: MapPin,
-      component: 'RunRoutes'
-    },
-    {
-      id: 'races',
-      name: { en: 'Races', de: 'Wettkämpfe' },
-      icon: Trophy,
-      component: 'RunRaces'
+      id: 'tools',
+      name: { en: 'Tools', de: 'Tools' },
+      icon: Calculator,
+      component: RunTools
     }
   ],
   

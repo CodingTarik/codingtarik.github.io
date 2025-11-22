@@ -106,9 +106,9 @@ Der erste Schritt in eine Halle kann einschüchternd wirken, aber keine Sorge, e
     en: `
 <InteractiveWelcome language="en" />
 
-### Hey, so glad you're here!
+### Hey, so glad you\'re here!
 
-You've already taken the first and most important step: you're curious. Welcome to one of the most fascinating sports in the world, which is so much more than just climbing a wall. It's a mindset.
+You've already taken the first and most important step: you\'re curious. Welcome to one of the most fascinating sports in the world, which is so much more than just climbing a wall. It's a mindset.
 
 #### What is Bouldering at its Core?
 
@@ -184,7 +184,7 @@ Bouldering is meditation in motion and one of the most comprehensive workouts th
 
 ### Your First Session: A Quick Guide
 
-The first step into a gym can seem intimidating, but don't worry, it's easier than you think.
+The first step into a gym can seem intimidating, but don\'t worry, it\'s easier than you think.
 
 **The Atmosphere:** You'll find an open and supportive environment. No one will judge you—everyone started once and is happy to see new faces.
 
@@ -211,7 +211,7 @@ The first step into a gym can seem intimidating, but don't worry, it's easier th
         { text: "Find a comfortable spot and watch for 10 minutes. What do you notice?", checked: false },
         { text: "Pay attention to how experienced climbers stand in front of a boulder and 'read' the holds before they start.", checked: false },
         { text: "Listen to the conversations. You'll quickly realize how supportive the community is and how openly they discuss 'beta' (solutions).", checked: false },
-        { text: "Observe how people of different heights climb the same route. You'll see: there isn't just ONE right way!", checked: false },
+        { text: "Observe how people of different heights climb the same route. You'll see: there isn\'t just ONE right way!", checked: false },
       ]
     }
   },

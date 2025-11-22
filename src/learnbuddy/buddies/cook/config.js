@@ -1,5 +1,11 @@
-import { ChefHat, ShoppingCart, BookOpen } from 'lucide-react';
+import { ChefHat, ShoppingCart, BookOpen, Calculator, Timer, Calendar } from 'lucide-react';
 import CookHomePage from './components/CookHomePage';
+import RecipeBook from './components/RecipeBook';
+import ShoppingList from './components/ShoppingList';
+import KitchenConverter from './components/KitchenConverter';
+import KitchenTimer from './components/KitchenTimer';
+import MealPlanner from './components/MealPlanner';
+import { lessons, getLessonById, getNextLesson } from './data/lessons';
 
 export const cookBuddyConfig = {
   id: 'cook',
@@ -16,25 +22,43 @@ export const cookBuddyConfig = {
   },
   homePage: CookHomePage,
   lessons: {
-    data: [],
-    getLessonById: () => null,
-    getNextLesson: () => null
+    data: lessons,
+    getLessonById: getLessonById,
+    getNextLesson: getNextLesson
   },
   
-  sharedTabs: ['home', 'lessons', 'plan'],
+  sharedTabs: ['home', 'lessons'],
   
   customTabs: [
     {
       id: 'recipes',
       name: { en: 'Recipes', de: 'Rezepte' },
       icon: BookOpen,
-      component: 'RecipeBook'
+      component: RecipeBook
+    },
+    {
+      id: 'mealplan',
+      name: { en: 'Meal Plan', de: 'Wochenplan' },
+      icon: Calendar,
+      component: MealPlanner
     },
     {
       id: 'shopping',
-      name: { en: 'Shopping List', de: 'Einkaufsliste' },
+      name: { en: 'Shopping', de: 'Einkauf' },
       icon: ShoppingCart,
-      component: 'ShoppingList'
+      component: ShoppingList
+    },
+    {
+      id: 'timer',
+      name: { en: 'Timer', de: 'Timer' },
+      icon: Timer,
+      component: KitchenTimer
+    },
+    {
+      id: 'converter',
+      name: { en: 'Converter', de: 'Umrechner' },
+      icon: Calculator,
+      component: KitchenConverter
     }
   ],
   
@@ -61,4 +85,3 @@ export const cookBuddyConfig = {
     }
   }
 };
-

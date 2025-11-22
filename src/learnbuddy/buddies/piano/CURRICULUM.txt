@@ -1,0 +1,174 @@
+═══════════════════════════════════════════════════════════════════════════════
+🎹 DER PIANO-KOMPASS (MODULARER GESAMT-LEHRPLAN)
+═══════════════════════════════════════════════════════════════════════════════
+
+Ziel: Dieser Lehrplan führt vom absoluten Anfänger zum fortgeschrittenen Pianisten, der Musiktheorie versteht und praktisch anwenden kann.
+
+HINWEIS ZU TOOLS:
+Jede Lektion sollte den MIDI-Player nutzen. Man kann MIDI-Dateien laden, die dann visualisiert werden (Synthesia-Style). Man kann das eigene Keyboard anschließen und sieht, was man spielt.
+
+═══════════════════════════════════════════════════════════════════════════════
+MODUL 1: DAS FUNDAMENT (ANFÄNGER)
+Ziel: Die Klaviatur kennenlernen, Noten lesen (Violinschlüssel), erste Rhythmen, richtige Haltung.
+═══════════════════════════════════════════════════════════════════════════════
+
+1.1 GRUNDLAGEN & HALTUNG
+Diese Sektion legt den Grundstein für deine pianistische Zukunft. Eine falsche Haltung kann später zu Verspannungen führen, deshalb nehmen wir uns hier Zeit.
+
+□ P-1.1.1 Die Haltung am Klavier (Sitzposition, Handform "Die Kralle")
+   - Theorie: Der Stuhl steht mittig vor dem "Schlüsselloch" (Mitte der Klaviatur). Abstand: Knie knapp unter der Tastatur. Arme locker, Ellbogen etwas höher als die Tasten.
+   - Die Hand: "Die Kralle" oder "Tunnel". Wir spielen mit den Fingerkuppen, nicht flach. Stell dir vor, du hältst einen Ball.
+   - Visualisierung: SVG der Sitzhaltung und der Handform (Korrekt vs. Falsch).
+   - Praxis: Sitzposition einrichten, Hand formen, locker auf die Tasten legen.
+
+□ P-1.1.2 Die Klaviatur: Orientierung (Schwarze Tasten 2er & 3er Gruppen)
+   - Theorie: Das Klavier hat 88 Tasten, aber nur 12 verschiedene Töne, die sich wiederholen.
+   - Das Muster: Die schwarzen Tasten sind der Schlüssel. Sie kommen immer in Gruppen von 2 und 3.
+   - Visualisierung: SVG der Klaviatur mit hervorgehobenen 2er- und 3er-Gruppen.
+   - Praxis: Alle 2er-Gruppen von tief nach hoch spielen. Dann alle 3er-Gruppen.
+
+□ P-1.1.3 Das mittlere C (C4) finden
+   - Theorie: Das C ist immer die weiße Taste LINKS neben der 2er-Gruppe schwarzer Tasten.
+   - Das mittlere C (Middle C) ist das C in der Mitte der Klaviatur (oft unter dem Herstellernamen). Es trennt Bass- und Violinschlüssel.
+   - Visualisierung: SVG Zoom auf 2er-Gruppe mit Pfeil auf das C. Notenbild des C4.
+   - Praxis: Alle C's auf der Tastatur finden und spielen. Das mittlere C blind finden.
+
+□ P-1.1.4 Finger-Nummerierung (1-5)
+   - Theorie: In Klaviernoten stehen oft kleine Zahlen über oder unter den Noten. Das sind Fingersätze.
+   - Zuordnung: 
+     1 = Daumen (Thumb)
+     2 = Zeigefinger (Index)
+     3 = Mittelfinger (Middle)
+     4 = Ringfinger (Ring)
+     5 = Kleiner Finger (Pinky)
+   - Visualisierung: SVG von linker und rechter Hand mit Zahlen auf den Fingern.
+   - Praxis: Eine 5-Finger-Übung (C-D-E-F-G) spielen und laut die Fingernummer sagen.
+
+1.2 RHYTHMUS & NOTENWERTE (BASIS)
+□ P-1.2.1 Der Takt (4/4 Takt)
+□ P-1.2.2 Notenwerte: Ganze, Halbe, Viertel
+□ P-1.2.3 Pausen: Ganze, Halbe, Viertel
+□ P-1.2.4 Klopfübungen
+
+1.3 NOTENLESEN (VIOLINSCHLÜSSEL)
+□ P-1.3.1 Das Notensystem (5 Linien)
+□ P-1.3.2 Der Violinschlüssel (G-Schlüssel)
+□ P-1.3.3 Noten im Violinschlüssel (C4 bis G4)
+□ P-1.3.4 Übung: "Ode an die Freude" (Rechte Hand, C-Lage)
+
+1.4 TECHNIK (5-FINGER-LAGE)
+□ P-1.4.1 C-Dur 5-Finger-Position (Rechte Hand)
+□ P-1.4.2 C-Dur 5-Finger-Position (Linke Hand) - Spiegelbildlich
+□ P-1.4.3 Koordination: Beide Hände parallel (C-Lage)
+
+═══════════════════════════════════════════════════════════════════════════════
+MODUL 2: ERWEITERTE GRUNDLAGEN
+Ziel: Bassschlüssel, beide Hände unabhängig, Achtelnoten, Dynamik.
+═══════════════════════════════════════════════════════════════════════════════
+
+2.1 DER BASSSCHLÜSSEL
+□ P-2.1.1 Der Bassschlüssel (F-Schlüssel)
+□ P-2.1.2 Noten im Bassschlüssel (C3 bis C4)
+□ P-2.1.3 Das "Große System" (Grand Staff) - Verbindung beider Schlüssel
+
+2.2 RHYTHMUS II
+□ P-2.2.1 Achtelnoten
+□ P-2.2.2 Punktierte Halbe Note (3 Schläge)
+□ P-2.2.3 3/4 Takt
+
+2.3 DYNAMIK & AUSDRUCK
+□ P-2.3.1 Lautstärke: p (piano) und f (forte)
+□ P-2.3.2 mf (mezzoforte) und mp (mezzopiano)
+□ P-2.3.3 Crescendo und Decrescendo
+
+2.4 TECHNIK & KOORDINATION
+□ P-2.4.1 Gegenbewegung vs. Parallelbewegung
+□ P-2.4.2 Handwechsel (Übergabe der Melodie)
+□ P-2.4.3 Artikulation: Legato (gebunden) vs. Staccato (kurz)
+
+═══════════════════════════════════════════════════════════════════════════════
+MODUL 3: MUSIKTHEORIE & TONLEITERN (BASIS)
+Ziel: Tonleitern verstehen, Intervalle, Vorzeichen.
+═══════════════════════════════════════════════════════════════════════════════
+
+3.1 INTERVALLE
+□ P-3.1.1 Ganzton- und Halbtonschritte
+□ P-3.1.2 Intervalle hören und sehen: Sekunde, Terz, Quinte
+□ P-3.1.3 Übung: Intervalle auf der Tastatur
+
+3.2 VORZEICHEN (ACCIDENTALS)
+□ P-3.2.1 Das Kreuz (#) - Sharp
+□ P-3.2.2 Das B (b) - Flat
+□ P-3.2.3 Das Auflösungszeichen
+
+3.3 TONLEITERN (SCALES)
+□ P-3.3.1 Aufbau einer Dur-Tonleiter (GT-GT-HT-GT-GT-GT-HT)
+□ P-3.3.2 C-Dur Tonleiter (1 Oktave) mit Untersetzen (Thumb under)
+□ P-3.3.3 G-Dur Tonleiter (1 Kreuz: Fis)
+□ P-3.3.4 F-Dur Tonleiter (1 B: B)
+
+═══════════════════════════════════════════════════════════════════════════════
+MODUL 4: AKKORDE & HARMONIELEHRE
+Ziel: Dreiklänge bilden, Akkordbegleitung, Leadsheets lesen.
+═══════════════════════════════════════════════════════════════════════════════
+
+4.1 DREIKLÄNGE (TRIADS)
+□ P-4.1.1 Aufbau Dur-Dreiklang (Grundton, große Terz, kleine Terz)
+□ P-4.1.2 Aufbau Moll-Dreiklang (Grundton, kleine Terz, große Terz)
+□ P-4.1.3 Hauptdreiklänge in C-Dur (I, IV, V) - C, F, G
+
+4.2 AKKORDUMKEHRUNGEN
+□ P-4.2.1 Grundstellung
+□ P-4.2.2 Erste Umkehrung (Sextakkord)
+□ P-4.2.3 Zweite Umkehrung (Quartsextakkord)
+
+4.3 BEGLEITMUSTER
+□ P-4.3.1 Gebrochene Akkorde (Arpeggios)
+□ P-4.3.2 Alberti-Bass
+□ P-4.3.3 Walzer-Begleitung (Bumm-Zack-Zack)
+
+═══════════════════════════════════════════════════════════════════════════════
+MODUL 5: FORTGESCHRITTENE TECHNIK & THEORIE
+Ziel: Pedalgebrauch, komplexe Rhythmen, Moll-Tonleitern.
+═══════════════════════════════════════════════════════════════════════════════
+
+5.1 DAS PEDAL
+□ P-5.1.1 Das Haltepedal (Sustain Pedal)
+□ P-5.1.2 Pedalwechsel (Syncopated Pedaling)
+□ P-5.1.3 Una Corda (Linkes Pedal)
+
+5.2 RHYTHMUS III
+□ P-5.2.1 Sechzehntelnoten
+□ P-5.2.2 Triolen
+□ P-5.2.3 Punktierte Achtel + Sechzehntel
+
+5.3 MOLL-TONLEITERN
+□ P-5.3.1 Natürliches Moll
+□ P-5.3.2 Harmonisches Moll
+□ P-5.3.3 Melodisches Moll
+
+5.4 MUSIKALISCHE FORMEN
+□ P-5.4.1 A-B Form (Zweiteilig)
+□ P-5.4.2 A-B-A Form (Ternär)
+□ P-5.4.3 Rondo
+
+═══════════════════════════════════════════════════════════════════════════════
+MODUL 6: VIRTUOSITÄT & IMPROVISATION
+Ziel: Schnelle Läufe, Improvisation, komplexe Stücke.
+═══════════════════════════════════════════════════════════════════════════════
+
+6.1 IMPROVISATION
+□ P-6.1.1 Pentatonik
+□ P-6.1.2 Blues-Tonleiter & 12-Bar Blues
+□ P-6.1.3 Improvisation über Akkordfolgen
+
+6.2 VIRTUOSE TECHNIK
+□ P-6.2.1 Oktaven
+□ P-6.2.2 Triller & Verzierungen
+□ P-6.2.3 Sprünge & Treffsicherheit
+
+6.3 STILKUNDE
+□ P-6.3.1 Barock (Bach) - Polyphonie
+□ P-6.3.2 Klassik (Mozart, Beethoven) - Struktur
+□ P-6.3.3 Romantik (Chopin, Liszt) - Ausdruck
+□ P-6.3.4 Jazz/Pop - Rhythmus & Harmonie

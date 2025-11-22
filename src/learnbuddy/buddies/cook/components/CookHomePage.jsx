@@ -167,7 +167,7 @@ function CookHomePage({ onStartLesson }) {
       </div>
 
       <div className="mt-16 text-center text-stone-500 dark:text-stone-400 text-sm">
-        <p className="italic">{language === 'en' ? 'Coming soon: Step-by-step recipes, video tutorials, and meal planning tools!' : 'Bald verfügbar: Schritt-für-Schritt-Rezepte, Video-Tutorials und Essensplanungs-Tools!'}</p>
+        <p className="italic">{language === 'en' ? 'New: Manage your recipes and shopping list!' : 'Neu: Verwalte deine Rezepte und Einkaufsliste!'}</p>
       </div>
 
       <div className="mt-16">

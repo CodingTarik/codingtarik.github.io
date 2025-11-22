@@ -1,5 +1,6 @@
-import { Dumbbell, Calendar, BarChart3 } from 'lucide-react';
+import { Dumbbell, Calendar, BarChart3, Activity } from 'lucide-react';
 import GymHomePage from './components/GymHomePage';
+import WorkoutTracker from './components/WorkoutTracker';
 
 export const gymBuddyConfig = {
   id: 'gym',
@@ -25,16 +26,10 @@ export const gymBuddyConfig = {
   
   customTabs: [
     {
-      id: 'exercises',
-      name: { en: 'Exercises', de: 'Übungen' },
-      icon: Dumbbell,
-      component: 'GymExercises'
-    },
-    {
-      id: 'stats',
-      name: { en: 'Stats', de: 'Statistiken' },
-      icon: BarChart3,
-      component: 'GymStats'
+      id: 'tracker',
+      name: { en: 'Tracker', de: 'Tracker' },
+      icon: Activity,
+      component: WorkoutTracker
     }
   ],
   

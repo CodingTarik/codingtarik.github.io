@@ -6,12 +6,22 @@ Ziel: Dieses Dokument dient als ein einziger, umfassender und aufbauender Lehrpl
 
 Die Nummerierung der Grammatikpunkte (z.B. "G-1", "G-2") stammt aus der umfassenden Grammatik-Referenz und dient der systematischen Erfassung.
 
+HINWEIS ZU GAMES UND LEKTIONEN:
+Die passenden Grammatik-Spiele befinden sich im Ordner `games_grammar` (bzw. `grammar-games`) und sollten so oft wie möglich in die Lektionen integriert werden, um das Gelernte spielerisch zu festigen.
+Lektionen müssen sehr ausführlich gestaltet sein! Erkläre jedes Konzept mit viel Fließtext: Was ist es? Wofür braucht man es? Wann nutzt man es? Gib viele Beispiele und Kontext, bevor die Übungen beginnen. Vermeide reine Listen ohne Erklärung.
+
 ═══════════════════════════════════════════════════════════════════════════════
 MODUL 1: DAS FUNDAMENT (NIVEAU A1 - Anfänger)
 Ziel: Grundlegendes Verstehen und Verwenden alltäglicher Ausdrücke.
 ═══════════════════════════════════════════════════════════════════════════════
 
 1.1 GRAMMATIK (A1)
+
+1.1.0 Grundlagen (Essentials) - NEU
+□ G-0A Verb 'to be' (I am, you are...)
+□ G-0B Subject Pronouns (I, you, he...) & Object Pronouns (me, you, him...)
+□ G-0C Possessive Adjectives (my, your, his...)
+□ G-0D Demonstratives (this, that, these, those)
 
 1.1.1 Gegenwart (Present) & 'Sein'
 □ G-1 Present continuous (I am doing)
@@ -33,6 +43,7 @@ Ziel: Grundlegendes Verstehen und Verwenden alltäglicher Ausdrücke.
 1.1.4 Fragen & Satzbau (Basis)
 □ G-49 Questions 1 (Wortstellung, Fragewörter: What, Where, Who, When, Why, How)
 □ G-109 Word order 1: verb + object; place and time
+□ G-X Short Answers (Yes, I do / No, I don't)
 
 1.1.5 Nomen, Artikel & Pronomen (Basis)
 □ G-69 Countable and uncountable 1
@@ -70,6 +81,8 @@ Ziel: Grundlegendes Verstehen und Verwenden alltäglicher Ausdrücke.
 □ Sich vorstellen, buchstabieren, nach dem Namen/Alter/Herkunft fragen
 □ Einfache Sätze bilden (I am..., I have..., I like...)
 □ Einfache Ja/Nein-Fragen und W-Fragen stellen
+□ PRONUNCIATION: The English Alphabet & Spelling
+□ PRONUNCIATION: th-sound (think vs. this)
 
 1.4 HÖREN (A1)
 
@@ -80,6 +93,7 @@ Ziel: Grundlegendes Verstehen und Verwenden alltäglicher Ausdrücke.
 
 □ Einfache Formulare ausfüllen (Name, Adresse, Nationalität)
 □ 3-5 Sätze über sich selbst, die eigene Familie oder den eigenen Tag schreiben
+□ PUNCTUATION: Capital letters & full stops (Basics)
 
 ═══════════════════════════════════════════════════════════════════════════════
 MODUL 2: DER AUFBAU (NIVEAU A2 - Grundlegend)
@@ -153,6 +167,7 @@ Ziel: Sätze und häufig gebrauchte Ausdrücke verstehen (z.B. Einkaufen, Arbeit
 □ Essen im Restaurant bestellen, nach dem Weg fragen
 □ Einfache Pläne und Absichten ausdrücken (going to)
 □ Über Erfahrungen sprechen (Have you ever...?)
+□ PRONUNCIATION: Past Simple endings (-ed: /t/, /d/, /ɪd/)
 
 2.4 HÖREN (A2)
 
@@ -164,6 +179,7 @@ Ziel: Sätze und häufig gebrauchte Ausdrücke verstehen (z.B. Einkaufen, Arbeit
 □ Postkarten, kurze Urlaubs-E-Mails verfassen
 □ Einen einfachen Tagesablauf oder eine vergangene Begebenheit beschreiben
 □ Kurze Notizen und Mitteilungen schreiben
+□ PUNCTUATION: Commas in lists and with 'but'/'and'
 
 ═══════════════════════════════════════════════════════════════════════════════
 MODUL 3: DIE MITTELSTUFE (NIVEAU B1 - Selbstständigkeit)
@@ -225,7 +241,7 @@ Ziel: Die meisten Situationen bewältigen, denen man auf Reisen begegnet; über 
 3.1.8 Artikel & Nomen (Details)
 □ G-73 the 1 (Spezifische Verwendung)
 □ G-74 the 2 (school / the school etc.) (Ortsnamen)
-Example
+□ Example
 □ G-75 the 3 (children / the children) (Verallgemeinerungen)
 □ G-76 the 4 (the giraffe / the telephone / the old etc.)
 □ G-77 Names with and without the 1
@@ -287,6 +303,7 @@ Example
 □ Meinungen äußern, Ratschläge geben, Vor- und Nachteile diskutieren
 □ Über Erfahrungen, Träume, Hoffnungen und Pläne sprechen
 □ Hypothetische Situationen (Typ 2) durchspielen ("What would you do if...")
+□ PRONUNCIATION: Word stress (record/record) & Sentence stress
 
 3.4 HÖREN (B1)
 
@@ -348,6 +365,7 @@ Ziel: Komplexe Texte verstehen, sich spontan und fließend verständigen, detail
 □ Flüssiges Debattieren und Argumentieren (Vor- und Nachteile abwägen)
 □ Eine klare, detaillierte Präsentation halten
 □ Komplexe hypothetische Situationen (Mixed Conditionals) diskutieren
+□ PRONUNCIATION: Connected Speech (Linking, Elision)
 
 4.4 HÖREN (B2)
 
@@ -360,6 +378,7 @@ Ziel: Komplexe Texte verstehen, sich spontan und fließend verständigen, detail
 □ Strukturierte Aufsätze (Essays): Einleitung, Hauptteil, Schluss
 □ Formelle Beschwerdebriefe, Bewerbungen (Cover Letter)
 □ Berichte, Rezensionen (Film, Buch)
+□ PUNCTUATION: Semicolons & Colons (Introduction)
 
 ═══════════════════════════════════════════════════════════════════════════════
 MODUL 5: DER FEINSCHLIFF (NIVEAU C1 - Kompetenz)
@@ -374,17 +393,23 @@ Ziel: Ein breites Spektrum anspruchsvoller Texte verstehen, sich implizit ausdr�
 □ Inversion (Vertiefung: Not only..., Seldom..., Under no circumstances...)
 □ Cleft Sentences (Vertiefung: What...is..., It...that...)
 □ (Neu) Emphatisches 'do/did' (Betonung: "I do believe you are correct.")
+
 □ 5.1.2 Konjunktiv (Subjunctive)
 □ (z.B. "I suggest that he be quiet.", "It is vital that...")
+
 □ 5.1.3 Ellipsen & Substitution
 □ (Bewusstes Weglassen von Satzteilen in formeller/informeller Sprache)
+
 □ 5.1.4 (Neu) Formelles Englisch & Nominalisierung
 □ (Neu) Nominalisierung (Verben in Nomen umwandeln für formellen Stil: "investigate" -> "an investigation of")
+
 □ 5.1.5 (Neu) Fortgeschrittene Nebensätze
 □ (Neu) Fortgeschrittene Relativsätze (gestapelt, "of which", "whereby")
 □ (Neu) Adverbialsätze (Nuancen: manner, concession)
+
 □ 5.1.6 Nuancen & Register
 □ (z.B. Unterschied 'hard' vs 'hardly', 'like' vs 'as' in allen Details)
+
 □ 5.1.7 Fortgeschrittene Partizipialkonstruktionen
 □ (Vertiefung von G-68, G-97 für komplexe Satzverbindungen)
 
@@ -400,6 +425,7 @@ Ziel: Ein breites Spektrum anspruchsvoller Texte verstehen, sich implizit ausdr�
 □ Spontan und fließend über komplexe, unbekannte Themen sprechen
 □ Humor, Ironie und Sarkasmus verstehen und anwenden
 □ Akzent-Reduktion, "Connected Speech" (fließende Wortverbindungen)
+□ PRONUNCIATION: Intonation & Pitch for subtle meaning
 
 5.4 HÖREN (C1)
 
@@ -423,13 +449,17 @@ Ziel: Müheloses Verstehen von praktisch allem; präzise, flüssige und nuancier
 
 □ 6.1.1 Vollständige Beherrschung & Stilistik
 □ Meisterung aller 145 Grammatik-Themen und ihrer Ausnahmen.
+
 □ 6.1.2 Rhetorische Mittel
 □ Bewusster Einsatz von stilistischer Inversion, komplexen Ellipsen und Archaismen (z.B. "whom", seltener Konjunktiv) zur Erzielung einer bestimmten Wirkung.
+
 □ 6.1.3 (Neu) Pragmatik & Tonalität (Abschwächung & Verstärkung)
 □ (Neu) "Hedging" (Vermeidungssprache: "It would seem that...", "Arguably...", "It is likely...")
 □ (Neu) Emphatische Adverbien & Intensivierer (z.B. utterly, deeply, profoundly, indeed)
+
 □ 6.1.4 Verständnis für Jargon & Historische Grammatik
 □ Fähigkeit, juristische, akademische oder literarische Texte zu dekonstruieren, die von Standardstrukturen abweichen.
+
 □ 6.1.5 (Neu) Fortgeschrittene Interpunktion (Stilistik)
 □ (Neu) Meisterung von Semikolon (;) und Geviertstrich (—) (Semicolon & Em-dash)
 □ (Neu) Nuancierte Kommasetzung (z.B. Oxford Comma, Kommas bei Partizipialsätzen)

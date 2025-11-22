@@ -5,6 +5,12 @@ import FixTheMistake from './FixTheMistake';
 import TranslateThis from './TranslateThis';
 import VerbConjugator from './VerbConjugator';
 import TenseTimeline from './TenseTimeline';
+import GrammarRacer from './GrammarRacer';
+import VerbPilot from './VerbPilot';
+import GrammarSmash from './GrammarSmash';
+import GrammarMole from './GrammarMole';
+import GrammarGhost from './GrammarGhost';
+import WordDrop from './WordDrop';
 
 /**
  * Generic wrapper component for grammar games
@@ -53,7 +59,25 @@ function GrammarGame({ type, data, title, description }) {
       
       case 'tenseTimeline':
         return <TenseTimeline language={language} />;
+        
+      case 'grammarRacer':
+        return <GrammarRacer exercises={processedData} language={language} />;
+        
+      case 'verbPilot':
+        return <VerbPilot exercises={processedData} language={language} />;
+
+      case 'grammarSmash':
+        return <GrammarSmash exercises={processedData} language={language} />;
+
+      case 'grammarMole':
+        return <GrammarMole exercises={processedData} language={language} />;
       
+      case 'grammarGhost':
+        return <GrammarGhost exercises={processedData} language={language} />;
+
+      case 'wordDrop':
+        return <WordDrop exercises={processedData} language={language} />;
+
       default:
         return <div className="text-red-500">Unknown game type: {type}</div>;
     }

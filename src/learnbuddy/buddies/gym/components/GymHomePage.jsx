@@ -137,7 +137,7 @@ function GymHomePage({ onStartLesson }) {
       </div>
 
       <div className="mt-16 text-center text-stone-500 dark:text-stone-400 text-sm">
-        <p className="italic">{language === 'en' ? 'Coming soon: Complete workout programs, exercise library, and progress tracking!' : 'Bald verfügbar: Vollständige Workout-Programme, Übungsbibliothek und Fortschritts-Tracking!'}</p>
+        <p className="italic">{language === 'en' ? 'Check out the "Tracker" tab to log your workouts!' : 'Nutze den "Tracker" Tab unten, um deine Workouts zu loggen!'}</p>
       </div>
 
       <div className="mt-16">

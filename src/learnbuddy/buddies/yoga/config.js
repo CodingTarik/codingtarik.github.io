@@ -1,5 +1,6 @@
-import { Flower2, Calendar, TrendingUp } from 'lucide-react';
+import { Flower2, Sparkles } from 'lucide-react';
 import YogaHomePage from './components/YogaHomePage';
+import YogaTools from './components/YogaTools';
 
 export const yogaBuddyConfig = {
   id: 'yoga',
@@ -25,16 +26,10 @@ export const yogaBuddyConfig = {
   
   customTabs: [
     {
-      id: 'sequences',
-      name: { en: 'Sequences', de: 'Sequenzen' },
-      icon: Calendar,
-      component: 'YogaSequences'
-    },
-    {
-      id: 'progress',
-      name: { en: 'Progress', de: 'Fortschritt' },
-      icon: TrendingUp,
-      component: 'YogaProgress'
+      id: 'tools',
+      name: { en: 'Tools', de: 'Tools' },
+      icon: Sparkles,
+      component: YogaTools
     }
   ],
   

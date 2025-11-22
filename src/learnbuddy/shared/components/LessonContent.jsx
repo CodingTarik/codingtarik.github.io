@@ -28,6 +28,19 @@ try {
 }
 
 function LessonContent({ content, components = {} }) {
+  // Check if content is a React element (JSX) or a string (Markdown)
+  const isReactElement = React.isValidElement(content);
+  
+  if (isReactElement) {
+    // If content is already JSX, render it directly
+    return (
+      <div className="prose prose-stone dark:prose-invert max-w-none">
+        {content}
+      </div>
+    );
+  }
+  
+  // If content is a string, parse it as Markdown
   return (
     <div className="prose prose-stone dark:prose-invert max-w-none">
       <Markdown

@@ -136,7 +136,7 @@ function RunHomePage({ onStartLesson }) {
       </div>
 
       <div className="mt-16 text-center text-stone-500 dark:text-stone-400 text-sm">
-        <p className="italic">{language === 'en' ? 'Coming soon: Complete running lessons, form analysis, and personalized training plans!' : 'Bald verfügbar: Vollständige Lauf-Lektionen, Formanalyse und personalisierte Trainingspläne!'}</p>
+        <p className="italic">{language === 'en' ? 'Check out the "Tools" tab for Pace Calculator and more!' : 'Nutze den "Tools" Tab unten für Pace-Rechner und mehr!'}</p>
       </div>
 
       {/* Support Banner at the bottom */}

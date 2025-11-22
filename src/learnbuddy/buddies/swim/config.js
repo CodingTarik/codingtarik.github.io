@@ -1,5 +1,7 @@
-import { Waves, Timer, TrendingUp } from 'lucide-react';
+import { Waves, Timer, TrendingUp, Calculator } from 'lucide-react';
 import SwimHomePage from './components/SwimHomePage';
+import SwimTools from './components/SwimTools';
+import { lessons, getLessonById, getNextLesson } from './data/lessons';
 
 export const swimBuddyConfig = {
   id: 'swim',
@@ -16,25 +18,19 @@ export const swimBuddyConfig = {
   },
   homePage: SwimHomePage,
   lessons: {
-    data: [],
-    getLessonById: () => null,
-    getNextLesson: () => null
+    data: lessons,
+    getLessonById: getLessonById,
+    getNextLesson: getNextLesson
   },
   
   sharedTabs: ['home', 'lessons', 'plan'],
   
   customTabs: [
     {
-      id: 'workouts',
-      name: { en: 'Workouts', de: 'Workouts' },
-      icon: Timer,
-      component: 'SwimWorkouts'
-    },
-    {
-      id: 'progress',
-      name: { en: 'Progress', de: 'Fortschritt' },
-      icon: TrendingUp,
-      component: 'SwimProgress'
+      id: 'tools',
+      name: { en: 'Tools', de: 'Tools' },
+      icon: Calculator,
+      component: SwimTools
     }
   ],
   

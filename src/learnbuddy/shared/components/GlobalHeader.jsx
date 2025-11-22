@@ -122,19 +122,23 @@ function GlobalHeader({ currentView, onViewChange }) {
                         const Icon = config.icon;
                         const isActive = id === activeBuddy;
                         return (
-                          <button
+                          <div
                             key={id}
-                            onClick={() => handleBuddySelect(id)}
                             className={`w-full flex items-center gap-3 px-4 py-3 transition-all ${
                               isActive 
                                 ? 'bg-teal-50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300' 
                                 : 'hover:bg-stone-50 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-300'
                             }`}
                           >
-                            <div className={`p-2 rounded-lg ${isActive ? 'bg-teal-100 dark:bg-teal-800' : 'bg-stone-100 dark:bg-stone-700'}`}>
-                              <Icon size={18} className={isActive ? 'text-teal-600 dark:text-teal-400' : 'text-stone-600 dark:text-stone-400'} />
-                            </div>
-                            <span className="flex-1 text-left font-medium">{config.name[language]}</span>
+                            <button
+                              onClick={() => handleBuddySelect(id)}
+                              className="flex-1 flex items-center gap-3"
+                            >
+                              <div className={`p-2 rounded-lg ${isActive ? 'bg-teal-100 dark:bg-teal-800' : 'bg-stone-100 dark:bg-stone-700'}`}>
+                                <Icon size={18} className={isActive ? 'text-teal-600 dark:text-teal-400' : 'text-stone-600 dark:text-stone-400'} />
+                              </div>
+                              <span className="flex-1 text-left font-medium">{config.name[language]}</span>
+                            </button>
                             <button
                               onClick={(e) => toggleFavorite(id, e)}
                               className="p-1 hover:bg-stone-200 dark:hover:bg-stone-600 rounded transition-colors"
@@ -142,7 +146,7 @@ function GlobalHeader({ currentView, onViewChange }) {
                               <Star size={16} className="fill-amber-500 text-amber-500" />
                             </button>
                             {isActive && <Check size={16} className="text-teal-600 dark:text-teal-400" />}
-                          </button>
+                          </div>
                         );
                       })}
                     </>
@@ -173,19 +177,23 @@ function GlobalHeader({ currentView, onViewChange }) {
                           const Icon = config.icon;
                           const isActive = id === activeBuddy;
                           return (
-                            <button
+                            <div
                               key={id}
-                              onClick={() => handleBuddySelect(id)}
                               className={`w-full flex items-center gap-3 px-4 py-3 transition-all ${
                                 isActive 
                                   ? 'bg-teal-50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300' 
                                   : 'hover:bg-stone-50 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-300'
                               }`}
                             >
-                              <div className={`p-2 rounded-lg ${isActive ? 'bg-teal-100 dark:bg-teal-800' : 'bg-stone-100 dark:bg-stone-700'}`}>
-                                <Icon size={18} className={isActive ? 'text-teal-600 dark:text-teal-400' : 'text-stone-600 dark:text-stone-400'} />
-                              </div>
-                              <span className="flex-1 text-left font-medium">{config.name[language]}</span>
+                              <button
+                                onClick={() => handleBuddySelect(id)}
+                                className="flex-1 flex items-center gap-3"
+                              >
+                                <div className={`p-2 rounded-lg ${isActive ? 'bg-teal-100 dark:bg-teal-800' : 'bg-stone-100 dark:bg-stone-700'}`}>
+                                  <Icon size={18} className={isActive ? 'text-teal-600 dark:text-teal-400' : 'text-stone-600 dark:text-stone-400'} />
+                                </div>
+                                <span className="flex-1 text-left font-medium">{config.name[language]}</span>
+                              </button>
                               <button
                                 onClick={(e) => toggleFavorite(id, e)}
                                 className="p-1 hover:bg-stone-200 dark:hover:bg-stone-600 rounded transition-colors"
@@ -193,7 +201,7 @@ function GlobalHeader({ currentView, onViewChange }) {
                                 <Star size={16} className="text-stone-400 hover:text-amber-500" />
                               </button>
                               {isActive && <Check size={16} className="text-teal-600 dark:text-teal-400" />}
-                            </button>
+                            </div>
                           );
                         })}
                       </div>

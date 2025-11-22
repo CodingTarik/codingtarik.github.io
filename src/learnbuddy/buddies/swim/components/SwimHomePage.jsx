@@ -122,7 +122,7 @@ function SwimHomePage({ onStartLesson }) {
       </div>
 
       <div className="mt-16 text-center text-stone-500 dark:text-stone-400 text-sm">
-        <p className="italic">{language === 'en' ? 'Coming soon: Comprehensive swim lessons, technique videos, and training plans!' : 'Bald verfügbar: Umfassende Schwimm-Lektionen, Technik-Videos und Trainingspläne!'}</p>
+        <p className="italic">{language === 'en' ? 'Check out the "Tools" tab for Swim Pace Calculator!' : 'Nutze den "Tools" Tab unten für den Schwimm-Pace-Rechner!'}</p>
       </div>
 
       {/* Support Banner at the bottom */}

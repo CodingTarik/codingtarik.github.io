@@ -93,8 +93,25 @@ function YogaHomePage({ onStartLesson }) {
         </button>
       </div>
 
-      <div className="mt-16 text-center text-stone-500 dark:text-stone-400 text-sm">
-        <p className="italic">{language === 'en' ? 'Coming soon: Complete yoga sequences, meditation guides, and breathing exercises!' : 'Bald verfügbar: Vollständige Yoga-Sequenzen, Meditations-Anleitungen und Atemübungen!'}</p>
+      <div className="mt-16 text-center">
+        <div className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-xl p-6 border border-purple-100 dark:border-purple-800">
+          <h3 className="text-xl font-bold text-stone-800 dark:text-stone-100 mb-2">
+            {language === 'en' ? '✨ Tools Available Now!' : '✨ Tools jetzt verfügbar!'}
+          </h3>
+          <p className="text-stone-600 dark:text-stone-400 mb-4">
+            {language === 'en' 
+              ? 'Explore our yoga tools: Session Timer, Breathing Guide, Pose Library, and Sequence Builder!'
+              : 'Entdecke unsere Yoga-Tools: Session-Timer, Atemführer, Posen-Bibliothek und Sequenz-Builder!'}
+          </p>
+          <button
+            onClick={() => {
+              window.location.hash = '#/learnbuddy/yoga/custom-tools';
+            }}
+            className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
+          >
+            {language === 'en' ? '🚀 Explore Tools' : '🚀 Tools erkunden'}
+          </button>
+        </div>
       </div>
 
       <div className="mt-16">

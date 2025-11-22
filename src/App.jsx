@@ -40,6 +40,29 @@ import GoalTracker from './learnbuddy/buddies/lifeskills/components/GoalTracker'
 import ReflectionTool from './learnbuddy/buddies/lifeskills/components/ReflectionTool';
 import DayPlanner from './learnbuddy/buddies/lifeskills/components/DayPlanner';
 
+// Piano-specific components
+import PianoPractice from './learnbuddy/buddies/piano/components/PianoPractice';
+import SongLibrary from './learnbuddy/buddies/piano/components/SongLibrary';
+
+// Cook-specific components
+import RecipeBook from './learnbuddy/buddies/cook/components/RecipeBook';
+import ShoppingList from './learnbuddy/buddies/cook/components/ShoppingList';
+import KitchenConverter from './learnbuddy/buddies/cook/components/KitchenConverter';
+import KitchenTimer from './learnbuddy/buddies/cook/components/KitchenTimer';
+import MealPlanner from './learnbuddy/buddies/cook/components/MealPlanner';
+
+// Gym-specific components
+import WorkoutTracker from './learnbuddy/buddies/gym/components/WorkoutTracker';
+
+// Run-specific components
+import RunTools from './learnbuddy/buddies/run/components/RunTools';
+
+// Swim-specific components
+import SwimTools from './learnbuddy/buddies/swim/components/SwimTools';
+
+// Yoga-specific components
+import YogaTools from './learnbuddy/buddies/yoga/components/YogaTools';
+
 // Blog Components
 import BlogPage from './blog/components/BlogPage';
 import PostDetail from './blog/components/PostDetail';
@@ -397,6 +420,46 @@ function AppContent() {
         return <ReflectionTool />;
       } else if (tabId === 'dayplanner') {
         return <DayPlanner />;
+      }
+    } else if (activeBuddy === 'piano') {
+      // Piano components
+      if (tabId === 'practice') {
+        return <PianoPractice />;
+      } else if (tabId === 'songs') {
+        return <SongLibrary />;
+      }
+    } else if (activeBuddy === 'cook') {
+      // Cook components
+      if (tabId === 'recipes') {
+        return <RecipeBook />;
+      } else if (tabId === 'shopping') {
+        return <ShoppingList />;
+      } else if (tabId === 'mealplan') {
+        return <MealPlanner />;
+      } else if (tabId === 'timer') {
+        return <KitchenTimer />;
+      } else if (tabId === 'converter') {
+        return <KitchenConverter />;
+      }
+    } else if (activeBuddy === 'gym') {
+      // Gym components
+      if (tabId === 'tracker') {
+        return <WorkoutTracker />;
+      }
+    } else if (activeBuddy === 'run') {
+      // Run components
+      if (tabId === 'tools') {
+        return <RunTools />;
+      }
+    } else if (activeBuddy === 'swim') {
+      // Swim components
+      if (tabId === 'tools') {
+        return <SwimTools />;
+      }
+    } else if (activeBuddy === 'yoga') {
+      // Yoga components
+      if (tabId === 'tools') {
+        return <YogaTools />;
       }
     }
     // Default for other buddies

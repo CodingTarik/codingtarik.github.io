@@ -6,22 +6,28 @@ import { coinBehindEar } from '../lessons/magic-tricks/coin-behind-ear.js';
 // Combine all lessons
 export const lessons = [
   {
-    id: memoryCardTrick.id,
-    category: memoryCardTrick.category,
-    categoryTitle: memoryCardTrick.categoryTitle,
-    ...memoryCardTrick
+    ...memoryCardTrick,
+    category: 'magic',
+    categoryTitle: {
+      en: 'Magic & Entertainment',
+      de: 'Zauberei & Unterhaltung'
+    }
   },
   {
-    id: cardToTop.id,
-    category: cardToTop.category,
-    categoryTitle: cardToTop.categoryTitle,
-    ...cardToTop
+    ...cardToTop,
+    category: 'magic',
+    categoryTitle: {
+      en: 'Magic & Entertainment',
+      de: 'Zauberei & Unterhaltung'
+    }
   },
   {
-    id: coinBehindEar.id,
-    category: coinBehindEar.category,
-    categoryTitle: coinBehindEar.categoryTitle,
-    ...coinBehindEar
+    ...coinBehindEar,
+    category: 'magic',
+    categoryTitle: {
+      en: 'Magic & Entertainment',
+      de: 'Zauberei & Unterhaltung'
+    }
   }
 ];
 
