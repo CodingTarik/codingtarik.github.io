@@ -1,5 +1,6 @@
-import { Mountain, Dumbbell, Calendar, Camera } from 'lucide-react';
+import { Mountain, Dumbbell, Calendar, Camera, Map } from 'lucide-react';
 import BoulderHomePage from './components/BoulderHomePage';
+import BoulderSkillPath from './components/BoulderSkillPath';
 import { lessons, getLessonById, getNextLesson } from './data/lessons';
 
 export const boulderBuddyConfig = {
@@ -28,6 +29,12 @@ export const boulderBuddyConfig = {
   
   // Buddy-specific tabs
   customTabs: [
+    {
+      id: 'path',
+      name: { en: 'Skill Path', de: 'Skill Path' },
+      icon: Map,
+      component: BoulderSkillPath
+    },
     {
       id: 'training',
       name: { en: 'Training', de: 'Training' },

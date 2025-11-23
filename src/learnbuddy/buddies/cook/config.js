@@ -1,10 +1,11 @@
-import { ChefHat, ShoppingCart, BookOpen, Calculator, Timer, Calendar } from 'lucide-react';
+import { ChefHat, ShoppingCart, BookOpen, Calculator, Timer, Calendar, Map } from 'lucide-react';
 import CookHomePage from './components/CookHomePage';
 import RecipeBook from './components/RecipeBook';
 import ShoppingList from './components/ShoppingList';
 import KitchenConverter from './components/KitchenConverter';
 import KitchenTimer from './components/KitchenTimer';
 import MealPlanner from './components/MealPlanner';
+import CookSkillPath from './components/CookSkillPath';
 import { lessons, getLessonById, getNextLesson } from './data/lessons';
 
 export const cookBuddyConfig = {
@@ -30,6 +31,12 @@ export const cookBuddyConfig = {
   sharedTabs: ['home', 'lessons'],
   
   customTabs: [
+    {
+      id: 'path',
+      name: { en: 'Skill Path', de: 'Skill Path' },
+      icon: Map,
+      component: CookSkillPath
+    },
     {
       id: 'recipes',
       name: { en: 'Recipes', de: 'Rezepte' },

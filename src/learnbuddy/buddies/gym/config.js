@@ -1,6 +1,7 @@
 import { Dumbbell, Calendar, BarChart3, Activity } from 'lucide-react';
 import GymHomePage from './components/GymHomePage';
 import WorkoutTracker from './components/WorkoutTracker';
+import { lessons, getLessonById, getNextLesson } from './data/lessons';
 
 export const gymBuddyConfig = {
   id: 'gym',
@@ -17,9 +18,9 @@ export const gymBuddyConfig = {
   },
   homePage: GymHomePage,
   lessons: {
-    data: [],
-    getLessonById: () => null,
-    getNextLesson: () => null
+    data: lessons,
+    getLessonById: getLessonById,
+    getNextLesson: getNextLesson
   },
   
   sharedTabs: ['home', 'lessons', 'plan'],

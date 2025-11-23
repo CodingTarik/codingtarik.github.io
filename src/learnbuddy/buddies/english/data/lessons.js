@@ -63,11 +63,26 @@ import { should1 } from '../lessons/module_2_elementary/g2_modals/should_1.jsx';
 import { ifIDo } from '../lessons/module_2_elementary/g3_conditional_passive/if_i_do.jsx';
 import { passive1 } from '../lessons/module_2_elementary/g3_conditional_passive/passive_1.jsx';
 
+import { reportedSpeech1 } from '../lessons/module_2_elementary/g4_reported_speech/reported_speech_1.jsx';
+import { indirectQuestions } from '../lessons/module_2_elementary/g4_reported_speech/indirect_questions.jsx';
+
 // New A2 Grammar Lessons
 import { verbPlusIng } from '../lessons/module_2_elementary/g5_gerund_infinitive/verb_plus_ing.jsx';
 import { verbPlusTo } from '../lessons/module_2_elementary/g5_gerund_infinitive/verb_plus_to.jsx';
 import { purposeExpressions } from '../lessons/module_2_elementary/g5_gerund_infinitive/purpose_expressions.jsx';
 import { negationPronouns } from '../lessons/module_2_elementary/g6_pronouns_quantifiers/negation_pronouns.jsx';
+import { muchManyLittleFew } from '../lessons/module_2_elementary/g6_pronouns_quantifiers/much_many_little_few.jsx';
+import { bothNeitherEither } from '../lessons/module_2_elementary/g6_pronouns_quantifiers/both_neither_either.jsx';
+
+import { relativeClauses1 } from '../lessons/module_2_elementary/g7_relative_clauses/relative_clauses_1.jsx';
+import { relativeClauses2 } from '../lessons/module_2_elementary/g7_relative_clauses/relative_clauses_2.jsx';
+
+import { adjectivesAdverbs2 } from '../lessons/module_2_elementary/g8_adjectives_adverbs/adjectives_adverbs_2.jsx';
+import { enoughAndToo } from '../lessons/module_2_elementary/g8_adjectives_adverbs/enough_and_too.jsx';
+import { comparative3 } from '../lessons/module_2_elementary/g8_adjectives_adverbs/comparative_3.jsx';
+
+import { althoughBecause } from '../lessons/module_2_elementary/g9_conjunctions_prepositions/although_because.jsx';
+import { duringForWhile } from '../lessons/module_2_elementary/g9_conjunctions_prepositions/during_for_while.jsx';
 
 // Define lesson categories
 export const categories = {
@@ -455,6 +470,18 @@ export const lessons = [
     ...passive1
   },
 
+  // --- A2: REPORTED SPEECH & QUESTIONS ---
+  {
+    category: 'a2_grammar',
+    group: groups.a2_reported_speech,
+    ...reportedSpeech1
+  },
+  {
+    category: 'a2_grammar',
+    group: groups.a2_reported_speech,
+    ...indirectQuestions
+  },
+
   // New A2 Lessons: Gerund/Infinitive
   {
     category: 'a2_grammar',
@@ -477,6 +504,57 @@ export const lessons = [
     category: 'a2_grammar',
     group: groups.a2_pronouns_quantifiers,
     ...negationPronouns
+  },
+  {
+    category: 'a2_grammar',
+    group: groups.a2_pronouns_quantifiers,
+    ...muchManyLittleFew
+  },
+  {
+    category: 'a2_grammar',
+    group: groups.a2_pronouns_quantifiers,
+    ...bothNeitherEither
+  },
+
+  // --- A2: RELATIVE CLAUSES ---
+  {
+    category: 'a2_grammar',
+    group: groups.a2_relative_clauses,
+    ...relativeClauses1
+  },
+  {
+    category: 'a2_grammar',
+    group: groups.a2_relative_clauses,
+    ...relativeClauses2
+  },
+
+  // --- A2: ADJECTIVES/ADVERBS & COMPARISONS ---
+  {
+    category: 'a2_grammar',
+    group: groups.a2_adjectives_adverbs,
+    ...adjectivesAdverbs2
+  },
+  {
+    category: 'a2_grammar',
+    group: groups.a2_adjectives_adverbs,
+    ...enoughAndToo
+  },
+  {
+    category: 'a2_grammar',
+    group: groups.a2_adjectives_adverbs,
+    ...comparative3
+  },
+
+  // --- A2: CONJUNCTIONS & PREPOSITIONS ---
+  {
+    category: 'a2_grammar',
+    group: groups.a2_conjunctions_prepositions,
+    ...althoughBecause
+  },
+  {
+    category: 'a2_grammar',
+    group: groups.a2_conjunctions_prepositions,
+    ...duringForWhile
   }
 ];
 

@@ -17,6 +17,18 @@ import { staplesCookingLesson } from '../lessons/module_2/staples_cooking';
 import { eggTechniquesLesson } from '../lessons/module_2/egg_techniques';
 import { seasoningBalanceLesson } from '../lessons/module_2/seasoning_balance';
 
+import { meatCookingLesson } from '../lessons/module_3/meat_preparation';
+import { fishSeafoodLesson } from '../lessons/module_3/fish_seafood';
+import { soupsStocksLesson } from '../lessons/module_3/soups_stocks';
+import { saucesBindingLesson } from '../lessons/module_3/sauces_binding';
+import { saladsDressingsLesson } from '../lessons/module_3/salads_dressings';
+import { sidesLesson } from '../lessons/module_3/sides';
+import { bakingLesson } from '../lessons/module_3/baking';
+
+import { nutritionTheoryLesson } from '../lessons/module_4/nutrition_theory';
+import { foodScienceLesson } from '../lessons/module_4/food_science';
+import { flavorBuildingLesson } from '../lessons/module_4/flavor_building';
+
 export const categories = {
   basics: {
     en: 'Module 1: Kitchen Foundations',
@@ -25,6 +37,14 @@ export const categories = {
   techniques: {
     en: 'Module 2: Fundamental Techniques',
     de: 'Modul 2: Fundamentale Techniken'
+  },
+  preparations: {
+    en: 'Module 3: Core Competencies',
+    de: 'Modul 3: Kernkompetenzen'
+  },
+  theory: {
+    en: 'Module 4: Theory & Creativity',
+    de: 'Modul 4: Theorie & Kreativität'
   }
 };
 
@@ -99,6 +119,50 @@ export const lessons = [
   {
     category: 'techniques',
     ...seasoningBalanceLesson
+  },
+
+  // Module 3: Preparations
+  {
+    category: 'preparations',
+    ...meatCookingLesson
+  },
+  {
+    category: 'preparations',
+    ...fishSeafoodLesson
+  },
+  {
+    category: 'preparations',
+    ...soupsStocksLesson
+  },
+  {
+    category: 'preparations',
+    ...saucesBindingLesson
+  },
+  {
+    category: 'preparations',
+    ...saladsDressingsLesson
+  },
+  {
+    category: 'preparations',
+    ...sidesLesson
+  },
+  {
+    category: 'preparations',
+    ...bakingLesson
+  },
+
+  // Module 4: Theory
+  {
+    category: 'theory',
+    ...nutritionTheoryLesson
+  },
+  {
+    category: 'theory',
+    ...foodScienceLesson
+  },
+  {
+    category: 'theory',
+    ...flavorBuildingLesson
   }
 ];
 

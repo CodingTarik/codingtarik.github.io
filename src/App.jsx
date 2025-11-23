@@ -23,6 +23,7 @@ import SettingsPage from './learnbuddy/shared/components/SettingsPage';
 import TrainingPage from './learnbuddy/buddies/boulder/components/TrainingPage';
 import SessionLogger from './learnbuddy/buddies/boulder/components/SessionLogger';
 import WorkoutExecutor from './learnbuddy/buddies/boulder/components/WorkoutExecutor';
+import BoulderSkillPath from './learnbuddy/buddies/boulder/components/BoulderSkillPath';
 
 // English-specific components
 import GrammarLevels from './learnbuddy/buddies/english/components/GrammarLevels';
@@ -50,6 +51,7 @@ import ShoppingList from './learnbuddy/buddies/cook/components/ShoppingList';
 import KitchenConverter from './learnbuddy/buddies/cook/components/KitchenConverter';
 import KitchenTimer from './learnbuddy/buddies/cook/components/KitchenTimer';
 import MealPlanner from './learnbuddy/buddies/cook/components/MealPlanner';
+import CookSkillPath from './learnbuddy/buddies/cook/components/CookSkillPath';
 
 // Gym-specific components
 import WorkoutTracker from './learnbuddy/buddies/gym/components/WorkoutTracker';
@@ -377,6 +379,8 @@ function AppContent() {
         return <TrainingPage />;
       } else if (tabId === 'sessions') {
         return <SessionLogger />;
+      } else if (tabId === 'path') {
+        return <BoulderSkillPath />;
       }
     } else if (activeBuddy === 'english') {
       // English components
@@ -440,6 +444,8 @@ function AppContent() {
         return <KitchenTimer />;
       } else if (tabId === 'converter') {
         return <KitchenConverter />;
+      } else if (tabId === 'path') {
+        return <CookSkillPath />;
       }
     } else if (activeBuddy === 'gym') {
       // Gym components
