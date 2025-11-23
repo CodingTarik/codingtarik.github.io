@@ -24,6 +24,7 @@ import TrainingPage from './learnbuddy/buddies/boulder/components/TrainingPage';
 import SessionLogger from './learnbuddy/buddies/boulder/components/SessionLogger';
 import WorkoutExecutor from './learnbuddy/buddies/boulder/components/WorkoutExecutor';
 import BoulderSkillPath from './learnbuddy/buddies/boulder/components/BoulderSkillPath';
+import BoulderSummary from './learnbuddy/buddies/boulder/components/BoulderSummary';
 
 // English-specific components
 import GrammarLevels from './learnbuddy/buddies/english/components/GrammarLevels';
@@ -381,6 +382,8 @@ function AppContent() {
         return <SessionLogger />;
       } else if (tabId === 'path') {
         return <BoulderSkillPath />;
+      } else if (tabId === 'summary') {
+        return <BoulderSummary onBack={() => handleSetCurrentPage('lektionen')} />;
       }
     } else if (activeBuddy === 'english') {
       // English components
@@ -769,6 +772,32 @@ function AppContent() {
         }
         return (
           <div className="max-w-2xl mx-auto px-4 py-8 mt-8">
+            {activeBuddy === 'boulder' && (
+              <button
+                onClick={() => handleSetCurrentPage('custom-summary')}
+                className="w-full mb-8 bg-teal-50 dark:bg-teal-900/20 border border-teal-200 dark:border-teal-800 rounded-xl p-4 flex items-center justify-between hover:bg-teal-100 dark:hover:bg-teal-900/30 transition-colors group"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-teal-100 dark:bg-teal-800 rounded-full flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                    ⚡
+                  </div>
+                  <div className="text-left">
+                    <h3 className="font-bold text-stone-800 dark:text-stone-100">
+                      {language === 'en' ? 'No time to read everything?' : 'Keine Zeit alles zu lesen?'}
+                    </h3>
+                    <p className="text-sm text-stone-600 dark:text-stone-400">
+                      {language === 'en' ? 'Click here for the summary' : 'Hier geht es zur Summary'}
+                    </p>
+                  </div>
+                </div>
+                <div className="text-teal-600 dark:text-teal-400">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </div>
+              </button>
+            )}
             <LessonsPage
               lessons={currentLessons}
               onSelectLesson={(lesson) => handleSetCurrentLesson(lesson)}

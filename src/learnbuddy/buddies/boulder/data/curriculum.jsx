@@ -344,7 +344,7 @@ export const boulderCurriculum = {
           ]
         },
         {
-          title: "Modul 2.3: Greiftechniken - Die 7 Hauptgriffe",
+          title: "Modul 2.3: Greiftechniken - Die 9 Hauptgriffe",
           illustration: (
             <svg viewBox="0 0 200 200" className="w-full h-full drop-shadow-lg">
               <circle cx="100" cy="100" r="90" fill="#fefce8" />
@@ -414,6 +414,28 @@ export const boulderCurriculum = {
                 "Griff seitlich ziehen",
                 "Körper in Opposition zum Zug",
                 "Oft mit Flagging kombiniert"
+              ]
+            },
+            {
+              title: "8. MATCH (Griffe zusammenführen)",
+              details: [
+                "Beide Hände auf einem Griff platzieren",
+                "Wichtig für Position halten oder wechseln",
+                "Match auf Jugs: Einfach, beide Hände nebeneinander",
+                "Match auf Slopers: Schwerer, Gewicht gleichmäßig verteilen",
+                "Match auf Crimps: Sehr präzise, Finger nebeneinander",
+                "Oft nötig um freie Hand für nächsten Zug zu bekommen"
+              ]
+            },
+            {
+              title: "9. GASTON (Seitlich nach außen drücken)",
+              details: [
+                "Griff seitlich nach außen drücken (nicht ziehen!)",
+                "Daumen zeigt nach oben oder zur Seite",
+                "Wichtig für Kompression und seitliche Bewegungen",
+                "Oft in Kombination mit Side-Pull auf anderer Seite",
+                "Erfordert Schulterstabilität und Core-Spannung",
+                "Häufig in Überhängen und bei Volumes"
               ]
             }
           ]
@@ -509,6 +531,18 @@ export const boulderCurriculum = {
                 "Knie zeigt von Wand weg",
                 "Effizient in Überhängen"
               ]
+            },
+            {
+              title: "Rock-over (Gewichtsverlagerung)",
+              details: [
+                "Gewicht kontrolliert auf einen Fuß verlagern",
+                "Wichtig für Slab und Balance-Boulder",
+                "Technik: Langsam Gewicht auf den vorderen Fuß bringen",
+                "Hüfte über den Fuß bewegen",
+                "Anderer Fuß kann dann leichter angehoben werden",
+                "Erfordert Vertrauen und Balance",
+                "Oft kombiniert mit Pivoting"
+              ]
             }
           ]
         },
@@ -572,6 +606,106 @@ export const boulderCurriculum = {
                 "Einen Arm nach dem anderen lockern, um Pump abzubauen",
                 "No-Hands-Rests (Knee-Bars, Bat Hangs) identifizieren",
                 "Das richtige Timing: Wann lohnt sich eine Pause?"
+              ]
+            }
+          ]
+        },
+        {
+          title: "Modul 2.7: Cross-through & Cross-over",
+          topics: [
+            {
+              title: "Was sind Cross-through/Cross-over?",
+              details: [
+                "Bewegungsmuster: Arm über den anderen kreuzen",
+                "Wichtig für effiziente Sequenzierung",
+                "Vermeidet unnötige Position-Wechsel"
+              ]
+            },
+            {
+              title: "Cross-through (Arm unter dem anderen durch)",
+              details: [
+                "Arm geht unter dem anderen Arm durch",
+                "Erlaubt bessere Körperposition",
+                "Oft effizienter als Handwechsel",
+                "Beispiel: Rechte Hand greift links, indem Arm unter linkem Arm durchgeht"
+              ]
+            },
+            {
+              title: "Cross-over (Arm über den anderen)",
+              details: [
+                "Arm geht über den anderen Arm",
+                "Für weite Griffe oder spezielle Sequenzen",
+                "Erfordert gute Schulter-Mobilität",
+                "Oft in Competition-Style Boulder"
+              ]
+            },
+            {
+              title: "Wann verwenden?",
+              details: [
+                "Wenn direkter Zug zu weit wäre",
+                "Um Körperposition zu optimieren",
+                "Bei kompaktem Boulder-Layout",
+                "Alternative zu Match + Handwechsel"
+              ]
+            },
+            {
+              title: "Übung & Anwendung",
+              details: [
+                "An leichten Boulder üben",
+                "Bewusst Sequenzen mit Cross-Moves planen",
+                "Schulter-Mobilität trainieren",
+                "Smooth ausführen, nicht ruckartig"
+              ]
+            }
+          ]
+        },
+        {
+          title: "Modul 2.8: Traversing - Horizontales Klettern",
+          topics: [
+            {
+              title: "Was ist Traversing?",
+              details: [
+                "Horizontal an der Wand klettern (nicht hoch!)",
+                "Ausgezeichnet für Ausdauer und Techniktraining",
+                "Geringeres Verletzungsrisiko (niedrige Höhe)",
+                "Perfekt zum Aufwärmen"
+              ]
+            },
+            {
+              title: "Traversing-Techniken",
+              details: [
+                "Kontinuierliche Bewegung ohne Pause",
+                "Effiziente Griffwechsel (Match, Cross-through)",
+                "Gute Fußarbeit (Pivoting, Smearing)",
+                "Körperspannung halten",
+                "Richtungswechsel einbauen"
+              ]
+            },
+            {
+              title: "Training mit Traversing",
+              details: [
+                "Ausdauer: Lange Traverse ohne Pause",
+                "Technik: Verschiedene Griffarten einbauen",
+                "Fußtechnik: Nur bestimmte Trittarten nutzen",
+                "Power Endurance: Schnelle Traverse mehrmals wiederholen"
+              ]
+            },
+            {
+              title: "Traverse-Varianten",
+              details: [
+                "Freestyle: Beliebig klettern",
+                "One-Touch: Jeden Griff nur einmal berühren",
+                "Elimination: Bestimmte Griffe/Tritte nicht nutzen",
+                "Speed Traverse: So schnell wie möglich"
+              ]
+            },
+            {
+              title: "Praktische Übungen",
+              details: [
+                "10 Minuten kontinuierliches Traversieren",
+                "Traverse mit nur Slopern",
+                "Traverse mit Match auf jedem Griff",
+                "Traverse mit Cross-through Moves"
               ]
             }
           ]
@@ -712,6 +846,24 @@ export const boulderCurriculum = {
                 "Core anspannen, um Schwingen zu stoppen",
                 "Schnell Füße wieder an die Wand bringen"
               ]
+            },
+            {
+              title: "No-Hands-Rests - Detailliert",
+              details: [
+                "Knee-Bar finden und positionieren:",
+                "  - Fuß + Knie klemmen dich zwischen Wand/Volume",
+                "  - Position testen: Kannst du Hände loslassen?",
+                "  - Oft in Ecken oder zwischen Volumes",
+                "Knee-Bar in verschiedenen Winkeln:",
+                "  - Vertikal: Knie zwischen Wand und Volume",
+                "  - Horizontal: Knie in Ecke/Winkel",
+                "  - Jeder Winkel erfordert andere Positionierung",
+                "No-Hands-Rests an Volumes:",
+                "  - Sitzen auf Volumes (wenn erlaubt)",
+                "  - Bicycle-Position (Füße klemmen)",
+                "  - Kompression zwischen Volumes",
+                "Wichtig: Diese Positionen zum Ausruhen & Chalken nutzen!"
+              ]
             }
           ]
         },
@@ -735,10 +887,26 @@ export const boulderCurriculum = {
               ]
             },
             {
-              title: "Mantel-Varianten",
+              title: "Mantel-Varianten - Detailliert",
               details: [
-                "Low Mantel (niedriges Hochdrücken)",
-                "High Mantel (explosiv)"
+                "Low Mantel (niedriges Hochdrücken):",
+                "  - Kontrolliert, langsam",
+                "  - Für niedrige Volumes/Ablagen",
+                "High Mantel (explosiv):",
+                "  - Dynamisch, kraftvoll",
+                "  - Für hohe Volumes",
+                "Mantle auf Volumes (speziell):",
+                "  - Volumes sind oft glatt, weniger Grip",
+                "  - Mehr Gewicht auf Füße verlagern",
+                "  - Oft mit Smearing auf Volume-Oberseite",
+                "Mantle mit Heel Hook:",
+                "  - Heel Hook auf Volume hilft beim Hochziehen",
+                "  - Reduziert Armkraft-Anforderung",
+                "  - Sehr effizient in Überhängen",
+                "Reverse Mantle:",
+                "  - Rückwärts hochdrücken",
+                "  - Selten, aber manchmal nötig",
+                "  - Erfordert viel Kraft und Balance"
               ]
             }
           ]
@@ -851,6 +1019,107 @@ export const boulderCurriculum = {
                 "Bewegungsabläufe trocken üben",
                 "Hilft bei komplexen Sequenzen",
                 "Muskelgedächtnis aufbauen"
+              ]
+            },
+            {
+              title: "Beta-Breaking - Eigene Lösungen finden",
+              details: [
+                "Nicht blind Beta kopieren!",
+                "Jeder Körper ist anders (Größe, Reichweite, Stärken)",
+                "Was für andere funktioniert, muss nicht für dich funktionieren",
+                "Kreatives Problemlösen:",
+                "  - Verschiedene Sequenzen ausprobieren",
+                "  - Alternative Griffe/Tritte finden",
+                "  - Eigene Bewegungsmuster entwickeln",
+                "Wann Beta-Breaking sinnvoll ist:",
+                "  - Standard-Beta funktioniert nicht",
+                "  - Du hast andere Stärken (z.B. mehr Reichweite)",
+                "  - Du willst kreativ sein",
+                "Wann Beta folgen:",
+                "  - Du lernst eine neue Technik",
+                "  - Standard-Beta ist offensichtlich effizient",
+                "  - Du bist Anfänger (erst lernen, dann breaken)",
+                "Beta-Breaking als Skill:",
+                "  - Trainiert Problemlösungsfähigkeit",
+                "  - Macht dich zu besserem Kletterer",
+                "  - Führt zu persönlichem Stil"
+              ]
+            }
+          ]
+        },
+        {
+          title: "Modul 3.7: Stemming & Laybacking - Spezialtechniken",
+          topics: [
+            {
+              title: "Stemming - Drücken gegen Wände",
+              details: [
+                "Technik für Ecken, Winkel und Volumes",
+                "Drücken gegen gegenüberliegende Wände/Strukturen",
+                "Körperspannung hält dich in Position",
+                "Wichtig für Indoor-Volumes und Outdoor-Ecken"
+              ]
+            },
+            {
+              title: "Stemming-Techniken",
+              details: [
+                "Hand-Foot-Stem:",
+                "  - Eine Hand + ein Fuß drücken gegen eine Wand",
+                "  - Andere Hand + Fuß gegen andere Wand",
+                "  - Körper in der Mitte 'eingeklemmt'",
+                "Hand-Hand-Stem:",
+                "  - Beide Hände gegen verschiedene Wände",
+                "  - Füße unterstützen",
+                "Foot-Foot-Stem:",
+                "  - Beide Füße gegen Wände",
+                "  - Hände greifen Griffe",
+                "  - Sehr kraftsparend!"
+              ]
+            },
+            {
+              title: "Stemming anwenden",
+              details: [
+                "In Ecken: Klassische Stemming-Situation",
+                "Zwischen Volumes: Häufig in modernen Hallen",
+                "In Spalten: Outdoor-Technik",
+                "Wichtig: Körperspannung halten, nicht nur drücken!"
+              ]
+            },
+            {
+              title: "Laybacking - Nach hinten lehnen",
+              details: [
+                "Technik für Spalten, Ecken und Kanten",
+                "Körpergewicht nach hinten verlagern",
+                "Arme ziehen, Füße drücken (Opposition!)",
+                "Wichtig für vertikale Spalten und Kanten"
+              ]
+            },
+            {
+              title: "Laybacking-Technik",
+              details: [
+                "Hände greifen Kante/Spalte von der Seite",
+                "Körper lehnt sich nach hinten (weg von Wand)",
+                "Füße drücken gegen Wand (Smearing oder auf Tritten)",
+                "Gewicht zwischen Händen und Füßen verteilen",
+                "Körperspannung extrem wichtig",
+                "Oft in Kombination mit Stemming"
+              ]
+            },
+            {
+              title: "Wann Laybacking verwenden?",
+              details: [
+                "Vertikale Spalten (Outdoor)",
+                "Kanten, die seitlich greifbar sind",
+                "Wenn direkter Zug nicht möglich",
+                "Oft in Slab oder leichtem Überhang"
+              ]
+            },
+            {
+              title: "Übung & Anwendung",
+              details: [
+                "An leichten Ecken/Volumes üben",
+                "Stemming in verschiedenen Winkeln probieren",
+                "Laybacking an Kanten trainieren",
+                "Körperspannung dabei immer im Fokus"
               ]
             }
           ]
