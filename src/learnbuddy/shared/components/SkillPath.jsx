@@ -408,13 +408,42 @@ const SkillPath = ({ title, description, phases, buddyTheme, buddyId }) => {
 
                             return (
                               <div key={mIndex} className={`md:flex items-center ${isOdd ? 'flex-row-reverse' : ''}`}>
+                                {/* Illustration or Empty Space */}
+                                <div className={`hidden md:flex md:w-1/2 items-center justify-center p-8 ${isOdd ? 'order-2' : 'order-1'}`}>
+                                  {module.illustration && (
+                                    React.isValidElement(module.illustration) ? (
+                                      <motion.div
+                                        className="w-full max-w-xs transform hover:scale-105 transition-transform duration-500"
+                                        initial={{ opacity: 0, y: 20 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        animate={{ y: [0, -8, 0] }}
+                                        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                                      >
+                                        {module.illustration}
+                                      </motion.div>
+                                    ) : (
+                                     <motion.img
+                                      src={module.illustration.url}
+                                      alt={module.illustration.alt || "Illustration"}
+                                      className="max-w-[80%] max-h-64 object-contain drop-shadow-xl transform hover:scale-105 transition-transform duration-500"
+                                      initial={{ opacity: 0, y: 20 }}
+                                      whileInView={{ opacity: 1, y: 0 }}
+                                      viewport={{ once: true }}
+                                      animate={{ y: [0, -8, 0] }}
+                                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                                    />
+                                    )
+                                  )}
+                                </div>
+
                                 {/* Module Node (The "Dot" on the map) */}
-                                <div className="md:w-1/2 flex justify-center mb-6 md:mb-0 relative">
+                                <div className="md:w-auto absolute left-1/2 transform -translate-x-1/2 flex justify-center z-20">
                                   <motion.button
                                     whileHover={{ scale: 1.1 }}
                                     whileTap={{ scale: 0.95 }}
                                     onClick={() => toggleModule(phaseIndex, mIndex)}
-                                    className={`w-20 h-20 rounded-full flex items-center justify-center shadow-lg border-4 z-20 relative transition-colors duration-300 ${
+                                    className={`w-20 h-20 rounded-full flex items-center justify-center shadow-lg border-4 transition-colors duration-300 ${
                                       isModuleComplete 
                                         ? 'bg-emerald-500 border-white dark:border-stone-800 text-white' 
                                         : isModuleExpanded 
@@ -423,7 +452,9 @@ const SkillPath = ({ title, description, phases, buddyTheme, buddyId }) => {
                                     }`}
                                     style={{ borderColor: isModuleComplete ? '#fff' : (isModuleExpanded ? primaryColor : '') }}
                                   >
-                                    {isModuleComplete ? (
+                                    {module.customIcon ? (
+                                      <img src={module.customIcon} alt="icon" className="w-10 h-10 object-contain" />
+                                    ) : isModuleComplete ? (
                                       <Award size={32} />
                                     ) : (
                                       <span className="text-2xl font-bold">{mIndex + 1}</span>
@@ -436,7 +467,7 @@ const SkillPath = ({ title, description, phases, buddyTheme, buddyId }) => {
                                 </div>
 
                                 {/* Module Content Card */}
-                                <div className="md:w-1/2 px-4">
+                                <div className={`md:w-1/2 px-4 ${isOdd ? 'order-1 md:pr-16 text-right' : 'order-2 md:pl-16 text-left'}`}>
                                   <motion.div
                                     layout
                                     className={`bg-white dark:bg-stone-800 rounded-2xl p-6 shadow-lg border transition-all duration-300 relative ${

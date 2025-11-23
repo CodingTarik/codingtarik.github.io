@@ -1,3 +1,5 @@
+import React from 'react';
+
 export const boulderCurriculum = {
   title: "Boulder Master Path",
   description: "Vom absoluten Anfänger zum fortgeschrittenen Boulderer – dein kompletter Wegweiser durch die Welt des Boulderns.",
@@ -9,10 +11,22 @@ export const boulderCurriculum = {
       modules: [
         {
           title: "Modul 1.1: Einführung ins Bouldern",
-          illustration: {
-             url: "https://images.unsplash.com/photo-1516592673884-4a382d1124c2?auto=format&fit=crop&w=600&q=80",
-             alt: "Climbing Wall Illustration"
-          },
+          illustration: (
+            <svg viewBox="0 0 200 200" className="w-full h-full drop-shadow-lg">
+              <defs>
+                <linearGradient id="mountainGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#5eead4" />
+                  <stop offset="100%" stopColor="#0f766e" />
+                </linearGradient>
+              </defs>
+              <circle cx="100" cy="100" r="90" fill="#f0fdfa" />
+              <path d="M40 160 L100 50 L160 160 Z" fill="url(#mountainGrad)" stroke="#0f766e" strokeWidth="3" strokeLinejoin="round" />
+              <path d="M100 50 L120 160 L80 160 Z" fill="#14b8a6" opacity="0.3" />
+              <path d="M100 50 L100 20" stroke="#334155" strokeWidth="3" />
+              <path d="M100 20 L140 35 L100 50" fill="#f59e0b" stroke="#b45309" strokeWidth="2" strokeLinejoin="round" />
+              <circle cx="160" cy="40" r="15" fill="#fcd34d" opacity="0.8" />
+            </svg>
+          ),
           topics: [
             {
               title: "Was ist Bouldern? Geschichte & Philosophie",
@@ -66,6 +80,16 @@ export const boulderCurriculum = {
         },
         {
           title: "Modul 1.2: Fundamentale Bewegungsprinzipien",
+          illustration: (
+            <svg viewBox="0 0 200 200" className="w-full h-full drop-shadow-lg">
+              <circle cx="100" cy="100" r="90" fill="#fef3c7" />
+              <path d="M60 140 Q100 120 140 140" stroke="#d97706" strokeWidth="8" fill="none" strokeLinecap="round" />
+              <path d="M80 100 L100 140 L120 100" fill="#f59e0b" stroke="#b45309" strokeWidth="3" strokeLinejoin="round" />
+              <circle cx="100" cy="140" r="15" fill="#ef4444" />
+              <path d="M100 140 L100 60" stroke="#ef4444" strokeWidth="4" strokeDasharray="8 4" />
+              <path d="M90 60 L100 45 L110 60" fill="none" stroke="#ef4444" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          ),
           topics: [
             {
               title: "Bewegung aus den Füßen einleiten",
@@ -95,6 +119,17 @@ export const boulderCurriculum = {
         },
         {
           title: "Modul 1.3: Sicherheit - Die wichtigste Lektion!",
+          illustration: (
+            <svg viewBox="0 0 200 200" className="w-full h-full drop-shadow-lg">
+              <circle cx="100" cy="100" r="90" fill="#ffe4e6" />
+              <rect x="40" y="120" width="120" height="40" rx="5" fill="#f43f5e" stroke="#be123c" strokeWidth="3" />
+              <path d="M40 120 L60 100 L140 100 L160 120" fill="#fb7185" stroke="#be123c" strokeWidth="3" strokeLinejoin="round" />
+              <circle cx="100" cy="70" r="20" fill="#881337" />
+              <path d="M100 90 L100 110" stroke="#881337" strokeWidth="4" strokeLinecap="round" />
+              <path d="M100 100 L80 90" stroke="#881337" strokeWidth="4" strokeLinecap="round" />
+              <path d="M100 100 L120 90" stroke="#881337" strokeWidth="4" strokeLinecap="round" />
+            </svg>
+          ),
           topics: [
             {
               title: "Richtig Fallen (The Most Important Skill!)",
@@ -189,6 +224,15 @@ export const boulderCurriculum = {
         },
         {
           title: "Modul 1.5: Ausrüstung - Gear für Anfänger",
+          illustration: (
+            <svg viewBox="0 0 200 200" className="w-full h-full drop-shadow-lg">
+              <circle cx="100" cy="100" r="90" fill="#e0f2fe" />
+              <path d="M60 120 Q60 150 100 150 Q160 150 160 110 Q160 80 120 80 L100 80 Q60 80 60 120 Z" fill="#0284c7" stroke="#0369a1" strokeWidth="3" />
+              <path d="M60 120 L100 120" stroke="#e0f2fe" strokeWidth="3" strokeDasharray="4 2" />
+              <path d="M160 110 Q160 130 120 130" fill="none" stroke="#075985" strokeWidth="3" />
+              <rect x="90" y="70" width="40" height="20" rx="5" fill="#f59e0b" transform="rotate(-10 110 80)" />
+            </svg>
+          ),
           customIcon: "https://cdn-icons-png.flaticon.com/512/9637/9637887.png", // Shoe icon placeholder
           topics: [
             {
@@ -301,10 +345,18 @@ export const boulderCurriculum = {
         },
         {
           title: "Modul 2.3: Greiftechniken - Die 7 Hauptgriffe",
-          illustration: {
-             url: "https://images.unsplash.com/photo-1564769662533-4f00a87b4056?auto=format&fit=crop&w=600&q=80",
-             alt: "Hand Grip"
-          },
+          illustration: (
+            <svg viewBox="0 0 200 200" className="w-full h-full drop-shadow-lg">
+              <circle cx="100" cy="100" r="90" fill="#fefce8" />
+              <path d="M70 100 Q100 80 130 100 Q130 130 100 130 Q70 130 70 100 Z" fill="#a8a29e" stroke="#57534e" strokeWidth="3" />
+              <path d="M100 130 L100 160" stroke="#78716c" strokeWidth="10" strokeLinecap="round" />
+              <path d="M100 160 L80 180" stroke="#78716c" strokeWidth="10" strokeLinecap="round" />
+              <path d="M100 160 L120 180" stroke="#78716c" strokeWidth="10" strokeLinecap="round" />
+              <circle cx="85" cy="90" r="8" fill="#fca5a5" stroke="#b91c1c" strokeWidth="2" />
+              <circle cx="100" cy="85" r="8" fill="#fca5a5" stroke="#b91c1c" strokeWidth="2" />
+              <circle cx="115" cy="90" r="8" fill="#fca5a5" stroke="#b91c1c" strokeWidth="2" />
+            </svg>
+          ),
           topics: [
             {
               title: "1. JUG (Henkel)",
@@ -532,6 +584,15 @@ export const boulderCurriculum = {
       modules: [
         {
           title: "Modul 3.1: Dynamische Bewegungen",
+          illustration: (
+            <svg viewBox="0 0 200 200" className="w-full h-full drop-shadow-lg">
+              <circle cx="100" cy="100" r="90" fill="#ede9fe" />
+              <path d="M40 140 Q100 40 160 80" stroke="#7c3aed" strokeWidth="6" fill="none" strokeDasharray="10 6" strokeLinecap="round" />
+              <circle cx="40" cy="140" r="10" fill="#8b5cf6" />
+              <path d="M150 80 L160 80 L155 95 Z" fill="#7c3aed" />
+              <circle cx="160" cy="80" r="15" fill="#fcd34d" stroke="#d97706" strokeWidth="3" />
+            </svg>
+          ),
           topics: [
             {
               title: "Dead Point",
@@ -899,6 +960,19 @@ export const boulderCurriculum = {
         },
         {
           title: "Modul 4.4: Finger-Kraft & Hangboard-Training",
+          illustration: (
+            <svg viewBox="0 0 200 200" className="w-full h-full drop-shadow-lg">
+              <circle cx="100" cy="100" r="90" fill="#fef2f2" />
+              <rect x="40" y="80" width="120" height="40" rx="5" fill="#fca5a5" stroke="#991b1b" strokeWidth="3" />
+              <rect x="50" y="90" width="20" height="10" rx="2" fill="#7f1d1d" />
+              <rect x="80" y="90" width="40" height="10" rx="2" fill="#7f1d1d" />
+              <rect x="130" y="90" width="20" height="10" rx="2" fill="#7f1d1d" />
+              <path d="M70 120 L70 150" stroke="#991b1b" strokeWidth="4" strokeLinecap="round" />
+              <path d="M130 120 L130 150" stroke="#991b1b" strokeWidth="4" strokeLinecap="round" />
+              <circle cx="70" cy="160" r="8" fill="#fca5a5" stroke="#991b1b" strokeWidth="3" />
+              <circle cx="130" cy="160" r="8" fill="#fca5a5" stroke="#991b1b" strokeWidth="3" />
+            </svg>
+          ),
           topics: [
             {
               title: "Finger-Anatomie verstehen",
@@ -1129,6 +1203,18 @@ export const boulderCurriculum = {
       modules: [
         {
           title: "Modul 5.1: Angst überwinden",
+          illustration: (
+            <svg viewBox="0 0 200 200" className="w-full h-full drop-shadow-lg">
+              <circle cx="100" cy="100" r="90" fill="#e0e7ff" />
+              <path d="M70 80 Q100 50 130 80 Q150 100 130 130 Q100 160 70 130 Q50 100 70 80 Z" fill="#a5b4fc" stroke="#4338ca" strokeWidth="3" />
+              <path d="M80 90 Q90 80 100 90" stroke="#4338ca" strokeWidth="3" fill="none" />
+              <path d="M100 90 Q110 80 120 90" stroke="#4338ca" strokeWidth="3" fill="none" />
+              <circle cx="100" cy="60" r="15" fill="#fbbf24" stroke="#b45309" strokeWidth="2" />
+              <path d="M90 60 L80 50" stroke="#b45309" strokeWidth="2" />
+              <path d="M110 60 L120 50" stroke="#b45309" strokeWidth="2" />
+              <path d="M100 45 L100 35" stroke="#b45309" strokeWidth="2" />
+            </svg>
+          ),
           topics: [
             {
               title: "Höhenangst beim Bouldern",
