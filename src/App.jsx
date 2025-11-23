@@ -87,6 +87,10 @@ import { getPostById } from './blog/utils/blogUtils';
 // CV Component
 import CVPage from './cv/components/CVPage';
 
+// Tools & Games
+import ToolsOverviewPage from './blog/components/ToolsOverviewPage';
+import DoodleDash from './games/doodledash/DoodleDash';
+
 // Shared Components
 import Footer from './shared/components/Footer';
 import PrivacyPage from './shared/components/PrivacyPage';
@@ -99,8 +103,8 @@ function AppContent() {
   const { activeBuddy, currentBuddyConfig, allBuddies, switchBuddy } = useBuddy();
   const { language } = useLanguage();
   
-  // App view state (blog vs learnbuddy vs admin)
-  const [appView, setAppView] = useState('blog'); // 'blog', 'learnbuddy', or 'admin'
+  // App view state (blog vs learnbuddy vs admin vs tools vs games)
+  const [appView, setAppView] = useState('blog'); // 'blog', 'learnbuddy', 'admin', 'tools', 'games'
   
   // Navigation state
   const [currentPage, setCurrentPage] = useState('home');
@@ -190,6 +194,18 @@ function AppContent() {
       // Check for CV route
       if (hash === '#/cv') {
         setAppView('cv');
+        return;
+      }
+
+      // Check for Tools route
+      if (hash === '#/tools') {
+        setAppView('tools');
+        return;
+      }
+
+      // Check for Games routes
+      if (hash.startsWith('#/games/')) {
+        setAppView('games');
         return;
       }
 
@@ -544,6 +560,22 @@ function AppContent() {
       return <CVPage />;
     }
 
+    // Tools View
+    if (appView === 'tools') {
+      return <ToolsOverviewPage />;
+    }
+
+    // Games View
+    if (appView === 'games') {
+      // Check specific game route
+      if (window.location.hash === '#/games/doodledash') {
+        return <DoodleDash />;
+      }
+      // Default: redirect to tools
+      window.location.hash = '#/tools';
+      return null;
+    }
+
     // Blog View
     if (appView === 'blog') {
       // Check for search page
@@ -552,7 +584,6 @@ function AppContent() {
           <div className="min-h-screen flex">
             {/* Left Sidebar */}
             <BlogSidebar
-              onBackToLearnBuddy={() => handleViewChange('learnbuddy')}
               selectedTab="search"
               onTabChange={(tab) => {
                 if (tab === 'posts') window.location.hash = '#/blog';
@@ -581,7 +612,6 @@ function AppContent() {
           <div className="min-h-screen flex">
             {/* Left Sidebar */}
             <BlogSidebar
-              onBackToLearnBuddy={() => handleViewChange('learnbuddy')}
               selectedTab="categories"
               onTabChange={(tab) => {
                 if (tab === 'posts') window.location.hash = '#/blog';
@@ -624,7 +654,6 @@ function AppContent() {
           <div className="min-h-screen flex">
             {/* Left Sidebar */}
             <BlogSidebar
-              onBackToLearnBuddy={() => handleViewChange('learnbuddy')}
               selectedTab="projects"
               onTabChange={(tab) => {
                 if (tab === 'posts') window.location.hash = '#/blog';
@@ -653,7 +682,6 @@ function AppContent() {
           <div className="min-h-screen flex">
             {/* Left Sidebar */}
             <BlogSidebar
-              onBackToLearnBuddy={() => handleViewChange('learnbuddy')}
               selectedTab="posts"
               onTabChange={(tab) => {
                 if (tab === 'posts') window.location.hash = '#/blog';
@@ -718,7 +746,7 @@ function AppContent() {
       }
       
       // Default Blog Page (Posts overview) - only if no other blog route matched
-      return <BlogPage onPostClick={handlePostClick} onBackToLearnBuddy={() => handleViewChange('learnbuddy')} />;
+      return <BlogPage onPostClick={handlePostClick} />;
     }
 
     // Admin Panel View
@@ -987,8 +1015,8 @@ function AppContent() {
         />
       )}
 
-      {/* Footer - Show on Blog, CV, Privacy, Imprint pages, but NOT on LearnBuddy */}
-      {appView !== 'learnbuddy' && <Footer />}
+      {/* Footer - Show on Blog, CV, Privacy, Imprint pages, but NOT on LearnBuddy, Games */}
+      {appView !== 'learnbuddy' && appView !== 'games' && <Footer />}
     </div>
   );
 }

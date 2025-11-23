@@ -20,7 +20,6 @@ const DiscordIcon = ({ size = 18 }) => (
 );
 
 export default function BlogSidebar({ 
-  onBackToLearnBuddy, 
   selectedTab,
   onTabChange,
   onCategorySelect,
@@ -216,15 +215,18 @@ export default function BlogSidebar({
 
       {/* Footer Buttons */}
       <div className="p-4 space-y-2.5">
-        {/* Go to LearnBuddy Button */}
+        {/* Tools Button */}
         <button
-          onClick={onBackToLearnBuddy}
-          className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-lg shadow-md p-2.5 hover:shadow-lg hover:scale-[1.02] transition-all flex items-center justify-center gap-2 font-semibold text-sm"
+          onClick={() => {
+            window.location.hash = '#/tools';
+            onClose();
+          }}
+          className="w-full bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 text-white rounded-lg shadow-md p-2.5 hover:shadow-lg hover:scale-[1.02] transition-all flex items-center justify-center gap-2 font-semibold text-sm"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M19 12H5M12 19l-7-7 7-7"/>
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
           </svg>
-          <span>Go to LearnBuddy</span>
+          <span>Tools & Games</span>
         </button>
 
         {/* Buy Me a Coffee */}

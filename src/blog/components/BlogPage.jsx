@@ -11,7 +11,7 @@ import { generateBlogStructuredData, injectStructuredData } from '../utils/seoUt
 import SearchBar from './SearchBar';
 import { trackCategoryClick, trackSearch } from './Analytics';
 
-export default function BlogPage({ onPostClick, onBackToLearnBuddy }) {
+export default function BlogPage({ onPostClick }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedTab, setSelectedTab] = useState('posts');
@@ -114,7 +114,6 @@ export default function BlogPage({ onPostClick, onBackToLearnBuddy }) {
 
       {/* Left Sidebar */}
       <BlogSidebar
-        onBackToLearnBuddy={onBackToLearnBuddy}
         selectedTab={selectedTab}
         onTabChange={handleTabChange}
         onCategorySelect={handleCategorySelect}

@@ -83,6 +83,20 @@ import { comparative3 } from '../lessons/module_2_elementary/g8_adjectives_adver
 
 import { althoughBecause } from '../lessons/module_2_elementary/g9_conjunctions_prepositions/although_because.jsx';
 import { duringForWhile } from '../lessons/module_2_elementary/g9_conjunctions_prepositions/during_for_while.jsx';
+import { byUntil } from '../lessons/module_2_elementary/g9_conjunctions_prepositions/by_until.jsx';
+import { toAtInInto } from '../lessons/module_2_elementary/g9_conjunctions_prepositions/to_at_in_into.jsx';
+
+// Import B1 Grammar Lessons
+import { presentPerfectContinuous } from '../lessons/module_3_intermediate/g1_tenses/present_perfect_continuous.jsx';
+import { presentPerfectContinuousSimple } from '../lessons/module_3_intermediate/g1_tenses/present_perfect_continuous_simple.jsx';
+import { pastPerfect } from '../lessons/module_3_intermediate/g1_tenses/past_perfect.jsx';
+import { pastPerfectContinuous } from '../lessons/module_3_intermediate/g1_tenses/past_perfect_continuous.jsx';
+import { reviewTenses } from '../lessons/module_3_intermediate/g1_tenses/review_tenses.jsx';
+
+import { futureContinuousPerfect } from '../lessons/module_3_intermediate/g2_future/future_continuous_perfect.jsx';
+import { futureTimeClauses } from '../lessons/module_3_intermediate/g2_future/future_time_clauses.jsx';
+
+import { couldDoHaveDone } from '../lessons/module_3_intermediate/g3_modals/could_do_have_done.jsx';
 
 // Define lesson categories
 export const categories = {
@@ -183,6 +197,19 @@ export const groups = {
   a2_conjunctions_prepositions: {
     id: 'a2_conjunctions_prepositions',
     title: { en: '2.9 Conjunctions & Prepositions', de: '2.9 Konjunktionen & Präpositionen' }
+  },
+  // B1 Groups
+  b1_tenses: {
+    id: 'b1_tenses',
+    title: { en: '3.1 Tenses (Consolidation)', de: '3.1 Zeitformen (Vertiefung)' }
+  },
+  b1_future: {
+    id: 'b1_future',
+    title: { en: '3.2 Future (Advanced)', de: '3.2 Zukunft (Erweitert)' }
+  },
+  b1_modals: {
+    id: 'b1_modals',
+    title: { en: '3.3 Modals (Nuances)', de: '3.3 Modalverben (Nuancen)' }
   }
 };
 
@@ -555,6 +582,62 @@ export const lessons = [
     category: 'a2_grammar',
     group: groups.a2_conjunctions_prepositions,
     ...duringForWhile
+  },
+  {
+    category: 'a2_grammar',
+    group: groups.a2_conjunctions_prepositions,
+    ...byUntil
+  },
+  {
+    category: 'a2_grammar',
+    group: groups.a2_conjunctions_prepositions,
+    ...toAtInInto
+  },
+
+  // --- B1: TENSES ---
+  {
+    category: 'b1_grammar',
+    group: groups.b1_tenses,
+    ...presentPerfectContinuous
+  },
+  {
+    category: 'b1_grammar',
+    group: groups.b1_tenses,
+    ...presentPerfectContinuousSimple
+  },
+  {
+    category: 'b1_grammar',
+    group: groups.b1_tenses,
+    ...pastPerfect
+  },
+  {
+    category: 'b1_grammar',
+    group: groups.b1_tenses,
+    ...pastPerfectContinuous
+  },
+  {
+    category: 'b1_grammar',
+    group: groups.b1_tenses,
+    ...reviewTenses
+  },
+
+  // --- B1: FUTURE ---
+  {
+    category: 'b1_grammar',
+    group: groups.b1_future,
+    ...futureContinuousPerfect
+  },
+  {
+    category: 'b1_grammar',
+    group: groups.b1_future,
+    ...futureTimeClauses
+  },
+
+  // --- B1: MODALS ---
+  {
+    category: 'b1_grammar',
+    group: groups.b1_modals,
+    ...couldDoHaveDone
   }
 ];
 
