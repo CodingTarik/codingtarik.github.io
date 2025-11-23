@@ -26,8 +26,30 @@ import { sidesLesson } from '../lessons/module_3/sides';
 import { bakingLesson } from '../lessons/module_3/baking';
 
 import { nutritionTheoryLesson } from '../lessons/module_4/nutrition_theory';
+import { mealForGymLesson } from '../lessons/module_4/meal_for_gym';
 import { foodScienceLesson } from '../lessons/module_4/food_science';
 import { flavorBuildingLesson } from '../lessons/module_4/flavor_building';
+import { storagePreservationLesson } from '../lessons/module_4/storage_preservation';
+import { herbsSpicesLesson } from '../lessons/module_4/herbs_spices';
+import { mealPrepLesson } from '../lessons/module_4/meal_prep';
+import { vegAlternativesLesson } from '../lessons/module_4/veg_alternatives';
+import { dessertsLesson } from '../lessons/module_4/desserts';
+import { spreadsDipsLesson } from '../lessons/module_4/spreads_dips';
+import { snacksFingerfoodLesson } from '../lessons/module_4/snacks_fingerfood';
+import { drinksLesson } from '../lessons/module_4/drinks';
+
+import { timingStressLesson } from '../lessons/module_5/timing_stress';
+import { platingPresentationLesson } from '../lessons/module_5/plating_presentation';
+import { troubleshootingLesson } from '../lessons/module_5/troubleshooting';
+import { hostingGuestsLesson } from '../lessons/module_5/hosting_guests';
+import { budgetCookingLesson } from '../lessons/module_5/budget_cooking';
+import { quickMealsLesson } from '../lessons/module_5/quick_meals';
+
+import { grillingOutdoorLesson } from '../lessons/module_6/grilling_outdoor';
+import { worldCuisinesLesson } from '../lessons/module_6/world_cuisines';
+import { specialDisciplinesLesson } from '../lessons/module_6/special_disciplines';
+import { breakfastBrunchLesson } from '../lessons/module_6/breakfast_brunch';
+import { cookingPhilosophyLesson } from '../lessons/module_6/cooking_philosophy';
 
 export const categories = {
   basics: {
@@ -45,6 +67,14 @@ export const categories = {
   theory: {
     en: 'Module 4: Theory & Creativity',
     de: 'Modul 4: Theorie & Kreativität'
+  },
+  management: {
+    en: 'Module 5: Management & Hosting',
+    de: 'Modul 5: Management & Gastgeber'
+  },
+  world: {
+    en: 'Module 6: World Cuisines & Mastery',
+    de: 'Modul 6: Weltküchen & Meisterschaft'
   }
 };
 
@@ -158,11 +188,95 @@ export const lessons = [
   },
   {
     category: 'theory',
+    ...mealForGymLesson
+  },
+  {
+    category: 'theory',
     ...foodScienceLesson
   },
   {
     category: 'theory',
     ...flavorBuildingLesson
+  },
+  {
+    category: 'theory',
+    ...storagePreservationLesson
+  },
+  {
+    category: 'theory',
+    ...herbsSpicesLesson
+  },
+  {
+    category: 'theory',
+    ...mealPrepLesson
+  },
+  {
+    category: 'theory',
+    ...vegAlternativesLesson
+  },
+  {
+    category: 'theory',
+    ...dessertsLesson
+  },
+  {
+    category: 'theory',
+    ...spreadsDipsLesson
+  },
+  {
+    category: 'theory',
+    ...snacksFingerfoodLesson
+  },
+  {
+    category: 'theory',
+    ...drinksLesson
+  },
+
+  // Module 5: Management
+  {
+    category: 'management',
+    ...timingStressLesson
+  },
+  {
+    category: 'management',
+    ...platingPresentationLesson
+  },
+  {
+    category: 'management',
+    ...troubleshootingLesson
+  },
+  {
+    category: 'management',
+    ...hostingGuestsLesson
+  },
+  {
+    category: 'management',
+    ...budgetCookingLesson
+  },
+  {
+    category: 'management',
+    ...quickMealsLesson
+  },
+
+  // Module 6: World & Specialization
+  {
+    category: 'world',
+    ...grillingOutdoorLesson
+  },
+  {
+    category: 'world',
+    ...worldCuisinesLesson
+  },
+  {
+    category: 'world',
+    ...specialDisciplinesLesson
+  },
+  {
+    category: 'world',
+    ...breakfastBrunchLesson
+  },
+  {
+    category: 'world',
+    ...cookingPhilosophyLesson
   }
 ];
 

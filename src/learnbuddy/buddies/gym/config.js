@@ -1,6 +1,8 @@
-import { Dumbbell, Calendar, BarChart3, Activity } from 'lucide-react';
+import { Dumbbell, Calendar, BarChart3, Activity, Map, BookOpen } from 'lucide-react';
 import GymHomePage from './components/GymHomePage';
 import WorkoutTracker from './components/WorkoutTracker';
+import GymSkillPath from './components/GymSkillPath';
+import GymSummary from './components/GymSummary';
 import { lessons, getLessonById, getNextLesson } from './data/lessons';
 
 export const gymBuddyConfig = {
@@ -31,6 +33,18 @@ export const gymBuddyConfig = {
       name: { en: 'Tracker', de: 'Tracker' },
       icon: Activity,
       component: WorkoutTracker
+    },
+    {
+      id: 'curriculum',
+      name: { en: 'Path', de: 'Wegweiser' },
+      icon: Map,
+      component: GymSkillPath
+    },
+    {
+      id: 'summary',
+      name: { en: 'Summary', de: 'Summary' },
+      icon: BookOpen,
+      component: GymSummary
     }
   ],
   
@@ -57,4 +71,3 @@ export const gymBuddyConfig = {
     }
   }
 };
-

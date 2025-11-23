@@ -56,12 +56,17 @@ import CookSkillPath from './learnbuddy/buddies/cook/components/CookSkillPath';
 
 // Gym-specific components
 import WorkoutTracker from './learnbuddy/buddies/gym/components/WorkoutTracker';
+import GymSkillPath from './learnbuddy/buddies/gym/components/GymSkillPath';
+import GymSummary from './learnbuddy/buddies/gym/components/GymSummary';
 
 // Run-specific components
 import RunTools from './learnbuddy/buddies/run/components/RunTools';
+import RunSkillPath from './learnbuddy/buddies/run/components/RunSkillPath';
+import RunSummary from './learnbuddy/buddies/run/components/RunSummary';
 
 // Swim-specific components
 import SwimTools from './learnbuddy/buddies/swim/components/SwimTools';
+import SwimSummary from './learnbuddy/buddies/swim/components/SwimSummary';
 
 // Yoga-specific components
 import YogaTools from './learnbuddy/buddies/yoga/components/YogaTools';
@@ -454,16 +459,26 @@ function AppContent() {
       // Gym components
       if (tabId === 'tracker') {
         return <WorkoutTracker />;
+      } else if (tabId === 'curriculum') {
+        return <GymSkillPath />;
+      } else if (tabId === 'summary') {
+        return <GymSummary onBack={() => handleSetCurrentPage('lektionen')} />;
       }
     } else if (activeBuddy === 'run') {
       // Run components
       if (tabId === 'tools') {
         return <RunTools />;
+      } else if (tabId === 'curriculum') {
+        return <RunSkillPath />;
+      } else if (tabId === 'summary') {
+        return <RunSummary onBack={() => handleSetCurrentPage('lektionen')} />;
       }
     } else if (activeBuddy === 'swim') {
       // Swim components
       if (tabId === 'tools') {
         return <SwimTools />;
+      } else if (tabId === 'summary') {
+        return <SwimSummary onBack={() => handleSetCurrentPage('lektionen')} />;
       }
     } else if (activeBuddy === 'yoga') {
       // Yoga components
@@ -791,6 +806,84 @@ function AppContent() {
                   </div>
                 </div>
                 <div className="text-teal-600 dark:text-teal-400">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </div>
+              </button>
+            )}
+            {activeBuddy === 'swim' && (
+              <button
+                onClick={() => handleSetCurrentPage('custom-summary')}
+                className="w-full mb-8 bg-cyan-50 dark:bg-cyan-900/20 border border-cyan-200 dark:border-cyan-800 rounded-xl p-4 flex items-center justify-between hover:bg-cyan-100 dark:hover:bg-cyan-900/30 transition-colors group"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-cyan-100 dark:bg-cyan-800 rounded-full flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                    🌊
+                  </div>
+                  <div className="text-left">
+                    <h3 className="font-bold text-stone-800 dark:text-stone-100">
+                      {language === 'en' ? 'No time to read everything?' : 'Keine Zeit alles zu lesen?'}
+                    </h3>
+                    <p className="text-sm text-stone-600 dark:text-stone-400">
+                      {language === 'en' ? 'Click here for the summary' : 'Hier geht es zur Summary'}
+                    </p>
+                  </div>
+                </div>
+                <div className="text-cyan-600 dark:text-cyan-400">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </div>
+              </button>
+            )}
+            {activeBuddy === 'run' && (
+              <button
+                onClick={() => handleSetCurrentPage('custom-summary')}
+                className="w-full mb-8 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl p-4 flex items-center justify-between hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors group"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-green-100 dark:bg-green-800 rounded-full flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                    🏃‍♂️
+                  </div>
+                  <div className="text-left">
+                    <h3 className="font-bold text-stone-800 dark:text-stone-100">
+                      {language === 'en' ? 'No time to read everything?' : 'Keine Zeit alles zu lesen?'}
+                    </h3>
+                    <p className="text-sm text-stone-600 dark:text-stone-400">
+                      {language === 'en' ? 'Click here for the summary' : 'Hier geht es zur Summary'}
+                    </p>
+                  </div>
+                </div>
+                <div className="text-green-600 dark:text-green-400">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </div>
+              </button>
+            )}
+            {activeBuddy === 'gym' && (
+              <button
+                onClick={() => handleSetCurrentPage('custom-summary')}
+                className="w-full mb-8 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4 flex items-center justify-between hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors group"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-red-100 dark:bg-red-800 rounded-full flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                    💪
+                  </div>
+                  <div className="text-left">
+                    <h3 className="font-bold text-stone-800 dark:text-stone-100">
+                      {language === 'en' ? 'No time to read everything?' : 'Keine Zeit alles zu lesen?'}
+                    </h3>
+                    <p className="text-sm text-stone-600 dark:text-stone-400">
+                      {language === 'en' ? 'Click here for the summary' : 'Hier geht es zur Summary'}
+                    </p>
+                  </div>
+                </div>
+                <div className="text-red-600 dark:text-red-400">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                     <polyline points="12 5 19 12 12 19"></polyline>

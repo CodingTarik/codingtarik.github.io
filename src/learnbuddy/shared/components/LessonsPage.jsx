@@ -74,25 +74,39 @@ function LessonsPage({ lessons, onSelectLesson }) {
   const renderLessonCard = (lesson) => {
     const isComplete = progress[lesson.id]?.completed || false;
     const lessonTitle = lesson.title?.[language] || lesson.title?.en || lesson.title;
+    const isSpecial = lesson.isSpecial;
     
     return (
       <div
         key={lesson.id}
-        className={`relative bg-white dark:bg-stone-800 rounded-lg shadow-sm border border-stone-200 dark:border-stone-700 transition-all ${
+        className={`relative bg-white dark:bg-stone-800 rounded-lg shadow-sm transition-all ${
           isComplete ? 'opacity-75' : ''
+        } ${
+          isSpecial 
+            ? 'border-2 border-amber-400 dark:border-amber-500 shadow-lg shadow-amber-100 dark:shadow-amber-900/20' 
+            : 'border border-stone-200 dark:border-stone-700'
         }`}
       >
+        {isSpecial && (
+             <div className="absolute -top-2 -right-2 z-10 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[10px] tracking-widest uppercase font-bold px-2 py-0.5 rounded-full shadow-sm animate-pulse">
+                Special
+             </div>
+        )}
         <button
           onClick={() => onSelectLesson(lesson)}
-          className="w-full p-4 hover:shadow-md transition-all text-left hover:bg-stone-50 dark:hover:bg-stone-700/50 rounded-lg flex items-center gap-3"
+          className={`w-full p-4 hover:shadow-md transition-all text-left rounded-lg flex items-center gap-3 ${
+             isSpecial ? 'bg-amber-50/30 dark:bg-amber-900/10 hover:bg-amber-50/60 dark:hover:bg-amber-900/20' : 'hover:bg-stone-50 dark:hover:bg-stone-700/50'
+          }`}
         >
           <div className="flex-1">
             <h3 className={`font-bold mb-1 ${
               isComplete 
                 ? 'text-stone-500 dark:text-stone-500 line-through' 
-                : 'text-stone-800 dark:text-stone-100'
+                : isSpecial 
+                    ? 'text-amber-700 dark:text-amber-400' 
+                    : 'text-stone-800 dark:text-stone-100'
             }`}>
-              {lessonTitle}
+              {lessonTitle} {isSpecial && <span className="inline-block ml-1 text-amber-500">✨</span>}
             </h3>
             {lesson.description && (
               <p className="text-sm text-stone-600 dark:text-stone-400 line-clamp-2">
