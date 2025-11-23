@@ -9,6 +9,7 @@ const BoulderSkillPath = () => {
       description={boulderCurriculum.description}
       phases={boulderCurriculum.phases}
       buddyTheme="teal"
+      buddyId="boulder"
     />
   );
 };

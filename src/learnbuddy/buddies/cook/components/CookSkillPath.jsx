@@ -9,6 +9,7 @@ const CookSkillPath = () => {
       description={cookCurriculum.description}
       phases={cookCurriculum.phases}
       buddyTheme="amber"
+      buddyId="cook"
     />
   );
 };
