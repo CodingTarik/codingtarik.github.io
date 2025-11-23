@@ -5,6 +5,7 @@ export const boulderCurriculum = {
     {
       title: "Phase 1: Grundlagen & Erste Schritte",
       description: "Der Einstieg in die Welt des Boulderns. Lerne die Basis-Techniken, Sicherheit und das richtige Mindset.",
+      backgroundImage: "linear-gradient(to bottom, #e6fffa, #bbf7d0)", // Example background override
       modules: [
         {
           title: "Modul 1.1: Einführung ins Bouldern",
@@ -16,6 +17,19 @@ export const boulderCurriculum = {
                 "Ursprung: Fontainebleau (Frankreich) & Yosemite Valley",
                 "Unterschied zu Seilklettern, Freiklettern, Sportklettern",
                 "Warum Bouldern? (Physisch, mental, sozial)"
+              ],
+              media: {
+                type: "image",
+                url: "https://images.unsplash.com/photo-1522163182402-834f871fd851?q=80&w=300&auto=format&fit=crop", // Placeholder
+                alt: "Bouldering Wall"
+              },
+              resources: [
+                { type: "video", title: "History of Bouldering", url: "https://youtube.com" },
+                { type: "article", title: "Fontainebleau Guide", url: "https://example.com" }
+              ],
+              tasks: [
+                "Gehe in deine lokale Boulderhalle und schaue dir die Wände an",
+                "Finde heraus, wo die 'Absprungmatte' ist"
               ]
             },
             {
@@ -25,6 +39,14 @@ export const boulderCurriculum = {
                 "Was ist beim Outdoor-Bouldern anders?",
                 "Crashpads, Spotting, Wetter, LNT (Leave No Trace)",
                 "Ethik: Chalk-Nutzung, Vogelschutz, Respekt vor Natur"
+              ],
+               media: {
+                type: "image",
+                url: "https://images.unsplash.com/photo-1564769662533-4f00a87b4056?q=80&w=300&auto=format&fit=crop",
+                alt: "Outdoor Bouldering"
+              },
+              tasks: [
+                "Lies die Hallenregeln deiner lokalen Halle durch"
               ]
             },
             {
@@ -79,6 +101,15 @@ export const boulderCurriculum = {
                 "Was NICHT tun: Steif landen, Hände abstützen, rückwärts fallen",
                 "Übung: Falltraining von verschiedenen Höhen",
                 "Häufigste Verletzungen beim Fallen (Knöchel, Handgelenke)"
+              ],
+              media: {
+                type: "image",
+                url: "https://images.unsplash.com/photo-1588771999234-a7638f206b7c?q=80&w=300&auto=format&fit=crop", // Fall practice
+                alt: "Falling Technique"
+              },
+              tasks: [
+                "Übe das Abspringen aus niedriger Höhe (3x)",
+                "Übe das Abrollen auf der Matte (3x)"
               ]
             },
             {
@@ -395,7 +426,12 @@ export const boulderCurriculum = {
                 "Zieht dich hoch oder stabilisiert",
                 "Core-intensiv!",
                 "In Überhängen essentiell"
-              ]
+              ],
+              media: {
+                type: "image",
+                url: "https://images.unsplash.com/photo-1601225696677-d09585722839?q=80&w=300&auto=format&fit=crop",
+                alt: "Heel Hook Technique"
+              }
             },
             {
               title: "Toe Hook (Zehen-Haken)",
@@ -1223,7 +1259,7 @@ export const boulderCurriculum = {
     },
     {
       title: "Phase 6: Spezial-Themen & Outdoor",
-      description: "Erweitere deinen Horizont: Felsklettern, Wettkämpfe und Spezialdisziplinen.",
+      description: "Erweitere dein Horizont: Felsklettern, Wettkämpfe und Spezialdisziplinen.",
       modules: [
         {
           title: "Modul 6.1: Outdoor-Bouldern - Der nächste Schritt",
