@@ -9,8 +9,10 @@ import {
   addCardLocally, 
   updateCardLocally, 
   deleteCardLocally,
+  removeDuplicateCards,
   getPendingChanges,
   clearPendingChanges,
+  clearCache,
   hasPendingChanges,
   getPendingChangesCount 
 } from '../../utils/vocabularyCache';
@@ -158,13 +160,16 @@ function CardManager({ deck, onBack }) {
     }
 
     const cardIndex = cards.findIndex(c => c === card);
+    console.log(`Deleting card at index ${cardIndex}:`, card);
     const success = deleteCardLocally(deck.id, cardIndex);
     
     if (success) {
       const cached = getCachedCards(deck.id);
+      const pending = getPendingChanges(deck.id);
+      console.log(`After delete - pending.deletes:`, pending.deletes);
       setCards(cached.cards);
       updatePendingCount();
-      toast.success(language === 'en' ? 'Card deleted!' : 'Karte gelöscht!', { icon: '🗑️' });
+      toast.success(language === 'en' ? 'Card deleted! Remember to sync.' : 'Karte gelöscht! Vergiss nicht zu synchronisieren.', { icon: '🗑️' });
     } else {
       toast.error(language === 'en' ? 'Failed to delete card' : 'Karte konnte nicht gelöscht werden');
     }
@@ -189,49 +194,77 @@ function CardManager({ deck, onBack }) {
       
       // Has pending changes - upload to Google Sheets
       let errors = [];
+      let successCount = { deletes: 0, updates: 0, adds: 0 };
       
       // Process deletes first (in reverse order to maintain indices)
-      for (const index of pending.deletes.sort((a, b) => b - a)) {
+      // Sort in descending order so indices remain valid after each delete
+      const sortedDeletes = [...pending.deletes].sort((a, b) => b - a);
+      console.log(`Syncing ${sortedDeletes.length} deletions...`, sortedDeletes);
+      
+      for (const index of sortedDeletes) {
         try {
           await deleteCardFromSheet(deck.scriptUrl, index);
+          successCount.deletes++;
         } catch (e) {
+          console.error(`Failed to delete card at index ${index}:`, e);
           errors.push(`Delete at index ${index}: ${e.message}`);
         }
       }
       
       // Process updates
+      console.log(`Syncing ${pending.updates.length} updates...`);
       for (const { index, card } of pending.updates) {
         try {
           await updateCardInSheet(deck.scriptUrl, index, card);
+          successCount.updates++;
         } catch (e) {
+          console.error(`Failed to update card at index ${index}:`, e);
           errors.push(`Update at index ${index}: ${e.message}`);
         }
       }
       
       // Process adds
+      console.log(`Syncing ${pending.adds.length} additions...`);
       for (const card of pending.adds) {
         try {
           const { _tempId, ...cardWithoutTemp } = card;
           await addCardToSheet(deck.scriptUrl, cardWithoutTemp);
+          successCount.adds++;
         } catch (e) {
+          console.error(`Failed to add card "${card.word}":`, e);
           errors.push(`Add card "${card.word}": ${e.message}`);
         }
       }
       
       if (errors.length > 0) {
         console.error('Sync errors:', errors);
+        const successMsg = successCount.deletes > 0 || successCount.updates > 0 || successCount.adds > 0
+          ? (language === 'en' 
+            ? `Partially synced: ${successCount.deletes} deleted, ${successCount.updates} updated, ${successCount.adds} added. ${errors.length} failed.`
+            : `Teilweise synchronisiert: ${successCount.deletes} gelöscht, ${successCount.updates} aktualisiert, ${successCount.adds} hinzugefügt. ${errors.length} fehlgeschlagen.`)
+          : '';
         toast.error(
-          language === 'en' ? `${errors.length} changes failed to sync` : `${errors.length} Änderungen konnten nicht synchronisiert werden`,
-          { duration: 5000 }
+          language === 'en' 
+            ? `${errors.length} changes failed to sync. ${successMsg}`
+            : `${errors.length} Änderungen konnten nicht synchronisiert werden. ${successMsg}`,
+          { duration: 7000 }
         );
       } else {
         // Clear pending changes and reload
         clearPendingChanges(deck.id);
         await loadCards(true);
         updatePendingCount();
+        const syncSummary = [
+          successCount.deletes > 0 && (language === 'en' ? `${successCount.deletes} deleted` : `${successCount.deletes} gelöscht`),
+          successCount.updates > 0 && (language === 'en' ? `${successCount.updates} updated` : `${successCount.updates} aktualisiert`),
+          successCount.adds > 0 && (language === 'en' ? `${successCount.adds} added` : `${successCount.adds} hinzugefügt`)
+        ].filter(Boolean).join(', ');
+        
         toast.success(
-          language === 'en' ? 'All changes synced successfully!' : 'Alle Änderungen erfolgreich synchronisiert!',
-          { icon: '🎉' }
+          language === 'en' 
+            ? `All changes synced successfully! ${syncSummary}`
+            : `Alle Änderungen erfolgreich synchronisiert! ${syncSummary}`,
+          { icon: '🎉', duration: 4000 }
         );
       }
     } catch (error) {
@@ -417,6 +450,82 @@ function CardManager({ deck, onBack }) {
             <Plus size={20} />
             {language === 'en' ? 'Add Card' : 'Karte hinzufügen'}
           </button>
+          <button
+            onClick={() => {
+              const totalCards = cards.length;
+              const confirmMsg = language === 'en' 
+                ? `Remove duplicate cards?\n\nThis will check all ${totalCards} cards and remove duplicates where BOTH word AND translation are identical.\n\nCards with empty word or translation will be skipped.\n\nContinue?`
+                : `Doppelte Karten entfernen?\n\nDies prüft alle ${totalCards} Karten und entfernt Duplikate, bei denen SOWOHL Wort ALS AUCH Übersetzung identisch sind.\n\nKarten mit leerem Wort oder Übersetzung werden übersprungen.\n\nFortfahren?`;
+              
+              if (!window.confirm(confirmMsg)) {
+                return;
+              }
+
+              const removedCount = removeDuplicateCards(deck.id);
+              
+              if (removedCount === 0) {
+                toast.success(
+                  language === 'en' 
+                    ? 'No duplicates found!'
+                    : 'Keine Duplikate gefunden!',
+                  { icon: '✅' }
+                );
+              } else if (removedCount > totalCards * 0.5) {
+                // Sicherheitscheck: Wenn mehr als 50% entfernt werden, ist etwas falsch
+                toast.error(
+                  language === 'en' 
+                    ? `Error: ${removedCount} cards would be removed (${((removedCount/totalCards)*100).toFixed(1)}%). This seems wrong. Please check manually.`
+                    : `Fehler: ${removedCount} Karten würden entfernt (${((removedCount/totalCards)*100).toFixed(1)}%). Das scheint falsch zu sein. Bitte manuell prüfen.`,
+                  { duration: 8000, icon: '⚠️' }
+                );
+                console.error('Duplikat-Entfernung abgebrochen - zu viele Karten würden entfernt werden');
+              } else {
+                toast.success(
+                  language === 'en' 
+                    ? `${removedCount} duplicate card(s) removed! (${((removedCount/totalCards)*100).toFixed(1)}% of total)`
+                    : `${removedCount} doppelte Karte(n) entfernt! (${((removedCount/totalCards)*100).toFixed(1)}% der Gesamtzahl)`,
+                  { icon: '✅', duration: 4000 }
+                );
+                loadCards();
+                updatePendingCount();
+              }
+            }}
+            className="flex items-center gap-2 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl transition-colors"
+            title={language === 'en' ? 'Remove duplicate cards' : 'Doppelte Karten entfernen'}
+          >
+            <Copy size={18} />
+            {language === 'en' ? 'Remove Duplicates' : 'Duplikate entfernen'}
+          </button>
+          {pendingCount > 0 && (
+            <button
+              onClick={() => {
+                if (!window.confirm(
+                  language === 'en' 
+                    ? 'Cancel all pending changes and reset to last synced state? This will discard all local changes.'
+                    : 'Alle ausstehenden Änderungen abbrechen und zum letzten synchronisierten Status zurücksetzen? Dies verwirft alle lokalen Änderungen.'
+                )) {
+                  return;
+                }
+
+                // Clear pending changes and cache, then reload from Google Sheets
+                clearPendingChanges(deck.id);
+                clearCache(deck.id);
+                loadCards(true);
+                updatePendingCount();
+                toast.success(
+                  language === 'en' 
+                    ? 'Reset to last synced state!'
+                    : 'Zurückgesetzt auf letzten synchronisierten Status!',
+                  { icon: '🔄' }
+                );
+              }}
+              className="flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white font-bold rounded-xl transition-colors"
+              title={language === 'en' ? 'Cancel sync and reset' : 'Sync abbrechen und zurücksetzen'}
+            >
+              <X size={18} />
+              {language === 'en' ? 'Cancel Sync' : 'Sync abbrechen'}
+            </button>
+          )}
         </div>
       </div>
 
@@ -511,7 +620,6 @@ function CardManager({ deck, onBack }) {
           </div>
           
           <div className="px-6 pb-6">
-          
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-2">
