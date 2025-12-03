@@ -442,3 +442,4 @@ Wähle die richtige Konjunktion! Denk daran: although = Kontrast, because = Grun
   quiz: { de: [], en: [] }
 };
 
+

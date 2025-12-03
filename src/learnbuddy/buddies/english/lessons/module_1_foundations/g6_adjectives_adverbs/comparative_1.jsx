@@ -284,3 +284,4 @@ Einige Adjektive haben **unregelmäßige** Komparativformen:
   quiz: { de: [], en: [] }
 };
 
+

@@ -284,3 +284,4 @@ Hier sind häufige Paare von -ing und -ed Adjektiven:
   quiz: { de: [], en: [] }
 };
 
+

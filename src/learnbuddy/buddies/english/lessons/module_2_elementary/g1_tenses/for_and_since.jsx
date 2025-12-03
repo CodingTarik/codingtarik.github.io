@@ -394,3 +394,4 @@ Wähle das richtige Wort! Denk daran: Zeitspanne = for, Zeitpunkt = since!
   quiz: { de: [], en: [] }
 };
 
+

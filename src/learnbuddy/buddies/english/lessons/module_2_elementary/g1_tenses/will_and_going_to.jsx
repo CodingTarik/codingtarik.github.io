@@ -376,3 +376,4 @@ Wähle richtig! Plan oder spontan? Beweis oder Meinung?
   quiz: { de: [], en: [] }
 };
 
+

@@ -243,3 +243,4 @@ const WordDrop = ({ exercises }) => {
 
 export default WordDrop;
 
+

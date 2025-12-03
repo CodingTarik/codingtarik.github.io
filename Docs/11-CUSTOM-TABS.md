@@ -230,3 +230,4 @@ Refer to existing implementations:
 - **EnglishBuddy**: Good example with vocabulary and media tabs
 - **PianoBuddy**: Simple example with 2 tabs
 
+

@@ -472,3 +472,4 @@ Wähle die richtige Form! Denk daran: well (nicht good), fast (nicht fastly), ha
   quiz: { de: [], en: [] }
 };
 
+

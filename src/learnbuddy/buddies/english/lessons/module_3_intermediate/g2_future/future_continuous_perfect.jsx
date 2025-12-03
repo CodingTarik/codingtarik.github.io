@@ -292,3 +292,4 @@ Benutzt für **Dauer** bis zu einem zukünftigen Punkt.
   quiz: { de: [], en: [] }
 };
 
+

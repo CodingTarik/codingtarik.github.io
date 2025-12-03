@@ -174,3 +174,4 @@ Manche Verben können BEIDES sein, aber die Bedeutung ändert sich!
   quiz: { de: [], en: [] }
 };
 
+

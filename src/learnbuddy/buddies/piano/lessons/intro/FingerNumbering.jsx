@@ -94,3 +94,4 @@ const FingerNumbering = () => {
 
 export default FingerNumbering;
 
+

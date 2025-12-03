@@ -387,3 +387,4 @@ Wähle die richtige Struktur! To für Handlungen, for für Nutzen, so that für 
   },
   quiz: { de: [], en: [] }
 };
+

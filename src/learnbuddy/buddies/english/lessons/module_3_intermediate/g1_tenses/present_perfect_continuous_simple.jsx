@@ -293,3 +293,4 @@ Denk daran, dass Zustandsverben (know, like, believe, belong, want) **nicht** in
   quiz: { de: [], en: [] }
 };
 
+

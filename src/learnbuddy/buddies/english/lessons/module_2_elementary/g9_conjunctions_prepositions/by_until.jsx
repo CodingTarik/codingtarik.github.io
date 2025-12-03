@@ -286,3 +286,4 @@ Wähle das richtige Wort!
   quiz: { de: [], en: [] }
 };
 
+

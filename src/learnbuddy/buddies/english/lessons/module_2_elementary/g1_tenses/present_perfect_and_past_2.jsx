@@ -362,3 +362,4 @@ Wähle richtig! Denk an die fortgeschrittenen Regeln!
   quiz: { de: [], en: [] }
 };
 
+

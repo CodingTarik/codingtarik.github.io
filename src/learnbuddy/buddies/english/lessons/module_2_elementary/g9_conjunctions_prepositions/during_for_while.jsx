@@ -430,3 +430,4 @@ Wähle das richtige Wort! Denk daran: during + Nomen, for + Dauer, while + Satz!
   quiz: { de: [], en: [] }
 };
 
+

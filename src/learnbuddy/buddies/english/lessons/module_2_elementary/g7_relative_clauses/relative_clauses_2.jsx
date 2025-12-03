@@ -472,3 +472,4 @@ Entscheide, ob du das Pronomen weglassen kannst! Denk daran: Objekt = kann wegla
   quiz: { de: [], en: [] }
 };
 
+

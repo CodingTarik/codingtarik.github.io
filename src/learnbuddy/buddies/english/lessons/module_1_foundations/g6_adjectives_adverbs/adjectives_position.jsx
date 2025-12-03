@@ -288,3 +288,4 @@ Einige Verben werden von **Adjektiven** gefolgt, nicht Adverbien! Diese Verben b
   quiz: { de: [], en: [] }
 };
 
+

@@ -310,3 +310,4 @@ const GymSummary = ({ onBack }) => {
 
 export default GymSummary;
 
+

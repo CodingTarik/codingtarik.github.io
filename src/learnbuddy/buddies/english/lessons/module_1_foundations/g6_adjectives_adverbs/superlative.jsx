@@ -305,3 +305,4 @@ Einige Adjektive haben **unregelmäßige** Superlativformen:
   quiz: { de: [], en: [] }
 };
 
+

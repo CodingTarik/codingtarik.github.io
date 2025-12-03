@@ -174,3 +174,4 @@ As a beginner, simple **linear progression** (just adding weight every workout) 
   }
 };
 
+

@@ -16,3 +16,4 @@ const GymSkillPath = () => {
 
 export default GymSkillPath;
 
+

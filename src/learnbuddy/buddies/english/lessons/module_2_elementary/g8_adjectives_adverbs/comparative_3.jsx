@@ -450,3 +450,4 @@ Wähle die richtige Form! Denk daran: as...as für gleich, than für Komparative
   quiz: { de: [], en: [] }
 };
 
+

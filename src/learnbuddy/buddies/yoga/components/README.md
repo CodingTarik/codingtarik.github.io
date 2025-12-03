@@ -163,3 +163,4 @@ Farben:
 - [ ] Erweiterte Statistiken
 - [ ] Integration mit Wearables (Herzfrequenz, etc.)
 
+

@@ -480,3 +480,4 @@ Wähle das richtige Wort! Denk daran: both = Plural, neither/either = Singular!
   quiz: { de: [], en: [] }
 };
 
+

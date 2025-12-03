@@ -403,3 +403,4 @@ Wähle den richtigen Infinitiv! Denk dran: want, decide, hope nehmen alle "to + 
   },
   quiz: { de: [], en: [] }
 };
+

@@ -496,3 +496,4 @@ Wähle das richtige Wort! Denk daran: enough = ausreichend, too = übermäßig!
   quiz: { de: [], en: [] }
 };
 
+

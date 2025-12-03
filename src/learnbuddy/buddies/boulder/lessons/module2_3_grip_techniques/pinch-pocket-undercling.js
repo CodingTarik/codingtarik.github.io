@@ -899,3 +899,4 @@ After Jug, Crimp, and Sloper, there are four more important grip types: **Pinch*
   }
 };
 
+
