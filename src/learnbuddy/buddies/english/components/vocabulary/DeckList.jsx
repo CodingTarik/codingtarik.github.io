@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, BookOpen, Edit, Trash2, Play, Brain, TrendingUp, AlertCircle, RefreshCw } from 'lucide-react';
+import { Plus, BookOpen, Edit, Trash2, Play, Brain, TrendingUp, AlertCircle, RefreshCw, MessageCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useLanguage } from '../../../../context/LanguageContext';
 import { getDecks, deleteDeck } from '../../utils/deckStorage';
@@ -320,6 +320,14 @@ function DeckList({ onCreateDeck, onEditDeck, onSelectDeck, refreshTrigger }) {
                   >
                     <Play size={18} />
                     {language === 'en' ? 'General Review' : 'Allgemeine Wiederholung'}
+                  </button>
+                  
+                  <button
+                    onClick={() => onSelectDeck(deck, 'aitutor')}
+                    className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-purple-500 to-indigo-500 text-white font-bold rounded-xl hover:shadow-lg transition-all"
+                  >
+                    <MessageCircle size={18} />
+                    {language === 'en' ? 'AI Tutor' : 'AI Tutor'}
                   </button>
                   
                   <button

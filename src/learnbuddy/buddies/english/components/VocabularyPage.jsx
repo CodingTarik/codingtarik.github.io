@@ -6,13 +6,14 @@ import DeckSetupModal from './vocabulary/DeckSetupModal';
 import CardManager from './vocabulary/CardManager';
 import SpacedRepetitionMode from './vocabulary/SpacedRepetitionMode';
 import GeneralLearningMode from './vocabulary/GeneralLearningMode';
+import AITutorMode from './vocabulary/AITutorMode';
 import StatsPanel from './vocabulary/StatsPanel';
 import { saveDeck } from '../utils/deckStorage';
 import * as sounds from '../utils/vocabularySounds';
 
 function VocabularyPage() {
   const { language } = useLanguage();
-  const [currentView, setCurrentView] = useState('decks'); // decks, manage, spaced, general, stats
+  const [currentView, setCurrentView] = useState('decks'); // decks, manage, spaced, general, aitutor, stats
   const [selectedDeck, setSelectedDeck] = useState(null);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [editingDeck, setEditingDeck] = useState(null);
@@ -241,6 +242,13 @@ function VocabularyPage() {
 
       {currentView === 'general' && selectedDeck && (
         <GeneralLearningMode
+          deck={selectedDeck}
+          onBack={handleBackToDecks}
+        />
+      )}
+
+      {currentView === 'aitutor' && selectedDeck && (
+        <AITutorMode
           deck={selectedDeck}
           onBack={handleBackToDecks}
         />

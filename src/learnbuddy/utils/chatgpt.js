@@ -867,3 +867,123 @@ Guidelines:
   }
 }
 
+/**
+ * Generate AI Tutor response for vocabulary learning
+ * @param {Object} card - The vocabulary card being reviewed
+ * @param {string} userAnswer - The user's transcribed answer
+ * @param {boolean} isFirstQuestion - Whether this is the first question for this card
+ * @param {string} apiKey - OpenAI API key
+ * @param {string} language - Language code ('en' or 'de')
+ * @returns {Promise<Object>} Object with feedback text and isCorrect boolean
+ */
+export async function generateVocabularyTutorResponse(card, userAnswer, isFirstQuestion, apiKey, language = 'de') {
+  if (!apiKey || !apiKey.startsWith('sk-')) {
+    throw new Error('Invalid or missing API key. Please configure your ChatGPT API key in settings.');
+  }
+
+  const systemPrompt = language === 'de' 
+    ? `Du bist ein freundlicher, ermutigender Englisch-Tutor, der Vokabeln mit einem Schüler durchgeht. 
+Du stellst Fragen auf Deutsch und gibst Feedback auf Deutsch. Du bist motivierend und hilfreich.
+
+Wichtig:
+- Wenn der Schüler richtig antwortet, lobe ihn und erkläre die Bedeutung
+- Wenn der Schüler falsch antwortet, korrigiere freundlich und erkläre die richtige Bedeutung
+- Sei kurz und prägnant (2-3 Sätze)
+- Verwende eine freundliche, ermutigende Sprache`
+    : `You are a friendly, encouraging English tutor going through vocabulary with a student.
+You ask questions and give feedback. You are motivating and helpful.
+
+Important:
+- If the student answers correctly, praise them and explain the meaning
+- If the student answers incorrectly, correct them kindly and explain the correct meaning
+- Be brief and concise (2-3 sentences)
+- Use friendly, encouraging language`;
+
+  const questionPrompt = isFirstQuestion
+    ? (language === 'de' 
+      ? `Kommen wir zum nächsten Wort. Was bedeutet "${card.word}"?`
+      : `Let's move to the next word. What does "${card.word}" mean?`)
+    : (language === 'de'
+      ? `Was bedeutet "${card.word}"?`
+      : `What does "${card.word}" mean?`);
+
+  const userPrompt = language === 'de'
+    ? `Der Schüler hat auf die Frage "${questionPrompt}" geantwortet: "${userAnswer}"
+
+Die richtige Übersetzung ist: "${card.translation}"
+
+Bewerte die Antwort und gib Feedback. Antworte auf Deutsch.`
+    : `The student answered the question "${questionPrompt}" with: "${userAnswer}"
+
+The correct translation is: "${card.translation}"
+
+Evaluate the answer and give feedback. Respond in English.`;
+
+  try {
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        messages: [
+          {
+            role: 'system',
+            content: systemPrompt
+          },
+          {
+            role: 'user',
+            content: userPrompt
+          }
+        ],
+        temperature: 0.7,
+        max_tokens: 200
+      })
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      
+      if (response.status === 401) {
+        throw new Error('Invalid API key. Please check your ChatGPT API key in settings.');
+      } else if (response.status === 429) {
+        throw new Error('Rate limit exceeded. Please try again in a moment.');
+      } else if (response.status === 402) {
+        throw new Error('Insufficient credits. Please check your OpenAI account.');
+      } else {
+        throw new Error(`API error: ${errorData.error?.message || 'Unknown error'}`);
+      }
+    }
+
+    const data = await response.json();
+    const feedbackText = data.choices[0].message.content.trim();
+    
+    // Simple check if answer is correct (check if translation appears in feedback or if feedback is positive)
+    const isCorrect = feedbackText.toLowerCase().includes('richtig') || 
+                     feedbackText.toLowerCase().includes('korrekt') ||
+                     feedbackText.toLowerCase().includes('correct') ||
+                     feedbackText.toLowerCase().includes('right') ||
+                     feedbackText.toLowerCase().includes('gut') ||
+                     feedbackText.toLowerCase().includes('good') ||
+                     feedbackText.toLowerCase().includes('genau') ||
+                     feedbackText.toLowerCase().includes('exactly') ||
+                     (!feedbackText.toLowerCase().includes('falsch') && 
+                      !feedbackText.toLowerCase().includes('wrong') && 
+                      !feedbackText.toLowerCase().includes('nicht') &&
+                      !feedbackText.toLowerCase().includes('not'));
+
+    return {
+      feedbackText,
+      isCorrect
+    };
+
+  } catch (error) {
+    if (error.message.includes('fetch')) {
+      throw new Error('Network error. Please check your internet connection.');
+    }
+    throw error;
+  }
+}
+
