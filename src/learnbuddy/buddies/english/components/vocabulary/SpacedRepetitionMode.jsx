@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, RotateCcw, Check, Trophy, TrendingUp, Volume2, VolumeX, RefreshCw } from 'lucide-react';
+import { ArrowLeft, RotateCcw, Check, Trophy, TrendingUp, Volume2, VolumeX, RefreshCw, SkipForward, ChevronLeft, Edit } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useLanguage } from '../../../../context/LanguageContext';
 import { fetchCardsFromSheet, updateCardInSheet, addCardToSheet, deleteCardFromSheet } from '../../utils/googleSheetsAPI';
@@ -16,6 +16,7 @@ import {
 import ReactMarkdown from 'react-markdown';
 import VocabularyMascot, { getMotivationalMessage } from './VocabularyMascot';
 import ConfettiEffect from './ConfettiEffect';
+import CardEditModal from './CardEditModal';
 import * as sounds from '../../utils/vocabularySounds';
 
 function SpacedRepetitionMode({ deck, onBack }) {
@@ -42,6 +43,7 @@ function SpacedRepetitionMode({ deck, onBack }) {
   const [showConfetti, setShowConfetti] = useState(false);
   const [soundsEnabled, setSoundsEnabled] = useState(sounds.areSoundsEnabled());
   const [isFlipping, setIsFlipping] = useState(false);
+  const [editingCard, setEditingCard] = useState(null);
 
   useEffect(() => {
     loadCards();
@@ -251,6 +253,48 @@ function SpacedRepetitionMode({ deck, onBack }) {
     loadCards();
   };
 
+  const handleSkip = () => {
+    if (currentIndex < dueCards.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+      setShowAnswer(false);
+      sounds.playWhoosh();
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+      setShowAnswer(false);
+      sounds.playWhoosh();
+    }
+  };
+
+  const handleEditCard = (updatedCard) => {
+    // Find card index in allCards
+    const cardIndex = allCards.findIndex(c => c.word === currentCard.word && c.translation === currentCard.translation);
+    
+    if (cardIndex !== -1) {
+      // Update locally
+      updateCardLocally(deck.id, cardIndex, updatedCard);
+      updatePendingCount();
+      
+      // Update local state
+      const updatedAllCards = [...allCards];
+      updatedAllCards[cardIndex] = updatedCard;
+      setAllCards(updatedAllCards);
+      
+      // Update dueCards if the current card is in it
+      const updatedDueCards = [...dueCards];
+      const dueCardIndex = updatedDueCards.findIndex(c => c.word === currentCard.word);
+      if (dueCardIndex !== -1) {
+        updatedDueCards[dueCardIndex] = updatedCard;
+        setDueCards(updatedDueCards);
+      }
+      
+      toast.success(language === 'en' ? 'Card updated!' : 'Karte aktualisiert!', { icon: '✏️' });
+    }
+  };
+
   if (loading) {
     return (
       <div className="max-w-4xl mx-auto">
@@ -419,6 +463,13 @@ function SpacedRepetitionMode({ deck, onBack }) {
             {sessionStats.total}
           </span>
           <button
+            onClick={() => setEditingCard(currentCard)}
+            className="p-2 hover:bg-blue-100 dark:hover:bg-blue-900/20 rounded-lg transition-colors text-blue-600 dark:text-blue-400"
+            title={language === 'en' ? 'Edit this card' : 'Diese Karte bearbeiten'}
+          >
+            <Edit size={20} />
+          </button>
+          <button
             onClick={() => handleSync(false)}
             disabled={syncing}
             className={`p-2 rounded-lg transition-colors disabled:opacity-50 hover:bg-stone-200 dark:hover:bg-stone-700 ${
@@ -581,11 +632,32 @@ function SpacedRepetitionMode({ deck, onBack }) {
         )}
       </div>
 
-      {/* Instructions */}
-      <div className="mt-6 text-center text-sm text-stone-500 dark:text-stone-400">
-        <p>{language === 'en' 
-          ? showAnswer ? 'Click card to flip back' : 'Think about the answer, then click to reveal'
-          : showAnswer ? 'Karte klicken zum zurückdrehen' : 'Denke über die Antwort nach, dann klicke um sie zu enthüllen'}</p>
+      {/* Navigation */}
+      <div className="flex items-center justify-between mt-6 gap-3">
+        <button
+          onClick={handlePrevious}
+          disabled={currentIndex === 0}
+          className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-stone-200 to-stone-300 dark:from-stone-700 dark:to-stone-600 text-stone-800 dark:text-stone-100 font-bold rounded-xl hover:shadow-lg transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+        >
+          <ChevronLeft size={24} />
+          {language === 'en' ? 'Previous' : 'Zurück'}
+        </button>
+
+        <button
+          onClick={handleSkip}
+          disabled={currentIndex === dueCards.length - 1}
+          className="flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-bold rounded-xl hover:shadow-lg transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+          title={language === 'en' ? 'Skip this card' : 'Diese Karte überspringen'}
+        >
+          <SkipForward size={20} />
+          {language === 'en' ? 'Skip' : 'Überspringen'}
+        </button>
+
+        <div className="text-sm text-stone-500 dark:text-stone-400 text-center flex-1">
+          <p>{language === 'en' 
+            ? showAnswer ? 'Click card to flip back' : 'Think about the answer, then click to reveal'
+            : showAnswer ? 'Karte klicken zum zurückdrehen' : 'Denke über die Antwort nach, dann klicke um sie zu enthüllen'}</p>
+        </div>
       </div>
 
       {/* Mascot */}
@@ -600,6 +672,17 @@ function SpacedRepetitionMode({ deck, onBack }) {
       <ConfettiEffect
         show={showConfetti}
         onComplete={() => setShowConfetti(false)}
+      />
+
+      {/* Card Edit Modal */}
+      <CardEditModal
+        isOpen={!!editingCard}
+        onClose={() => setEditingCard(null)}
+        card={editingCard}
+        onSave={handleEditCard}
+        deckId={deck.id}
+        updateCardLocally={updateCardLocally}
+        updatePendingCount={updatePendingCount}
       />
     </div>
   );

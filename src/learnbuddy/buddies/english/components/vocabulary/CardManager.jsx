@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Edit, Trash2, ArrowLeft, Save, X, Search, Download, Upload, RefreshCw, AlertCircle, Copy, Check, Image as ImageIcon } from 'lucide-react';
+import { Plus, Edit, Trash2, ArrowLeft, Save, X, Search, Download, Upload, RefreshCw, AlertCircle, Copy, Check, Image as ImageIcon, ArrowUpDown, ArrowUp, ArrowDown } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useLanguage } from '../../../../context/LanguageContext';
 import { fetchCardsFromSheet, addCardToSheet, updateCardInSheet, deleteCardFromSheet } from '../../utils/googleSheetsAPI';
@@ -35,11 +35,25 @@ function CardManager({ deck, onBack }) {
     image_url: ''
   });
   const [showImageModal, setShowImageModal] = useState(false);
+  const [sortBy, setSortBy] = useState('word'); // 'word', 'translation', 'rating', 'date', 'lastReview'
+  const [sortOrder, setSortOrder] = useState('asc'); // 'asc', 'desc'
+  const [showSortMenu, setShowSortMenu] = useState(false);
 
   useEffect(() => {
     loadCards();
     updatePendingCount();
   }, [deck]);
+
+  // Close sort menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (showSortMenu && !event.target.closest('.sort-menu-container')) {
+        setShowSortMenu(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [showSortMenu]);
 
   const updatePendingCount = () => {
     setPendingCount(getPendingChangesCount(deck.id));
@@ -261,6 +275,48 @@ function CardManager({ deck, onBack }) {
     card.translation.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  // Sort cards
+  const sortedCards = [...filteredCards].sort((a, b) => {
+    let comparison = 0;
+    
+    switch (sortBy) {
+      case 'word':
+        comparison = a.word.localeCompare(b.word);
+        break;
+      case 'translation':
+        comparison = (a.translation || '').localeCompare(b.translation || '');
+        break;
+      case 'rating':
+        comparison = (a.ratingGeneral || 0) - (b.ratingGeneral || 0);
+        break;
+      case 'date':
+        // Sort by lastReviewDate (newest first if desc, oldest first if asc)
+        const dateA = a.lastReviewDate ? new Date(a.lastReviewDate).getTime() : 0;
+        const dateB = b.lastReviewDate ? new Date(b.lastReviewDate).getTime() : 0;
+        comparison = dateA - dateB;
+        break;
+      case 'lastReview':
+        const reviewA = a.lastReviewDate ? new Date(a.lastReviewDate).getTime() : 0;
+        const reviewB = b.lastReviewDate ? new Date(b.lastReviewDate).getTime() : 0;
+        comparison = reviewA - reviewB;
+        break;
+      default:
+        comparison = 0;
+    }
+    
+    return sortOrder === 'asc' ? comparison : -comparison;
+  });
+
+  const handleSortChange = (newSortBy) => {
+    if (sortBy === newSortBy) {
+      // Toggle sort order if same column
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortBy(newSortBy);
+      setSortOrder('asc');
+    }
+  };
+
   const copyToRemNote = async () => {
     if (!cards || cards.length === 0) return;
 
@@ -290,7 +346,7 @@ function CardManager({ deck, onBack }) {
   };
 
   return (
-    <div className="max-w-6xl mx-auto">
+    <div className="max-w-6xl mx-auto pb-8">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-4">
@@ -385,9 +441,9 @@ function CardManager({ deck, onBack }) {
         </div>
       )}
 
-      {/* Search */}
-      <div className="mb-6">
-        <div className="relative">
+      {/* Search and Sort */}
+      <div className="mb-6 flex gap-3">
+        <div className="relative flex-1">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" size={20} />
           <input
             type="text"
@@ -397,16 +453,64 @@ function CardManager({ deck, onBack }) {
             className="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-800 text-stone-800 dark:text-stone-100 focus:border-rose-500 focus:outline-none"
           />
         </div>
+        <div className="relative sort-menu-container">
+          <button
+            onClick={() => setShowSortMenu(!showSortMenu)}
+            className="flex items-center gap-2 px-4 py-3 bg-stone-200 dark:bg-stone-700 hover:bg-stone-300 dark:hover:bg-stone-600 rounded-xl transition-colors text-stone-800 dark:text-stone-100 font-semibold"
+            title={language === 'en' ? 'Sort cards' : 'Karten sortieren'}
+          >
+            <ArrowUpDown size={18} />
+            <span className="hidden sm:inline">
+              {language === 'en' ? 'Sort' : 'Sortieren'}
+            </span>
+            {sortOrder === 'asc' ? <ArrowUp size={16} /> : <ArrowDown size={16} />}
+          </button>
+          {showSortMenu && (
+            <div className="absolute right-0 mt-2 bg-white dark:bg-stone-800 rounded-xl shadow-2xl border-2 border-stone-200 dark:border-stone-700 p-2 z-20 min-w-[200px] sort-menu-container">
+              {[
+                { key: 'word', label: language === 'en' ? 'Word' : 'Wort' },
+                { key: 'translation', label: language === 'en' ? 'Translation' : 'Übersetzung' },
+                { key: 'rating', label: language === 'en' ? 'Rating' : 'Bewertung' },
+                { key: 'lastReview', label: language === 'en' ? 'Last Review' : 'Letzte Wiederholung' }
+              ].map(option => (
+                <button
+                  key={option.key}
+                  onClick={() => {
+                    handleSortChange(option.key);
+                    setShowSortMenu(false);
+                  }}
+                  className={`w-full text-left px-3 py-2 rounded-lg hover:bg-stone-100 dark:hover:bg-stone-700 transition-colors flex items-center justify-between ${
+                    sortBy === option.key ? 'bg-purple-100 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300' : 'text-stone-700 dark:text-stone-300'
+                  }`}
+                >
+                  <span>{option.label}</span>
+                  {sortBy === option.key && (sortOrder === 'asc' ? <ArrowUp size={14} /> : <ArrowDown size={14} />)}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
-      {/* Add/Edit Form */}
+      {/* Add/Edit Modal */}
       {(isAdding || editingCard) && (
-        <div className="bg-gradient-to-br from-rose-50 to-pink-50 dark:from-rose-900/20 dark:to-pink-900/20 rounded-2xl p-6 mb-6 border-2 border-rose-200 dark:border-rose-800">
-          <h3 className="text-xl font-bold text-stone-800 dark:text-stone-100 mb-4">
-            {isAdding 
-              ? (language === 'en' ? 'Add New Card' : 'Neue Karte hinzufügen')
-              : (language === 'en' ? 'Edit Card' : 'Karte bearbeiten')}
-          </h3>
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-gradient-to-br from-rose-50 to-pink-50 dark:from-rose-900/20 dark:to-pink-900/20 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border-2 border-rose-200 dark:border-rose-800">
+          <div className="sticky top-0 bg-gradient-to-r from-rose-500 to-pink-500 p-6 flex items-center justify-between rounded-t-2xl mb-4">
+            <h3 className="text-xl font-bold text-white">
+              {isAdding 
+                ? (language === 'en' ? 'Add New Card' : 'Neue Karte hinzufügen')
+                : (language === 'en' ? 'Edit Card' : 'Karte bearbeiten')}
+            </h3>
+            <button
+              onClick={cancelEdit}
+              className="text-white hover:bg-white/20 p-2 rounded-lg transition-colors"
+            >
+              <X size={24} />
+            </button>
+          </div>
+          
+          <div className="px-6 pb-6">
           
           <div className="space-y-4">
             <div>
@@ -526,6 +630,8 @@ function CardManager({ deck, onBack }) {
               )}
             </div>
           </div>
+          </div>
+        </div>
         </div>
       )}
 
@@ -546,8 +652,8 @@ function CardManager({ deck, onBack }) {
           </p>
         </div>
       ) : (
-        <div className="space-y-3">
-          {filteredCards.map((card, index) => (
+        <div className="space-y-3 max-h-[calc(100vh-400px)] overflow-y-auto">
+          {sortedCards.map((card, index) => (
             <div
               key={index}
               className="bg-white dark:bg-stone-800 rounded-xl p-4 shadow-md hover:shadow-lg transition-all border-2 border-stone-200 dark:border-stone-700"

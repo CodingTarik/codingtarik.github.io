@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, RotateCcw, Check, Star, Shuffle, TrendingUp, RefreshCw, ChevronLeft, ChevronRight, Filter } from 'lucide-react';
+import { ArrowLeft, RotateCcw, Check, Star, Shuffle, TrendingUp, RefreshCw, ChevronLeft, ChevronRight, Filter, SkipForward, Edit } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useLanguage } from '../../../../context/LanguageContext';
 import { fetchCardsFromSheet, updateCardInSheet, addCardToSheet, deleteCardFromSheet } from '../../utils/googleSheetsAPI';
@@ -12,6 +12,7 @@ import {
   getPendingChangesCount
 } from '../../utils/vocabularyCache';
 import ReactMarkdown from 'react-markdown';
+import CardEditModal from './CardEditModal';
 import * as sounds from '../../utils/vocabularySounds';
 
 function GeneralLearningMode({ deck, onBack }) {
@@ -32,6 +33,7 @@ function GeneralLearningMode({ deck, onBack }) {
   const [isFlipping, setIsFlipping] = useState(false);
   const [showFilterMenu, setShowFilterMenu] = useState(false);
   const [ratingFilter, setRatingFilter] = useState([1, 2, 3, 4, 5, 0]); // 0 = unrated
+  const [editingCard, setEditingCard] = useState(null);
 
   useEffect(() => {
     loadCards();
@@ -235,6 +237,40 @@ function GeneralLearningMode({ deck, onBack }) {
     }
   };
 
+  const handleSkip = () => {
+    if (currentIndex < filteredCards.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+      setShowAnswer(false);
+      sounds.playWhoosh();
+    }
+  };
+
+  const handleEditCard = (updatedCard) => {
+    // Find card index in allCards
+    const cardIndex = allCards.findIndex(c => c.word === currentCard.word && c.translation === currentCard.translation);
+    
+    if (cardIndex !== -1) {
+      // Update locally
+      updateCardLocally(deck.id, cardIndex, updatedCard);
+      updatePendingCount();
+      
+      // Update local state
+      const updatedAllCards = [...allCards];
+      updatedAllCards[cardIndex] = updatedCard;
+      setAllCards(updatedAllCards);
+      
+      // Update filteredCards if the current card is in it
+      const updatedFilteredCards = [...filteredCards];
+      const filteredCardIndex = updatedFilteredCards.findIndex(c => c.word === currentCard.word);
+      if (filteredCardIndex !== -1) {
+        updatedFilteredCards[filteredCardIndex] = updatedCard;
+        setFilteredCards(updatedFilteredCards);
+      }
+      
+      toast.success(language === 'en' ? 'Card updated!' : 'Karte aktualisiert!', { icon: '✏️' });
+    }
+  };
+
   const resetSession = () => {
     setCurrentIndex(0);
     setShowAnswer(false);
@@ -413,6 +449,13 @@ function GeneralLearningMode({ deck, onBack }) {
               {pendingCount}
             </span>
           )}
+          <button
+            onClick={() => setEditingCard(currentCard)}
+            className="p-2 hover:bg-blue-100 dark:hover:bg-blue-900/20 rounded-lg transition-colors text-blue-600 dark:text-blue-400"
+            title={language === 'en' ? 'Edit this card' : 'Diese Karte bearbeiten'}
+          >
+            <Edit size={20} />
+          </button>
           <button
             onClick={() => handleSync(false)}
             disabled={syncing}
@@ -613,7 +656,7 @@ function GeneralLearningMode({ deck, onBack }) {
       </div>
 
       {/* Navigation */}
-      <div className="flex items-center justify-between mt-6">
+      <div className="flex items-center justify-between mt-6 gap-3">
         <button
           onClick={handlePrevious}
           disabled={currentIndex === 0}
@@ -623,7 +666,17 @@ function GeneralLearningMode({ deck, onBack }) {
           {language === 'en' ? 'Previous' : 'Zurück'}
         </button>
 
-        <div className="text-sm text-stone-500 dark:text-stone-400">
+        <button
+          onClick={handleSkip}
+          disabled={currentIndex === filteredCards.length - 1}
+          className="flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-bold rounded-xl hover:shadow-lg transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+          title={language === 'en' ? 'Skip this card' : 'Diese Karte überspringen'}
+        >
+          <SkipForward size={20} />
+          {language === 'en' ? 'Skip' : 'Überspringen'}
+        </button>
+
+        <div className="text-sm text-stone-500 dark:text-stone-400 text-center flex-1">
           <p>{language === 'en' 
             ? showAnswer ? 'Click card to flip back' : 'Click card to reveal'
             : showAnswer ? 'Karte klicken zum zurückdrehen' : 'Karte klicken zum aufdecken'}</p>
@@ -638,6 +691,17 @@ function GeneralLearningMode({ deck, onBack }) {
           <ChevronRight size={24} />
         </button>
       </div>
+
+      {/* Card Edit Modal */}
+      <CardEditModal
+        isOpen={!!editingCard}
+        onClose={() => setEditingCard(null)}
+        card={editingCard}
+        onSave={handleEditCard}
+        deckId={deck.id}
+        updateCardLocally={updateCardLocally}
+        updatePendingCount={updatePendingCount}
+      />
     </div>
   );
 }
