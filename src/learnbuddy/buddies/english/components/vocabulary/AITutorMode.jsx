@@ -1,15 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowLeft, Mic, MicOff, Play, Pause, Loader, Volume2, VolumeX, SkipForward, ChevronLeft, Star, Check, X, RefreshCw } from 'lucide-react';
+import { ArrowLeft, Mic, MicOff, Play, Pause, Loader, Volume2, VolumeX, SkipForward, ChevronLeft, Star, Check, X, RefreshCw, Edit, Eye, Upload } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useLanguage } from '../../../../context/LanguageContext';
 import { useSettings } from '../../../../context/SettingsContext';
-import { fetchCardsFromSheet, updateCardInSheet } from '../../utils/googleSheetsAPI';
+import { fetchCardsFromSheet, updateCardInSheet, addCardToSheet, deleteCardFromSheet } from '../../utils/googleSheetsAPI';
 import { getDueCards, calculateNextReview, RATING } from '../../utils/spacedRepetition';
 import { 
   getCachedCards, 
   setCachedCards, 
   updateCardLocally,
-  getPendingChangesCount
+  deleteCardLocally,
+  getPendingChangesCount,
+  getPendingChanges,
+  clearPendingChanges
 } from '../../utils/vocabularyCache';
 import { 
   transcribeAudio, 
@@ -17,6 +20,7 @@ import {
   generateVocabularyTutorResponse 
 } from '../../../../utils/chatgpt';
 import ReactMarkdown from 'react-markdown';
+import CardEditModal from './CardEditModal';
 import * as sounds from '../../utils/vocabularySounds';
 
 function AITutorMode({ deck, onBack }) {
@@ -48,6 +52,10 @@ function AITutorMode({ deck, onBack }) {
   const [playingAudioId, setPlayingAudioId] = useState(null);
   const audioRefs = useRef({});
   const [soundsEnabled, setSoundsEnabled] = useState(sounds.areSoundsEnabled());
+  const [editingCard, setEditingCard] = useState(null);
+  const [showAnswerManually, setShowAnswerManually] = useState(false);
+  const [syncing, setSyncing] = useState(false);
+  const [pendingCount, setPendingCount] = useState(0);
   
   // Session stats
   const [sessionStats, setSessionStats] = useState({
@@ -61,7 +69,12 @@ function AITutorMode({ deck, onBack }) {
   useEffect(() => {
     loadCards();
     checkApiKey();
+    updatePendingCount();
   }, [deck]);
+
+  const updatePendingCount = () => {
+    setPendingCount(getPendingChangesCount(deck.id));
+  };
 
   useEffect(() => {
     if (dueCards.length > 0 && currentIndex < dueCards.length && tutorState === 'question') {
@@ -233,8 +246,8 @@ function AITutorMode({ deck, onBack }) {
     try {
       const currentCard = dueCards[currentIndex];
       
-      // Transcribe user's answer
-      const transcription = await transcribeAudio(audioBlob, globalSettings.chatGptApiKey);
+      // Transcribe user's answer (let Whisper auto-detect language to support both English and German)
+      const transcription = await transcribeAudio(audioBlob, globalSettings.chatGptApiKey, null);
       setUserAnswer(transcription);
 
       // Get AI tutor feedback
@@ -320,6 +333,7 @@ function AITutorMode({ deck, onBack }) {
     // Update locally
     const cardIndex = allCards.findIndex(c => c === currentCard);
     updateCardLocally(deck.id, cardIndex, updatedCard);
+    updatePendingCount();
     
     // Update session stats
     const newStats = { ...sessionStats, total: sessionStats.total + 1 };
@@ -350,6 +364,7 @@ function AITutorMode({ deck, onBack }) {
         setTutorFeedbackText('');
         setUserAnswer('');
         setAudioBlob(null);
+        setShowAnswerManually(false);
         if (audioUrl) {
           URL.revokeObjectURL(audioUrl);
           setAudioUrl(null);
@@ -366,19 +381,20 @@ function AITutorMode({ deck, onBack }) {
   const handleSkip = () => {
     if (currentIndex < dueCards.length - 1) {
       setCurrentIndex(currentIndex + 1);
-      setTutorState('question');
-      setTutorQuestionAudio(null);
-      setTutorFeedbackAudio(null);
-      setTutorFeedbackText('');
-      setUserAnswer('');
-      setAudioBlob(null);
-      if (audioUrl) {
-        URL.revokeObjectURL(audioUrl);
-        setAudioUrl(null);
-      }
-      if (isRecording) {
-        stopRecording();
-      }
+        setTutorState('question');
+        setTutorQuestionAudio(null);
+        setTutorFeedbackAudio(null);
+        setTutorFeedbackText('');
+        setUserAnswer('');
+        setAudioBlob(null);
+        setShowAnswerManually(false);
+        if (audioUrl) {
+          URL.revokeObjectURL(audioUrl);
+          setAudioUrl(null);
+        }
+        if (isRecording) {
+          stopRecording();
+        }
     }
   };
 
@@ -391,6 +407,7 @@ function AITutorMode({ deck, onBack }) {
       setTutorFeedbackText('');
       setUserAnswer('');
       setAudioBlob(null);
+      setShowAnswerManually(false);
       if (audioUrl) {
         URL.revokeObjectURL(audioUrl);
         setAudioUrl(null);
@@ -398,6 +415,76 @@ function AITutorMode({ deck, onBack }) {
       if (isRecording) {
         stopRecording();
       }
+    }
+  };
+
+  const handleShowAnswerManually = () => {
+    setShowAnswerManually(true);
+    setTutorState('rating');
+    sounds.playWhoosh();
+  };
+
+  const handleSaveCard = async (cardData) => {
+    try {
+      const currentCard = dueCards[currentIndex];
+      const cardIndex = allCards.findIndex(c => c === currentCard);
+      
+      // Update card locally
+      const updatedCard = { ...currentCard, ...cardData };
+      updateCardLocally(deck.id, cardIndex, updatedCard);
+      
+      // Reload cards to reflect changes
+      await loadCards();
+      updatePendingCount();
+      
+      setEditingCard(null);
+      toast.success(language === 'en' ? 'Card updated!' : 'Karte aktualisiert!');
+    } catch (error) {
+      console.error('Error saving card:', error);
+      toast.error(language === 'en' ? 'Failed to update card' : 'Karte konnte nicht aktualisiert werden');
+    }
+  };
+
+  const handleDeleteCard = async (cardToDelete) => {
+    try {
+      const cardIndex = allCards.findIndex(c => c === cardToDelete);
+      
+      if (cardIndex === -1) {
+        toast.error(language === 'en' ? 'Card not found' : 'Karte nicht gefunden');
+        return;
+      }
+      
+      // Delete card locally
+      const success = deleteCardLocally(deck.id, cardIndex);
+      
+      if (success) {
+        // Reload cards to reflect changes
+        await loadCards();
+        updatePendingCount();
+        
+        // If we deleted the current card, move to next or previous
+        const deletedCardIndex = dueCards.findIndex(c => c === cardToDelete);
+        if (deletedCardIndex !== -1) {
+          if (deletedCardIndex < dueCards.length - 1) {
+            // Move to next card
+            setCurrentIndex(deletedCardIndex);
+          } else if (deletedCardIndex > 0) {
+            // Move to previous card
+            setCurrentIndex(deletedCardIndex - 1);
+          } else {
+            // No more cards
+            setSessionComplete(true);
+          }
+        }
+        
+        setEditingCard(null);
+        toast.success(language === 'en' ? 'Card deleted!' : 'Karte gelöscht!', { icon: '🗑️' });
+      } else {
+        toast.error(language === 'en' ? 'Failed to delete card' : 'Karte konnte nicht gelöscht werden');
+      }
+    } catch (error) {
+      console.error('Error deleting card:', error);
+      toast.error(language === 'en' ? 'Failed to delete card' : 'Karte konnte nicht gelöscht werden');
     }
   };
 
@@ -412,6 +499,78 @@ function AITutorMode({ deck, onBack }) {
     setSoundsEnabled(newState);
     sounds.saveSoundSettings(newState);
     sounds.playButtonClick();
+  };
+
+  const handleSync = async (forceRefresh = false) => {
+    setSyncing(true);
+    try {
+      const pending = getPendingChanges(deck.id);
+      const hasPending = pending.adds.length > 0 || pending.updates.length > 0 || pending.deletes.length > 0;
+      
+      if (!hasPending || forceRefresh) {
+        // No pending changes - just refresh from Google Sheets
+        await loadCards(true);
+        updatePendingCount();
+        toast.success(
+          language === 'en' ? 'Cards refreshed from Google Sheets!' : 'Karten von Google Sheets aktualisiert!',
+          { icon: '✅' }
+        );
+        return;
+      }
+      
+      // Has pending changes - upload to Google Sheets
+      let errors = [];
+      
+      // Process deletes first (in reverse order to maintain indices)
+      for (const index of pending.deletes.sort((a, b) => b - a)) {
+        try {
+          await deleteCardFromSheet(deck.scriptUrl, index);
+        } catch (e) {
+          errors.push(`Delete at index ${index}: ${e.message}`);
+        }
+      }
+      
+      // Process updates (including review progress)
+      for (const { index, card } of pending.updates) {
+        try {
+          await updateCardInSheet(deck.scriptUrl, index, card);
+        } catch (e) {
+          errors.push(`Update at index ${index}: ${e.message}`);
+        }
+      }
+      
+      // Process adds
+      for (const card of pending.adds) {
+        try {
+          const { _tempId, ...cardWithoutTemp } = card;
+          await addCardToSheet(deck.scriptUrl, cardWithoutTemp);
+        } catch (e) {
+          errors.push(`Add card "${card.word}": ${e.message}`);
+        }
+      }
+      
+      if (errors.length > 0) {
+        console.error('Sync errors:', errors);
+        toast.error(
+          language === 'en' ? `${errors.length} changes failed to sync` : `${errors.length} Änderungen konnten nicht synchronisiert werden`,
+          { duration: 5000 }
+        );
+      } else {
+        // Clear pending changes and reload
+        clearPendingChanges(deck.id);
+        await loadCards(true);
+        updatePendingCount();
+        toast.success(
+          language === 'en' ? 'All changes synced successfully!' : 'Alle Änderungen erfolgreich synchronisiert!',
+          { icon: '🎉' }
+        );
+      }
+    } catch (error) {
+      console.error('Sync error:', error);
+      toast.error(language === 'en' ? 'Sync failed' : 'Synchronisierung fehlgeschlagen');
+    } finally {
+      setSyncing(false);
+    }
   };
 
   if (loading) {
@@ -484,6 +643,30 @@ function AITutorMode({ deck, onBack }) {
         
         <div className="flex items-center gap-4">
           <button
+            onClick={() => setEditingCard(currentCard)}
+            className="p-2 rounded-full hover:bg-stone-200 dark:hover:bg-stone-700 transition-all"
+            title={language === 'en' ? 'Edit card' : 'Karte bearbeiten'}
+          >
+            <Edit size={20} />
+          </button>
+          <button
+            onClick={() => handleSync(false)}
+            disabled={syncing}
+            className="p-2 rounded-full hover:bg-stone-200 dark:hover:bg-stone-700 transition-all relative"
+            title={language === 'en' ? 'Sync changes' : 'Änderungen synchronisieren'}
+          >
+            {syncing ? (
+              <Loader size={20} className="animate-spin" />
+            ) : (
+              <Upload size={20} />
+            )}
+            {pendingCount > 0 && (
+              <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                {pendingCount}
+              </span>
+            )}
+          </button>
+          <button
             onClick={toggleSound}
             className="p-2 rounded-full hover:bg-stone-200 dark:hover:bg-stone-700 transition-all"
           >
@@ -502,20 +685,6 @@ function AITutorMode({ deck, onBack }) {
           <h2 className="text-4xl font-bold text-stone-800 dark:text-stone-100 mb-4">
             {currentCard.word}
           </h2>
-          
-          {/* Image */}
-          {currentCard.image_url && (
-            <div className="mb-4">
-              <img 
-                src={currentCard.image_url} 
-                alt={currentCard.word}
-                className="max-w-full max-h-64 mx-auto rounded-lg shadow-md"
-                onError={(e) => {
-                  e.target.style.display = 'none';
-                }}
-              />
-            </div>
-          )}
         </div>
 
         {/* Tutor Question Audio */}
@@ -539,6 +708,17 @@ function AITutorMode({ deck, onBack }) {
             <p className="text-lg text-stone-600 dark:text-stone-400 mb-4">
               {language === 'en' ? 'Record your answer' : 'Nimm deine Antwort auf'}
             </p>
+            
+            {/* Manual Reveal Button */}
+            <div className="mb-4">
+              <button
+                onClick={handleShowAnswerManually}
+                className="px-4 py-2 bg-stone-200 dark:bg-stone-700 text-stone-800 dark:text-stone-200 rounded-lg hover:bg-stone-300 dark:hover:bg-stone-600 transition-all flex items-center gap-2 mx-auto"
+              >
+                <Eye size={18} />
+                {language === 'en' ? 'Show Answer' : 'Antwort anzeigen'}
+              </button>
+            </div>
             
             {audioBlob ? (
               <div className="flex items-center justify-center gap-4 mb-4">
@@ -602,7 +782,7 @@ function AITutorMode({ deck, onBack }) {
           </div>
         )}
 
-        {tutorState === 'rating' && tutorFeedbackText && (
+        {tutorState === 'rating' && (tutorFeedbackText || showAnswerManually) && (
           <div className="mb-6">
             {/* User Answer */}
             {userAnswer && (
@@ -615,26 +795,28 @@ function AITutorMode({ deck, onBack }) {
             )}
 
             {/* Tutor Feedback */}
-            <div className={`p-4 rounded-lg mb-4 ${
-              isAnswerCorrect 
-                ? 'bg-green-50 dark:bg-green-900/20 border-2 border-green-300 dark:border-green-700'
-                : 'bg-amber-50 dark:bg-amber-900/20 border-2 border-amber-300 dark:border-amber-700'
-            }`}>
-              <div className="flex items-start gap-3 mb-2">
-                <button
-                  onClick={() => playAudio('feedback', tutorFeedbackAudio)}
-                  className="p-2 rounded-full bg-rose-500 text-white hover:bg-rose-600 transition-all flex-shrink-0"
-                >
-                  {playingAudioId === 'feedback' ? <Pause size={16} /> : <Play size={16} />}
-                </button>
-                <div className="flex-1">
-                  <p className="text-sm font-semibold text-stone-700 dark:text-stone-300 mb-1">
-                    {language === 'en' ? 'Tutor Feedback:' : 'Tutor Feedback:'}
-                  </p>
-                  <p className="text-stone-800 dark:text-stone-200">{tutorFeedbackText}</p>
+            {tutorFeedbackText && (
+              <div className={`p-4 rounded-lg mb-4 ${
+                isAnswerCorrect 
+                  ? 'bg-green-50 dark:bg-green-900/20 border-2 border-green-300 dark:border-green-700'
+                  : 'bg-amber-50 dark:bg-amber-900/20 border-2 border-amber-300 dark:border-amber-700'
+              }`}>
+                <div className="flex items-start gap-3 mb-2">
+                  <button
+                    onClick={() => playAudio('feedback', tutorFeedbackAudio)}
+                    className="p-2 rounded-full bg-rose-500 text-white hover:bg-rose-600 transition-all flex-shrink-0"
+                  >
+                    {playingAudioId === 'feedback' ? <Pause size={16} /> : <Play size={16} />}
+                  </button>
+                  <div className="flex-1">
+                    <p className="text-sm font-semibold text-stone-700 dark:text-stone-300 mb-1">
+                      {language === 'en' ? 'Tutor Feedback:' : 'Tutor Feedback:'}
+                    </p>
+                    <p className="text-stone-800 dark:text-stone-200">{tutorFeedbackText}</p>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
 
             {/* Translation */}
             <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg mb-4">
@@ -643,6 +825,20 @@ function AITutorMode({ deck, onBack }) {
               </p>
               <p className="text-blue-900 dark:text-blue-200 text-lg">{currentCard.translation}</p>
             </div>
+
+            {/* Image - shown on the back of the card */}
+            {currentCard.image_url && (
+              <div className="mb-4 flex justify-center">
+                <img 
+                  src={currentCard.image_url} 
+                  alt={currentCard.word}
+                  className="max-w-full max-h-64 rounded-lg shadow-md"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                  }}
+                />
+              </div>
+            )}
 
             {/* Explanation */}
             {currentCard.explanation && (
@@ -725,6 +921,18 @@ function AITutorMode({ deck, onBack }) {
           <SkipForward size={20} />
         </button>
       </div>
+
+      {/* Card Edit Modal */}
+      {editingCard && (
+        <CardEditModal
+          isOpen={!!editingCard}
+          onClose={() => setEditingCard(null)}
+          onSave={handleSaveCard}
+          onDelete={handleDeleteCard}
+          card={editingCard}
+          deckId={deck.id}
+        />
+      )}
     </div>
   );
 }

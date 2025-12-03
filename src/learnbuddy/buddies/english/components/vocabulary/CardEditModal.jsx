@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { X, Save, Image as ImageIcon } from 'lucide-react';
+import { X, Save, Image as ImageIcon, Trash2 } from 'lucide-react';
 import { useLanguage } from '../../../../context/LanguageContext';
 import ImageSearchModal from './ImageSearchModal';
 
-function CardEditModal({ isOpen, onClose, card, onSave, deckId, updateCardLocally, updatePendingCount }) {
+function CardEditModal({ isOpen, onClose, card, onSave, onDelete, deckId, updateCardLocally, updatePendingCount }) {
   const { language } = useLanguage();
   const [formData, setFormData] = useState({
     word: card?.word || '',
@@ -47,6 +47,21 @@ function CardEditModal({ isOpen, onClose, card, onSave, deckId, updateCardLocall
 
   const handleImageSelect = (imageUrl) => {
     setFormData({ ...formData, image_url: imageUrl });
+  };
+
+  const handleDelete = () => {
+    if (!window.confirm(
+      language === 'en' 
+        ? 'Are you sure you want to delete this card? This action cannot be undone.'
+        : 'Möchtest du diese Karte wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.'
+    )) {
+      return;
+    }
+
+    if (onDelete) {
+      onDelete(card);
+    }
+    onClose();
   };
 
   if (!isOpen || !card) return null;
@@ -157,6 +172,15 @@ function CardEditModal({ isOpen, onClose, card, onSave, deckId, updateCardLocall
               </div>
 
               <div className="flex gap-3 pt-4">
+                {onDelete && (
+                  <button
+                    onClick={handleDelete}
+                    className="flex items-center justify-center gap-2 px-4 py-3 bg-red-500 text-white font-bold rounded-xl hover:bg-red-600 transition-colors"
+                  >
+                    <Trash2 size={20} />
+                    {language === 'en' ? 'Delete' : 'Löschen'}
+                  </button>
+                )}
                 <button
                   onClick={onClose}
                   className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-stone-200 dark:bg-stone-700 text-stone-800 dark:text-stone-100 font-bold rounded-xl hover:bg-stone-300 dark:hover:bg-stone-600 transition-colors"

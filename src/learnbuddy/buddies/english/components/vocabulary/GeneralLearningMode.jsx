@@ -7,6 +7,7 @@ import {
   getCachedCards, 
   setCachedCards, 
   updateCardLocally,
+  deleteCardLocally,
   getPendingChanges,
   clearPendingChanges,
   getPendingChangesCount
@@ -268,6 +269,44 @@ function GeneralLearningMode({ deck, onBack }) {
       }
       
       toast.success(language === 'en' ? 'Card updated!' : 'Karte aktualisiert!', { icon: '✏️' });
+    }
+  };
+
+  const handleDeleteCard = (cardToDelete) => {
+    const cardIndex = allCards.findIndex(c => c === cardToDelete);
+    
+    if (cardIndex === -1) {
+      toast.error(language === 'en' ? 'Card not found' : 'Karte nicht gefunden');
+      return;
+    }
+    
+    // Delete card locally
+    const success = deleteCardLocally(deck.id, cardIndex);
+    
+    if (success) {
+      // Reload cards
+      loadCards();
+      updatePendingCount();
+      
+      // If we deleted the current card, move to next or previous
+      const deletedCardIndex = filteredCards.findIndex(c => c === cardToDelete);
+      if (deletedCardIndex !== -1) {
+        if (deletedCardIndex < filteredCards.length - 1) {
+          // Move to next card
+          setCurrentIndex(deletedCardIndex);
+        } else if (deletedCardIndex > 0) {
+          // Move to previous card
+          setCurrentIndex(deletedCardIndex - 1);
+        } else {
+          // No more cards
+          setCurrentIndex(0);
+        }
+        setShowAnswer(false);
+      }
+      
+      toast.success(language === 'en' ? 'Card deleted!' : 'Karte gelöscht!', { icon: '🗑️' });
+    } else {
+      toast.error(language === 'en' ? 'Failed to delete card' : 'Karte konnte nicht gelöscht werden');
     }
   };
 
@@ -698,6 +737,7 @@ function GeneralLearningMode({ deck, onBack }) {
         onClose={() => setEditingCard(null)}
         card={editingCard}
         onSave={handleEditCard}
+        onDelete={handleDeleteCard}
         deckId={deck.id}
         updateCardLocally={updateCardLocally}
         updatePendingCount={updatePendingCount}

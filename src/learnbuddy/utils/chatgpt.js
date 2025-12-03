@@ -456,7 +456,7 @@ Write the example text now:`;
  * @param {string} apiKey - OpenAI API key
  * @returns {Promise<string>} Transcribed text
  */
-export async function transcribeAudio(audioBlob, apiKey) {
+export async function transcribeAudio(audioBlob, apiKey, targetLanguage = null) {
   if (!apiKey || !apiKey.startsWith('sk-')) {
     throw new Error('Invalid or missing API key. Please configure your ChatGPT API key in settings.');
   }
@@ -465,7 +465,11 @@ export async function transcribeAudio(audioBlob, apiKey) {
     const formData = new FormData();
     formData.append('file', audioBlob, 'audio.webm');
     formData.append('model', 'whisper-1');
-    formData.append('language', 'en');
+    // Don't set language if targetLanguage is null - let Whisper auto-detect
+    // This allows both English and German answers
+    if (targetLanguage) {
+      formData.append('language', targetLanguage);
+    }
 
     const response = await fetch('https://api.openai.com/v1/audio/transcriptions', {
       method: 'POST',
@@ -888,7 +892,9 @@ Du stellst Fragen auf Deutsch und gibst Feedback auf Deutsch. Du bist motivieren
 Wichtig:
 - Wenn der Schüler richtig antwortet, lobe ihn und erkläre die Bedeutung
 - Wenn der Schüler falsch antwortet, korrigiere freundlich und erkläre die richtige Bedeutung
-- Sei kurz und prägnant (2-3 Sätze)
+- Wenn die Aussprache des englischen Wortes falsch war (auch wenn die Übersetzung richtig ist), gib freundliche Aussprache-Tipps
+- Gib immer ein praktisches Beispielsatz mit dem Wort (auf Englisch)
+- Sei kurz und prägnant (3-5 Sätze: Feedback + Aussprache-Tipps wenn nötig + Beispiel)
 - Verwende eine freundliche, ermutigende Sprache`
     : `You are a friendly, encouraging English tutor going through vocabulary with a student.
 You ask questions and give feedback. You are motivating and helpful.
@@ -896,7 +902,9 @@ You ask questions and give feedback. You are motivating and helpful.
 Important:
 - If the student answers correctly, praise them and explain the meaning
 - If the student answers incorrectly, correct them kindly and explain the correct meaning
-- Be brief and concise (2-3 sentences)
+- If the pronunciation of the English word was wrong (even if the translation is correct), provide friendly pronunciation tips
+- Always provide a practical example sentence with the word (in English)
+- Be brief and concise (3-5 sentences: feedback + pronunciation tips if needed + example)
 - Use friendly, encouraging language`;
 
   const questionPrompt = isFirstQuestion
@@ -911,13 +919,23 @@ Important:
     ? `Der Schüler hat auf die Frage "${questionPrompt}" geantwortet: "${userAnswer}"
 
 Die richtige Übersetzung ist: "${card.translation}"
+Das englische Wort ist: "${card.word}"
 
-Bewerte die Antwort und gib Feedback. Antworte auf Deutsch.`
+Bewerte die Antwort:
+1. Ist die Übersetzung/Bedeutung richtig?
+2. Wenn der Schüler das englische Wort ausgesprochen hat, war die Aussprache korrekt? Falls nicht, gib freundliche Aussprache-Tipps.
+
+Gib Feedback auf Deutsch.`
     : `The student answered the question "${questionPrompt}" with: "${userAnswer}"
 
 The correct translation is: "${card.translation}"
+The English word is: "${card.word}"
 
-Evaluate the answer and give feedback. Respond in English.`;
+Evaluate the answer:
+1. Is the translation/meaning correct?
+2. If the student pronounced the English word, was the pronunciation correct? If not, provide friendly pronunciation tips.
+
+Give feedback in English.`;
 
   try {
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -939,7 +957,7 @@ Evaluate the answer and give feedback. Respond in English.`;
           }
         ],
         temperature: 0.7,
-        max_tokens: 200
+        max_tokens: 300
       })
     });
 
