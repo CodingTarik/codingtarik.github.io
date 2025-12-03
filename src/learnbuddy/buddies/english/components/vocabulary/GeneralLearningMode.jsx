@@ -513,14 +513,12 @@ function GeneralLearningMode({ deck, onBack }) {
           isFlipping ? 'scale-95 opacity-50' : 'scale-100 opacity-100'
         }`}
         onClick={() => {
-          if (!showAnswer) {
-            setIsFlipping(true);
-            sounds.playCardFlip();
-            setTimeout(() => {
-              setShowAnswer(true);
-              setIsFlipping(false);
-            }, 150);
-          }
+          setIsFlipping(true);
+          sounds.playCardFlip();
+          setTimeout(() => {
+            setShowAnswer(!showAnswer);
+            setIsFlipping(false);
+          }, 150);
         }}
       >
         {!showAnswer ? (
@@ -557,6 +555,26 @@ function GeneralLearningMode({ deck, onBack }) {
               <h3 className="text-3xl font-bold text-stone-800 dark:text-stone-100 mb-6">
                 {currentCard.translation}
               </h3>
+              
+              {/* Image Display */}
+              {currentCard.image_url && (
+                <div className="mb-6 flex justify-center">
+                  <div className="relative rounded-xl overflow-hidden border-2 border-purple-200 dark:border-purple-800 bg-stone-100 dark:bg-stone-900 max-w-md w-full">
+                    <img
+                      src={currentCard.image_url}
+                      alt={currentCard.word}
+                      className="w-full h-auto max-h-64 object-contain"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        e.target.nextSibling.style.display = 'block';
+                      }}
+                    />
+                    <div className="hidden text-stone-400 dark:text-stone-600 p-8 text-center text-sm">
+                      {language === 'en' ? 'Image not available' : 'Bild nicht verfügbar'}
+                    </div>
+                  </div>
+                </div>
+              )}
               
               {currentCard.explanation && (
                 <div className="mt-6 p-4 bg-stone-100 dark:bg-stone-800 rounded-xl prose prose-sm dark:prose-invert max-w-none">
@@ -606,11 +624,9 @@ function GeneralLearningMode({ deck, onBack }) {
         </button>
 
         <div className="text-sm text-stone-500 dark:text-stone-400">
-          {!showAnswer && (
-            <p>{language === 'en' 
-              ? 'Click card to reveal'
-              : 'Karte klicken zum aufdecken'}</p>
-          )}
+          <p>{language === 'en' 
+            ? showAnswer ? 'Click card to flip back' : 'Click card to reveal'
+            : showAnswer ? 'Karte klicken zum zurückdrehen' : 'Karte klicken zum aufdecken'}</p>
         </div>
 
         <button

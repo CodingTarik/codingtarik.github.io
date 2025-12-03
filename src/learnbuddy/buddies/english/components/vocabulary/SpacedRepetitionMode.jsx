@@ -460,14 +460,12 @@ function SpacedRepetitionMode({ deck, onBack }) {
           isFlipping ? 'scale-95 opacity-50' : 'scale-100 opacity-100'
         }`}
         onClick={() => {
-          if (!showAnswer) {
-            setIsFlipping(true);
-            sounds.playCardFlip();
-            setTimeout(() => {
-              setShowAnswer(true);
-              setIsFlipping(false);
-            }, 150);
-          }
+          setIsFlipping(true);
+          sounds.playCardFlip();
+          setTimeout(() => {
+            setShowAnswer(!showAnswer);
+            setIsFlipping(false);
+          }, 150);
         }}
       >
         {!showAnswer ? (
@@ -493,6 +491,26 @@ function SpacedRepetitionMode({ deck, onBack }) {
               <h3 className="text-3xl font-bold text-stone-800 dark:text-stone-100 mb-6">
                 {currentCard.translation}
               </h3>
+              
+              {/* Image Display */}
+              {currentCard.image_url && (
+                <div className="mb-6 flex justify-center">
+                  <div className="relative rounded-xl overflow-hidden border-2 border-rose-200 dark:border-rose-800 bg-stone-100 dark:bg-stone-900 max-w-md w-full">
+                    <img
+                      src={currentCard.image_url}
+                      alt={currentCard.word}
+                      className="w-full h-auto max-h-64 object-contain"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        e.target.nextSibling.style.display = 'block';
+                      }}
+                    />
+                    <div className="hidden text-stone-400 dark:text-stone-600 p-8 text-center text-sm">
+                      {language === 'en' ? 'Image not available' : 'Bild nicht verfügbar'}
+                    </div>
+                  </div>
+                </div>
+              )}
               
               {currentCard.explanation && (
                 <div className="mt-6 p-4 bg-stone-100 dark:bg-stone-800 rounded-xl prose prose-sm dark:prose-invert max-w-none">
@@ -564,13 +582,11 @@ function SpacedRepetitionMode({ deck, onBack }) {
       </div>
 
       {/* Instructions */}
-      {!showAnswer && (
-        <div className="mt-6 text-center text-sm text-stone-500 dark:text-stone-400">
-          <p>{language === 'en' 
-            ? 'Think about the answer, then click to reveal'
-            : 'Denke über die Antwort nach, dann klicke um sie zu enthüllen'}</p>
-        </div>
-      )}
+      <div className="mt-6 text-center text-sm text-stone-500 dark:text-stone-400">
+        <p>{language === 'en' 
+          ? showAnswer ? 'Click card to flip back' : 'Think about the answer, then click to reveal'
+          : showAnswer ? 'Karte klicken zum zurückdrehen' : 'Denke über die Antwort nach, dann klicke um sie zu enthüllen'}</p>
+      </div>
 
       {/* Mascot */}
       <VocabularyMascot

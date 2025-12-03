@@ -41,6 +41,12 @@ Ein umfassendes Vokabellern-System mit Google Sheets Integration, Spaced Repetit
 - Füge Bilder ein
 - Erstelle Listen, Code-Blöcke, etc.
 
+### 🖼️ Bild-Integration
+- Füge Bilder zu Vokabelkarten hinzu (über Image_URL Spalte)
+- Integrierte Bildersuche ohne API-Key (LoremFlickr)
+- Bilder werden auf der Rückseite der Karte angezeigt (optimal für Lerneffekt)
+- Bilder können jederzeit entfernt oder ausgetauscht werden
+
 ## Setup-Anleitung
 
 ### 1. Google Spreadsheet erstellen
@@ -50,7 +56,7 @@ Ein umfassendes Vokabellern-System mit Google Sheets Integration, Spaced Repetit
 3. Füge diese Header in die erste Zeile ein:
 
 ```
-Wort    Übersetzung    Weitere Erklärung    Rating_General    Last_Review_date    Next_Review_date    Interval    Ease_Factor    Repetitions
+Wort    Übersetzung    Weitere Erklärung    Rating_General    Last_Review_date    Next_Review_date    Interval    Ease_Factor    Repetitions    Image_URL
 ```
 
 ### 2. Apps Script einrichten
@@ -88,6 +94,7 @@ Wort    Übersetzung    Weitere Erklärung    Rating_General    Last_Review_date
 | Interval | Intervall in Tagen | 7 |
 | Ease_Factor | Schwierigkeitsfaktor | 2.5 |
 | Repetitions | Anzahl erfolgreicher Wiederholungen | 3 |
+| Image_URL | URL zu einem Beispielbild (optional) | "https://source.unsplash.com/featured/800x600/?serendipity" |
 
 ### Beispiel-Karte mit Markdown
 

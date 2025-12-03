@@ -4,7 +4,7 @@
  */
 
 /**
- * Parse spreadsheet data format: Wort;;;Übersetzung;;;;Weitere Erklärung;;;Rating_General;;;;Last_Review_date;;;;Next_Review_date
+ * Parse spreadsheet data format: Wort;;;Übersetzung;;;;Weitere Erklärung;;;Rating_General;;;;Last_Review_date;;;;Next_Review_date;;;;Interval;;;;Ease_Factor;;;;Repetitions;;;;Image_URL
  * @param {string} row - Row data from spreadsheet
  * @returns {Object} Parsed card object
  */
@@ -25,7 +25,8 @@ export function parseCardRow(row) {
     nextReviewDate: parts[5]?.trim() || null,
     interval: parseInt(parts[6]) || 0,
     easeFactor: parseFloat(parts[7]) || 2.5,
-    repetitions: parseInt(parts[8]) || 0
+    repetitions: parseInt(parts[8]) || 0,
+    image_url: parts[9]?.trim() || ''
   };
 }
 
@@ -44,7 +45,8 @@ export function formatCardRow(card) {
     card.nextReviewDate || '',
     card.interval || 0,
     card.easeFactor || 2.5,
-    card.repetitions || 0
+    card.repetitions || 0,
+    card.image_url || ''
   ].join(';;;;');
 }
 
@@ -274,7 +276,8 @@ export function getSpreadsheetHeaders() {
     'Next_Review_date',
     'Interval',
     'Ease_Factor',
-    'Repetitions'
+    'Repetitions',
+    'Image_URL'
   ];
 }
 

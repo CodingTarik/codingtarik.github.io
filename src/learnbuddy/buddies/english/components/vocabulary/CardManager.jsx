@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Edit, Trash2, ArrowLeft, Save, X, Search, Download, Upload, RefreshCw, AlertCircle, Copy, Check } from 'lucide-react';
+import { Plus, Edit, Trash2, ArrowLeft, Save, X, Search, Download, Upload, RefreshCw, AlertCircle, Copy, Check, Image as ImageIcon } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useLanguage } from '../../../../context/LanguageContext';
 import { fetchCardsFromSheet, addCardToSheet, updateCardInSheet, deleteCardFromSheet } from '../../utils/googleSheetsAPI';
@@ -15,6 +15,7 @@ import {
   getPendingChangesCount 
 } from '../../utils/vocabularyCache';
 import ReactMarkdown from 'react-markdown';
+import ImageSearchModal from './ImageSearchModal';
 
 function CardManager({ deck, onBack }) {
   const { language } = useLanguage();
@@ -30,8 +31,10 @@ function CardManager({ deck, onBack }) {
     word: '',
     translation: '',
     explanation: '',
-    ratingGeneral: 0
+    ratingGeneral: 0,
+    image_url: ''
   });
+  const [showImageModal, setShowImageModal] = useState(false);
 
   useEffect(() => {
     loadCards();
@@ -90,7 +93,7 @@ function CardManager({ deck, onBack }) {
       setCards(cached.cards);
       
       // Clear only word and translation, keep form open
-      setFormData({ word: '', translation: '', explanation: formData.explanation, ratingGeneral: 0 });
+      setFormData({ word: '', translation: '', explanation: formData.explanation, ratingGeneral: 0, image_url: formData.image_url });
       updatePendingCount();
       
       // Show success message
@@ -123,7 +126,7 @@ function CardManager({ deck, onBack }) {
       const cached = getCachedCards(deck.id);
       setCards(cached.cards);
       setEditingCard(null);
-      setFormData({ word: '', translation: '', explanation: '', ratingGeneral: 0 });
+      setFormData({ word: '', translation: '', explanation: '', ratingGeneral: 0, image_url: '' });
       updatePendingCount();
       toast.success(language === 'en' ? 'Card updated!' : 'Karte aktualisiert!', { icon: '✏️' });
     } else {
@@ -231,7 +234,8 @@ function CardManager({ deck, onBack }) {
       word: card.word,
       translation: card.translation,
       explanation: card.explanation || '',
-      ratingGeneral: card.ratingGeneral || 0
+      ratingGeneral: card.ratingGeneral || 0,
+      image_url: card.image_url || ''
     });
     setIsAdding(false);
   };
@@ -239,13 +243,17 @@ function CardManager({ deck, onBack }) {
   const startAdd = () => {
     setIsAdding(true);
     setEditingCard(null);
-    setFormData({ word: '', translation: '', explanation: '', ratingGeneral: 0 });
+    setFormData({ word: '', translation: '', explanation: '', ratingGeneral: 0, image_url: '' });
   };
 
   const cancelEdit = () => {
     setEditingCard(null);
     setIsAdding(false);
-    setFormData({ word: '', translation: '', explanation: '', ratingGeneral: 0 });
+    setFormData({ word: '', translation: '', explanation: '', ratingGeneral: 0, image_url: '' });
+  };
+
+  const handleImageSelect = (imageUrl) => {
+    setFormData({ ...formData, image_url: imageUrl });
   };
 
   const filteredCards = cards.filter(card =>
@@ -442,6 +450,52 @@ function CardManager({ deck, onBack }) {
               />
             </div>
 
+            {/* Image URL Field */}
+            <div>
+              <label className="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-2">
+                {language === 'en' ? 'Image' : 'Bild'}
+              </label>
+              <div className="flex gap-2">
+                <input
+                  type="url"
+                  value={formData.image_url}
+                  onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
+                  placeholder={language === 'en' ? 'Image URL or click search...' : 'Bild-URL oder Suche klicken...'}
+                  className="flex-1 px-4 py-3 rounded-xl border-2 border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-800 text-stone-800 dark:text-stone-100 focus:border-rose-500 focus:outline-none font-mono text-sm"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowImageModal(true)}
+                  className="px-4 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold rounded-xl hover:shadow-lg transition-all flex items-center gap-2"
+                >
+                  <ImageIcon size={20} />
+                  {language === 'en' ? 'Search' : 'Suchen'}
+                </button>
+                {formData.image_url && (
+                  <button
+                    type="button"
+                    onClick={() => setFormData({ ...formData, image_url: '' })}
+                    className="px-4 py-3 bg-red-100 dark:bg-red-900/20 text-red-600 dark:text-red-400 font-bold rounded-xl hover:bg-red-200 dark:hover:bg-red-900/30 transition-colors"
+                    title={language === 'en' ? 'Remove image' : 'Bild entfernen'}
+                  >
+                    <X size={20} />
+                  </button>
+                )}
+              </div>
+              {formData.image_url && (
+                <div className="mt-3 rounded-xl overflow-hidden border-2 border-stone-200 dark:border-stone-700 bg-stone-100 dark:bg-stone-900 max-w-md">
+                  <img
+                    src={formData.image_url}
+                    alt="Preview"
+                    className="w-full h-auto max-h-48 object-contain"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                    }}
+                  />
+                </div>
+              )}
+            </div>
+
             <div className="flex gap-3">
               <button
                 onClick={cancelEdit}
@@ -518,6 +572,19 @@ function CardManager({ deck, onBack }) {
                     )}
                   </div>
                   
+                  {card.image_url && (
+                    <div className="mt-3 rounded-xl overflow-hidden border-2 border-purple-200 dark:border-purple-800 bg-stone-100 dark:bg-stone-900 max-w-xs">
+                      <img
+                        src={card.image_url}
+                        alt={card.word}
+                        className="w-full h-auto max-h-32 object-contain"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                        }}
+                      />
+                    </div>
+                  )}
+                  
                   {card.explanation && (
                     <div className="mt-3 p-3 bg-stone-50 dark:bg-stone-900 rounded-lg prose prose-sm dark:prose-invert max-w-none">
                       <ReactMarkdown>{card.explanation}</ReactMarkdown>
@@ -533,6 +600,11 @@ function CardManager({ deck, onBack }) {
                 </div>
 
                 <div className="flex gap-2">
+                  {card.image_url && (
+                    <div className="p-2 bg-purple-100 dark:bg-purple-900/20 rounded-lg" title={language === 'en' ? 'Has image' : 'Hat Bild'}>
+                      <ImageIcon size={18} className="text-purple-600 dark:text-purple-400" />
+                    </div>
+                  )}
                   <button
                     onClick={() => startEdit(card)}
                     disabled={isAdding || editingCard}
@@ -555,6 +627,14 @@ function CardManager({ deck, onBack }) {
           ))}
         </div>
       )}
+
+      {/* Image Search Modal */}
+      <ImageSearchModal
+        isOpen={showImageModal}
+        onClose={() => setShowImageModal(false)}
+        onSelectImage={handleImageSelect}
+        currentImageUrl={formData.image_url}
+      />
     </div>
   );
 }
