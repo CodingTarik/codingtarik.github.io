@@ -103,6 +103,23 @@ export default function CVPage() {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const formatDate = (dateString, lang) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return dateString; // Return as-is if invalid
+    
+    if (lang === 'de') {
+      // German format: DD.MM.YYYY
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+      return `${day}.${month}.${year}`;
+    } else {
+      // English format: MMM DD, YYYY
+      return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+    }
+  };
+
   const handlePrintWithPersonalData = () => {
     setPrintData({...printData, includePersonalData: true});
     setShowPrintDialog(false);
@@ -233,7 +250,7 @@ export default function CVPage() {
                     <div className="flex items-center gap-1.5">
                       <Calendar size={12} className="flex-shrink-0" />
                       <span>
-                        <span className="font-medium">{language === 'en' ? 'Born:' : 'Geb.:'}</span> {printData.birthdate}
+                        <span className="font-medium">{language === 'en' ? 'Born:' : 'Geb.:'}</span> {formatDate(printData.birthdate, language)}
                       </span>
                     </div>
                   )}
@@ -353,10 +370,10 @@ export default function CVPage() {
                 degree="M.Sc. Computer Science"
                 institution="TU Darmstadt"
                 period={language === 'en' ? 'Apr 2025 - Sept 2026' : 'Apr 2025 - Sept 2026'}
-                grade={language === 'en' ? 'Current Grade: 1.0' : 'Aktuelle Note: 1.0'}
+                grade={language === 'en' ? 'Grade: 1.0' : 'Note: 1.0'}
                 description={language === 'en'
-                  ? 'Focus: Software Engineering, AI, Cybersecurity. Thesis: "Design and Implementation of a Modular Plugin Framework for Retrieval-Augmented Generation using Model Context Protocol" (submitted October 29, 2025)'
-                  : 'Schwerpunkt: Software Engineering, KI, Cybersecurity. Thesis: "Design und Implementierung eines modularen Plugin-Frameworks für Retrieval-Augmented Generation mittels Model Context Protocol" (abgegeben 29. Oktober 2025)'}
+                  ? 'Focus: Software Engineering, AI, Cybersecurity. Thesis: "Design and Implementation of a Modular Plugin Framework for Retrieval-Augmented Generation using Model Context Protocol"'
+                  : 'Schwerpunkt: Software Engineering, KI, Cybersecurity. Thesis: "Design und Implementierung eines modularen Plugin-Frameworks für Retrieval-Augmented Generation mittels Model Context Protocol"'}
               />
 
               <Education
@@ -367,11 +384,11 @@ export default function CVPage() {
 
               <Education
                 degree={language === 'en' ? 'Open University Student' : 'Gaststudent'}
-                institution={language === 'en' ? 'University of Helsinki & Metropolia, Finland' : 'Universität Helsinki & Metropolia, Finnland'}
+                institution={language === 'en' ? 'University of Helsinki & Metropolia University of Applied Sciences, Finland' : 'Universität Helsinki & Metropolia University of Applied Sciences, Finnland'}
                 period="Jan 2024 - Oct 2025"
                 description={language === 'en'
-                  ? 'Completed advanced CS courses: software engineering, system engineering, web development & cyber security.'
-                  : 'Abschluss fortgeschrittener Informatik-Kurse: Software Engineering, System Engineering, Webentwicklung & Cyber Security.'}
+                  ? 'Completed diverse CS courses: software engineering, system engineering, web development & cyber security.'
+                  : 'Abschluss diverser Informatik-Kurse: Software Engineering, System Engineering, Webentwicklung & Cyber Security.'}
               />
 
               <Education
@@ -568,7 +585,7 @@ export default function CVPage() {
             <Section title={t.hobbies} icon={<Heart />} compact className="print:order-7">
               <Hobby icon="🎹" title={language === 'en' ? 'Piano' : 'Klavier'} subtitle={language === 'en' ? 'Music' : 'Musik'} />
               <Hobby icon="🤾" title="Handball" subtitle={language === 'en' ? 'Sports' : 'Sport'} />
-              <Hobby icon="💻" title={language === 'en' ? 'Programming' : 'Programmieren'} subtitle={language === 'en' ? 'Passion' : 'Leidenschaft'} />
+              <Hobby icon="💻" title={language === 'en' ? 'Programming' : 'Programmieren'} subtitle={language === 'en' ? 'Interest' : 'Interesse'} />
               <Hobby icon="🚩" title="Capture The Flag" subtitle="Cybersecurity" />
             </Section>
 
@@ -579,11 +596,6 @@ export default function CVPage() {
                   <Globe className="w-4 h-4 text-blue-600" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-xs font-semibold text-slate-900 mb-0.5">
-                    {language === 'en' 
-                      ? 'This CV was created with a custom web application' 
-                      : 'Dieser Lebenslauf wurde mit einer selbst entwickelten Webanwendung erstellt'}
-                  </h3>
                   <p className="text-xs text-slate-700 leading-tight">
                     {language === 'en'
                       ? 'This CV is also available online in both German and English at:'
@@ -594,8 +606,8 @@ export default function CVPage() {
                   </p>
                   <p className="text-xs text-slate-600 leading-tight mt-1">
                     {language === 'en'
-                      ? 'Note: Some PDF readers may have display issues. Chromium-based PDF browsers work best.'
-                      : 'Hinweis: Bei manchen PDF-Lesern kann es zu Darstellungsproblemen kommen. Der Chromium PDF Browser funktioniert am besten.'}
+                      ? 'This CV was created with a custom web application, therefore display issues may occur in some PDF readers. Chromium-based browsers work well.'
+                      : 'Dieser Lebenslauf wurde mit einer selbst entwickelten Webanwendung erstellt, daher kann es zu Anzeigeproblemen in manchen PDF-Readern geben. Chromium-basierte Browser funktionieren gut.'}
                   </p>
                 </div>
               </div>
@@ -772,7 +784,7 @@ export default function CVPage() {
           /* Page Setup - no top margin for blue header */
           @page {
             size: A4;
-            margin: 0mm 0mm 10mm 0mm;
+            margin: 0mm 0mm 0mm 0mm;
           }
           
           /* Force exact color printing */
@@ -825,13 +837,16 @@ export default function CVPage() {
             background: white !important;
             min-height: 0 !important;
             height: auto !important;
+            padding-bottom: 0 !important;
+            margin-bottom: 0 !important;
           }
 
           /* CV Container - clean professional layout with side margins */
           .cv-print-container {
             max-width: 100% !important;
             margin: 0 !important;
-            padding: 0 12mm 5mm 12mm !important;
+            padding: 0 12mm 0 12mm !important;
+            padding-bottom: 0 !important;
             background: white !important;
           }
 
