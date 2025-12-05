@@ -546,15 +546,15 @@ export default function CVPage() {
               />
               <SkillCategory 
                 title="DevOps & Cloud" 
-                skills={['Docker', 'Kubernetes', 'GCP', 'Git', 'CI/CD', 'Linux', 'Bash']} 
+                skills={['Docker', 'Kubernetes', 'GCP', 'Git', 'CI/CD', 'Terraform', 'Bash']} 
               />
               <SkillCategory 
                 title={language === 'en' ? 'Databases & Tools' : 'Datenbanken & Tools'} 
-                skills={['PostgreSQL', 'MongoDB', 'Redis', 'SQL', 'Postman', 'VS Code']} 
+                skills={['PostgreSQL', 'MongoDB', 'SQL', 'Postman', 'VS Code']} 
               />
               <SkillCategory 
                 title="Cybersecurity" 
-                skills={['Kali Linux', 'Metasploit', 'Burp Suite', 'Snort', 'Wireshark', 'OWASP']} 
+                skills={['Kali Linux', 'Metasploit', 'Burp Suite', 'Snort', 'Wireshark', 'OWASP', 'OpenVAS', 'Nmap']} 
               />
             </Section>
 
