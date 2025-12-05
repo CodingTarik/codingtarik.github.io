@@ -328,16 +328,6 @@ export default function CVPage() {
               />
 
               <Experience
-                title="Content Creator"
-                company="lerneprogrammieren.de"
-                period="2019 - 2020"
-                description={language === 'en'
-                  ? 'Authored educational programming articles and tutorials for German-speaking beginners, translating complex technical concepts into accessible content.'
-                  : 'Verfasste Bildungsartikel und Tutorials zum Programmieren für deutschsprachige Anfänger, übersetzte komplexe technische Konzepte in zugängliche Inhalte.'}
-                skills={['PHP', 'SQL', 'Python', 'Java']}
-              />
-
-              <Experience
                 title={language === 'en' ? 'Internship - IT Department' : 'Praktikum - IT-Abteilung'}
                 company="DoIT Solutions GmbH, Gelnhausen"
                 period="2019"
@@ -380,8 +370,8 @@ export default function CVPage() {
                 institution={language === 'en' ? 'University of Helsinki & Metropolia, Finland' : 'Universität Helsinki & Metropolia, Finnland'}
                 period="Jan 2024 - Oct 2025"
                 description={language === 'en'
-                  ? 'Completed advanced CS courses: software engineering, system engineering, web development.'
-                  : 'Abschluss fortgeschrittener Informatik-Kurse: Software Engineering, System Engineering, Webentwicklung.'}
+                  ? 'Completed advanced CS courses: software engineering, system engineering, web development & cyber security.'
+                  : 'Abschluss fortgeschrittener Informatik-Kurse: Software Engineering, System Engineering, Webentwicklung & Cyber Security.'}
               />
 
               <Education
@@ -417,7 +407,7 @@ export default function CVPage() {
               <Achievement
                 title={language === 'en' ? 'Modular Plugin Framework for RAG' : 'Modulares Plugin-Framework für RAG'}
                 period="2025"
-                subtitle={language === 'en' ? 'Master Thesis' : 'Masterarbeit'}
+                subtitle={language === 'en' ? 'Master Thesis - Grade: 1.0' : 'Masterarbeit - Note: 1.0'}
                 description={language === 'en' 
                   ? 'Developing extensible ecosystem for RAG systems with dual-layer extensibility and multi-level configuration.'
                   : 'Entwicklung eines erweiterbaren Ökosystems für RAG-Systeme mit zweischichtiger Erweiterbarkeit.'}
@@ -434,7 +424,7 @@ export default function CVPage() {
 
               <Achievement
                 title={language === 'en' ? 'Animal Manager - Tikki Hywood Foundation' : 'Tierverwaltung - Tikki Hywood Foundation'}
-                period={`2020 - ${t.present}`}
+                period="2020 - 2024"
                 subtitle={language === 'en' ? 'Volunteer Developer (Wildlife Conservation NGO)' : 'Ehrenamtlicher Entwickler (Tierschutzorganisation)'}
                 description={language === 'en'
                   ? 'Built custom animal management system for wildlife conservation organization focused on pangolin rescue and rehabilitation with centralized data synchronization.'
@@ -443,15 +433,15 @@ export default function CVPage() {
 
               <Achievement
                 title={language === 'en' ? 'Cybersecurity & CTF Competitions' : 'Cybersecurity & CTF-Wettbewerbe'}
-                period={`2021 - ${t.present}`}
-                subtitle={advancedMode ? (language === 'en' ? 'TUD.dll Hacking Team & CCC Wizards of Dos' : 'TUD.dll Hacking Team & CCC Wizards of Dos') : 'TUD.dll Hacking Team'}
+                period="2021 - 2024"
+                subtitle={language === 'en' ? 'TUD.dll Hacking Team & CCC Wizards of Dos' : 'TUD.dll Hacking Team & CCC Wizards of Dos'}
                 description={advancedMode 
                   ? (language === 'en'
                     ? 'Active participation in TU Darmstadt\'s cybersecurity team (TUD.dll) and the "Wizards of Dos" team from Chaos Computer Club Darmstadt. Participating in CTF competitions, solving security challenges and developing offensive security skills.'
                     : 'Aktive Teilnahme im Cybersecurity-Team der TU Darmstadt (TUD.dll) und im "Wizards of Dos"-Team vom Chaos Computer Club Darmstadt. Teilnahme an CTF-Wettbewerben, Lösen von Sicherheits-Challenges und Entwicklung von Offensive-Security-Fähigkeiten.')
                   : (language === 'en'
-                    ? 'Active participation in TU Darmstadt\'s cybersecurity team, participating in CTF competitions.'
-                    : 'Aktive Teilnahme im Cybersecurity-Team der TU Darmstadt, Teilnahme an CTF-Wettbewerben.')
+                    ? 'Active participation in TU Darmstadt\'s cybersecurity team (TUD.dll) and the "Wizards of Dos" team from Chaos Computer Club Darmstadt. Participating in CTF competitions.'
+                    : 'Aktive Teilnahme im Cybersecurity-Team der TU Darmstadt (TUD.dll) und im "Wizards of Dos"-Team vom Chaos Computer Club Darmstadt. Teilnahme an CTF-Wettbewerben.')
                 }
               />
 
@@ -505,8 +495,8 @@ export default function CVPage() {
               <Certificate
                 title="Deutschlandstipendium"
                 issuer="TU Darmstadt"
-                year="2021, 2023"
-                description={language === 'en' ? 'Germany Scholarship - Awarded twice' : 'Deutschland-Stipendium - 2x vergeben'}
+                year="2021, 2023, 2025"
+                description={language === 'en' ? 'Germany Scholarship - Awarded three times' : 'Deutschland-Stipendium - 3x vergeben'}
               />
 
               <Certificate
@@ -538,20 +528,6 @@ export default function CVPage() {
                 year="2023"
                 link="https://credly.com/badges/81775887-0432-4ccb-95ec-9c5759fd5936"
               />
-              
-              <Certificate
-                title="C1 English Certificate"
-                issuer="TU Darmstadt"
-                year="2024"
-              />
-
-              {advancedMode && (
-                <Certificate
-                  title="Fitnesstrainer C Lizenz"
-                  issuer={language === 'en' ? 'Hamburg Sports and Fitness Academy' : 'Hamburger Sport- und Fitnessakademie'}
-                  year="2022"
-                />
-              )}
             </Section>
 
             {/* Technical Skills - Print Order 5 */}
