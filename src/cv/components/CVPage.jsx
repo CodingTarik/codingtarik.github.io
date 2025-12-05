@@ -370,10 +370,10 @@ export default function CVPage() {
                 degree="M.Sc. Computer Science"
                 institution="TU Darmstadt"
                 period={language === 'en' ? 'Apr 2025 - Sept 2026' : 'Apr 2025 - Sept 2026'}
-                grade={language === 'en' ? 'Grade: 1.0' : 'Note: 1.0'}
+                grade={language === 'en' ? 'Current Grade: 1.0' : 'Aktueller Schnitt: 1.0'}
                 description={language === 'en'
-                  ? 'Focus: Software Engineering, AI, Cybersecurity. Thesis: "Design and Implementation of a Modular Plugin Framework for Retrieval-Augmented Generation using Model Context Protocol"'
-                  : 'Schwerpunkt: Software Engineering, KI, Cybersecurity. Thesis: "Design und Implementierung eines modularen Plugin-Frameworks für Retrieval-Augmented Generation mittels Model Context Protocol"'}
+                  ? 'Focus: Software Engineering, AI, Cybersecurity. Thesis: "Design and Implementation of a Modular Plugin Framework for Retrieval-Augmented Generation using Model Context Protocol" - Grade: 1.0'
+                  : 'Schwerpunkt: Software Engineering, KI, Cybersecurity. Thesis: "Design und Implementierung eines modularen Plugin-Frameworks für Retrieval-Augmented Generation mittels Model Context Protocol" - Note: 1.0'}
               />
 
               <Education
@@ -421,24 +421,6 @@ export default function CVPage() {
 
             {/* Key Achievements - Print Order 3 */}
             <Section title={t.achievements} icon={<Award />} className="print:order-3 print:mb-0">
-              <Achievement
-                title={language === 'en' ? 'Modular Plugin Framework for RAG' : 'Modulares Plugin-Framework für RAG'}
-                period="2025"
-                subtitle={language === 'en' ? 'Master Thesis - Grade: 1.0' : 'Masterarbeit - Note: 1.0'}
-                description={language === 'en' 
-                  ? 'Developing extensible ecosystem for RAG systems with dual-layer extensibility and multi-level configuration.'
-                  : 'Entwicklung eines erweiterbaren Ökosystems für RAG-Systeme mit zweischichtiger Erweiterbarkeit.'}
-              />
-              
-              <Achievement
-                title={language === 'en' ? 'Secure Hybrid RAG Applications' : 'Sichere Hybrid-RAG-Anwendungen'}
-                period="2024"
-                subtitle={language === 'en' ? 'Bachelor Thesis - Grade: 1.0' : 'Bachelorarbeit - Note: 1.0'}
-                description={language === 'en'
-                  ? 'Analyzed security vulnerabilities in RAG systems and developed practical solutions for enterprise implementations.'
-                  : 'Analyse von Sicherheitslücken in RAG-Systemen und Entwicklung praktischer Lösungen.'}
-              />
-
               <Achievement
                 title={language === 'en' ? 'Animal Manager - Tikki Hywood Foundation' : 'Tierverwaltung - Tikki Hywood Foundation'}
                 period="2020 - 2024"
