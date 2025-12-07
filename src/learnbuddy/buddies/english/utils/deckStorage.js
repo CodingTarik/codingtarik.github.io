@@ -43,6 +43,11 @@ export function saveDeck(deck) {
     deck.createdAt = new Date().toISOString();
   }
   
+  // Set default storage mode if not specified
+  if (!deck.storageMode) {
+    deck.storageMode = deck.scriptUrl ? 'spreadsheet' : 'local';
+  }
+  
   deck.updatedAt = new Date().toISOString();
   
   const existingIndex = decks.findIndex(d => d.id === deck.id);
@@ -164,32 +169,78 @@ export function getAllReviewDates() {
 export function exportDeck(deckId, cards) {
   const deck = getDeck(deckId);
   
-  return JSON.stringify({
-    deck,
-    cards,
+  // Create export object with all metadata
+  const exportData = {
+    deck: {
+      ...deck,
+      // Don't export scriptUrl for local decks
+      scriptUrl: deck.storageMode === 'local' ? undefined : deck.scriptUrl
+    },
+    cards: cards || [],
     exportDate: new Date().toISOString(),
-    version: '1.0'
-  }, null, 2);
+    version: '2.0' // Updated version to include storageMode
+  };
+  
+  return JSON.stringify(exportData, null, 2);
+}
+
+/**
+ * Download deck as JSON file
+ * @param {string} deckId - Deck ID
+ * @param {Array} cards - Card data
+ * @param {string} deckName - Deck name for filename
+ */
+export function downloadDeck(deckId, cards, deckName) {
+  const jsonString = exportDeck(deckId, cards);
+  const blob = new Blob([jsonString], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${deckName || 'deck'}_${new Date().toISOString().split('T')[0]}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
 
 /**
  * Import deck from JSON
  * @param {string} jsonString - JSON string
+ * @param {string} storageMode - Optional storage mode override ('local' or 'spreadsheet')
  * @returns {Object} Imported deck and cards
  */
-export function importDeck(jsonString) {
+export function importDeck(jsonString, storageMode = null) {
   try {
     const data = JSON.parse(jsonString);
     
     // Generate new ID for imported deck
     delete data.deck.id;
-    data.deck.name = `${data.deck.name} (Imported)`;
+    delete data.deck.createdAt;
+    delete data.deck.updatedAt;
+    
+    // Add (Imported) suffix if not already present
+    if (!data.deck.name.includes('(Imported)')) {
+      data.deck.name = `${data.deck.name} (Imported)`;
+    }
+    
+    // Set storage mode
+    if (storageMode) {
+      data.deck.storageMode = storageMode;
+    } else if (!data.deck.storageMode) {
+      // Default to local if no scriptUrl, otherwise spreadsheet
+      data.deck.storageMode = data.deck.scriptUrl ? 'spreadsheet' : 'local';
+    }
+    
+    // If switching to local mode, remove scriptUrl
+    if (data.deck.storageMode === 'local') {
+      data.deck.scriptUrl = undefined;
+    }
     
     const savedDeck = saveDeck(data.deck);
     
     return {
       deck: savedDeck,
-      cards: data.cards
+      cards: data.cards || []
     };
   } catch (error) {
     console.error('Error importing deck:', error);

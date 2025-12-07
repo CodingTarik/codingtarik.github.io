@@ -1,9 +1,11 @@
 /**
  * Local cache for vocabulary cards with sync tracking
+ * Also handles persistent local storage for local-mode decks
  */
 
 const CACHE_KEY_PREFIX = 'vocabulary_cache_';
 const PENDING_KEY_PREFIX = 'vocabulary_pending_';
+const LOCAL_STORAGE_KEY_PREFIX = 'vocabulary_local_';
 
 /**
  * Get cached cards for a deck
@@ -20,15 +22,64 @@ export function getCachedCards(deckId) {
 
 /**
  * Cache cards for a deck
+ * For local-mode decks, also saves to persistent storage
  */
-export function setCachedCards(deckId, cards) {
+export function setCachedCards(deckId, cards, isLocalMode = false) {
   try {
-    localStorage.setItem(CACHE_KEY_PREFIX + deckId, JSON.stringify({
+    const cacheData = {
       cards,
       timestamp: Date.now()
-    }));
+    };
+    
+    localStorage.setItem(CACHE_KEY_PREFIX + deckId, JSON.stringify(cacheData));
+    
+    // For local-mode decks, also save to persistent storage
+    if (isLocalMode) {
+      localStorage.setItem(LOCAL_STORAGE_KEY_PREFIX + deckId, JSON.stringify(cards));
+    }
   } catch (e) {
     console.error('Error caching cards:', e);
+  }
+}
+
+/**
+ * Get cards from local storage (for local-mode decks)
+ */
+export function getLocalCards(deckId) {
+  try {
+    const data = localStorage.getItem(LOCAL_STORAGE_KEY_PREFIX + deckId);
+    return data ? JSON.parse(data) : [];
+  } catch (e) {
+    console.error('Error loading local cards:', e);
+    return [];
+  }
+}
+
+/**
+ * Save cards to local storage (for local-mode decks)
+ */
+export function saveLocalCards(deckId, cards) {
+  try {
+    localStorage.setItem(LOCAL_STORAGE_KEY_PREFIX + deckId, JSON.stringify(cards));
+    // Also update cache
+    setCachedCards(deckId, cards, true);
+    return true;
+  } catch (e) {
+    console.error('Error saving local cards:', e);
+    return false;
+  }
+}
+
+/**
+ * Delete local storage for a deck
+ */
+export function deleteLocalCards(deckId) {
+  try {
+    localStorage.removeItem(LOCAL_STORAGE_KEY_PREFIX + deckId);
+    return true;
+  } catch (e) {
+    console.error('Error deleting local cards:', e);
+    return false;
   }
 }
 
@@ -57,13 +108,22 @@ export function setPendingChanges(deckId, changes) {
 }
 
 /**
- * Add a card locally (pending sync)
+ * Add a card locally (pending sync for spreadsheet mode, immediate save for local mode)
  */
-export function addCardLocally(deckId, card) {
+export function addCardLocally(deckId, card, isLocalMode = false) {
   const cached = getCachedCards(deckId);
-  const pending = getPendingChanges(deckId);
   
+  if (isLocalMode) {
+    // For local mode, save immediately
+    const localCards = cached ? cached.cards : getLocalCards(deckId);
+    const newCards = [...localCards, card];
+    return saveLocalCards(deckId, newCards);
+  }
+  
+  // For spreadsheet mode, use pending changes
   if (!cached) return false;
+  
+  const pending = getPendingChanges(deckId);
   
   // Add temp ID for local tracking
   const tempId = `temp_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
@@ -81,9 +141,22 @@ export function addCardLocally(deckId, card) {
 }
 
 /**
- * Update a card locally (pending sync)
+ * Update a card locally (pending sync for spreadsheet mode, immediate save for local mode)
  */
-export function updateCardLocally(deckId, index, updatedCard) {
+export function updateCardLocally(deckId, index, updatedCard, isLocalMode = false) {
+  if (isLocalMode) {
+    // For local mode, save immediately
+    const cached = getCachedCards(deckId);
+    const localCards = cached ? cached.cards : getLocalCards(deckId);
+    
+    if (!localCards[index]) return false;
+    
+    const newCards = [...localCards];
+    newCards[index] = updatedCard;
+    return saveLocalCards(deckId, newCards);
+  }
+  
+  // For spreadsheet mode, use pending changes
   const cached = getCachedCards(deckId);
   const pending = getPendingChanges(deckId);
   
@@ -117,9 +190,21 @@ export function updateCardLocally(deckId, index, updatedCard) {
 }
 
 /**
- * Delete a card locally (pending sync)
+ * Delete a card locally (pending sync for spreadsheet mode, immediate save for local mode)
  */
-export function deleteCardLocally(deckId, index) {
+export function deleteCardLocally(deckId, index, isLocalMode = false) {
+  if (isLocalMode) {
+    // For local mode, save immediately
+    const cached = getCachedCards(deckId);
+    const localCards = cached ? cached.cards : getLocalCards(deckId);
+    
+    if (!localCards[index]) return false;
+    
+    const newCards = localCards.filter((_, i) => i !== index);
+    return saveLocalCards(deckId, newCards);
+  }
+  
+  // For spreadsheet mode, use pending changes
   const cached = getCachedCards(deckId);
   const pending = getPendingChanges(deckId);
   

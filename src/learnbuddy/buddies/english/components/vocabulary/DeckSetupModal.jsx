@@ -9,6 +9,7 @@ function DeckSetupModal({ isOpen, onClose, onSave, editingDeck }) {
   const [deckName, setDeckName] = useState('');
   const [deckDescription, setDeckDescription] = useState('');
   const [scriptUrl, setScriptUrl] = useState('');
+  const [storageMode, setStorageMode] = useState('local'); // 'local' or 'spreadsheet'
   const [copied, setCopied] = useState(false);
 
   // Initialize form with editing deck data
@@ -17,12 +18,14 @@ function DeckSetupModal({ isOpen, onClose, onSave, editingDeck }) {
       setDeckName(editingDeck.name || '');
       setDeckDescription(editingDeck.description || '');
       setScriptUrl(editingDeck.scriptUrl || '');
+      setStorageMode(editingDeck.storageMode || (editingDeck.scriptUrl ? 'spreadsheet' : 'local'));
       setStep(1); // Start at step 1 for editing
     } else if (isOpen) {
       // Reset for new deck
       setDeckName('');
       setDeckDescription('');
       setScriptUrl('');
+      setStorageMode('local');
       setStep(1);
     }
   }, [editingDeck, isOpen]);
@@ -40,21 +43,28 @@ function DeckSetupModal({ isOpen, onClose, onSave, editingDeck }) {
   };
 
   const handleSave = () => {
-    if (!deckName.trim() || !scriptUrl.trim()) {
-      alert(language === 'en' ? 'Please fill in all required fields' : 'Bitte alle Pflichtfelder ausfüllen');
+    if (!deckName.trim()) {
+      alert(language === 'en' ? 'Please fill in the deck name' : 'Bitte Deck-Name eingeben');
+      return;
+    }
+
+    if (storageMode === 'spreadsheet' && !scriptUrl.trim()) {
+      alert(language === 'en' ? 'Please fill in the Web App URL for spreadsheet mode' : 'Bitte Web-App-URL für Spreadsheet-Modus eingeben');
       return;
     }
 
     onSave({
       name: deckName.trim(),
       description: deckDescription.trim(),
-      scriptUrl: scriptUrl.trim()
+      scriptUrl: storageMode === 'spreadsheet' ? scriptUrl.trim() : undefined,
+      storageMode: storageMode
     });
 
     // Reset form
     setDeckName('');
     setDeckDescription('');
     setScriptUrl('');
+    setStorageMode('local');
     setStep(1);
     onClose();
   };
@@ -135,14 +145,69 @@ function DeckSetupModal({ isOpen, onClose, onSave, editingDeck }) {
                 />
               </div>
 
+              {/* Storage Mode Selection */}
+              <div>
+                <label className="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-2">
+                  {language === 'en' ? 'Storage Mode' : 'Speichermodus'} *
+                </label>
+                <div className="grid grid-cols-2 gap-3">
+                  <button
+                    onClick={() => setStorageMode('local')}
+                    className={`p-4 rounded-xl border-2 transition-all ${
+                      storageMode === 'local'
+                        ? 'border-rose-500 bg-rose-50 dark:bg-rose-900/20'
+                        : 'border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-700'
+                    }`}
+                  >
+                    <div className="font-bold text-stone-800 dark:text-stone-100 mb-1">
+                      {language === 'en' ? 'Local' : 'Lokal'}
+                    </div>
+                    <div className="text-xs text-stone-600 dark:text-stone-400">
+                      {language === 'en' 
+                        ? 'Store cards locally in browser'
+                        : 'Karten lokal im Browser speichern'}
+                    </div>
+                  </button>
+                  <button
+                    onClick={() => setStorageMode('spreadsheet')}
+                    className={`p-4 rounded-xl border-2 transition-all ${
+                      storageMode === 'spreadsheet'
+                        ? 'border-rose-500 bg-rose-50 dark:bg-rose-900/20'
+                        : 'border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-700'
+                    }`}
+                  >
+                    <div className="font-bold text-stone-800 dark:text-stone-100 mb-1">
+                      {language === 'en' ? 'Spreadsheet' : 'Spreadsheet'}
+                    </div>
+                    <div className="text-xs text-stone-600 dark:text-stone-400">
+                      {language === 'en' 
+                        ? 'Sync with Google Sheets'
+                        : 'Mit Google Sheets synchronisieren'}
+                    </div>
+                  </button>
+                </div>
+              </div>
+
               <button
-                onClick={() => setStep(2)}
+                onClick={() => {
+                  if (storageMode === 'spreadsheet' && !editingDeck) {
+                    setStep(2);
+                  } else if (storageMode === 'spreadsheet' && editingDeck) {
+                    setStep(2);
+                  } else {
+                    handleSave();
+                  }
+                }}
                 disabled={!deckName.trim()}
                 className="w-full py-3 bg-gradient-to-r from-rose-500 to-pink-500 text-white font-bold rounded-xl hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {editingDeck 
-                  ? (language === 'en' ? 'Next' : 'Weiter')
-                  : (language === 'en' ? 'Next: Setup Spreadsheet' : 'Weiter: Spreadsheet einrichten')}
+                {storageMode === 'local'
+                  ? (editingDeck 
+                      ? (language === 'en' ? 'Update Deck' : 'Deck aktualisieren')
+                      : (language === 'en' ? 'Create Deck' : 'Deck erstellen'))
+                  : editingDeck 
+                    ? (language === 'en' ? 'Next' : 'Weiter')
+                    : (language === 'en' ? 'Next: Setup Spreadsheet' : 'Weiter: Spreadsheet einrichten')}
               </button>
             </div>
           )}
@@ -154,31 +219,81 @@ function DeckSetupModal({ isOpen, onClose, onSave, editingDeck }) {
                 {language === 'en' ? 'Edit Spreadsheet Connection' : 'Spreadsheet-Verbindung bearbeiten'}
               </h3>
 
-              <div className="bg-yellow-50 dark:bg-yellow-900/20 border-2 border-yellow-200 dark:border-yellow-800 rounded-xl p-4">
-                <p className="text-sm text-yellow-800 dark:text-yellow-300">
-                  ⚠️ {language === 'en' 
-                    ? 'Warning: Changing the spreadsheet URL will connect this deck to a different spreadsheet. Make sure the new spreadsheet has the same structure and data.'
-                    : 'Warnung: Das Ändern der Spreadsheet-URL verbindet dieses Deck mit einem anderen Spreadsheet. Stelle sicher, dass das neue Spreadsheet die gleiche Struktur und Daten hat.'}
-                </p>
-              </div>
-
+              {/* Storage Mode Selection for Editing */}
               <div>
                 <label className="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-2">
-                  {language === 'en' ? 'Web App URL' : 'Web-App-URL'} *
+                  {language === 'en' ? 'Storage Mode' : 'Speichermodus'} *
                 </label>
-                <input
-                  type="url"
-                  value={scriptUrl}
-                  onChange={(e) => setScriptUrl(e.target.value)}
-                  placeholder="https://script.google.com/macros/s/.../exec"
-                  className="w-full px-4 py-3 rounded-xl border-2 border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-700 text-stone-800 dark:text-stone-100 focus:border-rose-500 focus:outline-none"
-                />
-                <p className="mt-2 text-xs text-stone-500 dark:text-stone-400">
-                  {language === 'en' 
-                    ? 'Current URL: ' + (editingDeck.scriptUrl || 'None')
-                    : 'Aktuelle URL: ' + (editingDeck.scriptUrl || 'Keine')}
-                </p>
+                <div className="grid grid-cols-2 gap-3">
+                  <button
+                    onClick={() => {
+                      setStorageMode('local');
+                      setScriptUrl('');
+                    }}
+                    className={`p-4 rounded-xl border-2 transition-all ${
+                      storageMode === 'local'
+                        ? 'border-rose-500 bg-rose-50 dark:bg-rose-900/20'
+                        : 'border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-700'
+                    }`}
+                  >
+                    <div className="font-bold text-stone-800 dark:text-stone-100 mb-1">
+                      {language === 'en' ? 'Local' : 'Lokal'}
+                    </div>
+                    <div className="text-xs text-stone-600 dark:text-stone-400">
+                      {language === 'en' 
+                        ? 'Store cards locally'
+                        : 'Karten lokal speichern'}
+                    </div>
+                  </button>
+                  <button
+                    onClick={() => setStorageMode('spreadsheet')}
+                    className={`p-4 rounded-xl border-2 transition-all ${
+                      storageMode === 'spreadsheet'
+                        ? 'border-rose-500 bg-rose-50 dark:bg-rose-900/20'
+                        : 'border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-700'
+                    }`}
+                  >
+                    <div className="font-bold text-stone-800 dark:text-stone-100 mb-1">
+                      {language === 'en' ? 'Spreadsheet' : 'Spreadsheet'}
+                    </div>
+                    <div className="text-xs text-stone-600 dark:text-stone-400">
+                      {language === 'en' 
+                        ? 'Sync with Google Sheets'
+                        : 'Mit Google Sheets synchronisieren'}
+                    </div>
+                  </button>
+                </div>
               </div>
+
+              {storageMode === 'spreadsheet' && (
+                <>
+                  <div className="bg-yellow-50 dark:bg-yellow-900/20 border-2 border-yellow-200 dark:border-yellow-800 rounded-xl p-4">
+                    <p className="text-sm text-yellow-800 dark:text-yellow-300">
+                      ⚠️ {language === 'en' 
+                        ? 'Warning: Changing the spreadsheet URL will connect this deck to a different spreadsheet. Make sure the new spreadsheet has the same structure and data.'
+                        : 'Warnung: Das Ändern der Spreadsheet-URL verbindet dieses Deck mit einem anderen Spreadsheet. Stelle sicher, dass das neue Spreadsheet die gleiche Struktur und Daten hat.'}
+                    </p>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-stone-700 dark:text-stone-300 mb-2">
+                      {language === 'en' ? 'Web App URL' : 'Web-App-URL'} *
+                    </label>
+                    <input
+                      type="url"
+                      value={scriptUrl}
+                      onChange={(e) => setScriptUrl(e.target.value)}
+                      placeholder="https://script.google.com/macros/s/.../exec"
+                      className="w-full px-4 py-3 rounded-xl border-2 border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-700 text-stone-800 dark:text-stone-100 focus:border-rose-500 focus:outline-none"
+                    />
+                    <p className="mt-2 text-xs text-stone-500 dark:text-stone-400">
+                      {language === 'en' 
+                        ? 'Current URL: ' + (editingDeck.scriptUrl || 'None')
+                        : 'Aktuelle URL: ' + (editingDeck.scriptUrl || 'Keine')}
+                    </p>
+                  </div>
+                </>
+              )}
 
               <div className="flex gap-3">
                 <button
@@ -189,10 +304,10 @@ function DeckSetupModal({ isOpen, onClose, onSave, editingDeck }) {
                 </button>
                 <button
                   onClick={handleSave}
-                  disabled={!scriptUrl.trim()}
+                  disabled={storageMode === 'spreadsheet' && !scriptUrl.trim()}
                   className="flex-1 py-3 bg-gradient-to-r from-rose-500 to-pink-500 text-white font-bold rounded-xl hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {language === 'en' ? 'Save Changes' : 'Änderungen speichern'}
+                  {language === 'en' ? 'Update Deck' : 'Deck aktualisieren'}
                 </button>
               </div>
             </div>

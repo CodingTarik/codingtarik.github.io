@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, BookOpen, Edit, Trash2, Play, Brain, TrendingUp, AlertCircle, RefreshCw, MessageCircle } from 'lucide-react';
+import { Plus, BookOpen, Edit, Trash2, Play, Brain, TrendingUp, AlertCircle, RefreshCw, MessageCircle, Download, Upload, X } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { useLanguage } from '../../../../context/LanguageContext';
-import { getDecks, deleteDeck } from '../../utils/deckStorage';
+import { getDecks, deleteDeck, downloadDeck, importDeck } from '../../utils/deckStorage';
 import { getDueCards } from '../../utils/spacedRepetition';
-import { getPendingChangesCount, getPendingChanges, clearPendingChanges, getCachedCards, setCachedCards } from '../../utils/vocabularyCache';
+import { getPendingChangesCount, getPendingChanges, clearPendingChanges, getCachedCards, setCachedCards, saveLocalCards, getLocalCards } from '../../utils/vocabularyCache';
 import { fetchCardsFromSheet, addCardToSheet, updateCardInSheet, deleteCardFromSheet } from '../../utils/googleSheetsAPI';
 
 function DeckList({ onCreateDeck, onEditDeck, onSelectDeck, refreshTrigger }) {
@@ -13,6 +13,7 @@ function DeckList({ onCreateDeck, onEditDeck, onSelectDeck, refreshTrigger }) {
   const [deckStats, setDeckStats] = useState({});
   const [pendingCounts, setPendingCounts] = useState({});
   const [syncingDeck, setSyncingDeck] = useState(null);
+  const [showImportModal, setShowImportModal] = useState(false);
 
   useEffect(() => {
     loadDecks();
@@ -22,10 +23,15 @@ function DeckList({ onCreateDeck, onEditDeck, onSelectDeck, refreshTrigger }) {
     const loadedDecks = getDecks();
     setDecks(loadedDecks);
     
-    // Load pending counts for each deck
+    // Load pending counts only for spreadsheet-mode decks
     const counts = {};
     loadedDecks.forEach(deck => {
-      counts[deck.id] = getPendingChangesCount(deck.id);
+      // Only show pending counts for spreadsheet-mode decks
+      if (deck.storageMode === 'spreadsheet' || (!deck.storageMode && deck.scriptUrl)) {
+        counts[deck.id] = getPendingChangesCount(deck.id);
+      } else {
+        counts[deck.id] = 0; // Local decks don't have pending changes
+      }
     });
     setPendingCounts(counts);
     
@@ -61,6 +67,96 @@ function DeckList({ onCreateDeck, onEditDeck, onSelectDeck, refreshTrigger }) {
       deleteDeck(deckId);
       loadDecks();
     }
+  };
+
+  const handleExport = (deck, event) => {
+    event.stopPropagation();
+    try {
+      let cards = [];
+      
+      // Load cards based on storage mode
+      if (deck.storageMode === 'local' || (!deck.storageMode && !deck.scriptUrl)) {
+        // For local decks, load from local storage
+        cards = getLocalCards(deck.id);
+        // Fallback to cache if local storage is empty
+        if (cards.length === 0) {
+          const cached = getCachedCards(deck.id);
+          cards = cached?.cards || [];
+        }
+      } else {
+        // For spreadsheet decks, load from cache
+        const cached = getCachedCards(deck.id);
+        cards = cached?.cards || [];
+      }
+      
+      downloadDeck(deck.id, cards, deck.name);
+      toast.success(
+        language === 'en' 
+          ? `Deck exported successfully! ${cards.length} cards exported.` 
+          : `Deck erfolgreich exportiert! ${cards.length} Karten exportiert.`,
+        { icon: '✅', duration: 3000 }
+      );
+    } catch (error) {
+      console.error('Export error:', error);
+      toast.error(
+        language === 'en' ? 'Failed to export deck' : 'Deck konnte nicht exportiert werden'
+      );
+    }
+  };
+
+  const handleImport = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    if (!file.name.endsWith('.json')) {
+      toast.error(
+        language === 'en' ? 'Please select a JSON file' : 'Bitte wähle eine JSON-Datei'
+      );
+      return;
+    }
+
+    try {
+      const text = await file.text();
+      const { deck, cards } = importDeck(text);
+      
+      // Save cards based on storage mode
+      if (deck.storageMode === 'local') {
+        // For local mode, save cards to persistent storage
+        saveLocalCards(deck.id, cards || []);
+        setCachedCards(deck.id, cards || [], true);
+      } else if (deck.storageMode === 'spreadsheet' && deck.scriptUrl) {
+        // For spreadsheet mode, try to load cards from sheet
+        try {
+          const fetchedCards = await fetchCardsFromSheet(deck.scriptUrl);
+          setCachedCards(deck.id, fetchedCards);
+        } catch (e) {
+          // If fetch fails, use imported cards as fallback (cache only)
+          console.warn('Could not fetch from spreadsheet, using imported cards:', e);
+          setCachedCards(deck.id, cards || []);
+        }
+      } else {
+        // Fallback: save to cache
+        setCachedCards(deck.id, cards || []);
+      }
+
+      loadDecks();
+      toast.success(
+        language === 'en' 
+          ? `Deck "${deck.name}" imported successfully! ${cards?.length || 0} cards imported.` 
+          : `Deck "${deck.name}" erfolgreich importiert! ${cards?.length || 0} Karten importiert.`,
+        { icon: '✅', duration: 3000 }
+      );
+    } catch (error) {
+      console.error('Import error:', error);
+      toast.error(
+        language === 'en' 
+          ? `Failed to import deck: ${error.message}` 
+          : `Deck konnte nicht importiert werden: ${error.message}`
+      );
+    }
+
+    // Reset file input
+    event.target.value = '';
   };
 
   const handleSync = async (deck, event, forceRefresh = false) => {
@@ -183,13 +279,25 @@ function DeckList({ onCreateDeck, onEditDeck, onSelectDeck, refreshTrigger }) {
               : (language === 'en' ? 'decks' : 'Decks')}
           </p>
         </div>
-        <button
-          onClick={onCreateDeck}
-          className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-rose-500 to-pink-500 text-white font-bold rounded-xl hover:shadow-lg transition-all"
-        >
-          <Plus size={20} />
-          {language === 'en' ? 'New Deck' : 'Neues Deck'}
-        </button>
+        <div className="flex items-center gap-2">
+          <label className="flex items-center gap-2 px-4 py-2 bg-stone-200 dark:bg-stone-700 text-stone-800 dark:text-stone-100 font-bold rounded-xl hover:bg-stone-300 dark:hover:bg-stone-600 transition-all cursor-pointer">
+            <Upload size={20} />
+            {language === 'en' ? 'Import Deck' : 'Deck importieren'}
+            <input
+              type="file"
+              accept=".json"
+              onChange={handleImport}
+              className="hidden"
+            />
+          </label>
+          <button
+            onClick={onCreateDeck}
+            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-rose-500 to-pink-500 text-white font-bold rounded-xl hover:shadow-lg transition-all"
+          >
+            <Plus size={20} />
+            {language === 'en' ? 'New Deck' : 'Neues Deck'}
+          </button>
+        </div>
       </div>
 
       {/* Deck Grid */}
@@ -208,7 +316,7 @@ function DeckList({ onCreateDeck, onEditDeck, onSelectDeck, refreshTrigger }) {
                 <div className="flex items-start justify-between mb-2">
                   <div className="flex items-center gap-2">
                     <BookOpen className="text-white" size={32} />
-                    {pendingCount > 0 && (
+                    {pendingCount > 0 && (deck.storageMode === 'spreadsheet' || (!deck.storageMode && deck.scriptUrl)) && (
                       <span className="px-2 py-0.5 bg-orange-500 text-white text-xs font-bold rounded-full flex items-center gap-1">
                         <AlertCircle size={12} />
                         {pendingCount}
@@ -216,6 +324,13 @@ function DeckList({ onCreateDeck, onEditDeck, onSelectDeck, refreshTrigger }) {
                     )}
                   </div>
                   <div className="flex gap-1">
+                    <button
+                      onClick={(e) => handleExport(deck, e)}
+                      className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+                      title={language === 'en' ? 'Export Deck' : 'Deck exportieren'}
+                    >
+                      <Download size={16} className="text-white" />
+                    </button>
                     <button
                       onClick={() => onEditDeck(deck)}
                       className="p-2 hover:bg-white/20 rounded-lg transition-colors"
@@ -236,14 +351,26 @@ function DeckList({ onCreateDeck, onEditDeck, onSelectDeck, refreshTrigger }) {
                 {deck.description && (
                   <p className="text-sm text-white/80 line-clamp-2">{deck.description}</p>
                 )}
-                {pendingCount > 0 && (
-                  <p className="text-xs text-orange-200 mt-2 flex items-center gap-1">
-                    <AlertCircle size={12} />
-                    {language === 'en' 
-                      ? `${pendingCount} change${pendingCount > 1 ? 's' : ''} not synced`
-                      : `${pendingCount} Änderung${pendingCount > 1 ? 'en' : ''} nicht synchronisiert`}
-                  </p>
-                )}
+                {/* Show storage mode badge */}
+                <div className="mt-2 flex items-center gap-2">
+                  {deck.storageMode === 'local' || (!deck.storageMode && !deck.scriptUrl) ? (
+                    <span className="px-2 py-0.5 bg-blue-500/80 text-white text-xs font-bold rounded-full">
+                      {language === 'en' ? 'Local' : 'Lokal'}
+                    </span>
+                  ) : (
+                    <span className="px-2 py-0.5 bg-green-500/80 text-white text-xs font-bold rounded-full">
+                      {language === 'en' ? 'Spreadsheet' : 'Spreadsheet'}
+                    </span>
+                  )}
+                  {pendingCount > 0 && (deck.storageMode === 'spreadsheet' || (!deck.storageMode && deck.scriptUrl)) && (
+                    <span className="px-2 py-0.5 bg-orange-500 text-white text-xs font-bold rounded-full flex items-center gap-1">
+                      <AlertCircle size={12} />
+                      {language === 'en' 
+                        ? `${pendingCount} change${pendingCount > 1 ? 's' : ''} not synced`
+                        : `${pendingCount} Änderung${pendingCount > 1 ? 'en' : ''} nicht synchronisiert`}
+                    </span>
+                  )}
+                </div>
               </div>
 
               {/* Stats */}
@@ -288,23 +415,25 @@ function DeckList({ onCreateDeck, onEditDeck, onSelectDeck, refreshTrigger }) {
 
                 {/* Action Buttons */}
                 <div className="space-y-2">
-                  {/* Sync Button - always visible, changes based on pending state */}
-                  <button
-                    onClick={(e) => handleSync(deck, e, false)}
-                    disabled={syncingDeck === deck.id}
-                    className={`w-full flex items-center justify-center gap-2 px-4 py-3 font-bold rounded-xl hover:shadow-lg transition-all disabled:opacity-50 ${
-                      pendingCount > 0
-                        ? 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white'
-                        : 'bg-gradient-to-r from-green-500 to-emerald-500 text-white'
-                    }`}
-                  >
-                    <RefreshCw size={18} className={syncingDeck === deck.id ? 'animate-spin' : ''} />
-                    {syncingDeck === deck.id
-                      ? (language === 'en' ? 'Syncing...' : 'Synchronisiere...')
-                      : pendingCount > 0
-                        ? (language === 'en' ? `Upload ${pendingCount}` : `${pendingCount} hochladen`)
-                        : (language === 'en' ? 'Refresh' : 'Aktualisieren')}
-                  </button>
+                  {/* Sync Button - only visible for spreadsheet-mode decks */}
+                  {(deck.storageMode === 'spreadsheet' || (!deck.storageMode && deck.scriptUrl)) && (
+                    <button
+                      onClick={(e) => handleSync(deck, e, false)}
+                      disabled={syncingDeck === deck.id}
+                      className={`w-full flex items-center justify-center gap-2 px-4 py-3 font-bold rounded-xl hover:shadow-lg transition-all disabled:opacity-50 ${
+                        pendingCount > 0
+                          ? 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white'
+                          : 'bg-gradient-to-r from-green-500 to-emerald-500 text-white'
+                      }`}
+                    >
+                      <RefreshCw size={18} className={syncingDeck === deck.id ? 'animate-spin' : ''} />
+                      {syncingDeck === deck.id
+                        ? (language === 'en' ? 'Syncing...' : 'Synchronisiere...')
+                        : pendingCount > 0
+                          ? (language === 'en' ? `Upload ${pendingCount}` : `${pendingCount} hochladen`)
+                          : (language === 'en' ? 'Refresh' : 'Aktualisieren')}
+                    </button>
+                  )}
                   
                   <button
                     onClick={() => onSelectDeck(deck, 'spaced')}
