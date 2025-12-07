@@ -2,17 +2,20 @@ import React, { useState, useRef } from 'react';
 import { 
   Printer, Share2, Copy, Globe, Award, Briefcase, GraduationCap, 
   Code, Heart, Languages, MapPin, Mail, Phone, Calendar, ExternalLink,
-  Check, X, Download, Settings, Github, Linkedin
+  Check, X, Download, Settings, Github, Linkedin, FileText
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import ReactMarkdown from 'react-markdown';
 
 export default function CVPage() {
   const [language, setLanguage] = useState('en'); // 'en' or 'de'
   const [advancedMode, setAdvancedMode] = useState(false);
   const [showPrintDialog, setShowPrintDialog] = useState(false);
   const [showShareDialog, setShowShareDialog] = useState(false);
+  const [showCoverLetterDialog, setShowCoverLetterDialog] = useState(false);
   const [copied, setCopied] = useState(false);
   const cvRef = useRef(null);
+  const coverLetterRef = useRef(null);
 
   // Print Dialog State
   const [printData, setPrintData] = useState({
@@ -25,6 +28,17 @@ export default function CVPage() {
     includePersonalData: false
   });
 
+  // Cover Letter State
+  const [coverLetterData, setCoverLetterData] = useState({
+    recipientName: '',
+    recipientTitle: '',
+    company: '',
+    companyAddress: '',
+    date: new Date().toISOString().split('T')[0],
+    subject: '',
+    content: ''
+  });
+
   const translations = {
     en: {
       title: 'Curriculum Vitae',
@@ -33,6 +47,7 @@ export default function CVPage() {
       copyText: 'Copy as Text',
       advanced: 'Advanced Mode',
       printForApplication: 'Print for Application',
+      createCoverLetter: 'Create Cover Letter',
       experience: 'Professional Experience',
       education: 'Education',
       skills: 'Technical Skills',
@@ -54,6 +69,7 @@ export default function CVPage() {
       copyText: 'Als Text kopieren',
       advanced: 'Erweiterter Modus',
       printForApplication: 'Für Bewerbung drucken',
+      createCoverLetter: 'Anschreiben erstellen',
       experience: 'Berufserfahrung',
       education: 'Ausbildung',
       skills: 'Technische Fähigkeiten',
@@ -132,6 +148,19 @@ export default function CVPage() {
     }, 100);
   };
 
+  const [isPrintingCoverLetter, setIsPrintingCoverLetter] = useState(false);
+
+  const handlePrintCoverLetter = () => {
+    setIsPrintingCoverLetter(true);
+    setShowCoverLetterDialog(false);
+    setTimeout(() => {
+      window.print();
+      setTimeout(() => {
+        setIsPrintingCoverLetter(false);
+      }, 500);
+    }, 100);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
       {/* Action Bar - Hidden in Print */}
@@ -179,6 +208,15 @@ export default function CVPage() {
             </button>
 
             <button
+              onClick={() => setShowCoverLetterDialog(true)}
+              className="flex items-center gap-2 px-3 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white transition-colors"
+              title={t.createCoverLetter}
+            >
+              <FileText size={18} />
+              <span className="hidden sm:inline text-sm font-medium">{t.createCoverLetter}</span>
+            </button>
+
+            <button
               onClick={handleShare}
               className="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
               title={t.share}
@@ -198,7 +236,7 @@ export default function CVPage() {
       </div>
 
       {/* CV Content */}
-      <div ref={cvRef} className="cv-print-container max-w-5xl mx-auto p-4 md:p-8 print:p-0">
+      <div ref={cvRef} className={`cv-print-container max-w-5xl mx-auto p-4 md:p-8 print:p-0 ${isPrintingCoverLetter ? 'print:hidden' : ''}`}>
         {/* Header */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -760,6 +798,181 @@ export default function CVPage() {
         )}
       </AnimatePresence>
 
+      {/* Cover Letter Dialog */}
+      <AnimatePresence>
+        {showCoverLetterDialog && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto"
+            onClick={() => setShowCoverLetterDialog(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white dark:bg-slate-800 rounded-xl shadow-2xl max-w-4xl w-full p-6 my-8"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-2xl font-bold">
+                  {language === 'en' ? 'Create Cover Letter' : 'Anschreiben erstellen'}
+                </h3>
+                <button
+                  onClick={() => setShowCoverLetterDialog(false)}
+                  className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                {/* Left Column - Form Fields */}
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-1">
+                      {language === 'en' ? 'Recipient Name' : 'Empfängername'}
+                    </label>
+                    <input
+                      type="text"
+                      value={coverLetterData.recipientName}
+                      onChange={(e) => setCoverLetterData({...coverLetterData, recipientName: e.target.value})}
+                      className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700"
+                      placeholder={language === 'en' ? 'e.g., John Doe' : 'z.B. Max Mustermann'}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-1">
+                      {language === 'en' ? 'Recipient Title' : 'Titel des Empfängers'}
+                    </label>
+                    <input
+                      type="text"
+                      value={coverLetterData.recipientTitle}
+                      onChange={(e) => setCoverLetterData({...coverLetterData, recipientTitle: e.target.value})}
+                      className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700"
+                      placeholder={language === 'en' ? 'e.g., HR Manager' : 'z.B. Personalmanager'}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-1">
+                      {language === 'en' ? 'Company' : 'Unternehmen'}
+                    </label>
+                    <input
+                      type="text"
+                      value={coverLetterData.company}
+                      onChange={(e) => setCoverLetterData({...coverLetterData, company: e.target.value})}
+                      className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700"
+                      placeholder={language === 'en' ? 'Company Name' : 'Firmenname'}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-1">
+                      {language === 'en' ? 'Company Address' : 'Firmenadresse'}
+                    </label>
+                    <textarea
+                      value={coverLetterData.companyAddress}
+                      onChange={(e) => setCoverLetterData({...coverLetterData, companyAddress: e.target.value})}
+                      className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700"
+                      rows="3"
+                      placeholder={language === 'en' ? 'Street, City, ZIP' : 'Straße, Stadt, PLZ'}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-1">
+                      {language === 'en' ? 'Date' : 'Datum'}
+                    </label>
+                    <input
+                      type="date"
+                      value={coverLetterData.date}
+                      onChange={(e) => setCoverLetterData({...coverLetterData, date: e.target.value})}
+                      className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-1">
+                      {language === 'en' ? 'Subject' : 'Betreff'}
+                    </label>
+                    <input
+                      type="text"
+                      value={coverLetterData.subject}
+                      onChange={(e) => setCoverLetterData({...coverLetterData, subject: e.target.value})}
+                      className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700"
+                      placeholder={language === 'en' ? 'e.g., Application for Software Developer Position' : 'z.B. Bewerbung als Software-Entwickler'}
+                    />
+                  </div>
+                </div>
+
+                {/* Right Column - Preview */}
+                <div className="lg:sticky lg:top-4">
+                  <div className="bg-slate-50 dark:bg-slate-900 rounded-lg p-4 border border-slate-200 dark:border-slate-700">
+                    <h4 className="text-sm font-semibold mb-3 text-slate-700 dark:text-slate-300">
+                      {language === 'en' ? 'Preview' : 'Vorschau'}
+                    </h4>
+                    <div className="bg-white dark:bg-slate-800 rounded border border-slate-200 dark:border-slate-700 p-6 max-h-[600px] overflow-y-auto shadow-inner">
+                      <CoverLetterPreview data={coverLetterData} language={language} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Cover Letter Content */}
+              <div className="mb-6">
+                <label className="block text-sm font-medium mb-2">
+                  {language === 'en' ? 'Cover Letter Content (Markdown supported)' : 'Anschreiben Inhalt (Markdown unterstützt)'}
+                </label>
+                <textarea
+                  value={coverLetterData.content}
+                  onChange={(e) => setCoverLetterData({...coverLetterData, content: e.target.value})}
+                  className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-700 font-mono text-sm"
+                  rows="10"
+                  placeholder={language === 'en' 
+                    ? 'Write your cover letter here. Markdown formatting is supported.\n\nExample:\n\nDear Mr./Ms. [Name],\n\n**Introduction**\n\nI am writing to express my interest in...'
+                    : 'Schreiben Sie Ihr Anschreiben hier. Markdown-Formatierung wird unterstützt.\n\nBeispiel:\n\nSehr geehrte/r [Name],\n\n**Einleitung**\n\nich bewerbe mich um...'}
+                />
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                  {language === 'en' 
+                    ? 'Markdown syntax: **bold**, *italic*, lists, etc.'
+                    : 'Markdown-Syntax: **fett**, *kursiv*, Listen, etc.'}
+                </p>
+              </div>
+
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setShowCoverLetterDialog(false)}
+                  className="flex-1 px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+                >
+                  {language === 'en' ? 'Cancel' : 'Abbrechen'}
+                </button>
+                <button
+                  onClick={handlePrintCoverLetter}
+                  className="flex-1 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+                >
+                  {language === 'en' ? 'Print Cover Letter' : 'Anschreiben drucken'}
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Cover Letter Print View */}
+      {coverLetterData.content && (
+        <div 
+          ref={coverLetterRef} 
+          className={`cover-letter-print-container max-w-5xl mx-auto p-4 md:p-8 print:p-0 ${
+            isPrintingCoverLetter ? 'print:block' : 'hidden print:hidden'
+          }`}
+        >
+          <CoverLetterPreview data={coverLetterData} language={language} />
+        </div>
+      )}
+
       {/* Print Styles */}
       <style>{`
         @media print {
@@ -1292,10 +1505,73 @@ export default function CVPage() {
             min-height: 0 !important;
             max-height: none !important;
           }
-
+          
           /* Force flex to block inside problematic components */
           .cv-print-container .achievement-component .flex,
           .cv-print-container .certificate-component .flex {
+            display: block !important;
+          }
+
+          /* Cover Letter Print Styles */
+          .cover-letter-print-container {
+            max-width: 100% !important;
+            margin: 0 !important;
+            padding: 12mm 12mm 12mm 12mm !important;
+            background: white !important;
+          }
+
+          /* Hide CV when printing cover letter - handled by conditional class */
+
+          /* Cover Letter Content Styling */
+          .cover-letter-content {
+            border-left: 4px solid #3b82f6 !important;
+            padding-left: 8mm !important;
+            font-family: 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif !important;
+            color: #334155 !important;
+            line-height: 1.6 !important;
+          }
+
+          .cover-letter-content > div {
+            margin-bottom: 0.5rem !important;
+          }
+
+          .cover-letter-body {
+            font-size: 0.9rem !important;
+            line-height: 1.6 !important;
+            color: #334155 !important;
+          }
+
+          .cover-letter-body p {
+            margin-bottom: 0.75rem !important;
+            text-align: justify !important;
+          }
+
+          .cover-letter-body strong {
+            font-weight: 600 !important;
+            color: #1e3a8a !important;
+          }
+
+          .cover-letter-body ul,
+          .cover-letter-body ol {
+            margin-left: 1.5rem !important;
+            margin-bottom: 0.75rem !important;
+          }
+
+          .cover-letter-body li {
+            margin-bottom: 0.25rem !important;
+          }
+
+          .cover-letter-body h1,
+          .cover-letter-body h2,
+          .cover-letter-body h3 {
+            margin-top: 1rem !important;
+            margin-bottom: 0.5rem !important;
+            color: #1e3a8a !important;
+            font-weight: 600 !important;
+          }
+
+          /* Hide cover letter dialog in print */
+          .cover-letter-print-container:not(.hidden) {
             display: block !important;
           }
         }
@@ -1429,6 +1705,109 @@ function Hobby({ icon, title, subtitle }) {
       <div>
         <h4 className="font-medium text-slate-900 dark:text-white text-sm">{title}</h4>
         <p className="text-xs text-slate-600 dark:text-slate-400">{subtitle}</p>
+      </div>
+    </div>
+  );
+}
+
+function CoverLetterPreview({ data, language }) {
+  const formatDate = (dateString, lang) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return dateString;
+    
+    if (lang === 'de') {
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+      return `${day}.${month}.${year}`;
+    } else {
+      return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    }
+  };
+
+  return (
+    <div className="cover-letter-content border-l-4 border-blue-500 pl-6 print:pl-8 space-y-4 print:space-y-4">
+      {/* Sender Address */}
+      <div className="text-sm print:text-xs text-slate-600 dark:text-slate-400">
+        <div className="font-semibold text-slate-900 dark:text-white mb-1">Tarik Azzouzi</div>
+        <div>{language === 'en' ? 'Working Student Software Developer' : 'Werkstudent Software-Entwickler'}</div>
+        <div>M.Sc. Computer Science Student</div>
+        <div className="mt-2">
+          <div>codingtarik.github.io</div>
+          <div>github.com/codingtarik</div>
+          <div>linkedin.com/in/tarik-azzouzi</div>
+        </div>
+      </div>
+
+      {/* Date */}
+      {data.date && (
+        <div className="text-sm print:text-xs text-slate-600 dark:text-slate-400">
+          {formatDate(data.date, language)}
+        </div>
+      )}
+
+      {/* Recipient */}
+      {(data.recipientName || data.company) && (
+        <div className="text-sm print:text-xs text-slate-600 dark:text-slate-400 space-y-1">
+          {data.recipientName && (
+            <div>
+              {data.recipientTitle ? `${data.recipientTitle} ` : ''}
+              {data.recipientName}
+            </div>
+          )}
+          {data.company && <div className="font-semibold">{data.company}</div>}
+          {data.companyAddress && (
+            <div className="whitespace-pre-line">{data.companyAddress}</div>
+          )}
+        </div>
+      )}
+
+      {/* Subject */}
+      {data.subject && (
+        <div className="text-sm print:text-xs font-semibold text-slate-900 dark:text-white">
+          {language === 'en' ? 'Subject:' : 'Betreff:'} {data.subject}
+        </div>
+      )}
+
+      {/* Greeting */}
+      <div className="text-sm print:text-xs text-slate-700 dark:text-slate-300">
+        {data.recipientName 
+          ? (language === 'en' 
+              ? `Dear ${data.recipientTitle ? data.recipientTitle + ' ' : ''}${data.recipientName},`
+              : `Sehr geehrte${data.recipientTitle ? 'r ' + data.recipientTitle : 'r'} ${data.recipientName},`)
+          : (language === 'en' ? 'Dear Sir or Madam,' : 'Sehr geehrte Damen und Herren,')}
+      </div>
+
+      {/* Content */}
+      {data.content ? (
+        <div className="cover-letter-body text-sm print:text-xs text-slate-700 dark:text-slate-300 leading-relaxed print:leading-relaxed prose prose-sm max-w-none dark:prose-invert">
+          <ReactMarkdown
+            components={{
+              p: ({node, ...props}) => <p className="mb-3 print:mb-3" {...props} />,
+              strong: ({node, ...props}) => <strong className="font-semibold text-slate-900 dark:text-white" {...props} />,
+              em: ({node, ...props}) => <em className="italic" {...props} />,
+              ul: ({node, ...props}) => <ul className="list-disc list-inside mb-3 print:mb-3 space-y-1" {...props} />,
+              ol: ({node, ...props}) => <ol className="list-decimal list-inside mb-3 print:mb-3 space-y-1" {...props} />,
+              li: ({node, ...props}) => <li className="ml-2" {...props} />,
+              h1: ({node, ...props}) => <h1 className="text-lg font-bold mb-2 print:mb-2 text-slate-900 dark:text-white" {...props} />,
+              h2: ({node, ...props}) => <h2 className="text-base font-bold mb-2 print:mb-1.5 text-slate-900 dark:text-white" {...props} />,
+              h3: ({node, ...props}) => <h3 className="text-sm font-bold mb-2 print:mb-1.5 text-slate-900 dark:text-white" {...props} />,
+            }}
+          >
+            {data.content}
+          </ReactMarkdown>
+        </div>
+      ) : (
+        <div className="text-sm text-slate-400 italic">
+          {language === 'en' ? 'Start writing your cover letter...' : 'Beginnen Sie mit dem Schreiben Ihres Anschreibens...'}
+        </div>
+      )}
+
+      {/* Closing */}
+      <div className="text-sm print:text-xs text-slate-700 dark:text-slate-300 space-y-2">
+        <div>{language === 'en' ? 'Sincerely,' : 'Mit freundlichen Grüßen,'}</div>
+        <div className="mt-4 print:mt-3">Tarik Azzouzi</div>
       </div>
     </div>
   );
