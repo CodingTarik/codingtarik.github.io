@@ -15,16 +15,25 @@ export const blogConfig = {
     linkedin: "tarik-azzouzi",
   },
 
+  // Profile Picture & Avatar Settings (Zentrale Steuerung für Profilbild)
+  avatar: {
+    sizePx: 200,          // Durchmesser in Pixel (z.B. 160, 180, 200, 220)
+    zoom: 1.3,           // Bild-Zoom Factor (1.0 = 100%, 1.15 = 115%, 1.3 = 130%)
+    offsetX: "50%",       // Horizontalverschiebung (50% = zentriert, <50% = nach links, >50% = nach rechts)
+    offsetY: "55%",       // Vertikalverschiebung (50% = zentriert, <50% = nach oben/Gesicht, >50% = nach unten)
+    borderWidthPx: 4,     // Dicke des bunten Rahmens in Pixel (z.B. 2, 4, 6)
+  },
+
   // URLs
   siteUrl: "https://codingtarik.github.io",
   blogUrl: "https://codingtarik.github.io/blog",
-  
+
   // GitHub
   github: {
     owner: "CodingTarik",
     repo: "codingtarik.github.io",
   },
-  
+
   // Social Media Links
   social: {
     github: "https://github.com/CodingTarik",

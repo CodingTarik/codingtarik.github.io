@@ -42,7 +42,13 @@ function AppContent() {
   const renderContent = () => {
     if (appView === 'privacy') return <PrivacyPage />;
     if (appView === 'imprint') return <ImprintPageFooter />;
-    if (appView === 'tools') return <ToolsOverviewPage />;
+    if (appView === 'tools') {
+      return (
+        <BlogSubpageLayout selectedTab="tools" handlePostClick={handlePostClick}>
+          <ToolsOverviewPage />
+        </BlogSubpageLayout>
+      );
+    }
     if (appView === 'pdf-tools') return <PdfTools />;
     if (appView === 'piano-studio') return <PianoStudio />;
     if (appView === 'flashmaster') return <FlashMaster />;

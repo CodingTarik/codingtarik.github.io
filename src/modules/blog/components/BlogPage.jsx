@@ -107,6 +107,8 @@ export default function BlogPage({ onPostClick }) {
       navigate('/blog/categories');
     } else if (tabId === 'projects') {
       navigate('/blog/projects');
+    } else if (tabId === 'tools') {
+      navigate('/tools');
     }
   };
 
@@ -136,7 +138,7 @@ export default function BlogPage({ onPostClick }) {
       />
 
       {/* Main Content Area */}
-      <div className="lg:ml-80 flex-1 p-3 sm:p-4 md:p-8 relative z-10">
+      <div className="lg:ml-72 flex-1 p-3 sm:p-4 md:p-8 relative z-10">
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsSidebarOpen(true)}

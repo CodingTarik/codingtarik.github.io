@@ -16,6 +16,7 @@ export default function BlogSubpageLayout({ selectedTab, handlePostClick, onCate
           else if (tab === 'search') navigate('/blog/search');
           else if (tab === 'categories') navigate('/blog/categories');
           else if (tab === 'projects') navigate('/blog/projects');
+          else if (tab === 'tools') navigate('/tools');
         }}
         onCategorySelect={onCategorySelect || (() => { })}
         selectedCategory={null}
@@ -24,11 +25,11 @@ export default function BlogSubpageLayout({ selectedTab, handlePostClick, onCate
       />
 
       {/* Main Content */}
-      <div className="lg:ml-80 flex-1">
+      <div className="lg:ml-72 flex-1">
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsSidebarOpen(true)}
-          className="lg:hidden fixed bottom-6 right-6 p-3 sm:p-4 bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 rounded-full shadow-lg hover:scale-110 transition-transform z-30"
+          className="lg:hidden fixed bottom-6 right-6 p-3 sm:p-4 bg-primary text-white rounded-full shadow-lg shadow-primary/30 hover:scale-110 transition-transform z-30 cursor-pointer"
         >
           <Menu size={20} />
         </button>
