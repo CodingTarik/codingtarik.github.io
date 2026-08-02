@@ -1,0 +1,151 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Vocabulary Card Flip Animations */
+@layer utilities {
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+  
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+  
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+}
+
+/* Confetti Animation */
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(0) rotateZ(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotateZ(720deg);
+    opacity: 0;
+  }
+}
+
+.animate-confetti-fall {
+  animation: confetti-fall linear forwards;
+}
+
+@layer base {
+  :root {
+    --background: 249 250 251; /* #F9FAFB */
+    --text: 31 41 55;         /* #1F2937 */
+    --primary: 109 40 217;      /* #6D28D9 */
+    --secondary: 5 150 105;     /* #059669 */
+    --accent: 220 38 38;        /* #DC2626 */
+    --border: 229 231 235;      /* #E5E7EB */
+    --card: 255 255 255;      /* #FFFFFF */
+    --card-border: 243 244 246; /* #F3F4F6 */
+    --text-muted: 107 114 128;   /* #6B7280 */
+  }
+  .dark {
+    --background: 18 18 18;       /* #121212 */
+    --text: 234 234 234;      /* #EAEAEA */
+    --primary: 187 134 252;     /* #BB86FC */
+    --secondary: 3 218 198;     /* #03DAC6 */
+    --accent: 207 102 121;      /* #CF6679 */
+    --border: 46 46 46;         /* #2E2E2E */
+    --card: 30 30 30;           /* #1E1E1E */
+    --card-border: 42 42 42;      /* #2A2A2A */
+    --text-muted: 156 163 175;   /* #9CA3AF */
+  }
+  body {
+    @apply bg-background text-text;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Safe area for mobile devices with notches/home indicators */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Hide scrollbar for horizontal scroll nav */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* ─── Blog Typography & Reading Experience ─── */
+.prose-container {
+  font-size: 1.0625rem; /* 17px - slightly larger than default for readability */
+  line-height: 1.8;
+  letter-spacing: -0.003em;
+  word-spacing: 0.01em;
+}
+
+.prose-container h1 { line-height: 1.3; letter-spacing: -0.02em; }
+.prose-container h2 { line-height: 1.35; letter-spacing: -0.015em; margin-top: 2em; }
+.prose-container h3 { line-height: 1.4; letter-spacing: -0.01em; margin-top: 1.5em; }
+.prose-container p { margin-bottom: 1.25em; }
+.prose-container blockquote {
+  border-left: 3px solid rgb(var(--primary));
+  padding-left: 1em;
+  font-style: italic;
+  color: rgb(var(--text-muted));
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Prevent horizontal overflow on mobile */
+@media (max-width: 640px) {
+  body {
+    overflow-x: hidden;
+  }
+  
+  /* Better touch targets on mobile */
+  button, a {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Smoother scrolling on iOS */
+  .overflow-y-auto, .overflow-x-auto {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .prose-container {
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+}
+
+/* Print styles for blog posts */
+@media print {
+  .prose-container {
+    font-size: 12pt;
+    line-height: 1.6;
+    max-width: none;
+  }
+  nav, footer, button, .giscus-container { display: none !important; }
+}
+

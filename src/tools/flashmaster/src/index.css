@@ -1,0 +1,338 @@
+/* FlashMaster – custom styles (Tailwind utilities come from the parent project) */
+
+/* ── Light Mode ── */
+html.light body {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+html.light .glass {
+  background: rgba(248, 250, 252, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(99, 102, 241, 0.12);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+html.light .glass-card {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(99, 102, 241, 0.12);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+html.light .bg-slate-950 { background-color: #f8fafc; }
+html.light .bg-slate-900 { background-color: #f1f5f9; }
+html.light .bg-slate-800 { background-color: #e2e8f0; }
+html.light .bg-slate-800\/50 { background-color: rgba(226, 232, 240, 0.5); }
+html.light .bg-slate-700\/50 { background-color: rgba(203, 213, 225, 0.5); }
+
+html.light .text-white { color: #0f172a; }
+html.light .text-slate-400 { color: #64748b; }
+html.light .text-slate-500 { color: #94a3b8; }
+html.light .text-slate-300 { color: #475569; }
+
+html.light .border-slate-700\/50 { border-color: rgba(203, 213, 225, 0.5); }
+
+html.light input,
+html.light textarea,
+html.light select {
+  background-color: rgba(241, 245, 249, 0.8) !important;
+  border-color: rgba(203, 213, 225, 0.5) !important;
+  color: #0f172a !important;
+}
+
+html.light input::placeholder,
+html.light textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+html.light .markdown-content blockquote { color: #64748b; }
+html.light .markdown-content code { background: rgba(99, 102, 241, 0.08); color: #4338ca; }
+html.light .markdown-content pre { background: #f1f5f9; border-color: rgba(99, 102, 241, 0.1); }
+html.light .markdown-content th { background: rgba(99, 102, 241, 0.05); }
+html.light .markdown-content th, html.light .markdown-content td { border-color: rgba(99, 102, 241, 0.1); }
+
+html.light .gradient-text {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed, #db2777);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+html.light ::selection {
+  background: rgba(99, 102, 241, 0.2);
+  color: #0f172a;
+}
+
+html.light ::-webkit-scrollbar-thumb {
+  background: rgba(99, 102, 241, 0.2);
+}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(99, 102, 241, 0.3);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(99, 102, 241, 0.5);
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection */
+::selection {
+  background: rgba(99, 102, 241, 0.3);
+  color: white;
+}
+
+/* Card flip animation */
+.flip-card {
+  perspective: 1200px;
+}
+
+.flip-card-inner {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+.flip-card-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.flip-card-back {
+  transform: rotateY(180deg);
+  position: absolute;
+  inset: 0;
+}
+
+/* Glassmorphism */
+.glass {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(99, 102, 241, 0.1);
+}
+
+.glass-card {
+  background: rgba(30, 41, 59, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(99, 102, 241, 0.15);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glow effects */
+.glow-sm {
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.15);
+}
+
+.glow-md {
+  box-shadow: 0 0 30px rgba(99, 102, 241, 0.2);
+}
+
+.glow-lg {
+  box-shadow: 0 0 60px rgba(99, 102, 241, 0.25);
+}
+
+/* Markdown content styling */
+.markdown-content h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; }
+.markdown-content h2 { font-size: 1.35rem; font-weight: 600; margin-bottom: 0.5rem; }
+.markdown-content h3 { font-size: 1.15rem; font-weight: 600; margin-bottom: 0.4rem; }
+.markdown-content p { margin-bottom: 0.5rem; line-height: 1.6; }
+.markdown-content ul, .markdown-content ol { padding-left: 1.5rem; margin-bottom: 0.5rem; }
+.markdown-content li { margin-bottom: 0.25rem; }
+.markdown-content ul li { list-style-type: disc; }
+.markdown-content ol li { list-style-type: decimal; }
+.markdown-content blockquote {
+  border-left: 3px solid #6366f1;
+  padding-left: 1rem;
+  margin: 0.75rem 0;
+  color: #94a3b8;
+  font-style: italic;
+}
+.markdown-content code {
+  background: rgba(99, 102, 241, 0.15);
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+}
+.markdown-content pre {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  overflow-x: auto;
+  margin: 0.75rem 0;
+}
+.markdown-content pre code {
+  background: transparent;
+  padding: 0;
+}
+.markdown-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.75rem 0;
+}
+.markdown-content th, .markdown-content td {
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+.markdown-content th {
+  background: rgba(99, 102, 241, 0.1);
+  font-weight: 600;
+}
+.markdown-content img {
+  max-width: 100%;
+  border-radius: 0.5rem;
+  margin: 0.5rem 0;
+}
+.markdown-content strong { font-weight: 600; }
+.markdown-content em { font-style: italic; }
+.markdown-content hr {
+  border: none;
+  border-top: 1px solid rgba(99, 102, 241, 0.2);
+  margin: 1rem 0;
+}
+
+/* Star rating */
+.star-rating {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.star-rating button {
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.star-rating button:hover {
+  transform: scale(1.2);
+}
+
+.star-rating button:active {
+  transform: scale(0.95);
+}
+
+/* Pulse animation for level up */
+@keyframes level-up {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+.animate-level-up {
+  animation: level-up 0.5s ease-in-out;
+}
+
+/* Slide up animation */
+@keyframes slide-up {
+  from { transform: translateY(10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}
+
+/* Safe area padding for PWA */
+@supports (padding-top: env(safe-area-inset-top)) {
+  .safe-top { padding-top: env(safe-area-inset-top); }
+  .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+}
+
+/* Cloze Deletions */
+.cloze-blank {
+  display: inline-block;
+  padding: 2px 12px;
+  margin: 0 2px;
+  background: rgba(99, 102, 241, 0.15);
+  border: 1.5px dashed rgba(99, 102, 241, 0.4);
+  border-radius: 6px;
+  color: #818cf8;
+  font-weight: 600;
+  min-width: 60px;
+  text-align: center;
+}
+
+.cloze-answer {
+  display: inline-block;
+  padding: 2px 12px;
+  margin: 0 2px;
+  background: rgba(34, 197, 94, 0.15);
+  border: 1.5px solid rgba(34, 197, 94, 0.4);
+  border-radius: 6px;
+  color: #4ade80;
+  font-weight: 700;
+}
+
+/* Mobile touch improvements */
+@media (hover: none) {
+  button, a, [role="button"] {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* On touch devices, always show card actions (no hover available) */
+@media (hover: none) and (pointer: coarse) {
+  .group .group-hover\:opacity-100 {
+    opacity: 1 !important;
+  }
+}
+
+/* Prevent body scroll when modal / overlay is open */
+body.no-scroll {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+/* Ensure inputs don't zoom on iOS (min 16px) */
+@media screen and (max-width: 768px) {
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Mobile-friendly scrollable overflow containers */
+.mobile-scroll-x {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.mobile-scroll-x::-webkit-scrollbar {
+  display: none;
+}
+
+/* react-pdf provides its own TextLayer.css — we only add selection highlight */
+.textLayer ::selection {
+  background: rgba(99, 102, 241, 0.35);
+}

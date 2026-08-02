@@ -1,0 +1,4 @@
+# Jekyll configuration to disable processing
+plugins: []
+exclude: ['*']
+

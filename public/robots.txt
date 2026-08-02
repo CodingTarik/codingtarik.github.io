@@ -1,0 +1,17 @@
+# Robots.txt for codingtarik.github.io
+# Allow all search engines to crawl the site
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://codingtarik.github.io/sitemap.xml
+
+# Disallow admin and internal paths
+Disallow: /admin
+
+# Allow important paths explicitly
+Allow: /blog
+Allow: /blog/post/
+Allow: /cv
+Allow: /tools

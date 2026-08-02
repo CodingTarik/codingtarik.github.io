@@ -1,0 +1,20 @@
+{
+  "name": "LearnBuddy - Dein persoenlicher Lern-Begleiter",
+  "short_name": "LearnBuddy",
+  "description": "Interaktiver Lernbegleiter fuer Bouldern, Kochen, Englisch, Klavier und mehr. Inklusive Blog ueber Web Development und Cybersecurity.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#fafaf9",
+  "theme_color": "#14b8a6",
+  "orientation": "portrait",
+  "categories": ["education", "lifestyle", "productivity"],
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

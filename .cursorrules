@@ -1,0 +1,198 @@
+# Cursor AI Rules for LearnBuddy Project
+
+## Project Structure
+This is a React-based LearnBuddy application with multiple "Buddies" (learning modules).
+
+## Adding Custom Tabs to a Buddy
+
+When adding custom tabs (like RecipeBook, ShoppingList) to a buddy, follow these steps:
+
+### 1. Create the Component
+Create the component in `src/learnbuddy/buddies/{buddyName}/components/`
+
+Example:
+- `src/learnbuddy/buddies/cook/components/RecipeBook.jsx`
+- `src/learnbuddy/buddies/cook/components/ShoppingList.jsx`
+
+### 2. Update the Buddy Config
+In `src/learnbuddy/buddies/{buddyName}/config.js`:
+
+```javascript
+import RecipeBook from './components/RecipeBook';
+import ShoppingList from './components/ShoppingList';
+
+export const cookBuddyConfig = {
+  // ... other config
+  customTabs: [
+    {
+      id: 'recipes',
+      name: { en: 'Recipes', de: 'Rezepte' },
+      icon: BookOpen,
+      component: RecipeBook  // Direct component reference (not string!)
+    },
+    {
+      id: 'shopping',
+      name: { en: 'Shopping List', de: 'Einkaufsliste' },
+      icon: ShoppingCart,
+      component: ShoppingList
+    }
+  ]
+};
+```
+
+### 3. Register in App.jsx (CRITICAL!)
+**This is the most important step that's easy to forget!**
+
+In `src/App.jsx`:
+
+a) Import the components at the top:
+```javascript
+// Cook-specific components
+import RecipeBook from './learnbuddy/buddies/cook/components/RecipeBook';
+import ShoppingList from './learnbuddy/buddies/cook/components/ShoppingList';
+```
+
+b) Add to the `renderCustomTab` function:
+```javascript
+const renderCustomTab = (tabId) => {
+  // ... existing code for other buddies ...
+  
+  } else if (activeBuddy === 'cook') {
+    // Cook components
+    if (tabId === 'recipes') {
+      return <RecipeBook />;
+    } else if (tabId === 'shopping') {
+      return <ShoppingList />;
+    }
+  }
+  
+  // Default for other buddies
+  return (
+    <div className="max-w-2xl mx-auto px-4 py-8 mt-8">
+      <div className="bg-white dark:bg-stone-800 rounded-lg shadow-md p-12 text-center">
+        <h2 className="text-2xl font-bold text-stone-800 dark:text-stone-100 mb-4">
+          {language === 'en' ? 'Coming Soon!' : 'Bald verfügbar!'}
+        </h2>
+        <p className="text-stone-600 dark:text-stone-400">
+          {language === 'en'
+            ? 'This feature is currently being developed. Stay tuned!'
+            : 'Dieses Feature wird gerade entwickelt. Bleib dran!'}
+        </p>
+      </div>
+    </div>
+  );
+};
+```
+
+### 4. Lessons Structure
+Lessons must be structured as:
+```javascript
+export const {buddyName}BuddyConfig = {
+  lessons: {
+    data: lessons,           // Array of lesson objects
+    getLessonById: getLessonById,
+    getNextLesson: getNextLesson
+  }
+};
+```
+
+## Common Mistakes to Avoid
+1. ❌ Using string component names in config.js (use direct imports instead)
+2. ❌ Forgetting to add components to App.jsx's renderCustomTab function
+3. ❌ Wrong lessons structure (must be object with data, getLessonById, getNextLesson)
+
+## File Naming Conventions
+- Components: PascalCase (e.g., `RecipeBook.jsx`)
+- Config files: lowercase (e.g., `config.js`)
+- Data files: lowercase (e.g., `lessons.js`)
+- Curriculum: UPPERCASE (e.g., `CURRICULUM.txt`)
+
+## Lesson Content Guidelines
+
+### Writing Style
+Lessons should be **comprehensive and well-explained**, NOT just bullet points or short summaries.
+
+**Good Example:**
+```jsx
+<div className="space-y-6">
+  <p>
+    Kochen ist eine faszinierende Mischung aus drei Elementen: Handwerk, Wissenschaft und Kreativität.
+    Wie ein Tischler sein Holz bearbeitet, musst du lernen, wie man schneidet, rührt und Hitze kontrolliert.
+  </p>
+  <div className="bg-amber-50 p-4 rounded-lg">
+    <h3 className="font-bold mb-2">Warum ist das wichtig?</h3>
+    <p>Wenn du die "Warum"-Fragen verstehst, bist du kein Sklave von Rezepten mehr...</p>
+  </div>
+</div>
+```
+
+**Bad Example (Too Short):**
+```jsx
+<div>
+  <p>Kochen = Handwerk + Wissenschaft + Kreativität</p>
+</div>
+```
+
+### Formatting & Structure
+Use rich formatting to make lessons engaging:
+
+1. **Sections with Headers**: Use `<h2>` and `<h3>` tags with proper styling
+2. **Color-coded Info Boxes**: Use background colors for different types of content:
+   - `bg-blue-50` for tips
+   - `bg-amber-50` for important notes
+   - `bg-green-50` for success/practice exercises
+   - `bg-red-50` for warnings
+
+3. **Tables**: Use tables for comparisons or structured data:
+```jsx
+<table className="w-full border-collapse">
+  <thead>
+    <tr className="bg-gray-100">
+      <th className="border p-2">Method</th>
+      <th className="border p-2">Temperature</th>
+      <th className="border p-2">Use Case</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td className="border p-2">Simmering</td>
+      <td className="border p-2">85-95°C</td>
+      <td className="border p-2">Soups, Stews</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+4. **Lists**: Use styled lists with proper spacing:
+```jsx
+<ul className="list-disc list-inside space-y-2">
+  <li>First point with explanation</li>
+  <li>Second point with details</li>
+</ul>
+```
+
+5. **Visual Elements**: Include SVG illustrations when appropriate:
+```jsx
+<svg viewBox="0 0 400 200" className="w-full max-w-md mx-auto">
+  {/* Simple, clean SVG illustrations */}
+</svg>
+```
+
+6. **Practice Exercises**: Always include clear, actionable exercises:
+```jsx
+<div className="bg-green-50 p-6 rounded-xl border-2 border-green-300">
+  <h3 className="font-bold text-green-800 mb-4">🎯 Praktische Übung</h3>
+  <ol className="list-decimal list-inside space-y-2">
+    <li>Detailed step 1</li>
+    <li>Detailed step 2</li>
+  </ol>
+</div>
+```
+
+### Content Principles
+- **Explain WHY, not just WHAT**: Don't just list facts, explain the reasoning
+- **Use Examples**: Provide concrete examples for abstract concepts
+- **Progressive Complexity**: Start simple, build up gradually
+- **Practical Application**: Always connect theory to practice
+- **Engaging Language**: Write conversationally, not like a textbook
+

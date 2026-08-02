@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Redirecting...</title>
+    <script>
+      // GitHub Pages SPA redirect trick
+      // When GitHub Pages encounters an unknown route, it serves this 404.html.
+      // This script saves the intended URL and redirects to the root,
+      // where index.html picks it up and restores the correct path.
+      (function () {
+        var pathSegmentsToKeep = 0; // For GitHub Pages root domain (username.github.io)
+        var l = window.location;
+        var repo = ''; // Leave empty for root GitHub Pages (username.github.io)
+        
+        // Store the real path in sessionStorage
+        sessionStorage.redirect = l.pathname + l.search + l.hash;
+        
+        // Redirect to root
+        l.replace(
+          l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+          (repo ? '/' + repo : '') +
+          '/'
+        );
+      })();
+    </script>
+  </head>
+  <body>
+    <!-- This page redirects to the single-page application -->
+    <noscript>
+      <p>JavaScript is required. Please enable JavaScript and reload the page.</p>
+      <p><a href="/">Go to homepage</a></p>
+    </noscript>
+  </body>
+</html>
