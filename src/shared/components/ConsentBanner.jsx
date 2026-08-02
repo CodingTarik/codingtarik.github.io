@@ -15,12 +15,11 @@ const BANNER_TEXT = {
     title: 'Privacy Settings',
     description: (
       <>
-        We use cookie-free statistics (Umami) to improve the website — without storing
-        any personal data. External fonts are only loaded with your consent. Details in our{' '}
+        We use cookie-free analytics (Umami) to improve our website — without storing personal data. External services like Google Fonts are only loaded with your consent. Learn more in our{' '}
       </>
     ),
     privacyLink: 'Privacy Policy',
-    detailsShow: 'Customize services',
+    detailsShow: 'Customize individual services',
     detailsHide: 'Show less',
     alwaysActive: 'Always active',
     recommended: 'Recommended',
@@ -32,12 +31,10 @@ const BANNER_TEXT = {
     title: 'Datenschutz-Einstellungen',
     description: (
       <>
-        Wir nutzen cookiefreie Statistiken (Umami) zur Verbesserung der Website — 
-        ohne persoenliche Daten zu speichern. Externe Schriftarten werden nur mit 
-        deiner Zustimmung geladen. Details in unserer{' '}
+        Wir nutzen cookiefreie Web-Analysen (Umami) zur Verbesserung unserer Website — ohne persönliche Daten zu speichern. Externe Schriftarten geladen wir erst nach deiner Zustimmung. Details in unserer{' '}
       </>
     ),
-    privacyLink: 'Datenschutzerklaerung',
+    privacyLink: 'Datenschutzerklärung',
     detailsShow: 'Einzelne Dienste anpassen',
     detailsHide: 'Weniger anzeigen',
     alwaysActive: 'Immer aktiv',
@@ -48,18 +45,10 @@ const BANNER_TEXT = {
   },
 };
 
-/**
- * GDPR/DSGVO-compliant Consent Banner
- * 
- * Shows an info banner on first visit.
- * Analytics (Umami) is enabled by default (legitimate interest).
- * External content (Google Fonts) requires consent.
- * Can be reopened via the footer ("Privacy Settings").
- */
 export default function ConsentBanner({ forceOpen = false, onClose }) {
   const [isVisible, setIsVisible] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
-  const [lang, setLang] = useState('en');
+  const [lang, setLang] = useState('de');
   const [categories, setCategories] = useState(() => {
     const consent = getConsent();
     return {
@@ -68,7 +57,6 @@ export default function ConsentBanner({ forceOpen = false, onClose }) {
     };
   });
 
-  // Banner anzeigen wenn noch kein Consent vorliegt oder forceOpen
   useEffect(() => {
     if (forceOpen) {
       const consent = getConsent();
@@ -82,7 +70,6 @@ export default function ConsentBanner({ forceOpen = false, onClose }) {
     }
   }, [forceOpen]);
 
-  // Auf externe "open-consent-banner" Events reagieren
   useEffect(() => {
     const handleOpenBanner = () => {
       const consent = getConsent();
@@ -133,38 +120,48 @@ export default function ConsentBanner({ forceOpen = false, onClose }) {
   return (
     <>
       {/* Backdrop */}
-      <div className="fixed inset-0 bg-black/50 z-[9998] backdrop-blur-sm" />
+      <div className="fixed inset-0 bg-black/70 z-[9998] backdrop-blur-md transition-opacity" />
 
-      {/* Banner */}
+      {/* Banner Modal */}
       <div className="fixed inset-x-0 bottom-0 z-[9999] p-4 sm:p-6">
-        <div className="max-w-2xl mx-auto bg-white dark:bg-stone-900 rounded-2xl shadow-2xl border border-stone-200 dark:border-stone-700 overflow-hidden">
+        <div className="max-w-2xl mx-auto bg-card border border-border/80 rounded-3xl shadow-2xl overflow-hidden text-text backdrop-blur-xl">
           
           {/* Header */}
-          <div className="p-5 sm:p-6">
-            <div className="flex items-start gap-3 mb-3">
-              <div className="p-2 rounded-xl bg-teal-50 dark:bg-teal-900/30 flex-shrink-0">
-                <Shield size={22} className="text-teal-600 dark:text-teal-400" />
+          <div className="p-6 sm:p-7">
+            <div className="flex items-start gap-4 mb-4">
+              <div className="p-3 rounded-2xl bg-primary/10 text-primary border border-primary/20 flex-shrink-0">
+                <Shield size={24} />
               </div>
-              <div className="flex-1">
-                <div className="flex items-center justify-between gap-2">
-                  <h2 className="text-lg font-bold text-stone-900 dark:text-stone-100">
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between gap-2 mb-1">
+                  <h2 className="text-xl font-bold bg-gradient-to-r from-text to-primary bg-clip-text text-transparent">
                     {t.title}
                   </h2>
-                  {/* Language Toggle */}
-                  <button
-                    onClick={() => setLang(prev => prev === 'en' ? 'de' : 'en')}
-                    className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors border border-stone-200 dark:border-stone-700"
-                    aria-label={lang === 'en' ? 'Auf Deutsch wechseln' : 'Switch to English'}
-                  >
-                    <Globe size={13} />
-                    {lang === 'en' ? 'DE' : 'EN'}
-                  </button>
+                  {/* Language Switcher */}
+                  <div className="flex items-center bg-background border border-border rounded-xl p-1 shadow-sm">
+                    <button
+                      onClick={() => setLang('de')}
+                      className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                        lang === 'de' ? 'bg-primary text-white' : 'text-muted hover:text-text'
+                      }`}
+                    >
+                      DE
+                    </button>
+                    <button
+                      onClick={() => setLang('en')}
+                      className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                        lang === 'en' ? 'bg-primary text-white' : 'text-muted hover:text-text'
+                      }`}
+                    >
+                      EN
+                    </button>
+                  </div>
                 </div>
-                <p className="text-sm text-stone-600 dark:text-stone-400 mt-1 leading-relaxed">
+                <p className="text-xs sm:text-sm text-muted leading-relaxed">
                   {t.description}
                   <a 
                     href="/privacy" 
-                    className="text-teal-600 dark:text-teal-400 underline hover:no-underline"
+                    className="text-primary font-semibold underline hover:no-underline ml-1"
                     onClick={() => { setIsVisible(false); onClose?.(); }}
                   >
                     {t.privacyLink}
@@ -176,7 +173,7 @@ export default function ConsentBanner({ forceOpen = false, onClose }) {
             {/* Details Toggle */}
             <button
               onClick={() => setShowDetails(!showDetails)}
-              className="flex items-center gap-1.5 text-sm font-medium text-teal-600 dark:text-teal-400 hover:text-teal-700 dark:hover:text-teal-300 transition-colors mt-2"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:opacity-80 transition-opacity mt-1 cursor-pointer"
             >
               <Settings size={14} />
               <span>{showDetails ? t.detailsHide : t.detailsShow}</span>
@@ -186,14 +183,14 @@ export default function ConsentBanner({ forceOpen = false, onClose }) {
 
           {/* Detailed Settings */}
           {showDetails && (
-            <div className="px-5 sm:px-6 pb-2 space-y-3">
+            <div className="px-6 pb-2 space-y-3">
               {Object.values(CONSENT_CATEGORIES).map((cat) => {
                 const isOn = cat.required || categories[cat.id];
 
                 return (
                   <div
                     key={cat.id}
-                    className="flex items-start gap-3 p-3 rounded-xl bg-stone-50 dark:bg-stone-800/50 border border-stone-200 dark:border-stone-700"
+                    className="flex items-start gap-3.5 p-4 rounded-2xl bg-background/60 border border-border/70"
                   >
                     {/* Toggle Switch */}
                     <button
@@ -201,14 +198,10 @@ export default function ConsentBanner({ forceOpen = false, onClose }) {
                       disabled={cat.required}
                       role="switch"
                       aria-checked={isOn}
-                      aria-label={`${cat.name[lang]} ${cat.required ? `(${t.alwaysActive})` : isOn ? (lang === 'en' ? 'disable' : 'deaktivieren') : (lang === 'en' ? 'enable' : 'aktivieren')}`}
                       className={`
                         mt-0.5 flex-shrink-0 w-11 h-6 rounded-full relative transition-colors duration-200
-                        ${isOn
-                          ? 'bg-teal-500 dark:bg-teal-600'
-                          : 'bg-stone-300 dark:bg-stone-600'
-                        }
-                        ${cat.required ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer hover:opacity-90'}
+                        ${isOn ? 'bg-primary' : 'bg-border'}
+                        ${cat.required ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer hover:opacity-90'}
                       `}
                     >
                       <span
@@ -221,22 +214,22 @@ export default function ConsentBanner({ forceOpen = false, onClose }) {
 
                     {/* Info */}
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <span className="font-semibold text-sm text-stone-900 dark:text-stone-100">
+                      <div className="flex items-center gap-2 flex-wrap mb-1">
+                        <span className="font-bold text-sm text-text">
                           {cat.name[lang]}
                         </span>
                         {cat.required && (
-                          <span className="text-[11px] px-2 py-0.5 rounded-full bg-stone-200 dark:bg-stone-700 text-stone-500 dark:text-stone-400 font-medium">
+                          <span className="text-[10px] px-2 py-0.5 rounded-full bg-border text-muted font-bold">
                             {t.alwaysActive}
                           </span>
                         )}
                         {cat.defaultOn && !cat.required && (
-                          <span className="text-[11px] px-2 py-0.5 rounded-full bg-teal-100 dark:bg-teal-900/40 text-teal-700 dark:text-teal-400 font-medium">
+                          <span className="text-[10px] px-2 py-0.5 rounded-full bg-primary/10 text-primary font-bold border border-primary/20">
                             {t.recommended}
                           </span>
                         )}
                       </div>
-                      <p className="text-xs text-stone-500 dark:text-stone-400 mt-1 leading-relaxed">
+                      <p className="text-xs text-muted leading-relaxed">
                         {cat.description[lang]}
                       </p>
                     </div>
@@ -246,20 +239,20 @@ export default function ConsentBanner({ forceOpen = false, onClose }) {
             </div>
           )}
 
-          {/* Buttons */}
-          <div className="p-5 sm:p-6 flex flex-col sm:flex-row gap-2.5">
+          {/* Action Buttons */}
+          <div className="p-6 flex flex-col sm:flex-row gap-3 border-t border-border/50 bg-background/30">
             {showDetails ? (
               <>
                 <button
                   onClick={handleSaveSelection}
-                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-sm bg-teal-600 hover:bg-teal-700 text-white transition-colors shadow-sm"
+                  className="flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-2xl font-bold text-xs sm:text-sm bg-gradient-to-r from-primary to-secondary text-white shadow-lg shadow-primary/20 hover:opacity-90 transition-all cursor-pointer"
                 >
                   <Check size={16} />
                   {t.saveSelection}
                 </button>
                 <button
                   onClick={handleAcceptAll}
-                  className="flex-1 px-4 py-2.5 rounded-xl font-semibold text-sm bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-800 dark:text-stone-200 transition-colors border border-stone-200 dark:border-stone-700"
+                  className="flex-1 px-5 py-3 rounded-2xl font-bold text-xs sm:text-sm bg-card border border-border hover:bg-border/40 text-text transition-all cursor-pointer"
                 >
                   {t.acceptAll}
                 </button>
@@ -268,14 +261,14 @@ export default function ConsentBanner({ forceOpen = false, onClose }) {
               <>
                 <button
                   onClick={handleAcceptAll}
-                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-sm bg-teal-600 hover:bg-teal-700 text-white transition-colors shadow-sm"
+                  className="flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-2xl font-bold text-xs sm:text-sm bg-gradient-to-r from-primary to-secondary text-white shadow-lg shadow-primary/20 hover:opacity-90 transition-all cursor-pointer"
                 >
                   <Check size={16} />
                   {t.acceptAll}
                 </button>
                 <button
                   onClick={handleAcceptEssentialOnly}
-                  className="flex-1 px-4 py-2.5 rounded-xl font-semibold text-sm bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-800 dark:text-stone-200 transition-colors border border-stone-200 dark:border-stone-700"
+                  className="flex-1 px-5 py-3 rounded-2xl font-bold text-xs sm:text-sm bg-card border border-border hover:bg-border/40 text-text transition-all cursor-pointer"
                 >
                   {t.essentialOnly}
                 </button>
