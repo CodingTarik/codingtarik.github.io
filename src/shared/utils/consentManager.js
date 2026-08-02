@@ -41,7 +41,7 @@ export const getConsent = () => {
     
     const parsed = JSON.parse(stored);
     
-    // Wenn die Version sich geaendert hat, Consent zuruecksetzen
+    // Reset consent state if consent schema version has updated
     if (parsed.version !== CONSENT_VERSION) {
       return { ...DEFAULT_CONSENT, categories: { ...DEFAULT_CONSENT.categories } };
     }

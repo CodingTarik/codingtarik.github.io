@@ -1,4 +1,4 @@
-// Aufwärm- und Dehnübungen für Boulderer
+// Warmup and mobility exercises for boulderers
 export const warmupExercises = [
   {
     id: 1,

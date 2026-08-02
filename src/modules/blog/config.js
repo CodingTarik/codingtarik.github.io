@@ -1,10 +1,8 @@
 /**
- * Blog Configuration
- * Zentrale Konfiguration für das Blog-System
+ * Global Blog Configuration
  */
 
 export const blogConfig = {
-  // Blog Informationen
   title: "Tarik's Blog",
   subtitle: "CodingTarik",
   description: "Personal blog about programming, technology, and learning",
@@ -15,29 +13,30 @@ export const blogConfig = {
     linkedin: "tarik-azzouzi",
   },
 
-  // Profile Picture & Avatar Settings (Zentrale Steuerung für Profilbild)
+  // Profile picture customization
   avatar: {
-    sizePx: 200,          // Durchmesser in Pixel (z.B. 160, 180, 200, 220)
-    zoom: 1.3,           // Bild-Zoom Factor (1.0 = 100%, 1.15 = 115%, 1.3 = 130%)
-    offsetX: "50%",       // Horizontalverschiebung (50% = zentriert, <50% = nach links, >50% = nach rechts)
-    offsetY: "55%",       // Vertikalverschiebung (50% = zentriert, <50% = nach oben/Gesicht, >50% = nach unten)
-    borderWidthPx: 4,     // Dicke des bunten Rahmens in Pixel (z.B. 2, 4, 6)
+    sizePx: 200,          // Diameter in pixels
+    zoom: 1.3,            // Zoom factor (1.0 = 100%, 1.3 = 130%)
+    offsetX: "50%",       // Horizontal position (50% = center)
+    offsetY: "55%",       // Vertical position (50% = center)
+    borderWidthPx: 4,     // Border frame thickness
   },
 
-  // URLs
+  // Base URLs
   siteUrl: "https://codingtarik.github.io",
   blogUrl: "https://codingtarik.github.io/blog",
 
-  // GitHub
+  // Repository metadata
   github: {
     owner: "CodingTarik",
     repo: "codingtarik.github.io",
   },
 
-  // Social Media Links
+  // Social Media
   social: {
     github: "https://github.com/CodingTarik",
     linkedin: "https://www.linkedin.com/in/tarik-azzouzi/",
+    fiverr: "https://www.fiverr.com/cyberta",
     hackthebox: "https://app.hackthebox.com/profile/477139",
     tryhackme: "https://tryhackme.com/p/CodingTarik",
     discord: "https://discord.gg/xggTvK2",
@@ -49,7 +48,7 @@ export const blogConfig = {
     buyMeCoffee: "https://buymeacoffee.com/codingtarik",
   },
 
-  // Imprint / Impressum
+  // Legal imprint information
   imprint: {
     name: "Tarik Azzouzi",
     street: "Nieder-Ramstädter-Straße 187",
@@ -69,7 +68,7 @@ export const blogConfig = {
     feedUrl: "https://codingtarik.github.io/rss.xml",
   },
 
-  // SEO
+  // SEO & Social sharing
   seo: {
     keywords: [
       "programming",
@@ -85,17 +84,16 @@ export const blogConfig = {
     twitterHandle: "@CodingTarik",
   },
 
-  // Features
+  // Feature Toggles
   features: {
     search: true,
     categories: true,
     tags: true,
-    comments: false, // Kann später aktiviert werden
-    newsletter: false, // Kann später aktiviert werden
+    comments: false,
+    newsletter: false,
     darkMode: true,
   },
 
-  // Pagination
   postsPerPage: 10,
   recentPostsCount: 5,
 
@@ -108,7 +106,7 @@ export const blogConfig = {
     },
   },
 
-  // Default Post Settings
+  // Default Post Metadata
   defaultPost: {
     author: "Tarik Azzouzi",
     featured: false,
@@ -117,4 +115,3 @@ export const blogConfig = {
 };
 
 export default blogConfig;
-

@@ -1,66 +1,42 @@
 export default {
   // ─── Metadata ───
-  id: 'unique-post-id', // Eindeutige ID (z.B. 'getting-started-with-react')
-  title: 'Dein Post-Titel',
-  description: 'Eine kurze Beschreibung des Posts (für SEO und Preview)',
+  id: 'unique-post-id', // Unique ID (e.g. 'getting-started-with-react')
+  title: 'Post Title',
+  description: 'Short post description for SEO and article previews',
   date: '2025-11-06', // Format: YYYY-MM-DD
-  lastModified: '2025-11-06', // Letztes Update
-  author: 'Tarik', // Dein Name
-  language: 'de', // 'de' oder 'en'
+  lastModified: '2025-11-06',
+  author: 'Tarik',
+  language: 'en', // 'en' or 'de'
 
   // ─── Publishing ───
-  published: true, // false = wird nicht auf der Seite angezeigt
-  draft: false, // true = nur im Dev-Modus sichtbar
-  featured: false, // Optional: Featured Post auf Homepage
+  published: true, // Set to false to hide post from live site
+  draft: false,
+  featured: false,
 
   // ─── Categorization ───
-  categories: ['Category1', 'Category2'], // Mehrere Kategorien möglich
-  keywords: ['keyword1', 'keyword2', 'keyword3'], // SEO Keywords
-  
+  categories: ['Documentation'],
+  keywords: ['keyword1', 'keyword2'],
+
   // ─── Media ───
-  thumbnail: '/path/to/thumbnail.jpg', // Optional: Pfad zum Thumbnail-Bild
-  socialImage: '/path/to/social-image.jpg', // Optional: Bild für Social Media Shares (1200x630)
-  
-  // ─── Content in Markdown ───
+  thumbnail: '/path/to/thumbnail.jpg',
+  socialImage: '/path/to/social-image.jpg',
+
+  // ─── Content ───
   content: `
-# Dein Post-Titel
+# Post Title
 
-## Einleitung
+## Introduction
 
-Hier kommt dein Inhalt in **Markdown**-Format.
+Write post content in **Markdown** format.
 
-### Untertitel
+### Features
 
-Du kannst auch normale HTML-Elemente verwenden:
-
-<div style="padding: 20px; background: #f0f0f0; border-radius: 8px;">
-  <strong>Custom HTML Box:</strong> Flexibilität für spezielle Layouts!
-</div>
-
-## Code-Beispiele
+Standard markdown formatting, code highlighting, and embedded components are supported.
 
 \`\`\`javascript
 const example = () => {
-  console.log('Code-Highlighting funktioniert!');
+  console.log('Code highlighting works!');
 };
 \`\`\`
-
-## Listen
-
-- Punkt 1
-- Punkt 2
-- Punkt 3
-
-## Bilder
-
-![Alt Text](/path/to/image.jpg)
-
-## Links
-
-[Link zu einer Website](https://example.com)
-
----
-
-**Ende des Posts**
 `
 };

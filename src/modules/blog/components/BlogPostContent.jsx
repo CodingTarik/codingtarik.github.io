@@ -274,22 +274,18 @@ const Tabs = ({ children }) => {
   );
 };
 
-// =========================================================================
-// HIER IST FIX 1 (Tab)
-// =========================================================================
+// Custom Tab Component for Markdown Tabbed Code Blocks
 const Tab = ({ children }) => {
-  // Entferne React.Children.only, da es zu streng ist.
   const childrenArray = React.Children.toArray(children);
   
-  // Prüfe, ob das erste (und hoffentlich einzige) Kind ein CodeBlock ist.
+  // Check if child content is a syntax-highlighted CodeBlock
   const isSingleCodeBlock = 
-      childrenArray.length > 0 && // Sicherstellen, dass Kinder vorhanden sind
+      childrenArray.length > 0 &&
       React.isValidElement(childrenArray[0]) &&
       childrenArray[0].type.name === 'MarkdownCodeBlock';
 
   if (isSingleCodeBlock) {
     const child = childrenArray[0];
-    // Klone nur das CodeBlock-Element und entferne seine Ränder/Schatten
     return React.cloneElement(child, {
       ...child.props,
       className: 'shadow-none border-none my-0 rounded-none overflow-hidden', 
@@ -297,13 +293,10 @@ const Tab = ({ children }) => {
     });
   }
   
-  // Fallback für normalen Text oder gemischten Inhalt
   return <div className="p-4">{children}</div>;
 };
 
-// =========================================================================
-// HIER IST FIX 2 (LiveCodeBlock)
-// =========================================================================
+// Interactive Live Code Sandbox Component
 const LiveCodeBlock = ({ codeString }) => {
   const { isDark } = useTheme();
   const theme = isDark ? themes.dracula : themes.github;
@@ -312,7 +305,6 @@ const LiveCodeBlock = ({ codeString }) => {
     <LiveProvider code={codeString} theme={theme} noInline={false}>
       <div 
         className="not-prose relative text-text rounded-lg border border-border my-6 shadow-lg overflow-hidden"
-        // Wende die Hintergrundfarbe des Themes manuell auf den Container an
         style={{ backgroundColor: theme.plain.backgroundColor }} 
       >
         <div className="p-4 border-b border-border min-h-[100px]">
@@ -326,7 +318,6 @@ const LiveCodeBlock = ({ codeString }) => {
               lineHeight: '1.6',
               padding: '1rem', 
               outline: 'none',
-              // Der Hintergrund wird vom 'theme' auf dem Provider geerbt
             }} 
           />
         </div>

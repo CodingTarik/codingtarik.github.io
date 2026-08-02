@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { X, Search, Loader2, Image as ImageIcon, RefreshCw, Check } from 'lucide-react';
 import { useLanguage } from '../../../../context/LanguageContext';
 
-// Wir nutzen hier LoremFlickr oder Unsplash Source mit dem "Lock" oder "Sig" Trick.
-// Unsplash Source ist leider oft instabil/deprecated, daher ist LoremFlickr oft zuverlässiger für Keywords ohne API Key.
-// Wenn du unbedingt Unsplash willst, ändere die BASE URL zu: 'https://source.unsplash.com/random/400x300';
+// Image search provider configuration (LoremFlickr fallback for keyless image previews)
 const IMAGE_SERVICE_BASE = 'https://loremflickr.com/400/300'; 
 
 function ImageSearchModal({ isOpen, onClose, onSelectImage, currentImageUrl }) {
@@ -14,27 +12,25 @@ function ImageSearchModal({ isOpen, onClose, onSelectImage, currentImageUrl }) {
   const [selectedCandidate, setSelectedCandidate] = useState('');
   const [manualUrl, setManualUrl] = useState('');
   
-  // Wir generieren eine "Session ID" (Timestamp), damit beim Neuladen komplett neue Bilder kommen
+  // Unique session timestamp to force fresh image queries
   const [searchSession, setSearchSession] = useState(Date.now());
   
-  // Das sind die Platzhalter für unser Grid (z.B. 9 Bilder)
+  // Placeholder grid items for image candidate results
   const [candidates, setCandidates] = useState([]);
 
-  // Initialisiere mit 9 leeren Plätzen, wenn gesucht wird
   const triggerSearch = () => {
     if (!searchQuery.trim()) return;
     setIsSearching(true);
-    setSearchSession(Date.now()); // Neue Session erzwingt neue Bilder
-    setCandidates(Array.from({ length: 9 }, (_, i) => i)); // Erstellt Array [0...8]
+    setSearchSession(Date.now());
+    setCandidates(Array.from({ length: 9 }, (_, i) => i));
     setSelectedCandidate('');
     
-    // Kleiner Fake-Timeout für UX, da die Bilder eh einzeln laden
     setTimeout(() => setIsSearching(false), 500);
   };
 
   const handleSelectCandidate = (url) => {
     setSelectedCandidate(url);
-    setManualUrl(url); // Synchronisiere mit dem manuellen Input
+    setManualUrl(url);
   };
 
   const handleConfirm = () => {
@@ -49,14 +45,12 @@ function ImageSearchModal({ isOpen, onClose, onSelectImage, currentImageUrl }) {
     onClose();
   };
 
-  // Generiert die URL für ein spezifisches Grid-Item
-  // Der Trick ist der ?lock= oder ?sig= Parameter, der das Bild "festpinnt" für diesen Index
+  // Generate URL for specific grid item using unique index key
   const getCandidateUrl = (index) => {
-    const keyword = encodeURIComponent(searchQuery);
-    // LoremFlickr nutzt 'lock', Unsplash nutzt 'sig'. Wir bauen es so, dass es eindeutig ist.
-    return `${IMAGE_SERVICE_BASE}/${keyword}?lock=${searchSession + index}`;
+    const cleanTag = encodeURIComponent(searchQuery.trim());
+    return `${IMAGE_SERVICE_BASE}/${cleanTag}?lock=${searchSession}_${index}`;
     
-    // Falls du Unsplash Source nutzen willst (Achtung: oft langsam/down):
+    // If you want to use Unsplash Source (Attention: often slow/down):
     // return `https://source.unsplash.com/random/400x300/?${keyword}&sig=${searchSession + index}`;
   };
 

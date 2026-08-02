@@ -322,23 +322,22 @@ export function removeDuplicateCards(deckId) {
   const cached = getCachedCards(deckId);
   const pendingCheck = getPendingChanges(deckId);
   
-  // SICHERHEIT: Erst synchronisieren, wenn bereits Löschungen ausstehen,
-  // da sonst die Indizes durcheinander geraten können.
+  // Guard clause: Require sync before deleting duplicate indices
   if (pendingCheck.deletes.length > 0) {
-    console.warn("Bitte erst synchronisieren, bevor Duplikate entfernt werden, um Index-Fehler zu vermeiden.");
-    alert("Bitte synchronisiere erst deine aktuellen Löschungen mit Google Sheets, bevor du die Duplikat-Suche startest!");
+    console.warn("Please sync pending deletions to Google Sheets before running duplicate removal.");
+    alert("Please sync your pending deletions to Google Sheets before removing duplicates!");
     return 0;
   }
 
   if (!cached || !cached.cards) return 0;
   
-  const seen = new Map(); // Map statt Set, um den ersten Index zu speichern
+  const seen = new Map();
   const uniqueCards = [];
   const indicesToDelete = [];
-  const duplicateExamples = []; // Für Debugging
+  const duplicateExamples = [];
   
-  console.group("Duplikat-Prüfung gestartet");
-  console.log(`Prüfe ${cached.cards.length} Karten auf Duplikate...`);
+  console.group("Duplicate Check");
+  console.log(`Checking ${cached.cards.length} cards for duplicates...`);
   
   let emptyCards = 0;
   let cardsWithOnlyWord = 0;
@@ -346,11 +345,9 @@ export function removeDuplicateCards(deckId) {
   let validCards = 0;
   
   cached.cards.forEach((card, index) => {
-    // 1. Strings erzwingen, trimmen und Unicode normalisieren
     const word = String(card.word || '').normalize('NFC').trim();
     const translation = String(card.translation || '').normalize('NFC').trim();
     
-    // Statistiken sammeln
     if (!word && !translation) {
       emptyCards++;
       uniqueCards.push(card);
@@ -369,15 +366,12 @@ export function removeDuplicateCards(deckId) {
     
     validCards++;
     
-    // 2. Erstelle einen eindeutigen Key - NUR für Karten mit BEIDEN Feldern gefüllt
     const uniqueKey = JSON.stringify([word.toLowerCase(), translation.toLowerCase()]);
     
     if (seen.has(uniqueKey)) {
-      // Das ist ein echtes Duplikat!
       const firstIndex = seen.get(uniqueKey);
       indicesToDelete.push(index);
       
-      // Erste 10 Duplikate für Debugging speichern
       if (duplicateExamples.length < 10) {
         duplicateExamples.push({
           first: { index: firstIndex, word, translation },
@@ -390,39 +384,37 @@ export function removeDuplicateCards(deckId) {
     }
   });
   
-  console.log(`Statistiken:`);
-  console.log(`- Leere Karten: ${emptyCards}`);
-  console.log(`- Nur Wort: ${cardsWithOnlyWord}`);
-  console.log(`- Nur Übersetzung: ${cardsWithOnlyTranslation}`);
-  console.log(`- Gültige Karten (beide Felder): ${validCards}`);
-  console.log(`- Eindeutige Karten: ${seen.size}`);
-  console.log(`- Duplikate gefunden: ${indicesToDelete.length}`);
+  console.log(`Stats:`);
+  console.log(`- Empty cards: ${emptyCards}`);
+  console.log(`- Word only: ${cardsWithOnlyWord}`);
+  console.log(`- Translation only: ${cardsWithOnlyTranslation}`);
+  console.log(`- Valid cards: ${validCards}`);
+  console.log(`- Unique cards: ${seen.size}`);
+  console.log(`- Duplicates found: ${indicesToDelete.length}`);
   
   if (duplicateExamples.length > 0) {
-    console.log(`Beispiele für Duplikate:`);
+    console.log(`Duplicate Examples:`);
     duplicateExamples.forEach((ex, i) => {
       console.log(`${i + 1}. Index ${ex.first.index} & ${ex.duplicate.index}: "${ex.first.word}" -> "${ex.first.translation}"`);
     });
   }
   
-  // SICHERHEIT: Wenn mehr als 50% der Karten als Duplikate erkannt werden, ist etwas falsch
+  // Safety check: Abort if over 50% of cards match as duplicates
   const duplicateRatio = indicesToDelete.length / cached.cards.length;
   if (duplicateRatio > 0.5) {
-    console.error(`WARNUNG: ${(duplicateRatio * 100).toFixed(1)}% der Karten wurden als Duplikate erkannt! Das scheint falsch zu sein.`);
-    console.error(`Bitte überprüfe die Karten manuell.`);
+    console.error(`WARNING: ${(duplicateRatio * 100).toFixed(1)}% of cards flagged as duplicates. Aborting for safety.`);
     console.groupEnd();
-    return 0; // Sicherheitshalber nichts löschen
+    return 0;
   }
   
   console.groupEnd();
 
   if (indicesToDelete.length > 0) {
-    // Cache mit den bereinigten Karten überschreiben
     setCachedCards(deckId, uniqueCards);
     
     const pending = getPendingChanges(deckId);
     
-    // 1. Duplikate aus den "Adds" (neu hinzugefügten, noch nicht gesyncten) entfernen
+    // Remove duplicates from pending additions
     const seenAdds = new Set();
     pending.adds = pending.adds.filter(card => {
       const w = String(card.word || '').normalize('NFC').trim();
@@ -434,11 +426,9 @@ export function removeDuplicateCards(deckId) {
       return true;
     });
     
-    // 2. Updates und Deletes Indizes anpassen
-    // Wir sortieren absteigend, damit wir von hinten löschen und Indizes vorne stabil bleiben
+    // Adjust indices for pending updates and deletions
     const sortedIndices = [...indicesToDelete].sort((a, b) => b - a);
     
-    // Updates anpassen: Wenn eine Karte VOR einem Update gelöscht wurde, rutscht der Index des Updates eins runter
     pending.updates = pending.updates
       .filter(({ index }) => !indicesToDelete.includes(index))
       .map(({ index, card }) => {

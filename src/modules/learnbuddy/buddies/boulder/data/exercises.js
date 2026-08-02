@@ -1,8 +1,8 @@
-// Vorgefertigte Übungen für Training & Aufwärmen
-// Types: 'timer' (countdown/challenge), 'reps' (Wiederholungen), 'pause'
+// Predefined exercises for workouts and warmup routines
+// Types: 'timer' (countdown/challenge), 'reps' (repeat count), 'pause'
 
 export const predefinedExercises = [
-  // === AUFWÄRMEN / MOBILITY ===
+  // === WARMUP / MOBILITY ===
   {
     id: 'warmup_wrist_circles',
     name: 'Handgelenke kreisen',
