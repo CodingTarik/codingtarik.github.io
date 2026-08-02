@@ -34,11 +34,9 @@ export default function BlogSidebar({
   const { isDark, toggleTheme } = useTheme();
 
   const tabs = [
-    { id: 'posts', label: 'Posts', icon: FileText },
-    { id: 'search', label: 'Search', icon: Search },
-    { id: 'categories', label: 'Categories', icon: FolderOpen },
+    { id: 'posts', label: 'Blog', icon: FileText },
     { id: 'projects', label: 'Projects', icon: Code },
-    { id: 'tools', label: 'Tools', icon: Wrench }
+    { id: 'tools', label: 'Tools & Apps', icon: Wrench }
   ];
 
   const socialLinks = [
@@ -134,7 +132,8 @@ export default function BlogSidebar({
         <nav className="p-3 space-y-1 flex-grow">
           {tabs.map((tab) => {
             const Icon = tab.icon;
-            const isActive = selectedTab === tab.id;
+            const normalizedActiveTab = (selectedTab === 'search' || selectedTab === 'categories') ? 'posts' : selectedTab;
+            const isActive = normalizedActiveTab === tab.id;
             return (
               <button
                 key={tab.id}

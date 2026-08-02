@@ -15,6 +15,7 @@ import {
   updateMetaTags 
 } from '../utils/seoUtils';
 import SearchBar from './SearchBar';
+import BlogSubNav from './BlogSubNav';
 import { trackCategoryClick, trackSearch } from './Analytics';
 import { navigate } from '../../../utils/navigation';
 
@@ -148,6 +149,9 @@ export default function BlogPage({ onPostClick }) {
         </button>
 
         <div className="max-w-4xl mx-auto">
+          {/* Blog Sub Navigation */}
+          <BlogSubNav />
+
           {/* Hero Section */}
           {selectedTab === 'posts' && !searchQuery && !selectedCategory && (
             <motion.div

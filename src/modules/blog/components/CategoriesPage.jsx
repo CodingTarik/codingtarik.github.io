@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { FolderOpen, FileText, TrendingUp, Grid, List, Search, Sparkles, BarChart3 } from 'lucide-react';
 import { getAllCategories, getPostsByCategory, getAllPosts } from '../utils/blogUtils';
 import ParticleBackground from './ParticleBackground';
+import BlogSubNav from './BlogSubNav';
 
 export default function CategoriesPage({ onCategorySelect }) {
   const [viewMode, setViewMode] = useState('grid');
@@ -47,6 +48,8 @@ export default function CategoriesPage({ onCategorySelect }) {
       </div>
 
       <div className="max-w-6xl mx-auto p-4 md:p-8 relative z-10">
+        <BlogSubNav />
+
         {/* Header */}
         <motion.header 
           className="mb-8 md:mb-12 text-center"

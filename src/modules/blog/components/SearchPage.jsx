@@ -17,6 +17,7 @@ import {
 import SearchBar from './SearchBar';
 import AnimatedPostCard from './AnimatedPostCard';
 import ParticleBackground from './ParticleBackground';
+import BlogSubNav from './BlogSubNav';
 import {
   searchPostsAdvanced,
   getAllCategories,
@@ -58,41 +59,45 @@ export default function SearchPage({ onPostClick }) {
   // Update suggestions as user types
   useEffect(() => {
     if (searchQuery.length >= 2 && !isSearching) {
-      const newSuggestions = getSearchSuggestions(searchQuery, 5);
-      setSuggestions(newSuggestions);
+      const suggs = getSearchSuggestions(searchQuery, 5);
+      setSuggestions(suggs);
     } else {
       setSuggestions([]);
     }
   }, [searchQuery, isSearching]);
 
-  const performSearch = (query) => {
-    if (!query.trim()) {
+  // Perform search
+  const performSearch = (query = searchQuery) => {
+    if (!query.trim() && !selectedCategory) {
       setSearchResults([]);
       return;
     }
 
     setIsSearching(true);
-    setShowSuggestions(false);
 
-    // Save to recent searches
-    const newRecent = [query, ...recentSearches.filter(q => q !== query)].slice(0, 5);
-    setRecentSearches(newRecent);
-    localStorage.setItem('recentSearches', JSON.stringify(newRecent));
-
-    // Simulate async search with timeout for better UX
-    setTimeout(() => {
-      const results = searchPostsAdvanced(query);
-      setSearchResults(results);
-      setIsSearching(false);
-
-      // Track search with results count
-      trackSearch(query, results.length);
-
-      // Update URL
-      import('../../../utils/navigation').then(({ navigate }) => {
-        navigate(`/blog/search?q=${encodeURIComponent(query)}`);
+    try {
+      const results = searchPostsAdvanced(query, {
+        limit: 50,
+        threshold: 0.4
       });
-    }, 300);
+
+      setSearchResults(results);
+
+      // Track search in analytics
+      if (query.trim()) {
+        trackSearch(query, results.length);
+
+        // Save to recent searches
+        const updated = [query, ...recentSearches.filter(s => s !== query)].slice(0, 5);
+        setRecentSearches(updated);
+        localStorage.setItem('recentSearches', JSON.stringify(updated));
+      }
+    } catch (error) {
+      console.error('Error searching posts:', error);
+      setSearchResults([]);
+    } finally {
+      setIsSearching(false);
+    }
   };
 
   const handleSearch = (query) => {
@@ -116,6 +121,7 @@ export default function SearchPage({ onPostClick }) {
     localStorage.removeItem('recentSearches');
   };
 
+  // Filter and sort results
   const filteredAndSortedResults = useMemo(() => {
     let results = searchResults;
 
@@ -151,6 +157,8 @@ export default function SearchPage({ onPostClick }) {
       </div>
 
       <div className="max-w-6xl mx-auto px-3 sm:px-4 md:px-8 py-4 sm:py-8 relative z-10">
+        <BlogSubNav />
+
         {/* Hero Header */}
         <motion.header
           className="mb-6 sm:mb-8 text-center"
