@@ -12,7 +12,7 @@ function sitemapPlugin() {
     name: 'generate-sitemap',
     closeBundle() {
       const today = new Date().toISOString().split('T')[0];
-      const postsDir = path.resolve(__dirname, 'src/blog/posts');
+      const postsDir = path.resolve(__dirname, 'posts');
       const postEntries = [];
 
       function scanDir(dir) {
@@ -60,13 +60,13 @@ function sitemapPlugin() {
         { loc: `${SITE_URL}/blog/categories`, changefreq: 'weekly', priority: '0.7', lastmod: today },
         { loc: `${SITE_URL}/blog/projects`, changefreq: 'weekly', priority: '0.7', lastmod: today },
         { loc: `${SITE_URL}/blog/search`, changefreq: 'monthly', priority: '0.5', lastmod: today },
-        { loc: `${SITE_URL}/cv`, changefreq: 'monthly', priority: '0.8', lastmod: today },
         { loc: `${SITE_URL}/tools`, changefreq: 'monthly', priority: '0.6', lastmod: today },
-        { loc: `${SITE_URL}/tools/logic-test`, changefreq: 'monthly', priority: '0.5', lastmod: today },
         { loc: `${SITE_URL}/tools/flashmaster`, changefreq: 'monthly', priority: '0.5', lastmod: today },
         { loc: `${SITE_URL}/tools/pdf-tools`, changefreq: 'monthly', priority: '0.5', lastmod: today },
         { loc: `${SITE_URL}/tools/piano`, changefreq: 'monthly', priority: '0.5', lastmod: today },
-        { loc: `${SITE_URL}/tools/travel`, changefreq: 'monthly', priority: '0.5', lastmod: today },
+        { loc: `${SITE_URL}/tools/device-test`, changefreq: 'monthly', priority: '0.5', lastmod: today },
+        { loc: `${SITE_URL}/tools/markdown`, changefreq: 'monthly', priority: '0.5', lastmod: today },
+        { loc: `${SITE_URL}/tools/perfect-pitch`, changefreq: 'monthly', priority: '0.5', lastmod: today },
         { loc: `${SITE_URL}/privacy`, changefreq: 'yearly', priority: '0.2', lastmod: today },
         { loc: `${SITE_URL}/imprint`, changefreq: 'yearly', priority: '0.2', lastmod: today },
       ];
@@ -123,7 +123,7 @@ function rssFeedPlugin() {
   return {
     name: 'generate-rss-feed',
     closeBundle() {
-      const postsDir = path.resolve(__dirname, 'src/blog/posts');
+      const postsDir = path.resolve(__dirname, 'posts');
       const posts = [];
 
       function scanDir(dir) {
@@ -288,17 +288,14 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      strategies: 'injectManifest',
-      srcDir: 'src',
-      filename: 'sw.js',
-      injectManifest: {
+      workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,xml,txt,json}'],
-        maximumFileSizeToCacheInBytes: 50 * 1024 * 1024, // 50MB
+        maximumFileSizeToCacheInBytes: 50 * 1024 * 1024,
       },
       manifest: {
         name: 'LearnBuddy - Dein persoenlicher Lern-Begleiter',
         short_name: 'LearnBuddy',
-        description: 'Interaktiver Lernbegleiter fuer Bouldern, Kochen, Englisch, Klavier und mehr. Inklusive Blog ueber Web Development und Cybersecurity.',
+        description: 'Interaktiver Lernbegleiter fuer Bouldern, Kochen, Englisch, Klavier und mehr.',
         theme_color: '#14b8a6',
         background_color: '#fafaf9',
         display: 'standalone',

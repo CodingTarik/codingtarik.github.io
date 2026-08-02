@@ -1,30 +1,30 @@
 import React, { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
 
-import { LanguageProvider } from './learnbuddy/context/LanguageContext';
-import { ThemeProvider } from './learnbuddy/context/ThemeContext';
-import { BuddyProvider } from './learnbuddy/context/BuddyContext';
-import { SettingsProvider } from './learnbuddy/context/SettingsContext';
+import { LanguageProvider } from './modules/learnbuddy/context/LanguageContext';
+import { ThemeProvider } from './modules/learnbuddy/context/ThemeContext';
+import { BuddyProvider } from './modules/learnbuddy/context/BuddyContext';
+import { SettingsProvider } from './modules/learnbuddy/context/SettingsContext';
 
 import { useAppRouting } from './hooks/useAppRouting';
 import { navigate, getPath } from './utils/navigation';
 
-import BlogPage from './blog/components/BlogPage';
-import BlogSubpageLayout from './blog/components/BlogSubpageLayout';
-import BlogPostDetailLayout from './blog/components/BlogPostDetailLayout';
-import SearchPage from './blog/components/SearchPage';
-import CategoriesPage from './blog/components/CategoriesPage';
-import ProjectsPage from './blog/components/ProjectsPage';
+import BlogPage from './modules/blog/components/BlogPage';
+import BlogSubpageLayout from './modules/blog/components/BlogSubpageLayout';
+import BlogPostDetailLayout from './modules/blog/components/BlogPostDetailLayout';
+import SearchPage from './modules/blog/components/SearchPage';
+import CategoriesPage from './modules/blog/components/CategoriesPage';
+import ProjectsPage from './modules/blog/components/ProjectsPage';
 
-import LearnBuddyView from './learnbuddy/LearnBuddyView';
-import ToolsOverviewPage from './blog/components/ToolsOverviewPage';
+import LearnBuddyView from './modules/learnbuddy/LearnBuddyView';
+import ToolsOverviewPage from './modules/blog/components/ToolsOverviewPage';
 
-import PianoStudio from './tools/piano/PianoStudio';
-import PdfTools from './tools/pdf-tools/PdfTools';
-import FlashMaster from './tools/flashmaster/FlashMaster';
-import DeviceTest from './tools/device-test/DeviceTest';
-import MarkdownEditor from './tools/markdown-editor/MarkdownEditor';
-import PerfectPitch from './tools/perfect-pitch/PerfectPitch';
+import PianoStudio from './modules/tools/piano/PianoStudio';
+import PdfTools from './modules/tools/pdf-tools/PdfTools';
+import FlashMaster from './modules/tools/flashmaster/FlashMaster';
+import DeviceTest from './modules/tools/device-test/DeviceTest';
+import MarkdownEditor from './modules/tools/markdown-editor/MarkdownEditor';
+import PerfectPitch from './modules/tools/perfect-pitch/PerfectPitch';
 
 import Footer from './shared/components/Footer';
 import PrivacyPage from './shared/components/PrivacyPage';

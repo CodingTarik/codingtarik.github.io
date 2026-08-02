@@ -3,7 +3,7 @@ import { Sun, Moon, ChevronDown, Check, Star, Grid3x3, Info, Settings, Newspaper
 import { useLanguage } from '../../context/LanguageContext';
 import { useTheme } from '../../context/ThemeContext';
 import { useBuddy } from '../../context/BuddyContext';
-import { navigate } from '../../../utils/navigation';
+import { navigate } from '../../../../utils/navigation';
 
 function GlobalHeader({ currentView, onViewChange }) {
   const { language, changeLanguage } = useLanguage();

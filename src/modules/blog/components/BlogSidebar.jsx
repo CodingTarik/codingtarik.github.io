@@ -6,7 +6,7 @@ import { useTheme } from '../../learnbuddy/context/ThemeContext';
 import { generateRSSFeed } from '../utils/rssUtils';
 import { trackSocialClick, trackCoffeeClick, trackRSSClick, trackCategoryClick } from './Analytics';
 import blogConfig from '../config';
-import profileImage from '../../assets/profile.jpeg';
+import profileImage from '../../../assets/profile.jpeg';
 
 // Custom Discord Icon Component
 const DiscordIcon = ({ size = 18 }) => (
@@ -217,7 +217,7 @@ export default function BlogSidebar({
           {/* Tools Button */}
           <button
             onClick={() => {
-              import('../../utils/navigation').then(({ navigate }) => {
+              import('../../../utils/navigation').then(({ navigate }) => {
                 navigate('/tools');
               });
               onClose();

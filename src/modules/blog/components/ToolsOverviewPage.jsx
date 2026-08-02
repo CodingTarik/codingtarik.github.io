@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Sparkles, BookOpen, Wrench, ArrowRight, FileText, Music, Layers, MonitorSmartphone, Heart, Edit3, Headphones } from 'lucide-react';
 import ParticleBackground from './ParticleBackground';
-import { navigate } from '../../utils/navigation';
+import { navigate } from '../../../utils/navigation';
 
 export default function ToolsOverviewPage() {
   const tools = [

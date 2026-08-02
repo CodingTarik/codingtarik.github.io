@@ -1,6 +1,6 @@
 import React from 'react';
 import { FileText, ArrowLeft } from 'lucide-react';
-import blogConfig from '../../blog/config';
+import blogConfig from '../../modules/blog/config';
 
 export default function ImprintPageFooter() {
   return (

@@ -89,7 +89,7 @@ export default function SearchPage({ onPostClick }) {
       trackSearch(query, results.length);
 
       // Update URL
-      import('../../utils/navigation').then(({ navigate }) => {
+      import('../../../utils/navigation').then(({ navigate }) => {
         navigate(`/blog/search?q=${encodeURIComponent(query)}`);
       });
     }, 300);

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { navigate } from '../../utils/navigation';
+import { navigate } from '../../../utils/navigation';
 import BlogSidebar from './BlogSidebar';
 import SearchBar from './SearchBar';
 import PostDetail from './PostDetail';

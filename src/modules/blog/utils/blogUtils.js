@@ -1,15 +1,12 @@
 import Fuse from 'fuse.js';
 
-// ─── Content Management: Import all blog posts (JS + MDX) ───
-// Lazy loading: posts are loaded on demand, not eagerly bundled
-const jsModules = import.meta.glob('../posts/**/*.js', { eager: true });
-// MDX support: uncomment when @mdx-js/rollup is configured
-// const mdxModules = import.meta.glob('../posts/**/*.mdx', { eager: true });
+// ─── Content Management: Import all blog posts from root /posts/ directory ───
+const jsModules = import.meta.glob('/posts/**/*.js', { eager: true });
+const relativeJsModules = import.meta.glob('../../../posts/**/*.js', { eager: true });
 
-// Merge all post modules
 const allModules = {
   ...jsModules,
-  // ...mdxModules,
+  ...relativeJsModules,
 };
 
 // Extract and normalize posts from modules

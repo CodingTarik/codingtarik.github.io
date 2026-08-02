@@ -16,7 +16,7 @@ import {
 } from '../utils/seoUtils';
 import SearchBar from './SearchBar';
 import { trackCategoryClick, trackSearch } from './Analytics';
-import { navigate } from '../../utils/navigation';
+import { navigate } from '../../../utils/navigation';
 
 export default function BlogPage({ onPostClick }) {
   const [searchQuery, setSearchQuery] = useState('');

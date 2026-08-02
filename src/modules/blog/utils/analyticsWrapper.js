@@ -8,7 +8,7 @@
  * The Umami script is loaded dynamically via consentManager.js.
  */
 
-import { isConsentGiven } from '../../shared/utils/consentManager';
+import { isConsentGiven } from '../../../shared/utils/consentManager';
 
 // Choose your analytics provider here:
 // Options: 'umami', 'plausible', 'ga4', 'none'

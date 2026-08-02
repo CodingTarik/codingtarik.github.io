@@ -105,7 +105,7 @@ function YogaHomePage({ onStartLesson }) {
           </p>
           <button
             onClick={() => {
-              import('../../../../utils/navigation').then(({ navigate }) => navigate('/learnbuddy/yoga/custom-tools'));
+              import('../../../../../utils/navigation').then(({ navigate }) => navigate('/learnbuddy/yoga/custom-tools'));
             }}
             className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
           >

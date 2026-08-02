@@ -9,7 +9,7 @@ import { lifeskillsBuddyConfig } from '../buddies/lifeskills/config';
 import { cybersecurityBuddyConfig } from '../buddies/cybersecurity/config';
 import { pianoBuddyConfig } from '../buddies/piano/config';
 import { englishBuddyConfig } from '../buddies/english/config';
-import { navigate } from '../../utils/navigation';
+import { navigate } from '../../../utils/navigation';
 
 const BuddyContext = createContext();
 

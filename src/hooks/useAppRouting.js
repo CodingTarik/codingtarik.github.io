@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getPath, navigate } from '../utils/navigation';
-import { updateMetaTags, updateCanonicalUrl } from '../blog/utils/seoUtils';
-import { getPostById } from '../blog/utils/blogUtils';
+import { updateMetaTags, updateCanonicalUrl } from '../modules/blog/utils/seoUtils';
+import { getPostById } from '../modules/blog/utils/blogUtils';
 
 const SEO_CONFIG = {
   'tools': {

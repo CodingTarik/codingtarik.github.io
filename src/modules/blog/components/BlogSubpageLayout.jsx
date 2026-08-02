@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Menu } from 'lucide-react';
-import { navigate } from '../../utils/navigation';
+import { navigate } from '../../../utils/navigation';
 import BlogSidebar from './BlogSidebar';
 
 export default function BlogSubpageLayout({ selectedTab, handlePostClick, onCategorySelect, children }) {

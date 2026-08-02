@@ -15,7 +15,6 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
-    "dev:single": "vite build --config vite.singlefile.config.js",
     "analyze": "ANALYZE=true vite build"
   },
   "dependencies": {
