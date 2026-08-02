@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Sparkles, BookOpen, User, Gamepad2, Wrench, ArrowRight, Activity, FileText, Music, Layers, Globe, MonitorSmartphone, Heart, Edit3, Code, ArrowLeftRight, Crosshair, Castle, Brain, Headphones, Shield } from 'lucide-react';
+import { Sparkles, BookOpen, Wrench, ArrowRight, FileText, Music, Layers, MonitorSmartphone, Heart, Edit3, Headphones } from 'lucide-react';
 import ParticleBackground from './ParticleBackground';
 import { navigate } from '../../utils/navigation';
 
@@ -14,33 +14,6 @@ export default function ToolsOverviewPage() {
       gradient: 'from-purple-600 to-blue-600',
       link: '/learnbuddy/boulder/home',
       category: 'Learning'
-    },
-    {
-      id: 'cv',
-      title: 'CV / Resume',
-      description: 'Professional curriculum vitae and portfolio overview',
-      icon: User,
-      gradient: 'from-blue-600 to-cyan-600',
-      link: '/cv',
-      category: 'Professional'
-    },
-    {
-      id: 'logic-test',
-      title: 'A.O.N. Assessment',
-      description: 'Simulation of logical reasoning assessments including deductive reasoning, working memory, and more.',
-      icon: User, // Using User icon as shield/brain are not imported, but User is already imported and used for CV
-      gradient: 'from-indigo-600 to-blue-600',
-      link: '/tools/logic-test',
-      category: 'Professional'
-    },
-    {
-      id: 'focus-detector',
-      title: 'Focus Detector',
-      description: 'Visual utility that tracks window focus and visibility state in real-time.',
-      icon: Activity,
-      gradient: 'from-emerald-600 to-teal-600',
-      link: '/tools/focus-detector',
-      category: 'Tools',
     },
     {
       id: 'pdf-tools',
@@ -73,16 +46,6 @@ export default function ToolsOverviewPage() {
       badge: 'New'
     },
     {
-      id: 'travel-hub',
-      title: 'Travel Hub',
-      description: 'Reise-Toolkit: Budget-Tracker, Zeitzonen, Visa-Checker, Tagebuch, Notfall-Info, Umrechner & Länder-Guides.',
-      icon: Globe,
-      gradient: 'from-teal-500 to-cyan-500',
-      link: '/tools/travel',
-      category: 'Tools',
-      badge: 'New'
-    },
-    {
       id: 'device-test',
       title: 'Mic & Webcam Test',
       description: 'Test your microphone and webcam with real-time visualizations — 100% local, nothing is recorded or sent.',
@@ -90,26 +53,6 @@ export default function ToolsOverviewPage() {
       gradient: 'from-sky-500 to-indigo-600',
       link: '/tools/device-test',
       category: 'Tools',
-      badge: 'New'
-    },
-    {
-      id: 'prompt-library',
-      title: 'AI Prompt Library',
-      description: 'Save, organize & reuse your AI prompts. Variables, tags, categories, import/export — all local in your browser.',
-      icon: Sparkles,
-      gradient: 'from-violet-500 to-purple-600',
-      link: '/tools/prompt-library',
-      category: 'Developer',
-      badge: 'New'
-    },
-    {
-      id: 'data-converter',
-      title: 'Data Converter',
-      description: 'Convert between JSON, YAML & TOML instantly. Auto-detection, pretty-print, minify — 100% client-side.',
-      icon: ArrowLeftRight,
-      gradient: 'from-teal-500 to-cyan-600',
-      link: '/tools/data-converter',
-      category: 'Developer',
       badge: 'New'
     },
     {
@@ -123,36 +66,6 @@ export default function ToolsOverviewPage() {
       badge: 'New'
     },
     {
-      id: 'pubg-tierlist',
-      title: 'PUBG Weapon Tier List',
-      description: 'All PUBG weapons ranked: S- to D-Tier with Damage, Fire Rate, Range & Stability stats.',
-      icon: Crosshair,
-      gradient: 'from-orange-500 to-red-600',
-      link: '/tools/pubg-tierlist',
-      category: 'Gaming',
-      badge: 'New'
-    },
-    {
-      id: 'aoe-strategy',
-      title: 'AoE II Strategy Guide',
-      description: 'Build Orders & strategies for every Age of Empires II civilization. Dark Age to Castle Age step-by-step.',
-      icon: Castle,
-      gradient: 'from-amber-500 to-yellow-600',
-      link: '/tools/aoe-strategy',
-      category: 'Gaming',
-      badge: 'New'
-    },
-    {
-      id: 'brain-training',
-      title: 'Brain Training',
-      description: '6 science-based cognitive exercises: Reaction Time, Stroop Test, N-Back, Aim Trainer, Speed Reading & Peripheral Vision.',
-      icon: Brain,
-      gradient: 'from-indigo-500 to-purple-600',
-      link: '/tools/brain-training',
-      category: 'Learning',
-      badge: 'New'
-    },
-    {
       id: 'perfect-pitch',
       title: 'Perfect Pitch Trainer',
       description: 'Train your ear to identify musical notes and intervals. Three modes: White Keys, All Keys & Intervals.',
@@ -160,86 +73,6 @@ export default function ToolsOverviewPage() {
       gradient: 'from-violet-500 to-pink-600',
       link: '/tools/perfect-pitch',
       category: 'Learning',
-      badge: 'New'
-    },
-    {
-      id: 'doodledash',
-      title: 'DoodleDash',
-      description: 'Draw and guess with friends! New: Avatars, Chat, Fill Tool & More!',
-      icon: Gamepad2,
-      gradient: 'from-pink-600 to-purple-600',
-      link: '/games/doodledash',
-      category: 'Games',
-      badge: 'Update'
-    },
-    {
-      id: 'maexchen',
-      title: 'Mäxchen',
-      description: 'Das legendäre Bluff-Würfelspiel! Würfle, bluffe und decke Lügner auf. 4-6 Spieler!',
-      icon: Gamepad2,
-      gradient: 'from-amber-500 to-orange-600',
-      link: '/games/maexchen',
-      category: 'Games',
-      badge: 'Neu'
-    },
-    {
-      id: 'kniffel',
-      title: 'Kniffel',
-      description: 'Das Würfel-Klassiker-Spiel! Sammle Punkte mit cleveren Kombinationen. 2-6 Spieler!',
-      icon: Gamepad2,
-      gradient: 'from-violet-500 to-purple-600',
-      link: '/games/kniffel',
-      category: 'Games',
-      badge: 'Neu'
-    },
-    {
-      id: 'liars-dice',
-      title: "Liar's Dice",
-      description: 'Bluff your way to victory! Bid, lie, and call out liars in this classic dice game. 2-8 players!',
-      icon: Gamepad2,
-      gradient: 'from-cyan-500 to-purple-600',
-      link: '/games/liars-dice',
-      category: 'Games',
-      badge: 'New'
-    },
-    {
-      id: 'imposter',
-      title: 'Wort-Imposter',
-      description: 'Finde den Spion! Jeder bekommt ein Wort — aber der Imposter hat ein anderes. 3-10 Spieler, 1 Gerät!',
-      icon: Gamepad2,
-      gradient: 'from-red-500 to-orange-600',
-      link: '/games/imposter',
-      category: 'Games',
-      badge: 'Neu'
-    },
-    {
-      id: 'cupcake-chaos',
-      title: 'Cupcake Chaos',
-      description: 'The chaotic card game! Draw, steal, trap & counter your way to exactly 10 cards. Shout CUPCAKE! to win. 2-6 players!',
-      icon: Gamepad2,
-      gradient: 'from-fuchsia-500 to-purple-600',
-      link: '/games/cupcake-chaos',
-      category: 'Games',
-      badge: 'New'
-    },
-    {
-      id: 'cybershield',
-      title: 'CyberShield',
-      description: 'Learn Information Security Management! Defend your organization against cyber threats as a SOC analyst. 30 ISMS scenarios!',
-      icon: Shield,
-      gradient: 'from-cyan-500 to-emerald-600',
-      link: '/games/cybershield',
-      category: 'Learning',
-      badge: 'New'
-    },
-    {
-      id: 'who-am-i',
-      title: 'Who Am I?',
-      description: 'The classic guessing game! Get a secret identity, ask yes/no questions, and figure out who you are. 2-12 players!',
-      icon: Gamepad2,
-      gradient: 'from-amber-500 to-pink-600',
-      link: '/games/who-am-i',
-      category: 'Games',
       badge: 'New'
     }
   ];

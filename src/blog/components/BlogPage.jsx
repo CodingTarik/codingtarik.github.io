@@ -107,8 +107,6 @@ export default function BlogPage({ onPostClick }) {
       navigate('/blog/categories');
     } else if (tabId === 'projects') {
       navigate('/blog/projects');
-    } else if (tabId === 'cv') {
-      navigate('/cv');
     }
   };
 

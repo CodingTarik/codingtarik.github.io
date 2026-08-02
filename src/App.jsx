@@ -87,32 +87,13 @@ import CategoriesPage from './blog/components/CategoriesPage';
 import ProjectsPage from './blog/components/ProjectsPage';
 import { getPostById } from './blog/utils/blogUtils';
 
-// CV Component
-import CVPage from './cv/components/CVPage';
-
-// Tools & Games
+// Tools
 import ToolsOverviewPage from './blog/components/ToolsOverviewPage';
-import DoodleDash from './games/doodledash/DoodleDash';
-import Maexchen from './games/maexchen/Maexchen';
-import Kniffel from './games/kniffel/Kniffel';
-import LiarsDice from './games/liars-dice/LiarsDice';
-import WhoAmI from './games/who-am-i/WhoAmI';
-import CupcakeChaos from './games/cupcake-chaos/CupcakeChaos';
-import Imposter from './games/imposter/Imposter';
-import CyberShield from './games/cybershield/CyberShield';
-import LogicTest from './tools/logic-test/LogicTest';
-import FocusDetector from './tools/focus-detector/FocusDetector';
 import PianoStudio from './tools/piano/PianoStudio';
 import PdfTools from './tools/pdf-tools/PdfTools';
 import FlashMaster from './tools/flashmaster/FlashMaster';
-import TravelHub from './tools/travel/TravelHub';
 import DeviceTest from './tools/device-test/DeviceTest';
-import PromptLibrary from './tools/prompt-library/PromptLibrary';
-import DataConverter from './tools/data-converter/DataConverter';
 import MarkdownEditor from './tools/markdown-editor/MarkdownEditor';
-import PubgTierList from './tools/pubg-tierlist/PubgTierList';
-import AoeStrategy from './tools/aoe-strategy/AoeStrategy';
-import BrainTraining from './tools/brain-training/BrainTraining';
 import PerfectPitch from './tools/perfect-pitch/PerfectPitch';
 
 // Shared Components
@@ -126,9 +107,6 @@ import { updateMetaTags, updateCanonicalUrl, removeStructuredData } from './blog
 // Consent & DSGVO
 import ConsentBanner from './shared/components/ConsentBanner';
 import { applyConsent, hasConsented } from './shared/utils/consentManager';
-
-// Admin Panel
-import AdminPanel from './admin/AdminPanel';
 
 // Reusable blog subpage layout with responsive sidebar
 function BlogSubpageWithSidebar({ selectedTab, handlePostClick, onCategorySelect, children }) {
@@ -144,7 +122,6 @@ function BlogSubpageWithSidebar({ selectedTab, handlePostClick, onCategorySelect
           else if (tab === 'search') navigate('/blog/search');
           else if (tab === 'categories') navigate('/blog/categories');
           else if (tab === 'projects') navigate('/blog/projects');
-          else if (tab === 'cv') navigate('/cv');
         }}
         onCategorySelect={onCategorySelect || (() => { })}
         selectedCategory={null}
@@ -182,7 +159,6 @@ function BlogPostDetailWithSidebar({ currentPost, handleBackToBlog, handlePostCl
           else if (tab === 'search') navigate('/blog/search');
           else if (tab === 'categories') navigate('/blog/categories');
           else if (tab === 'projects') navigate('/blog/projects');
-          else if (tab === 'cv') navigate('/cv');
         }}
         onCategorySelect={() => { }}
         selectedCategory={null}
@@ -329,25 +305,10 @@ function AppContent() {
   // Update SEO for non-blog, non-learnbuddy views
   useEffect(() => {
     const seoByView = {
-      'cv': {
-        title: 'Lebenslauf - Tarik Azzouzi | Software Engineer',
-        description: 'Lebenslauf und berufliches Profil von Tarik Azzouzi - Software Engineer mit Erfahrung in Web Development, Cybersecurity und DevOps.',
-        canonicalPath: 'cv'
-      },
       'tools': {
         title: 'Tools & Utilities - Tarik Azzouzi',
-        description: 'Nuetzliche Online-Tools: Logik-Test, Fokus-Detektor und mehr. Kostenlos und ohne Anmeldung.',
+        description: 'Nuetzliche Online-Tools: PDF Tools, Piano Studio, FlashMaster, Perfect Pitch Trainer und mehr.',
         canonicalPath: 'tools'
-      },
-      'logic-test': {
-        title: 'Logik-Test - Teste dein logisches Denken',
-        description: 'Kostenloser Online Logik-Test. Trainiere dein logisches Denkvermogen mit verschiedenen Aufgabentypen.',
-        canonicalPath: 'tools/logic-test'
-      },
-      'focus-detector': {
-        title: 'Fokus-Detektor - Aufmerksamkeit testen',
-        description: 'Teste und trainiere deine Aufmerksamkeit und Konzentration mit dem Fokus-Detektor.',
-        canonicalPath: 'tools/focus-detector'
       },
       'privacy': {
         title: 'Privacy Policy - Tarik Azzouzi',
@@ -359,11 +320,6 @@ function AppContent() {
         description: 'Legal notice and contact information from Tarik Azzouzi.',
         canonicalPath: 'imprint'
       },
-      'games': {
-        title: 'Games - DoodleDash & mehr',
-        description: 'Spiele und Mini-Games zum Zeitvertreib. Probiere DoodleDash und mehr aus.',
-        canonicalPath: 'games/doodledash'
-      },
       'flashmaster': {
         title: 'FlashMaster - Karteikarten mit Spaced Repetition',
         description: 'Leistungsstarke Karteikarten-App mit Spaced Repetition, KI-Kartenerstellung, Anki-Import/Export, Voice-Modus und mehr.',
@@ -373,31 +329,6 @@ function AppContent() {
         title: 'Mic & Webcam Test - Mikrofon und Kamera testen',
         description: 'Teste dein Mikrofon und deine Webcam direkt im Browser. Echtzeit-Visualisierung, 100% lokal, keine Daten werden gesendet.',
         canonicalPath: 'tools/device-test'
-      },
-      'prompt-library': {
-        title: 'AI Prompt Library - Prompts speichern, organisieren & testen',
-        description: 'Speichere und organisiere deine AI Prompts mit Variablen, Tags, Kategorien, Import/Export. 100% lokal im Browser.',
-        canonicalPath: 'tools/prompt-library'
-      },
-      'data-converter': {
-        title: 'Data Converter - JSON ↔ YAML ↔ TOML',
-        description: 'Konvertiere zwischen JSON, YAML und TOML. Auto-Erkennung, Pretty-Print, Minify. 100% lokal im Browser.',
-        canonicalPath: 'tools/data-converter'
-      },
-      'pubg-tierlist': {
-        title: 'PUBG Weapon Tier List - All Weapons Ranked',
-        description: 'PUBG Weapon Tier List with Damage, Fire Rate, Range & Stability stats. S- to D-Tier ranking of all weapons.',
-        canonicalPath: 'tools/pubg-tierlist'
-      },
-      'aoe-strategy': {
-        title: 'Age of Empires II Strategy Guide - Build Orders',
-        description: 'Build Orders and strategies for every AoE2 civilization. Step-by-step from Dark Age to Castle Age.',
-        canonicalPath: 'tools/aoe-strategy'
-      },
-      'brain-training': {
-        title: 'Brain Training - 6 Science-Based Cognitive Exercises',
-        description: 'Train your brain with scientifically-backed exercises: Reaction Time, Stroop Test, N-Back, Aim Trainer, Speed Reading & Peripheral Vision.',
-        canonicalPath: 'tools/brain-training'
       },
       'perfect-pitch': {
         title: 'Perfect Pitch Trainer - Ear Training for Musical Notes & Intervals',
@@ -436,33 +367,9 @@ function AppContent() {
         return;
       }
 
-      // Check for Admin route
-      if (path.startsWith('/admin')) {
-        setAppView('admin');
-        return;
-      }
-
-      // Check for CV route
-      if (path === '/cv') {
-        setAppView('cv');
-        return;
-      }
-
       // Check for Tools route
       if (path === '/tools') {
         setAppView('tools');
-        return;
-      }
-
-      // Check for Logic Test route
-      if (path === '/tools/logic-test') {
-        setAppView('logic-test');
-        return;
-      }
-
-      // Check for Focus Detector route
-      if (path === '/tools/focus-detector') {
-        setAppView('focus-detector');
         return;
       }
 
@@ -484,27 +391,9 @@ function AppContent() {
         return;
       }
 
-      // Check for Travel Hub route
-      if (path === '/tools/travel') {
-        setAppView('travel-hub');
-        return;
-      }
-
       // Check for Device Test route
       if (path === '/tools/device-test') {
         setAppView('device-test');
-        return;
-      }
-
-      // Check for Prompt Library route
-      if (path === '/tools/prompt-library') {
-        setAppView('prompt-library');
-        return;
-      }
-
-      // Check for Data Converter route
-      if (path === '/tools/data-converter') {
-        setAppView('data-converter');
         return;
       }
 
@@ -514,33 +403,9 @@ function AppContent() {
         return;
       }
 
-      // Check for PUBG Tier List route
-      if (path === '/tools/pubg-tierlist') {
-        setAppView('pubg-tierlist');
-        return;
-      }
-
-      // Check for AoE Strategy route
-      if (path === '/tools/aoe-strategy') {
-        setAppView('aoe-strategy');
-        return;
-      }
-
-      // Check for Brain Training route
-      if (path === '/tools/brain-training') {
-        setAppView('brain-training');
-        return;
-      }
-
       // Check for Perfect Pitch route
       if (path === '/tools/perfect-pitch') {
         setAppView('perfect-pitch');
-        return;
-      }
-
-      // Check for Games routes
-      if (path.startsWith('/games/')) {
-        setAppView('games');
         return;
       }
 
@@ -879,24 +744,9 @@ function AppContent() {
       return <ImprintPageFooter />;
     }
 
-    // CV View
-    if (appView === 'cv') {
-      return <CVPage />;
-    }
-
     // Tools View
     if (appView === 'tools') {
       return <ToolsOverviewPage />;
-    }
-
-    // Logic Test View
-    if (appView === 'logic-test') {
-      return <LogicTest />;
-    }
-
-    // Focus Detector View
-    if (appView === 'focus-detector') {
-      return <FocusDetector />;
     }
 
     // PDF Tools View
@@ -914,11 +764,6 @@ function AppContent() {
       return <FlashMaster />;
     }
 
-    // Travel Hub View
-    if (appView === 'travel-hub') {
-      return <TravelHub />;
-    }
-
     // Markdown Editor View
     if (appView === 'markdown-editor') {
       return <MarkdownEditor />;
@@ -929,67 +774,9 @@ function AppContent() {
       return <DeviceTest />;
     }
 
-    // Prompt Library View
-    if (appView === 'prompt-library') {
-      return <PromptLibrary />;
-    }
-
-    // Data Converter View
-    if (appView === 'data-converter') {
-      return <DataConverter />;
-    }
-
-    // PUBG Tier List View
-    if (appView === 'pubg-tierlist') {
-      return <PubgTierList />;
-    }
-
-    // AoE Strategy View
-    if (appView === 'aoe-strategy') {
-      return <AoeStrategy />;
-    }
-
-    // Brain Training View
-    if (appView === 'brain-training') {
-      return <BrainTraining />;
-    }
-
     // Perfect Pitch View
     if (appView === 'perfect-pitch') {
       return <PerfectPitch />;
-    }
-
-    // Games View
-    if (appView === 'games') {
-      const path = getPath();
-      // Check specific game route
-      if (path.startsWith('/games/doodledash')) {
-        return <DoodleDash />;
-      }
-      if (path.startsWith('/games/maexchen')) {
-        return <Maexchen />;
-      }
-      if (path.startsWith('/games/kniffel')) {
-        return <Kniffel />;
-      }
-      if (path.startsWith('/games/liars-dice')) {
-        return <LiarsDice />;
-      }
-      if (path.startsWith('/games/who-am-i')) {
-        return <WhoAmI />;
-      }
-      if (path === '/games/imposter') {
-        return <Imposter />;
-      }
-      if (path.startsWith('/games/cupcake-chaos')) {
-        return <CupcakeChaos />;
-      }
-      if (path === '/games/cybershield') {
-        return <CyberShield />;
-      }
-      // Default: redirect to tools
-      navigate('/tools', { replace: true });
-      return null;
     }
 
     // Blog View
@@ -1053,11 +840,6 @@ function AppContent() {
 
       // Default Blog Page (Posts overview) - only if no other blog route matched
       return <BlogPage onPostClick={handlePostClick} />;
-    }
-
-    // Admin Panel View
-    if (appView === 'admin') {
-      return <AdminPanel />;
     }
 
     // LearnBuddy View
@@ -1321,8 +1103,8 @@ function AppContent() {
         />
       )}
 
-      {/* Footer - Show on Blog, CV, Privacy, Imprint pages, but NOT on LearnBuddy, Games */}
-      {appView !== 'learnbuddy' && appView !== 'games' && appView !== 'piano-studio' && appView !== 'flashmaster' && appView !== 'markdown-editor' && appView !== 'brain-training' && appView !== 'perfect-pitch' && <Footer />}
+      {/* Footer - Show on Blog, Privacy, Imprint pages, but NOT on LearnBuddy */}
+      {appView !== 'learnbuddy' && appView !== 'piano-studio' && appView !== 'flashmaster' && appView !== 'markdown-editor' && appView !== 'perfect-pitch' && <Footer />}
 
       {/* DSGVO Consent Banner */}
       <ConsentBanner />

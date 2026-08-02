@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shield, FileText, Cookie, Settings } from 'lucide-react';
+import { Shield, FileText, Cookie } from 'lucide-react';
 import { navigate, getPath } from '../../utils/navigation';
 
 export default function Footer() {
@@ -47,14 +47,6 @@ export default function Footer() {
               <Cookie size={14} />
               <span>Privacy Settings</span>
             </button>
-            <a
-              href="/admin"
-              onClick={(e) => handleNavClick(e, '/admin')}
-              className="flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-light-primary dark:hover:text-dark-primary transition-colors font-medium"
-            >
-              <Settings size={14} />
-              <span>Admin</span>
-            </a>
           </div>
 
           {/* Copyright */}
