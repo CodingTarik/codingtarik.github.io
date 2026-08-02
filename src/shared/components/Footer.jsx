@@ -5,9 +5,9 @@ import { navigate, getPath } from '../../utils/navigation';
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
-  // Check if we're in blog view (has sidebar) - use getPath for offline compatibility
+  // Check if page has sidebar - use getPath for offline compatibility
   const path = getPath();
-  const isBlogView = path.startsWith('/blog') || path === '/' || path === '';
+  const hasSidebar = path.startsWith('/blog') || path === '/tools' || path === '/tools/' || path === '/' || path === '';
 
   const handleOpenConsentBanner = () => {
     window.dispatchEvent(new CustomEvent('open-consent-banner'));
@@ -19,7 +19,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className={`bg-light-background dark:bg-dark-background border-t border-light-border dark:border-dark-border mt-auto relative z-50 ${isBlogView ? 'lg:ml-80' : ''}`}>
+    <footer className={`bg-light-background dark:bg-dark-background border-t border-light-border dark:border-dark-border mt-auto relative z-50 ${hasSidebar ? 'lg:ml-72' : ''}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           {/* Links */}

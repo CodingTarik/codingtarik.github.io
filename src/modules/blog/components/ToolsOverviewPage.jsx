@@ -196,7 +196,7 @@ export default function ToolsOverviewPage() {
             </h1>
 
             <p className="text-base sm:text-lg text-muted leading-relaxed mb-6">
-              A curated collection of web applications built for learning, privacy-focused document processing, audio analysis, and productivity. Runs 100% locally in your browser.
+              A collection of practical web applications designed for everyday tasks, learning, and productivity. 100% privacy-focused and runs directly in your browser.
             </p>
 
             {/* Quick Metrics Bar */}
@@ -215,14 +215,11 @@ export default function ToolsOverviewPage() {
                 <span>Zero Server Uploads</span>
               </div>
 
-              <div className="col-span-2 sm:col-span-1 flex items-center justify-start sm:justify-end gap-2.5 text-xs sm:text-sm font-semibold text-text">
-                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20">
-                  <div className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                  </div>
-                  <span className="text-emerald-500 tracking-wide uppercase text-[10px] font-extrabold">All Systems Online</span>
+              <div className="col-span-2 sm:col-span-1 flex items-center gap-2.5 text-xs sm:text-sm font-semibold text-text">
+                <div className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+                  <Cpu size={18} />
                 </div>
+                <span>Browser Native Execution</span>
               </div>
             </div>
           </div>
