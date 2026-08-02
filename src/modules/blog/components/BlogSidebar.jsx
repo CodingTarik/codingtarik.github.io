@@ -17,6 +17,14 @@ const DiscordIcon = ({ size = 16 }) => (
   </svg>
 );
 
+// Custom Fiverr Icon
+const FiverrIcon = ({ size = 16 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+    <circle cx="17.2" cy="5.8" r="1.6" />
+    <path d="M22 8.5h-3.5V7c0-.8.5-1.2 1.2-1.2h2.2V2.5h-2.9C16.4 2.5 15 4.3 15 7v1.5h-2V12h2v9.5h3.5V12H22V8.5zM10.8 8.5H8.3V7c0-.8.5-1.2 1.2-1.2h1.3V2.5H7.9C5.3 2.5 3.8 4.3 3.8 7v1.5H2V12h1.8v9.5H7.3V12h3.5V8.5z" />
+  </svg>
+);
+
 export default function BlogSidebar({
   selectedTab,
   onTabChange,
@@ -36,6 +44,7 @@ export default function BlogSidebar({
   const socialLinks = [
     { icon: Github, label: 'GitHub', url: blogConfig.social.github },
     { icon: Linkedin, label: 'LinkedIn', url: blogConfig.social.linkedin },
+    { icon: FiverrIcon, label: 'Fiverr (CyberTA)', url: blogConfig.social.fiverr },
     { icon: Box, label: 'HackTheBox', url: blogConfig.social.hackthebox },
     { icon: Target, label: 'TryHackMe', url: blogConfig.social.tryhackme },
     { icon: DiscordIcon, label: 'Discord', url: blogConfig.social.discord },
