@@ -9,6 +9,38 @@ import {
 import ParticleBackground from './ParticleBackground';
 import { navigate } from '../../../utils/navigation';
 
+const SpotlightCard = ({ children, className = '', onClick }) => {
+  const divRef = React.useRef(null);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [opacity, setOpacity] = useState(0);
+
+  const handleMouseMove = (e) => {
+    if (!divRef.current) return;
+    const rect = divRef.current.getBoundingClientRect();
+    setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  };
+
+  return (
+    <div
+      ref={divRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setOpacity(1)}
+      onMouseLeave={() => setOpacity(0)}
+      onClick={onClick}
+      className={`relative overflow-hidden ${className}`}
+    >
+      <div
+        className="pointer-events-none absolute -inset-px transition duration-300 z-10"
+        style={{
+          opacity,
+          background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(120, 119, 198, 0.15), transparent 40%)`
+        }}
+      />
+      {children}
+    </div>
+  );
+};
+
 export default function ToolsOverviewPage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
@@ -183,11 +215,14 @@ export default function ToolsOverviewPage() {
                 <span>Zero Server Uploads</span>
               </div>
 
-              <div className="col-span-2 sm:col-span-1 flex items-center gap-2.5 text-xs sm:text-sm font-semibold text-text">
-                <div className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
-                  <Star size={18} />
+              <div className="col-span-2 sm:col-span-1 flex items-center justify-start sm:justify-end gap-2.5 text-xs sm:text-sm font-semibold text-text">
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20">
+                  <div className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                  </div>
+                  <span className="text-emerald-500 tracking-wide uppercase text-[10px] font-extrabold">All Systems Online</span>
                 </div>
-                <span>7 Web Apps Ready</span>
               </div>
             </div>
           </div>
@@ -226,15 +261,21 @@ export default function ToolsOverviewPage() {
           {/* Right Tools: Search & Layout Switcher */}
           <div className="flex items-center gap-3">
             {/* Search Box */}
-            <div className="relative flex-1 lg:w-72">
-              <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted" />
+            <div className="relative flex-1 lg:w-72 group">
+              <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted group-focus-within:text-primary transition-colors" />
               <input
                 type="text"
                 placeholder="Filter by keyword..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 bg-card border border-border rounded-xl text-xs sm:text-sm focus:outline-none focus:border-primary text-text placeholder:text-muted shadow-sm transition-colors"
+                className="w-full pl-9 pr-14 py-2 bg-card border border-border rounded-xl text-xs sm:text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-text placeholder:text-muted shadow-sm transition-all"
               />
+              {!searchQuery && (
+                <div className="absolute right-3 top-1/2 -translate-y-1/2 hidden sm:flex items-center gap-1">
+                  <kbd className="px-1.5 py-0.5 bg-background border border-border rounded text-[10px] font-bold text-muted shadow-sm">⌘</kbd>
+                  <kbd className="px-1.5 py-0.5 bg-background border border-border rounded text-[10px] font-bold text-muted shadow-sm">K</kbd>
+                </div>
+              )}
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
@@ -280,18 +321,21 @@ export default function ToolsOverviewPage() {
                 {filteredTools.map((tool, idx) => {
                   const Icon = tool.icon;
                   return (
-                    <motion.article
+                    <motion.div
                       key={tool.id}
-                      onClick={() => navigate(tool.link)}
                       initial={{ opacity: 0, y: 15 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: idx * 0.05 }}
                       whileHover={{ y: -6 }}
-                      className={`
-                        group relative bg-card border border-border rounded-2xl p-6 shadow-md ${tool.borderGlow}
-                        transition-all duration-300 flex flex-col justify-between overflow-hidden cursor-pointer
-                      `}
+                      className="flex flex-col"
                     >
+                      <SpotlightCard
+                        onClick={() => navigate(tool.link)}
+                        className={`
+                          group bg-card border border-border rounded-2xl p-6 shadow-md ${tool.borderGlow}
+                          transition-all duration-300 flex flex-col justify-between h-full cursor-pointer flex-1
+                        `}
+                      >
                       {/* Top Bar: Icon & Badge */}
                       <div>
                         <div className="flex items-start justify-between mb-4">
@@ -343,7 +387,8 @@ export default function ToolsOverviewPage() {
                           </div>
                         </div>
                       </div>
-                    </motion.article>
+                      </SpotlightCard>
+                    </motion.div>
                   );
                 })}
               </motion.div>
