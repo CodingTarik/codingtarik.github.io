@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Github, GitCommit, Star, GitFork, Activity, TrendingUp, MapPin, Building, Link as LinkIcon, Sparkles } from 'lucide-react';
+import { Github, GitCommit, Star, GitFork, Activity, TrendingUp, Sparkles } from 'lucide-react';
 import blogConfig from '../config';
 
 export default function GitHubActivity({ username = blogConfig.author.github }) {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchGitHubStats = async () => {
@@ -35,15 +34,11 @@ export default function GitHubActivity({ username = blogConfig.author.github }) 
           followers: userData.followers,
           following: userData.following,
           bio: userData.bio || 'Passionate software developer & open-source builder.',
-          location: userData.location,
-          company: userData.company,
-          blog: userData.blog,
         });
         
         setLoading(false);
       } catch (err) {
         console.error('Error fetching GitHub stats:', err);
-        setError(err.message);
         
         // Fallback data
         setStats({
@@ -67,7 +62,7 @@ export default function GitHubActivity({ username = blogConfig.author.github }) 
       <div className="mb-10 p-8 bg-card/60 backdrop-blur-md rounded-3xl border border-border/80 shadow-lg text-center">
         <div className="animate-pulse flex items-center justify-center gap-3">
           <Github size={24} className="text-primary animate-spin" />
-          <span className="text-muted font-medium">Loading live GitHub data...</span>
+          <span className="text-muted font-medium">Loading live GitHub activity...</span>
         </div>
       </div>
     );
@@ -155,7 +150,7 @@ export default function GitHubActivity({ username = blogConfig.author.github }) 
             whileTap={{ scale: 0.97 }}
           >
             <Github size={16} />
-            <span>GitHub Profil besuchen</span>
+            <span>View GitHub Profile</span>
             <TrendingUp size={14} />
           </motion.a>
         </div>

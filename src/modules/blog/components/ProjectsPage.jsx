@@ -200,7 +200,7 @@ export default function ProjectsPage() {
   ];
 
   const filterCategories = [
-    { id: 'all', label: 'Alle Projekte', icon: Layers },
+    { id: 'all', label: 'All Projects', icon: Layers },
     { id: 'featured', label: '⭐ Featured', icon: Star },
     { id: 'web', label: 'Web & React', icon: Code },
     { id: 'python', label: 'Python & AI', icon: Terminal },
@@ -254,17 +254,8 @@ export default function ProjectsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            Projekte & Open Source
+            Projects & Open Source
           </motion.h1>
-
-          <motion.p
-            className="text-sm sm:text-base md:text-lg text-muted max-w-2xl mx-auto leading-relaxed"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
-          >
-            Eine interaktive Übersicht meiner Open-Source-Software, Web-Applikationen und Algorithmen.
-          </motion.p>
         </motion.header>
 
         {/* Live GitHub Activity Board */}
@@ -278,7 +269,7 @@ export default function ProjectsPage() {
               <Search size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted" />
               <input
                 type="text"
-                placeholder="Projekte oder Tech-Stack suchen..."
+                placeholder="Search projects or tech stack..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-10 pr-4 py-2.5 bg-card/80 backdrop-blur-md border border-border/80 rounded-2xl text-xs sm:text-sm text-text placeholder-muted focus:outline-none focus:border-primary transition-all shadow-sm"
@@ -427,8 +418,8 @@ export default function ProjectsPage() {
         {filteredProjects.length === 0 && (
           <div className="text-center py-16 bg-card/60 rounded-3xl border border-border/80">
             <Search size={40} className="mx-auto mb-3 text-muted" />
-            <h3 className="text-lg font-bold text-text mb-1">Keine Projekte gefunden</h3>
-            <p className="text-xs sm:text-sm text-muted">Versuche einen anderen Suchbegriff oder Filter.</p>
+            <h3 className="text-lg font-bold text-text mb-1">No projects found</h3>
+            <p className="text-xs sm:text-sm text-muted">Try a different search query or filter.</p>
           </div>
         )}
 
@@ -443,10 +434,10 @@ export default function ProjectsPage() {
             <Code size={32} />
           </div>
           <h3 className="text-xl sm:text-2xl font-bold text-text mb-2">
-            Ständig neue Open-Source-Projekte
+            Constantly Building Open Source
           </h3>
           <p className="text-xs sm:text-sm text-muted max-w-md mx-auto leading-relaxed">
-            Folge mir auf GitHub, um neue Repositories, Werkzeuge und Updates direkt zu sehen!
+            Follow on GitHub to get real-time updates on new repositories, tools, and releases.
           </p>
           <a
             href={`https://github.com/${blogConfig.author.github}`}
@@ -455,7 +446,7 @@ export default function ProjectsPage() {
             className="inline-flex items-center gap-2 mt-5 px-5 py-2.5 bg-gradient-to-r from-primary to-secondary text-white rounded-xl text-xs sm:text-sm font-bold shadow-lg shadow-primary/20 hover:opacity-90 transition-all cursor-pointer"
           >
             <Github size={16} />
-            <span>CodingTarik auf GitHub folgen</span>
+            <span>Follow @CodingTarik on GitHub</span>
           </a>
         </motion.div>
 
