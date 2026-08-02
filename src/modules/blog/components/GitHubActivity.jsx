@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Github, GitCommit, Star, GitFork, Activity, TrendingUp, Sparkles } from 'lucide-react';
+import { Github, GitCommit, Star, GitFork, Activity, TrendingUp, Sparkles, Layers } from 'lucide-react';
 import blogConfig from '../config';
 
 export default function GitHubActivity({ username = blogConfig.author.github }) {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const techBreakdown = [
+    { name: 'Python', count: 6, color: 'bg-emerald-500', percent: '45%' },
+    { name: 'React / TypeScript', count: 4, color: 'bg-cyan-500', percent: '32%' },
+    { name: 'Java', count: 2, color: 'bg-amber-500', percent: '15%' },
+    { name: 'Node.js / Express', count: 1, color: 'bg-purple-500', percent: '8%' },
+  ];
 
   useEffect(() => {
     const fetchGitHubStats = async () => {
@@ -182,6 +189,35 @@ export default function GitHubActivity({ username = blogConfig.author.github }) 
           })}
         </div>
 
+        {/* Full-Width Ecosystem Tech Breakdown (Integrated right below stats grid) */}
+        <div className="p-5 my-6 rounded-2xl bg-background/60 border border-border/80 backdrop-blur-md shadow-inner">
+          <div className="flex items-center justify-between text-xs sm:text-sm font-bold text-text mb-3">
+            <div className="flex items-center gap-2">
+              <Layers size={16} className="text-primary" />
+              <span>Ecosystem Tech Stack Distribution</span>
+            </div>
+            <span className="text-muted font-mono text-xs">{stats?.totalRepos || 12} Repositories</span>
+          </div>
+
+          {/* Progress Bar */}
+          <div className="h-3 w-full bg-background rounded-full overflow-hidden flex gap-1 p-0.5 border border-border/60 mb-3 shadow-inner">
+            {techBreakdown.map((t) => (
+              <div key={t.name} style={{ width: t.percent }} className={`${t.color} h-full rounded-full transition-all`} title={`${t.name}: ${t.percent}`} />
+            ))}
+          </div>
+
+          {/* Legend */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-semibold pt-1">
+            {techBreakdown.map((t) => (
+              <div key={t.name} className="flex items-center gap-2 bg-card/60 p-2 rounded-xl border border-border/50">
+                <span className={`w-3 h-3 rounded-full ${t.color} flex-shrink-0`} />
+                <span className="text-text truncate">{t.name}</span>
+                <span className="text-muted font-mono text-[11px] ml-auto">{t.percent}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* GitHub Commit Heatmap / Activity Board */}
         <div className="mt-6 pt-6 border-t border-border/60">
           <div className="flex items-center justify-between mb-4">
@@ -193,7 +229,6 @@ export default function GitHubActivity({ username = blogConfig.author.github }) 
           </div>
 
           <div className="p-4 bg-background/60 rounded-2xl border border-border/80 shadow-inner overflow-x-auto flex justify-center">
-            {/* Dark mode optimized cyan heat map */}
             <div className="min-w-[650px] w-full flex justify-center py-2">
               <img
                 src={`https://ghchart.rshah.org/00E5FF/${username}`}

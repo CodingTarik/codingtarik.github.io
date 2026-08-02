@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ExternalLink, Github, Code, Star, Search, Filter, Layers, Sparkles, Terminal,
@@ -52,27 +52,35 @@ export default function ProjectsPage() {
   const [viewMode, setViewMode] = useState('grid'); // 'grid' | 'list'
   const [sortBy, setSortBy] = useState('featured'); // 'featured' | 'stars' | 'name'
   const [selectedProject, setSelectedProject] = useState(null);
+  const [liveStars, setLiveStars] = useState({});
+
+  // Fetch live repository star counts from GitHub API
+  useEffect(() => {
+    const fetchGitHubStars = async () => {
+      try {
+        const username = blogConfig.author.github;
+        const res = await fetch(`https://api.github.com/users/${username}/repos?per_page=100`);
+        if (res.ok) {
+          const repos = await res.json();
+          const starMap = {};
+          repos.forEach((repo) => {
+            starMap[repo.name.toLowerCase()] = repo.stargazers_count || 0;
+          });
+          setLiveStars(starMap);
+        }
+      } catch (err) {
+        console.error('Failed to fetch live GitHub stars:', err);
+      }
+    };
+
+    fetchGitHubStars();
+  }, []);
 
   const projects = [
     {
-      id: 1,
-      title: 'LearnBuddy PWA',
-      description: 'Progressive Web Application for skill learning — from bouldering & cooking to software development. Features interactive lessons, quiz modes & offline sync.',
-      fullDescription: 'LearnBuddy is a modular Progressive Web Application designed for interactive self-education. It provides tailored learning pathways for various disciplines like Bouldering, Languages, Gym Workouts, Cooking, and Programming with offline capabilities.',
-      tech: ['React', 'Tailwind CSS', 'PWA', 'Vite'],
-      category: 'web',
-      icon: GraduationCap,
-      color: 'from-cyan-500/20 to-blue-500/20',
-      iconColor: 'text-cyan-400',
-      github: `https://github.com/${blogConfig.author.github}/${blogConfig.github?.repo || 'codingtarik.github.io'}`,
-      demo: '/learnbuddy/boulder/home',
-      featured: true,
-      stars: 12,
-      status: 'Production Ready',
-    },
-    {
       id: 2,
       title: 'MathPlan (TU Darmstadt)',
+      repoName: 'MathPlan',
       description: 'Management System for TU Darmstadt students. Streamlines submission, verification, and approval of academic examination plans with an administrative review board.',
       fullDescription: 'Developed specifically for TU Darmstadt mathematics department. Streamlines student course planning, module validation, and official examination schedule submissions.',
       tech: ['Node.js', 'Express', 'MySQL', 'SQLite', 'Jest'],
@@ -88,6 +96,7 @@ export default function ProjectsPage() {
     {
       id: 3,
       title: 'Parallel Subtitle Player',
+      repoName: 'Parallel-Subtitle-Player',
       description: 'Synchronized dual-subtitle video player for language acquisition. Compare and analyze dialogues in real-time with bookmarking and vocabulary export.',
       fullDescription: 'Elevates video-based language learning by displaying two subtitle tracks in sync. Supports keyboard navigation, phrase looping, dictionary lookup, and vocabulary export.',
       tech: ['TypeScript', 'React', 'Tailwind', 'Media APIs'],
@@ -103,6 +112,7 @@ export default function ProjectsPage() {
     {
       id: 4,
       title: 'Pangolin Wildlife Database',
+      repoName: 'Pangolin-Database-Manager',
       description: 'Conservation data management system built for the Tikki Hywood Foundation to track and protect endangered pangolin species in real time.',
       fullDescription: 'Custom wildlife management database software engineered for the Tikki Hywood Foundation. Handles rescue records, medical treatments, telemetry logs, and release tracking.',
       tech: ['Python', 'SQLite', 'Tkinter', 'Data Analysis'],
@@ -118,6 +128,7 @@ export default function ProjectsPage() {
     {
       id: 5,
       title: 'Jarvis Home Automation',
+      repoName: 'Jarvis-Home',
       description: 'Smart home IoT automation controller inspired by J.A.R.V.I.S. Includes voice command processing, sensor dashboards, and local hardware telemetry.',
       fullDescription: 'An offline-first IoT controller featuring voice recognition, MQTT sensor telemetry, dynamic lighting automation, and hardware dashboards.',
       tech: ['Python', 'IoT', 'Speech Recognition', 'AsyncIO'],
@@ -133,6 +144,7 @@ export default function ProjectsPage() {
     {
       id: 6,
       title: 'Mensa Menu Planner',
+      repoName: 'mensa-website',
       description: 'University cafeteria menu aggregator with intuitive meal planning, dietary filters, and student nutrition tracking.',
       fullDescription: 'Aggregates cafeteria menus across campus dining halls, providing real-time allergen filtering, price comparisons, and meal ratings.',
       tech: ['JavaScript', 'HTML5', 'CSS3', 'REST API'],
@@ -141,11 +153,13 @@ export default function ProjectsPage() {
       color: 'from-red-500/20 to-orange-500/20',
       iconColor: 'text-orange-400',
       github: `https://github.com/${blogConfig.author.github}/mensa-website`,
+      stars: 5,
       status: 'Maintained',
     },
     {
       id: 7,
       title: 'Multiple Knapsack Solver',
+      repoName: 'Multiple-Knapsack-Solver',
       description: 'High-performance combinatorial optimization algorithm for solving the NP-hard Multiple Knapsack Problem efficiently.',
       fullDescription: 'Algorithmic suite implementing exact branch-and-bound as well as greedy heuristic solvers for the Multiple Knapsack Problem.',
       tech: ['Python', 'Algorithms', 'Optimization', 'NumPy'],
@@ -154,11 +168,13 @@ export default function ProjectsPage() {
       color: 'from-teal-500/20 to-cyan-500/20',
       iconColor: 'text-teal-400',
       github: `https://github.com/${blogConfig.author.github}/Multiple-Knapsack-Solver`,
+      stars: 4,
       status: 'Research Tool',
     },
     {
       id: 8,
       title: 'Java Client-Server File System',
+      repoName: 'Java-Client-Server-File-Server-With-Gui',
       description: 'Multi-threaded client-server file distribution system with encrypted file transfers and custom Swing GUI client.',
       fullDescription: 'Concurrent Java file server featuring socket communication, custom protocol headers, user authentication, and desktop GUI.',
       tech: ['Java', 'Swing', 'Sockets', 'Multithreading'],
@@ -167,11 +183,13 @@ export default function ProjectsPage() {
       color: 'from-sky-500/20 to-indigo-500/20',
       iconColor: 'text-sky-400',
       github: `https://github.com/${blogConfig.author.github}/Java-Client-Server-File-Server-With-Gui`,
+      stars: 6,
       status: 'Open Source',
     },
     {
       id: 9,
       title: 'Forest Chrome Extension',
+      repoName: 'Forest-Chrome-Extension-Exceptional-Use',
       description: 'Productivity extension augmenting the Forest app with custom site blocking logic and session stats.',
       fullDescription: 'Extends the Forest focus browser extension to allow granular whitelist rules, exception schedules, and study analytics.',
       tech: ['JavaScript', 'Chrome Extension API', 'CSS'],
@@ -180,11 +198,13 @@ export default function ProjectsPage() {
       color: 'from-green-500/20 to-emerald-500/20',
       iconColor: 'text-green-400',
       github: `https://github.com/${blogConfig.author.github}/Forest-Chrome-Extension-Exceptional-Use`,
+      stars: 3,
       status: 'Stable',
     },
     {
       id: 10,
       title: 'Euklid Geometric Engine',
+      repoName: 'Euklid',
       description: 'Algorithmic visualization platform for Euclidean geometry and classic mathematical proofs.',
       fullDescription: 'Interactive math engine capable of plotting Euclidean constructions, calculating intersections, and visualizing geometry algorithms.',
       tech: ['Python', 'Mathematics', 'Geometry'],
@@ -193,11 +213,13 @@ export default function ProjectsPage() {
       color: 'from-violet-500/20 to-purple-500/20',
       iconColor: 'text-violet-400',
       github: `https://github.com/${blogConfig.author.github}/Euklid`,
+      stars: 7,
       status: 'Stable',
     },
     {
       id: 11,
       title: '2048 Python Game',
+      repoName: '2048Python',
       description: 'Custom Python implementation of the 2048 grid puzzle featuring smooth animations and high-score persistence.',
       fullDescription: 'Clean Pygame desktop implementation of 2048 with keyboard controls, tile merging animations, and undo history.',
       tech: ['Python', 'Pygame'],
@@ -206,11 +228,13 @@ export default function ProjectsPage() {
       color: 'from-rose-500/20 to-pink-500/20',
       iconColor: 'text-rose-400',
       github: `https://github.com/${blogConfig.author.github}/2048Python`,
+      stars: 5,
       status: 'Game',
     },
     {
       id: 12,
       title: 'K8055 USB Experiment Board',
+      repoName: 'k8055-USB-BOARD-Java-control',
       description: 'Hardware controller interface in Java for communicating with Velleman K8055 USB experiment boards.',
       fullDescription: 'Java hardware wrapper enabling low-latency digital I/O, analog-to-digital reading, and PWM output for the K8055 board.',
       tech: ['Java', 'USB Native', 'Hardware Control'],
@@ -219,9 +243,22 @@ export default function ProjectsPage() {
       color: 'from-yellow-500/20 to-amber-500/20',
       iconColor: 'text-yellow-400',
       github: `https://github.com/${blogConfig.author.github}/k8055-USB-BOARD-Java-control`,
+      stars: 4,
       status: 'Hardware',
     },
   ];
+
+  // Helper to get real live stars for a project
+  const getStars = (project) => {
+    if (!project) return 0;
+    if (project.repoName) {
+      const key = project.repoName.toLowerCase();
+      if (liveStars[key] !== undefined) {
+        return liveStars[key];
+      }
+    }
+    return project.stars ?? 0;
+  };
 
   const filterCategories = [
     { id: 'all', label: 'All Projects', icon: Layers },
@@ -230,16 +267,6 @@ export default function ProjectsPage() {
     { id: 'python', label: 'Python & AI', icon: Terminal },
     { id: 'tools', label: 'Tools & Systems', icon: Sparkles },
   ];
-
-  // Tech Stats Distribution Calculation
-  const techBreakdown = useMemo(() => {
-    return [
-      { name: 'Python', count: 6, color: 'bg-emerald-500', percent: '45%' },
-      { name: 'React / Web', count: 4, color: 'bg-cyan-500', percent: '32%' },
-      { name: 'Java', count: 2, color: 'bg-amber-500', percent: '15%' },
-      { name: 'Node.js', count: 1, color: 'bg-purple-500', percent: '8%' },
-    ];
-  }, []);
 
   const filteredProjects = useMemo(() => {
     let result = projects.filter((p) => {
@@ -254,7 +281,7 @@ export default function ProjectsPage() {
     });
 
     if (sortBy === 'stars') {
-      result = [...result].sort((a, b) => (b.stars || 0) - (a.stars || 0));
+      result = [...result].sort((a, b) => getStars(b) - getStars(a));
     } else if (sortBy === 'name') {
       result = [...result].sort((a, b) => a.title.localeCompare(b.title));
     } else if (sortBy === 'featured') {
@@ -262,7 +289,7 @@ export default function ProjectsPage() {
     }
 
     return result;
-  }, [projects, searchQuery, activeFilter, sortBy]);
+  }, [projects, searchQuery, activeFilter, sortBy, liveStars]);
 
   return (
     <div className="min-h-screen bg-background relative text-text overflow-hidden">
@@ -300,35 +327,6 @@ export default function ProjectsPage() {
           >
             Projects & Open Source
           </motion.h1>
-
-          {/* Tech Breakdown Bar */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="max-w-xl mx-auto mt-6 p-4 rounded-2xl bg-card/70 border border-border/80 backdrop-blur-md shadow-md"
-          >
-            <div className="flex items-center justify-between text-xs font-bold text-muted mb-2">
-              <span>Ecosystem Tech Breakdown</span>
-              <span>12 Repositories</span>
-            </div>
-            {/* Progress Bar */}
-            <div className="h-2.5 w-full bg-background rounded-full overflow-hidden flex gap-0.5 p-0.5 border border-border/50 mb-3">
-              {techBreakdown.map((t) => (
-                <div key={t.name} style={{ width: t.percent }} className={`${t.color} h-full rounded-full transition-all`} />
-              ))}
-            </div>
-            {/* Legend */}
-            <div className="flex items-center justify-center flex-wrap gap-4 text-xs font-semibold">
-              {techBreakdown.map((t) => (
-                <div key={t.name} className="flex items-center gap-1.5">
-                  <span className={`w-2.5 h-2.5 rounded-full ${t.color}`} />
-                  <span className="text-text">{t.name}</span>
-                  <span className="text-muted font-mono">({t.percent})</span>
-                </div>
-              ))}
-            </div>
-          </motion.div>
         </motion.header>
 
         {/* Live GitHub Activity Board */}
@@ -351,7 +349,7 @@ export default function ProjectsPage() {
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-bold text-muted hover:text-text"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-bold text-muted hover:text-text cursor-pointer"
                 >
                   ✕
                 </button>
@@ -426,6 +424,7 @@ export default function ProjectsPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {filteredProjects.map((project, index) => {
                 const ProjectIcon = project.icon;
+                const starCount = getStars(project);
 
                 return (
                   <motion.div
@@ -461,7 +460,7 @@ export default function ProjectsPage() {
                             </div>
                           </div>
 
-                          {/* Badges */}
+                          {/* Badges: Featured & Stars */}
                           <div className="flex items-center gap-2 flex-shrink-0">
                             {project.featured && (
                               <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30 text-amber-400 rounded-full text-[11px] font-bold">
@@ -470,12 +469,10 @@ export default function ProjectsPage() {
                               </span>
                             )}
 
-                            {project.stars && (
-                              <span className="flex items-center gap-1 text-xs font-semibold text-muted bg-background/60 px-2.5 py-1 rounded-full border border-border/60">
-                                <Star size={12} className="text-amber-400 fill-amber-400" />
-                                {project.stars}
-                              </span>
-                            )}
+                            <span className="flex items-center gap-1.5 text-xs font-bold text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-full border border-amber-500/20 shadow-xs">
+                              <Star size={13} className="fill-amber-400 text-amber-400" />
+                              <span>{starCount}</span>
+                            </span>
                           </div>
                         </div>
 
@@ -548,6 +545,7 @@ export default function ProjectsPage() {
             <div className="space-y-4">
               {filteredProjects.map((project, index) => {
                 const ProjectIcon = project.icon;
+                const starCount = getStars(project);
 
                 return (
                   <motion.div
@@ -576,6 +574,10 @@ export default function ProjectsPage() {
                               Featured
                             </span>
                           )}
+                          <span className="flex items-center gap-1 text-[11px] font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
+                            <Star size={11} className="fill-amber-400" />
+                            <span>{starCount}</span>
+                          </span>
                         </div>
                         <p className="text-xs text-muted max-w-xl line-clamp-1 mt-0.5">
                           {project.description}
@@ -706,6 +708,10 @@ export default function ProjectsPage() {
                         {selectedProject.status}
                       </span>
                     )}
+                    <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 font-bold flex items-center gap-1">
+                      <Star size={12} className="fill-amber-400" />
+                      <span>{getStars(selectedProject)} Stars</span>
+                    </span>
                   </div>
                 </div>
               </div>
