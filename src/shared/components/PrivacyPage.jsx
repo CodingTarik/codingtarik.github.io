@@ -19,7 +19,7 @@ export default function PrivacyPage() {
           <div className="flex items-center gap-3 mb-4">
             <Shield size={32} className="text-light-primary dark:text-dark-primary" />
             <h1 className="text-3xl md:text-4xl font-bold">
-              Datenschutzerklaerung
+              Privacy Policy
             </h1>
           </div>
           <p className="text-gray-500 dark:text-gray-400">
@@ -102,7 +102,7 @@ export default function PrivacyPage() {
             GitHub kann die Daten in den USA verarbeiten. Die Uebermittlung in die USA wird durch die
             EU-Standardvertragsklauseln abgesichert. Weitere Informationen findest du in der{' '}
             <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener noreferrer">
-              Datenschutzerklaerung von GitHub
+              GitHub's Privacy Policy
             </a>.
           </p>
 
@@ -141,9 +141,9 @@ export default function PrivacyPage() {
               onClick={() => window.dispatchEvent(new CustomEvent('open-consent-banner'))}
               className="text-light-primary dark:text-dark-primary underline hover:no-underline cursor-pointer bg-transparent border-none p-0 font-inherit"
             >
-              Datenschutz-Einstellungen
+              Privacy Settings
             </button>{' '}
-            im Footer aenderst und &quot;Statistiken&quot; deaktivierst.
+            in the footer and disable "Statistics".
           </p>
           <p>
             Weitere Informationen zu Umami:{' '}
@@ -167,7 +167,7 @@ export default function PrivacyPage() {
             Beim Laden der Schriftarten von Google-Servern wird deine IP-Adresse an Google uebermittelt.
             Google kann die Daten in den USA verarbeiten. Weitere Informationen:{' '}
             <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">
-              Datenschutzerklaerung von Google
+              Google's Privacy Policy
             </a>{' '}
             und{' '}
             <a href="https://developers.google.com/fonts/faq/privacy" target="_blank" rel="noopener noreferrer">
@@ -180,7 +180,7 @@ export default function PrivacyPage() {
               onClick={() => window.dispatchEvent(new CustomEvent('open-consent-banner'))}
               className="text-light-primary dark:text-dark-primary underline hover:no-underline cursor-pointer bg-transparent border-none p-0 font-inherit"
             >
-              Datenschutz-Einstellungen
+              Privacy Settings
             </button>{' '}
             widerrufen.
           </p>
@@ -194,7 +194,7 @@ export default function PrivacyPage() {
           </p>
           <p>Folgende Daten werden lokal gespeichert:</p>
           <ul>
-            <li>Deine Datenschutz-Einstellungen (Consent-Entscheidung)</li>
+            <li>Your privacy settings (consent decision)</li>
             <li>Spracheinstellungen (Deutsch/Englisch)</li>
             <li>Farbschema-Praeferenz (Hell/Dunkel)</li>
             <li>Lernfortschritt und persoenliche Notizen in LearnBuddy</li>
@@ -250,7 +250,7 @@ export default function PrivacyPage() {
               onClick={() => window.dispatchEvent(new CustomEvent('open-consent-banner'))}
               className="text-light-primary dark:text-dark-primary underline hover:no-underline cursor-pointer bg-transparent border-none p-0 font-inherit"
             >
-              Datenschutz-Einstellungen
+              Privacy Settings
             </button>{' '}
             oder kontaktiere uns per E-Mail.
           </p>

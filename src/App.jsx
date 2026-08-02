@@ -350,13 +350,13 @@ function AppContent() {
         canonicalPath: 'tools/focus-detector'
       },
       'privacy': {
-        title: 'Datenschutz - Tarik Azzouzi',
-        description: 'Datenschutzerklaerung fuer codingtarik.github.io',
+        title: 'Privacy Policy - Tarik Azzouzi',
+        description: 'Privacy Policy for codingtarik.github.io',
         canonicalPath: 'privacy'
       },
       'imprint': {
-        title: 'Impressum - Tarik Azzouzi',
-        description: 'Impressum und Kontaktinformationen von Tarik Azzouzi.',
+        title: 'Legal Notice - Tarik Azzouzi',
+        description: 'Legal notice and contact information from Tarik Azzouzi.',
         canonicalPath: 'imprint'
       },
       'games': {

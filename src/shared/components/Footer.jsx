@@ -30,7 +30,7 @@ export default function Footer() {
               className="flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-light-primary dark:hover:text-dark-primary transition-colors font-medium"
             >
               <Shield size={14} />
-              <span>Datenschutz</span>
+              <span>Privacy Policy</span>
             </a>
             <a
               href="/imprint"
@@ -38,14 +38,14 @@ export default function Footer() {
               className="flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-light-primary dark:hover:text-dark-primary transition-colors font-medium"
             >
               <FileText size={14} />
-              <span>Impressum</span>
+              <span>Legal Notice</span>
             </a>
             <button
               onClick={handleOpenConsentBanner}
               className="flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-light-primary dark:hover:text-dark-primary transition-colors font-medium"
             >
               <Cookie size={14} />
-              <span>Datenschutz-Einstellungen</span>
+              <span>Privacy Settings</span>
             </button>
             <a
               href="/admin"

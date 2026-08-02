@@ -20,7 +20,7 @@ export default function ImprintPageFooter() {
           <div className="flex items-center gap-3 mb-4">
             <FileText size={32} className="text-light-primary dark:text-dark-primary" />
             <h1 className="text-3xl md:text-4xl font-bold">
-              Impressum
+              Legal Notice
             </h1>
           </div>
         </div>
