@@ -154,20 +154,39 @@ const findCodeElement = (node) => {
 };
 
 const Callout = ({ children, type = 'info' }) => {
-  const icons = {
-    info: <InfoIcon size={18} />,
-    warning: <AlertTriangleIcon size={18} />,
-    alert: <XCircleIcon size={18} />,
+  const configs = {
+    info: {
+      icon: <InfoIcon size={18} />,
+      label: 'Info',
+      classes: 'border-l-blue-500 bg-blue-50 dark:bg-blue-950/40 text-text',
+      labelClasses: 'bg-blue-100 dark:bg-blue-900/60 text-blue-800 dark:text-blue-200',
+      iconClasses: 'text-blue-600 dark:text-blue-400',
+    },
+    warning: {
+      icon: <AlertTriangleIcon size={18} />,
+      label: 'Warnung',
+      classes: 'border-l-amber-500 bg-amber-50 dark:bg-amber-950/40 text-text',
+      labelClasses: 'bg-amber-100 dark:bg-amber-900/60 text-amber-800 dark:text-amber-200',
+      iconClasses: 'text-amber-600 dark:text-amber-400',
+    },
+    alert: {
+      icon: <XCircleIcon size={18} />,
+      label: 'Achtung',
+      classes: 'border-l-red-500 bg-red-50 dark:bg-red-950/40 text-text',
+      labelClasses: 'bg-red-100 dark:bg-red-900/60 text-red-800 dark:text-red-200',
+      iconClasses: 'text-red-600 dark:text-red-400',
+    },
   };
-  const styles = {
-    info: 'border-l-primary bg-primary/5 text-text',
-    warning: 'border-l-yellow-500 bg-yellow-500/5 text-text',
-    alert: 'border-l-red-500 bg-red-500/5 text-text',
-  };
+  const cfg = configs[type];
   return (
-    <div className={`not-prose my-6 flex items-start gap-4 rounded-lg border-l-4 p-4 ${styles[type]}`}>
-      <div className="flex-shrink-0 pt-0.5 text-inherit opacity-80">{icons[type]}</div>
-      <div className="flex-1 [&>p]:last:mb-0">{children}</div>
+    <div className={`not-prose my-6 rounded-lg border-l-4 p-4 ${cfg.classes}`}>
+      <div className="flex items-center gap-3 pb-1">
+        <span className={`flex-shrink-0 ${cfg.iconClasses}`}>{cfg.icon}</span>
+        <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-md ${cfg.labelClasses}`}>
+          {cfg.label}
+        </span>
+      </div>
+      <div className="[&>p]:last:mb-0">{children}</div>
     </div>
   );
 };
