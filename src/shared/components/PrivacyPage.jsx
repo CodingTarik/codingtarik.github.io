@@ -113,7 +113,29 @@ export default function PrivacyPage() {
           {/* Section 4 */}
           <section className="border-b border-border/60 pb-6">
             <h2 className="text-lg sm:text-xl font-bold text-text mb-3">
-              {lang === 'de' ? '4. Webanalyse (Umami Analytics)' : '4. Web Analytics (Umami Analytics)'}
+              {lang === 'de' ? '4. Hosting (GitHub Pages)' : '4. Hosting (GitHub Pages)'}
+            </h2>
+            <p className="mb-3">
+              {lang === 'de'
+                ? 'Diese Website wird bei GitHub Pages (GitHub Inc., 88 Colin P Kelly Jr St, San Francisco, CA 94107, USA) gehostet. Bei jedem Aufruf der Website erfasst der Provider automatisch Daten und Informationen vom Computersystem des aufrufenden Rechners (sog. Server-Log-Files).'
+                : 'This website is hosted by GitHub Pages (GitHub Inc., 88 Colin P Kelly Jr St, San Francisco, CA 94107, USA). Each time the website is accessed, the provider automatically collects data and information from the computer system of the calling computer (so-called server log files).'}
+            </p>
+            <p className="mb-3">
+              {lang === 'de'
+                ? 'Erfasst werden unter anderem: Verwendeter Browsertyp und Version, Betriebssystem, IP-Adresse des Nutzers, Datum und Uhrzeit des Zugriffs. Die vorübergehende Speicherung der IP-Adresse durch das System ist notwendig, um eine Auslieferung der Website an den Rechner des Nutzers zu ermöglichen.'
+                : 'The following data may be collected: browser type and version, operating system, IP address of the user, date and time of access. The temporary storage of the IP address by the system is necessary to enable delivery of the website to the user\'s computer.'}
+            </p>
+            <p>
+              {lang === 'de'
+                ? 'Die Erfassung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Wir haben ein berechtigtes Interesse an einer technisch fehlerfreien Darstellung und der Optimierung unserer Website.'
+                : 'The collection of this data is based on Art. 6 (1) lit. f GDPR. We have a legitimate interest in the technically error-free presentation and optimization of our website.'}
+            </p>
+          </section>
+
+          {/* Section 5 */}
+          <section className="border-b border-border/60 pb-6">
+            <h2 className="text-lg sm:text-xl font-bold text-text mb-3">
+              {lang === 'de' ? '5. Webanalyse (Umami Analytics)' : '5. Web Analytics (Umami Analytics)'}
             </h2>
             <p className="mb-3">
               {lang === 'de'
@@ -137,10 +159,32 @@ export default function PrivacyPage() {
             </p>
           </section>
 
-          {/* Section 5 */}
+          {/* Section 6 */}
           <section className="border-b border-border/60 pb-6">
             <h2 className="text-lg sm:text-xl font-bold text-text mb-3">
-              {lang === 'de' ? '5. Lokale Datenspeicherung (Local Storage)' : '5. Local Data Storage (Local Storage)'}
+              {lang === 'de' ? '6. Externe Dienste (Google Fonts)' : '6. External Services (Google Fonts)'}
+            </h2>
+            <p className="mb-3">
+              {lang === 'de'
+                ? 'Wir binden externe Schriftarten von Google (Google Fonts) ein. Um deine Privatsphäre zu schützen, werden diese Schriftarten nicht automatisch geladen, wenn du unsere Website besuchst.'
+                : 'We integrate external fonts from Google (Google Fonts). To protect your privacy, these fonts are not loaded automatically when you visit our website.'}
+            </p>
+            <p className="mb-3">
+              {lang === 'de'
+                ? 'Eine Verbindung zu den Servern von Google (und damit die Übertragung deiner IP-Adresse in die USA) findet erst und nur dann statt, wenn du im Cookie-Banner explizit deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) in die Nutzung externer Dienste erteilt hast.'
+                : 'A connection to Google servers (and thus the transmission of your IP address to the USA) only takes place if you have explicitly given your consent (Art. 6 (1) lit. a GDPR) to the use of external services in the cookie banner.'}
+            </p>
+            <p>
+              {lang === 'de'
+                ? 'Ohne deine Einwilligung werden standardmäßig lokale oder System-Schriftarten verwendet.'
+                : 'Without your consent, local or system fonts are used by default.'}
+            </p>
+          </section>
+
+          {/* Section 7 */}
+          <section className="border-b border-border/60 pb-6">
+            <h2 className="text-lg sm:text-xl font-bold text-text mb-3">
+              {lang === 'de' ? '7. Lokale Datenspeicherung (Local Storage)' : '7. Local Data Storage (Local Storage)'}
             </h2>
             <p>
               {lang === 'de'
@@ -149,10 +193,10 @@ export default function PrivacyPage() {
             </p>
           </section>
 
-          {/* Section 6 */}
+          {/* Section 8 */}
           <section>
             <h2 className="text-lg sm:text-xl font-bold text-text mb-3">
-              {lang === 'de' ? '6. Ihre Rechte' : '6. Your Rights'}
+              {lang === 'de' ? '8. Ihre Rechte' : '8. Your Rights'}
             </h2>
             <p className="mb-2">
               {lang === 'de'
