@@ -77,7 +77,7 @@ function SkillGroup({ icon: Icon, title, skills }) {
   );
 }
 
-function CertCard({ icon: Icon, title, issuer, period }) {
+function CertCard({ icon: Icon, title, issuer, period, detail }) {
   return (
     <motion.div
       variants={fadeUp}
@@ -89,6 +89,7 @@ function CertCard({ icon: Icon, title, issuer, period }) {
       <div className="min-w-0">
         <h3 className="text-[13px] font-bold leading-snug text-text">{title}</h3>
         <p className="text-[11px] text-muted mt-0.5">{issuer} · {period}</p>
+        {detail && <p className="text-[11px] text-muted mt-1 leading-relaxed">{detail}</p>}
       </div>
     </motion.div>
   );
@@ -131,23 +132,20 @@ export default function CVPage() {
 
             {/* Info */}
             <div className="text-center sm:text-left flex-1 w-full">
-              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary mb-2">Lebenslauf</p>
+              <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary mb-2">Curriculum Vitae</p>
               <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-text leading-tight">
                 Tarik Azzouzi
               </h1>
               <p className="text-base font-medium text-muted mt-1">
-                Full-Stack Developer · M.Sc. Computer Science (TU Darmstadt)
+                Cybersecurity &amp; AI Enthusiast · M.Sc. Computer Science at Technical University Darmstadt
               </p>
 
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-5 gap-y-2 mt-4 text-sm text-muted">
                 <span className="inline-flex items-center gap-1.5">
-                  <MapPin size={14} className="text-primary" /> Darmstadt, Deutschland
+                  <MapPin size={14} className="text-primary" /> Münster, Germany
                 </span>
                 <span className="inline-flex items-center gap-1.5">
-                  <GraduationCap size={14} className="text-primary" /> Fachrichtung: Informatik
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <Languages size={14} className="text-primary" /> DE (Muttersprache) · EN (C1)
+                  <Languages size={14} className="text-primary" /> German (Native) · English (C1)
                 </span>
               </div>
 
@@ -161,117 +159,133 @@ export default function CVPage() {
                   </span>
                 ))}
               </div>
+
+              <div className="flex flex-wrap justify-center sm:justify-start gap-x-5 gap-y-2 mt-4 text-[13px] font-medium">
+                <a href="https://codingtarik.github.io" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-primary transition-colors">codingtarik.github.io</a>
+                <a href="https://github.com/codingtarik" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-primary transition-colors">github.com/codingtarik</a>
+                <a href="https://linkedin.com/in/tarik-azzouzi" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-primary transition-colors">linkedin.com/in/tarik-azzouzi</a>
+                <a href="https://app.hackthebox.com/profile/477139" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-primary transition-colors">HackTheBox · 477139</a>
+              </div>
             </div>
           </div>
         </motion.section>
 
-        {/* ─── Profil ─── */}
+        {/* ─── Profile ─── */}
         <Card>
-          <SectionTitle icon={UserRound} title="Profil" />
+          <SectionTitle icon={UserRound} title="Profile" />
           <p className="text-sm text-muted leading-relaxed">
-            Masterstudent der Informatik an der TU Darmstadt mit Schwerpunkt Software Engineering,
-            Künstliche Intelligenz und Cybersecurity. Praktische Erfahrung in der Konzeption und
-            Entwicklung KI-gestützter Systeme, insbesondere Retrieval-Augmented Generation (RAG)
-            und AI-Agenten. Mehrjährige Freelance-Erfahrung in der Softwareentwicklung sowie
-            internationale Studienaufenthalte (Erasmus+, Gaststudium in Finnland und Passau).
+            Master&apos;s student in Computer Science at Technical University Darmstadt, specializing in software
+            engineering, artificial intelligence and cybersecurity. Hands-on experience designing and building
+            AI-powered systems, particularly retrieval-augmented generation (RAG) and AI agents. Several years of
+            freelance software development as well as international study experience (Erasmus+, guest studies in
+            Finland and Passau). Above all, deeply passionate about cybersecurity - offensive security, CTFs and
+            building secure systems.
           </p>
         </Card>
 
-        {/* ─── Berufserfahrung ─── */}
+        {/* ─── Experience ─── */}
         <Card>
-          <SectionTitle icon={Briefcase} title="Berufserfahrung" />
+          <SectionTitle icon={Briefcase} title="Experience" />
           <TimelineItem
-            period="Nov 2024 – Mär 2026"
+            period="Nov 2024 – Mar 2026"
             title="AI Full Stack Developer"
-            org="Genow.ai · Teilzeit · Darmstadt (Hybrid)"
-            detail="Entwicklung und Betreuung skalierbarer RAG-Plattformen für Unternehmenskunden. Full-Stack-Entwicklung mit Vue.js und Python mit Fokus auf KI-Agenten-Orchestrierung, Integration von LangChain-Pipelines und Deployment auf Google Cloud Platform."
+            org="Genow.ai · Part-time · Darmstadt (Hybrid)"
+            detail="Development and operation of scalable RAG platforms for enterprise customers. Full-stack engineering with Vue.js and Python, focused on AI agent orchestration, LangChain pipeline integration and deployment on Google Cloud Platform."
           />
           <TimelineItem
-            period="Aug 2019 – Dez 2023"
-            title="Freiberuflicher Software-Entwickler"
+            period="Aug 2019 – Dec 2023"
+            title="Freelance Software Developer"
             org="Upwork / Fiverr · Remote"
-            detail="Entwicklung maßgeschneiderter Softwarelösungen für internationale Kunden. Desktop-Anwendungen (C#/WPF) sowie Backends in Python, Java und C#."
+            detail="Development of tailored software solutions for international clients. Desktop applications (C#/WPF) as well as backends in Python, Java and C#."
+          />
+          <TimelineItem
+            period="2018"
+            title="Internship – IT Systems Electronics"
+            org="Neiss Gesellschaft für Haustechnik mbH · Gelnhausen"
+            detail="Two-week internship with hands-on experience in IT systems electronics and building technology, including DSL installation and commissioning of computer systems."
           />
           <TimelineItem
             last
-            period="Juni 2019"
-            title="Praktikum · IT-Abteilung"
+            period="Jun 2019"
+            title="Internship · IT Department"
             org="doIT solutions GmbH · Gelnhausen"
-            detail="Einblicke in IT-Betrieb und den Software-Entwicklungszyklus. Arbeit mit VirtualBox und Active Directory."
+            detail="Insights into IT operations and the software development lifecycle. Worked with VirtualBox and Active Directory."
           />
         </Card>
 
-        {/* ─── Ausbildung ─── */}
+        {/* ─── Education ─── */}
         <Card>
-          <SectionTitle icon={GraduationCap} title="Ausbildung" />
+          <SectionTitle icon={GraduationCap} title="Education" />
           <TimelineItem
             period="Apr 2025 – Sep 2026"
             title="M.Sc. Computer Science"
-            org="TU Darmstadt"
-            detail="Schwerpunkt Software Engineering, KI und Cybersecurity. Masterarbeit: Design und Implementierung modularer Plugin-Frameworks für RAG auf Basis des Model Context Protocol."
+            org="Technical University Darmstadt"
+            detail="Focus on software engineering, AI and cybersecurity. Grade: 1.0. Master&apos;s thesis: Design and implementation of modular plugin frameworks for RAG based on the Model Context Protocol."
           />
           <TimelineItem
             period="Sep 2025 – Jan 2026"
-            title="Erasmus+ Austauschsemester"
-            org="University of Latvia"
+            title="Erasmus+ Exchange Semester"
+            org="University of Latvia · Grade: 1.0"
+            detail="International semester abroad with a strong focus on cybersecurity and secure software development."
           />
           <TimelineItem
-            period="Okt 2021 – Mär 2025"
+            period="Oct 2021 – Mar 2025"
             title="B.Sc. Computer Science"
-            org="TU Darmstadt"
-            detail="Bachelorarbeit: Sichere Hybrid-RAG-Anwendungen in Unternehmen."
+            org="Technical University Darmstadt"
+            detail="Grade: 1.3. Bachelor&apos;s thesis: Secure hybrid RAG applications in the enterprise."
           />
           <TimelineItem
-            period="Jan 2024 – heute"
-            title="Gaststudium (Open University)"
-            org="University of Helsinki & Metropolia UAS, Finnland"
-            detail="Module in Software Engineering, System Engineering, Webentwicklung und Cybersecurity."
+            period="Jan 2024 – Present"
+            title="Guest Studies (Open University)"
+            org="University of Helsinki & Metropolia UAS, Finland"
+            detail="Modules in software engineering, systems engineering, web development and cybersecurity. Grade: 1.0."
           />
           <TimelineItem
             period="Apr 2024 – Sep 2024"
-            title="Gaststudent"
-            org="Universität Passau"
-            detail="Einführung in die Android-App-Entwicklung."
+            title="Guest Student"
+            org="University of Passau"
+            detail="Introduction to Android app development. Grade: 1.0."
           />
           <TimelineItem
             period="2018 – 2021"
-            title="Abitur · Berufliches Gymnasium"
+            title="Abitur (University Entrance) · Vocational Gymnasium"
             org="Berufliche Schulen des Main-Kinzig-Kreises, Gelnhausen"
-            detail="Schwerpunkt Praktische Informatik."
+            detail="Focus on Applied Computer Science. Grade: 1.0."
           />
           <TimelineItem
             last
             period="2012 – 2018"
-            title="Realschulabschluss"
+            title="Secondary School Diploma (Realschule)"
             org="Kreisrealschule Gelnhausen"
+            detail="Grade: 1.1."
           />
         </Card>
 
-        {/* ─── Fähigkeiten ─── */}
+        {/* ─── Skills ─── */}
         <Card>
-          <SectionTitle icon={Cpu} title="Fähigkeiten" />
+          <SectionTitle icon={Cpu} title="Skills" />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1">
-            <SkillGroup icon={Code} title="Programmierung" skills={['C#', 'Python', 'JavaScript', 'TypeScript', 'Java']} />
+            <SkillGroup icon={Code} title="Programming" skills={['C#', 'Python', 'JavaScript', 'TypeScript', 'Java']} />
             <SkillGroup icon={Wrench} title="Frameworks" skills={['Vue.js', 'React', 'Node.js', 'Express', 'LangChain']} />
-            <SkillGroup icon={Zap} title="KI & Daten" skills={['RAG Systems', 'LLMs', 'scikit-learn', 'AI Agents']} />
+            <SkillGroup icon={Zap} title="AI & Data" skills={['RAG Systems', 'LLMs', 'scikit-learn', 'AI Agents']} />
             <SkillGroup icon={Cloud} title="DevOps & Cloud" skills={['Docker', 'Kubernetes', 'GCP', 'Git', 'CI/CD', 'Terraform']} />
-            <SkillGroup icon={Database} title="Datenbanken" skills={['PostgreSQL', 'MongoDB', 'SQL']} />
+            <SkillGroup icon={Database} title="Databases" skills={['PostgreSQL', 'MongoDB', 'SQL']} />
             <SkillGroup icon={Terminal} title="Cybersecurity" skills={['Kali Linux', 'Metasploit', 'Burp Suite', 'Wireshark', 'Nmap', 'OWASP', 'OpenVAS', 'Snort']} />
           </div>
         </Card>
 
-        {/* ─── Zertifikate & Auszeichnungen ─── */}
+        {/* ─── Certifications & Awards ─── */}
         <Card>
-          <SectionTitle icon={Trophy} title="Zertifikate & Auszeichnungen" />
+          <SectionTitle icon={Trophy} title="Certifications & Awards" />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <CertCard icon={Award} title="Deutschlandstipendium" issuer="TU Darmstadt" period="2021/22 · 2023/24 · 2025/26" />
+            <CertCard icon={Award} title="Deutschlandstipendium (Germany Scholarship)" issuer="Technical University Darmstadt" period="2021/22 · 2023/24 · 2025/26" />
             <CertCard icon={Shield} title="Google Cybersecurity Certificate" issuer="Google" period="2023" />
             <CertCard icon={Shield} title="Ethical Hacking" issuer="Cisco" period="2025" />
             <CertCard icon={Terminal} title="Endpoint Security" issuer="Cisco" period="2025" />
             <CertCard icon={Flag} title="Cyber Apocalypse CTF 2024" issuer="HackTheBox" period="2024" />
-            <CertCard icon={Cpu} title="Elements of AI – Intro to AI" issuer="University of Helsinki" period="2024" />
             <CertCard icon={Code} title="Get In IT – Coding Challenge" issuer="Get In / BWI" period="2021" />
-            <CertCard icon={Trophy} title="Bundeswettbewerb Informatik · 2. Runde" issuer="BWINF" period="2020" />
+            <CertCard icon={Trophy} title="Bundeswettbewerb Informatik · 2nd Round" issuer="BWINF" period="2020" />
+            <CertCard icon={GraduationCap} title="Digitale Schultransformation – Besondere Anerkennung" issuer="Berufliche Schulen Gelnhausen" period="2019" detail="Special recognition for an outstanding contribution to the installation of new computer systems as part of the DigitalPakt." />
           </div>
         </Card>
 
@@ -280,27 +294,27 @@ export default function CVPage() {
           <SectionTitle icon={Heart} title="Engagement" />
           <TimelineItem
             period="2020 – 2024"
-            title="Tierverwaltungssystem · Tikki Hywood Foundation"
-            org="Ehrenamtliche Softwareentwicklung"
-            detail="Entwicklung eines Verwaltungssystems für eine Tierschutzorganisation mit Schwerpunkt Rettung und Rehabilitation, inklusive zentralisierter Datensynchronisation."
+            title="Wildlife Management System · Tikki Hywood Foundation"
+            org="Volunteer software development"
+            detail="Built a management system for an animal conservation organization focused on rescue and rehabilitation, including centralized data synchronization."
           />
           <TimelineItem
             last
             period="2021 – 2024"
-            title="Cybersecurity & CTF-Wettbewerbe"
-            org="TUD.dll (TU Darmstadt) & CCC „Wizards of Dos“"
-            detail="Teilnahme an CTF-Wettbewerben im Cybersecurity-Umfeld der TU Darmstadt und des Chaos Computer Clubs."
+            title="Cybersecurity & CTF Competitions"
+            org="TUD.dll (TU Darmstadt) & CCC “Wizards of Dos”"
+            detail="Participation in CTF competitions in the cybersecurity community of TU Darmstadt and the Chaos Computer Club."
           />
         </Card>
 
-        {/* ─── Sprachen & Interessen ─── */}
+        {/* ─── Languages & Interests ─── */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <Card>
-            <SectionTitle icon={Languages} title="Sprachen" />
+            <SectionTitle icon={Languages} title="Languages" />
             <div className="space-y-4">
               {[
-                { lang: 'Deutsch', level: 'Muttersprache', pct: 100 },
-                { lang: 'Englisch', level: 'Fließend (C1)', pct: 88 },
+                { lang: 'German', level: 'Native', pct: 100 },
+                { lang: 'English', level: 'Fluent (C1)', pct: 88 },
               ].map((l) => (
                 <div key={l.lang}>
                   <div className="flex justify-between items-center mb-1.5">
@@ -322,12 +336,12 @@ export default function CVPage() {
           </Card>
 
           <Card>
-            <SectionTitle icon={Heart} title="Interessen" />
+            <SectionTitle icon={Heart} title="Interests" />
             <div className="grid grid-cols-2 gap-2.5">
               {[
-                { icon: Music, t: 'Klavier', s: 'Musik' },
-                { icon: Hand, t: 'Handball', s: 'Sport' },
-                { icon: Code, t: 'Programmieren', s: 'Software' },
+                { icon: Music, t: 'Piano', s: 'Music' },
+                { icon: Hand, t: 'Handball', s: 'Sports' },
+                { icon: Code, t: 'Programming', s: 'Software' },
                 { icon: Flag, t: 'Capture The Flag', s: 'Cybersecurity' },
               ].map((h) => (
                 <div
@@ -346,7 +360,7 @@ export default function CVPage() {
             </div>
             <div className="flex items-center gap-2 mt-4 px-1 text-xs text-muted">
               <Sparkles size={14} className="text-primary" />
-              Offen für neue Herausforderungen in Forschung und Praxis.
+              Open to new challenges in research and practice.
             </div>
           </Card>
         </div>
