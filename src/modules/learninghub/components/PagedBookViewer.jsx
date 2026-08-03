@@ -153,55 +153,45 @@ export default function PagedBookViewer({
     <div className="min-h-screen bg-background text-text flex">
       {/* Paged.js Print & Book Styles */}
       <style>{`
-        /* Force exact colors so background colors and SVGs print properly */
-        * {
+        /* Force exact colors so background colors, SVGs, and text colors print properly */
+        *, *::before, *::after {
           -webkit-print-color-adjust: exact !important;
           print-color-adjust: exact !important;
           color-adjust: exact !important;
         }
 
-        /* Force white background for the book reading container on screen */
+        /* Force white background for the book reading container on screen & print */
         .book-reading-area {
-          background-color: #ffffff;
-          color: #000000;
+          background-color: #ffffff !important;
+          color: #111827;
         }
 
-        /* OVERRIDE ALL DARK MODE AND INHERITED STYLES FOR THE BOOK VIEWER */
-        .book-reading-area,
-        .book-reading-area p,
-        .book-reading-area span:not([class*="text-"]),
-        .book-reading-area li,
-        .book-reading-area code,
-        .book-reading-area em,
-        .book-reading-area strong {
-          color: #111827 !important;
-        }
-
+        /* Default prose text colors while allowing inline styles and color utility classes */
         .book-reading-area .prose {
-          --tw-prose-body: #111827 !important;
-          --tw-prose-headings: #000000 !important;
-          --tw-prose-lead: #374151 !important;
-          --tw-prose-links: #2563eb !important;
-          --tw-prose-bold: #000000 !important;
-          --tw-prose-counters: #4b5563 !important;
-          --tw-prose-bullets: #9ca3af !important;
-          --tw-prose-hr: #e5e7eb !important;
-          --tw-prose-quotes: #111827 !important;
-          --tw-prose-quote-borders: #e5e7eb !important;
-          --tw-prose-captions: #4b5563 !important;
-          --tw-prose-code: #111827 !important;
-          --tw-prose-pre-code: #111827 !important;
-          --tw-prose-pre-bg: #f3f4f6 !important;
-          --tw-prose-th-borders: #d1d5db !important;
-          --tw-prose-td-borders: #e5e7eb !important;
-          color: #111827 !important;
-        }
-        .book-reading-area .prose h1, .book-reading-area .prose h2, .book-reading-area .prose h3 {
-          color: #000000 !important;
+          --tw-prose-body: #111827;
+          --tw-prose-headings: #111827;
+          --tw-prose-lead: #374151;
+          --tw-prose-links: #2563eb;
+          --tw-prose-bold: #000000;
+          --tw-prose-counters: #4b5563;
+          --tw-prose-bullets: #9ca3af;
+          --tw-prose-hr: #e5e7eb;
+          --tw-prose-quotes: #111827;
+          --tw-prose-quote-borders: #e5e7eb;
+          --tw-prose-captions: #4b5563;
+          --tw-prose-code: #111827;
+          --tw-prose-pre-code: #111827;
+          --tw-prose-pre-bg: #f3f4f6;
+          --tw-prose-th-borders: #d1d5db;
+          --tw-prose-td-borders: #e5e7eb;
+          color: #111827;
         }
 
         /* On-Screen A4 Page Simulation */
         @media screen {
+          .print-only {
+            display: none !important;
+          }
           .book-reading-area {
             box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1), 0 0 10px rgba(0,0,0,0.05);
             min-height: 700px;
@@ -218,9 +208,12 @@ export default function PagedBookViewer({
 
         /* Essential Print CSS for Paged.js / PDF Export */
         @media print {
-          body {
-            background: white !important;
-            color: black !important;
+          .print-only {
+            display: block !important;
+          }
+          html, body {
+            background: #ffffff !important;
+            color: #111827 !important;
           }
           .no-print {
             display: none !important;
@@ -441,7 +434,7 @@ export default function PagedBookViewer({
         </main>
 
         {/* Hidden Container exclusively for window.print() and Paged.js logic */}
-        <div className="hidden print:block book-reading-area">
+        <div className="print-only book-reading-area">
           <div className="text-center py-32 border-b-2 border-black page-break">
             <h1 className="text-5xl font-black text-black mb-6">{course.title}</h1>
             <p className="text-2xl text-gray-800 mb-12 max-w-2xl mx-auto">{course.description}</p>
