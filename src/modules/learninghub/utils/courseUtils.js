@@ -18,7 +18,7 @@ const coursesMap = new Map();
 
 Object.entries(allCourseModules).forEach(([filepath, module]) => {
   const course = module.default;
-  if (course && course.id) {
+  if (course && course.id && course.type) {
     coursesMap.set(course.id, {
       ...course,
       _filepath: filepath,

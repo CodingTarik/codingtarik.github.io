@@ -8,13 +8,57 @@ Welcome to the **Learning Hub** content directory! This guide explains how to cr
 
 All learning materials are defined as standalone JavaScript objects and are **auto-discovered** by `src/modules/learninghub/utils/courseUtils.js` (there is no manual registry to update). Place your files under `posts/learninghub/` (or `courses/`):
 
-- `series/bouldering.js`, `series/swimming.js`, ... : Empty/interactive course placeholders (type `series`)
+- `series/bouldering.js`, `series/swimming.js`, ... : Single-file series course placeholder (type `series`, empty `lessons`)
+- `series/book-summaries/` : **Modular series** — a folder with a manifest `index.js` and one file per article in `lessons/`
 - `bob-learns-infosec.js`: Paged.js eBook (book) mit Terminal/Glitch-Design ("Bob learns Information Security Management", 6 Seiten)
+
+### Modular series (recommended once a course has articles)
+
+This is the clean, scalable structure. A series with content becomes a folder so each article lives in its own file:
+
+```
+posts/learninghub/series/book-summaries/
+├── index.js                          ← course manifest (title, meta, imports lessons)
+└── lessons/
+    └── how-to-win-friends-and-influence-people.js   ← one article/lesson
+```
+
+**`index.js` (manifest):**
+```javascript
+import l0 from './lessons/how-to-win-friends-and-influence-people.js';
+
+export default {
+  id: 'book-summaries',
+  title: 'Book Summaries – Big Ideas, Compact Reads',
+  description: '...',
+  type: 'series',
+  category: 'Reading & Knowledge',
+  level: 'All Levels',
+  author: 'Tarik Azzouzi',
+  coverImage: '...',
+  tags: ['Books', 'Summaries', 'Knowledge'],
+  lessons: [l0],          // each imported lesson in order
+};
+```
+
+**A lesson file (`lessons/<lesson-id>.js`):**
+```javascript
+export default {
+  id: 'how-to-win-friends-and-influence-people',
+  title: 'How to Win Friends and Influence People – Dale Carnegie',
+  duration: '20 Min.',
+  description: '...',
+  content: `...`,        // markdown / HTML
+};
+```
+
+> [!INFO]
+> Lesson files must **not** have a top-level `type` field. The loader in `courseUtils.js` only registers files with `course.type`, so lesson files inside `lessons/` are never mistaken for courses.
 
 ### Registering a New Course/Book
 To make a new course or book visible on the website:
-1. Create your JS file in `posts/learninghub/your-course-name.js` (or `posts/learninghub/series/` for a series).
-2. It is picked up automatically — just give it a unique `id`, `title`, `type`, and (for series) a `lessons` array.
+1. Create your course file (or folder) in `posts/learninghub/your-course-name.js` (or `posts/learninghub/series/` for a series).
+2. Give it a unique `id`, `title`, and `type` (and for series a `lessons` array — one per imported lesson file).
 
 ---
 
