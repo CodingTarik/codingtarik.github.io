@@ -92,8 +92,8 @@ export default function CourseViewer({
   };
 
   return (
-    <div className="min-h-screen bg-background text-text flex flex-col lg:flex-row">
-      {/* Shared Sticky Course Sidebar */}
+    <div className="min-h-screen bg-background text-text flex">
+      {/* Shared Fixed Course Sidebar */}
       <CourseSidebar
         course={course}
         items={lessons}
@@ -108,8 +108,8 @@ export default function CourseViewer({
         onResetProgress={resetCourseProgress}
       />
 
-      {/* Main Content Area */}
-      <main className="flex-1 flex flex-col min-w-0">
+      {/* Main Reader Content Area (Offset by lg:ml-80) */}
+      <div className="lg:ml-80 flex-1 flex flex-col min-w-0">
         {/* Shared Header Bar */}
         <CourseHeaderBar
           course={course}
@@ -123,7 +123,7 @@ export default function CourseViewer({
         />
 
         {/* Lesson Body Content */}
-        <div className="flex-1 max-w-4xl w-full mx-auto p-4 sm:p-10">
+        <main className="flex-1 max-w-4xl w-full mx-auto p-4 sm:p-10">
           {/* Lesson Hero Header Banner */}
           <div className="mb-10 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-primary/10 via-card to-card border border-border/80 shadow-sm relative overflow-hidden">
             <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -197,8 +197,8 @@ export default function CourseViewer({
               <ChevronRight size={16} />
             </button>
           </div>
-        </div>
-      </main>
+        </main>
+      </div>
     </div>
   );
 }

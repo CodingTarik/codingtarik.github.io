@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  ArrowLeft, CheckCircle2, Circle, X, RotateCcw, BookMarked, FileText, Info
+  ArrowLeft, CheckCircle2, Circle, X, RotateCcw, BookMarked, FileText
 } from 'lucide-react';
 
 export default function CourseSidebar({
@@ -19,7 +19,6 @@ export default function CourseSidebar({
   customFooterNote
 }) {
   const isBook = course.type === 'book';
-  const accentColor = isBook ? 'amber' : 'primary';
   const itemTypeLabel = isBook ? 'Chapter' : 'Lesson';
 
   return (
@@ -37,16 +36,16 @@ export default function CourseSidebar({
         )}
       </AnimatePresence>
 
-      {/* Sticky Sidebar Container */}
+      {/* Fixed Sidebar Container */}
       <aside
         className={`
-          no-print fixed lg:sticky top-0 lg:top-[57px] left-0 z-50 lg:z-auto w-[85vw] sm:w-80 bg-card/95 backdrop-blur-md border-r border-border
-          flex flex-col h-screen lg:h-[calc(100vh-57px)] transition-transform duration-300 ease-in-out shadow-2xl lg:shadow-none shrink-0
+          no-print fixed left-0 top-0 bottom-0 z-40 w-[85vw] sm:w-80 bg-card/95 backdrop-blur-md border-r border-border
+          flex flex-col h-screen transition-transform duration-300 ease-in-out shadow-2xl lg:shadow-none shrink-0
           ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
         `}
       >
-        {/* Header */}
-        <div className="p-4 border-b border-border flex flex-col gap-3 bg-card/40">
+        {/* Sidebar Header */}
+        <div className="p-4 border-b border-border flex flex-col gap-3 bg-card/40 shrink-0">
           <div className="flex items-center justify-between">
             <button
               onClick={onBackToOverview}
@@ -99,7 +98,7 @@ export default function CourseSidebar({
           </div>
         </div>
 
-        {/* Item List */}
+        {/* Item List (Independently Scrollable) */}
         <div className="flex-1 overflow-y-auto p-3 space-y-1.5 scrollbar-thin">
           {items.map((item, idx) => {
             const isActive = item.id === activeItemId;
@@ -163,16 +162,16 @@ export default function CourseSidebar({
           })}
         </div>
 
-        {/* Custom Footer Note (e.g. PDF Export tip for books) */}
+        {/* Custom Footer Note (e.g. PDF Export Guide) */}
         {customFooterNote && (
-          <div className="p-3 border-t border-border bg-card/30">
+          <div className="p-3 border-t border-border bg-card/30 shrink-0">
             {customFooterNote}
           </div>
         )}
 
         {/* Footer */}
         {onResetProgress && (
-          <div className="p-3 border-t border-border flex items-center justify-between text-xs text-muted bg-card/40">
+          <div className="p-3 border-t border-border flex items-center justify-between text-xs text-muted bg-card/40 shrink-0">
             <button
               onClick={() => onResetProgress(course.id)}
               className="flex items-center gap-1.5 hover:text-rose-500 transition-colors text-[11px] font-medium"

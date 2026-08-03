@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
   CheckCircle2, Circle, Printer, BookOpen, Layers, 
-  ChevronLeft, ChevronRight, Hash, ArrowRight, Info 
+  ChevronLeft, ChevronRight, Info 
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import BlogPostContent from '../../blog/components/BlogPostContent';
@@ -18,7 +18,7 @@ export default function PagedBookViewer({
 }) {
   const chapters = course.chapters || [];
   const [activeChapterId, setActiveChapterId] = useState(chapters[0]?.id || null);
-  const [viewMode, setViewMode] = useState('chapter'); // 'chapter' or 'continuous'
+  const [viewMode, setViewMode] = useState('chapter');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [jumpPageInput, setJumpPageInput] = useState('');
 
@@ -62,7 +62,7 @@ export default function PagedBookViewer({
   };
 
   return (
-    <div className="min-h-screen bg-background text-text flex flex-col">
+    <div className="min-h-screen bg-background text-text flex">
       {/* Printable Book CSS Rules */}
       <style>{`
         @media print {
@@ -98,43 +98,44 @@ export default function PagedBookViewer({
         }
       `}</style>
 
-      {/* Shared Header Bar */}
-      <CourseHeaderBar
+      {/* Shared Fixed Course Sidebar */}
+      <CourseSidebar
         course={course}
-        activeItem={activeChapter}
-        currentIndex={activeIndex}
-        totalCount={chapters.length}
-        isCompleted={isCurrentCompleted}
-        onToggleComplete={handleToggleChapter}
+        items={chapters}
+        activeItemId={activeChapter?.id}
+        onSelectItem={(id) => setActiveChapterId(id)}
+        isItemCompleted={isLessonCompleted}
+        onToggleItemComplete={toggleLessonCompleted}
+        stats={stats}
         onBackToOverview={onBackToOverview}
-        onToggleSidebar={() => setIsSidebarOpen(true)}
-        onPrintPdf={handlePrintPdf}
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+        customFooterNote={
+          <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400">
+            <p className="font-bold mb-1 flex items-center gap-1.5 text-xs">
+              <Info size={14} />
+              <span>PDF Export Guide</span>
+            </p>
+            <p className="text-[11px] leading-relaxed">
+              Click **Export PDF / Print** in the top bar to save the complete book as a formatted A4 PDF.
+            </p>
+          </div>
+        }
       />
 
-      <div className="flex-1 flex flex-col lg:flex-row">
-        {/* Shared Sticky Course Sidebar */}
-        <CourseSidebar
+      {/* Main Reader Content Area (Offset by lg:ml-80) */}
+      <div className="lg:ml-80 flex-1 flex flex-col min-w-0">
+        {/* Shared Header Bar */}
+        <CourseHeaderBar
           course={course}
-          items={chapters}
-          activeItemId={activeChapter?.id}
-          onSelectItem={(id) => setActiveChapterId(id)}
-          isItemCompleted={isLessonCompleted}
-          onToggleItemComplete={toggleLessonCompleted}
-          stats={stats}
+          activeItem={activeChapter}
+          currentIndex={activeIndex}
+          totalCount={chapters.length}
+          isCompleted={isCurrentCompleted}
+          onToggleComplete={handleToggleChapter}
           onBackToOverview={onBackToOverview}
-          isOpen={isSidebarOpen}
-          onClose={() => setIsSidebarOpen(false)}
-          customFooterNote={
-            <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400">
-              <p className="font-bold mb-1 flex items-center gap-1.5 text-xs">
-                <Info size={14} />
-                <span>PDF Export Guide</span>
-              </p>
-              <p className="text-[11px] leading-relaxed">
-                Click **Export PDF / Print** in the top bar to save the complete book as a formatted A4 PDF.
-              </p>
-            </div>
-          }
+          onToggleSidebar={() => setIsSidebarOpen(true)}
+          onPrintPdf={handlePrintPdf}
         />
 
         {/* Main Book Content Container */}
