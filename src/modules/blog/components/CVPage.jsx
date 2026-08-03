@@ -2,10 +2,18 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import {
   GraduationCap, Briefcase, Award, Languages, Cpu, Heart,
-  Code, Trophy, Terminal, Shield, Music, Hand,
+  Code, Trophy, Terminal, Music, Hand,
   Flag, Cloud, Database, Wrench, Zap,
-  MapPin, UserRound, Sparkles
+  MapPin, UserRound, Sparkles, Globe,
+  Github, Linkedin, ShieldCheck
 } from 'lucide-react';
+import { FaJava, FaBolt, FaRobot, FaCogs, FaDocker, FaBinoculars } from 'react-icons/fa';
+import {
+  SiDotnet, SiPython, SiJavascript, SiTypescript, SiVuedotjs, SiReact, SiNodedotjs,
+  SiExpress, SiLangchain, SiScikitlearn, SiKubernetes, SiGooglecloud, SiGit,
+  SiGithubactions, SiTerraform, SiPostgresql, SiMongodb, SiMysql, SiKalilinux,
+  SiMetasploit, SiBurpsuite, SiWireshark, SiOwasp, SiSnort, SiHackthebox
+} from 'react-icons/si';
 import profileImage from '../../../assets/application.jpeg';
 
 const container = {
@@ -16,6 +24,40 @@ const container = {
 const fadeUp = {
   hidden: { opacity: 0, y: 22 },
   show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } }
+};
+
+const TECH_ICONS = {
+  'C#': SiDotnet,
+  'Python': SiPython,
+  'JavaScript': SiJavascript,
+  'TypeScript': SiTypescript,
+  'Java': FaJava,
+  'Vue.js': SiVuedotjs,
+  'React': SiReact,
+  'Node.js': SiNodedotjs,
+  'Express': SiExpress,
+  'LangChain': SiLangchain,
+  'RAG Systems': FaBolt,
+  'LLMs': FaRobot,
+  'scikit-learn': SiScikitlearn,
+  'AI Agents': FaCogs,
+  'Docker': FaDocker,
+  'Kubernetes': SiKubernetes,
+  'GCP': SiGooglecloud,
+  'Git': SiGit,
+  'CI/CD': SiGithubactions,
+  'Terraform': SiTerraform,
+  'PostgreSQL': SiPostgresql,
+  'MongoDB': SiMongodb,
+  'SQL': SiMysql,
+  'Kali Linux': SiKalilinux,
+  'Metasploit': SiMetasploit,
+  'Burp Suite': SiBurpsuite,
+  'Wireshark': SiWireshark,
+  'Nmap': FaBinoculars,
+  'OWASP': SiOwasp,
+  'OpenVAS': ShieldCheck,
+  'Snort': SiSnort,
 };
 
 function SectionTitle({ icon: Icon, title }) {
@@ -41,13 +83,32 @@ function Card({ children, className = '' }) {
   );
 }
 
-function TimelineItem({ period, title, org, detail, last }) {
+function GradeBadge({ grade }) {
+  const display = String(grade);
+  let colors = { bg: 'rgba(245,158,11,0.15)', text: '#f59e0b', border: 'rgba(245,158,11,0.3)' };
+  const g = parseFloat(display.replace(',', '.'));
+  if (g <= 1.0) colors = { bg: 'rgba(16,185,129,0.16)', text: '#10b981', border: 'rgba(16,185,129,0.35)' };
+  else if (g <= 1.3) colors = { bg: 'rgba(34,197,94,0.14)', text: '#4ade80', border: 'rgba(34,197,94,0.32)' };
+  return (
+    <span
+      className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold ml-2 align-middle"
+      style={{ background: colors.bg, color: colors.text, border: `1px solid ${colors.border}` }}
+      title="Grade / final mark"
+    >
+      <Award size={10} />
+      {display}
+    </span>
+  );
+}
+
+function TimelineItem({ period, title, org, detail, grade, last }) {
   return (
     <div className={`relative pl-6 pb-6 ${last ? '' : 'border-l border-border'}`}>
       <span className="absolute left-[-4px] top-1 w-2 h-2 rounded-full bg-primary" />
       <span className="text-[11px] font-semibold text-muted uppercase tracking-wide">{period}</span>
       <h3 className="text-[15px] font-bold leading-tight text-text mt-0.5">
         {title} {org && <span className="font-medium text-muted">· {org}</span>}
+        {grade && <GradeBadge grade={grade} />}
       </h3>
       {detail && <p className="text-[13px] text-muted mt-1 leading-relaxed">{detail}</p>}
     </div>
@@ -64,14 +125,18 @@ function SkillGroup({ icon: Icon, title, skills }) {
         <h3 className="text-[12px] font-bold uppercase tracking-wider text-muted">{title}</h3>
       </div>
       <div className="flex flex-wrap gap-1.5 mb-3">
-        {skills.map((s) => (
-          <span
-            key={s}
-            className="text-xs font-medium px-2.5 py-1 rounded-lg bg-background border border-border text-text transition-colors hover:border-primary/40 hover:text-primary cursor-default"
-          >
-            {s}
-          </span>
-        ))}
+        {skills.map((s) => {
+          const TechIcon = TECH_ICONS[s] || Cpu;
+          return (
+            <span
+              key={s}
+              className="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-lg bg-background border border-border text-text transition-colors hover:border-primary/40 hover:text-primary cursor-default"
+            >
+              <TechIcon size={12} className="text-muted" />
+              {s}
+            </span>
+          );
+        })}
       </div>
     </div>
   );
@@ -160,11 +225,19 @@ export default function CVPage() {
                 ))}
               </div>
 
-              <div className="flex flex-wrap justify-center sm:justify-start gap-x-5 gap-y-2 mt-4 text-[13px] font-medium">
-                <a href="https://codingtarik.github.io" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-primary transition-colors">codingtarik.github.io</a>
-                <a href="https://github.com/codingtarik" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-primary transition-colors">github.com/codingtarik</a>
-                <a href="https://linkedin.com/in/tarik-azzouzi" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-primary transition-colors">linkedin.com/in/tarik-azzouzi</a>
-                <a href="https://app.hackthebox.com/profile/477139" target="_blank" rel="noopener noreferrer" className="text-muted hover:text-primary transition-colors">HackTheBox · 477139</a>
+              <div className="flex flex-wrap justify-center sm:justify-start gap-x-5 gap-y-2.5 mt-5 text-[13px] font-medium">
+                <a href="https://codingtarik.github.io" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted hover:text-primary transition-colors">
+                  <Globe size={14} className="text-primary" /> codingtarik.github.io
+                </a>
+                <a href="https://github.com/codingtarik" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted hover:text-primary transition-colors">
+                  <Github size={14} className="text-primary" /> github.com/codingtarik
+                </a>
+                <a href="https://linkedin.com/in/tarik-azzouzi" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted hover:text-primary transition-colors">
+                  <Linkedin size={14} className="text-primary" /> linkedin.com/in/tarik-azzouzi
+                </a>
+                <a href="https://app.hackthebox.com/profile/477139" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-muted hover:text-primary transition-colors">
+                  <SiHackthebox size={14} className="text-primary" /> HackTheBox · 477139
+                </a>
               </div>
             </div>
           </div>
@@ -178,7 +251,7 @@ export default function CVPage() {
             engineering, artificial intelligence and cybersecurity. Hands-on experience designing and building
             AI-powered systems, particularly retrieval-augmented generation (RAG) and AI agents. Several years of
             freelance software development as well as international study experience (Erasmus+, guest studies in
-            Finland and Passau). Above all, deeply passionate about cybersecurity - offensive security, CTFs and
+            Finland and Passau). Above all, deeply passionate about cybersecurity — offensive security, CTFs and
             building secure systems.
           </p>
         </Card>
@@ -188,9 +261,9 @@ export default function CVPage() {
           <SectionTitle icon={Briefcase} title="Experience" />
           <TimelineItem
             period="Nov 2024 – Mar 2026"
-            title="AI Full Stack Developer"
-            org="Genow.ai · Part-time · Darmstadt (Hybrid)"
-            detail="Development and operation of scalable RAG platforms for enterprise customers. Full-stack engineering with Vue.js and Python, focused on AI agent orchestration, LangChain pipeline integration and deployment on Google Cloud Platform."
+            title="AI Full Stack Developer · Product Engineer"
+            org="Genow.ai · Part-time (working student) · Darmstadt (Hybrid)"
+            detail="As a Product Engineer at Genow.ai, a deep-tech startup and TU Darmstadt spin-off, I advanced the AI-powered Knowledge Assistant and its agent-based RAG pipeline. I built features with Vue.js, TypeScript and Python, designed an agent and plugin system on the Model Context Protocol (MCP), set up data connectors with LangChain and a microservice architecture with Docker/Terraform on GCP, and performed penetration and vulnerability tests."
           />
           <TimelineItem
             period="Aug 2019 – Dec 2023"
@@ -220,44 +293,51 @@ export default function CVPage() {
             period="Apr 2025 – Sep 2026"
             title="M.Sc. Computer Science"
             org="Technical University Darmstadt"
-            detail="Focus on software engineering, AI and cybersecurity. Grade: 1.0. Master&apos;s thesis: Design and implementation of modular plugin frameworks for RAG based on the Model Context Protocol."
+            grade="1.0"
+            detail="Focus on software engineering, AI and cybersecurity. Master&apos;s thesis: Design and implementation of modular plugin frameworks for RAG based on the Model Context Protocol."
           />
           <TimelineItem
             period="Sep 2025 – Jan 2026"
             title="Erasmus+ Exchange Semester"
-            org="University of Latvia · Grade: 1.0"
+            org="University of Latvia"
+            grade="1.0"
             detail="International semester abroad with a strong focus on cybersecurity and secure software development."
           />
           <TimelineItem
             period="Oct 2021 – Mar 2025"
             title="B.Sc. Computer Science"
             org="Technical University Darmstadt"
-            detail="Grade: 1.3. Bachelor&apos;s thesis: Secure hybrid RAG applications in the enterprise."
+            grade="1.3"
+            detail="Bachelor&apos;s thesis: Secure hybrid RAG applications in the enterprise."
           />
           <TimelineItem
             period="Jan 2024 – Present"
             title="Guest Studies (Open University)"
             org="University of Helsinki & Metropolia UAS, Finland"
-            detail="Modules in software engineering, systems engineering, web development and cybersecurity. Grade: 1.0."
+            grade="1.0"
+            detail="Modules in software engineering, systems engineering, web development and cybersecurity."
           />
           <TimelineItem
             period="Apr 2024 – Sep 2024"
             title="Guest Student"
             org="University of Passau"
-            detail="Introduction to Android app development. Grade: 1.0."
+            grade="1.0"
+            detail="Introduction to Android app development."
           />
           <TimelineItem
             period="2018 – 2021"
             title="Abitur (University Entrance) · Vocational Gymnasium"
             org="Berufliche Schulen des Main-Kinzig-Kreises, Gelnhausen"
-            detail="Focus on Applied Computer Science. Grade: 1.0."
+            grade="1.0"
+            detail="Focus on Applied Computer Science."
           />
           <TimelineItem
             last
             period="2012 – 2018"
             title="Secondary School Diploma (Realschule)"
             org="Kreisrealschule Gelnhausen"
-            detail="Grade: 1.1."
+            grade="1.1"
+            detail="Completed with distinction."
           />
         </Card>
 
@@ -279,8 +359,8 @@ export default function CVPage() {
           <SectionTitle icon={Trophy} title="Certifications & Awards" />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <CertCard icon={Award} title="Deutschlandstipendium (Germany Scholarship)" issuer="Technical University Darmstadt" period="2021/22 · 2023/24 · 2025/26" />
-            <CertCard icon={Shield} title="Google Cybersecurity Certificate" issuer="Google" period="2023" />
-            <CertCard icon={Shield} title="Ethical Hacking" issuer="Cisco" period="2025" />
+            <CertCard icon={ShieldCheck} title="Google Cybersecurity Certificate" issuer="Google" period="2023" />
+            <CertCard icon={ShieldCheck} title="Ethical Hacking" issuer="Cisco" period="2025" />
             <CertCard icon={Terminal} title="Endpoint Security" issuer="Cisco" period="2025" />
             <CertCard icon={Flag} title="Cyber Apocalypse CTF 2024" issuer="HackTheBox" period="2024" />
             <CertCard icon={Code} title="Get In IT – Coding Challenge" issuer="Get In / BWI" period="2021" />
