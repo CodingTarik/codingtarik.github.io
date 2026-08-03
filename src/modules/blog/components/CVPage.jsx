@@ -126,14 +126,15 @@ function SkillGroup({ icon: Icon, title, skills }) {
       </div>
       <div className="flex flex-wrap gap-1.5 mb-3">
         {skills.map((s) => {
-          const TechIcon = TECH_ICONS[s] || Cpu;
+          const name = typeof s === 'string' ? s : s.name;
+          const TechIcon = TECH_ICONS[name] || Cpu;
           return (
             <span
-              key={s}
+              key={name}
               className="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-lg bg-background border border-border text-text transition-colors hover:border-primary/40 hover:text-primary cursor-default"
             >
               <TechIcon size={12} className="text-muted" />
-              {s}
+              {name}
             </span>
           );
         })}
@@ -304,13 +305,6 @@ export default function CVPage() {
             detail="International semester abroad with a strong focus on cybersecurity and secure software development."
           />
           <TimelineItem
-            period="Oct 2021 – Mar 2025"
-            title="B.Sc. Computer Science"
-            org="Technical University Darmstadt"
-            grade="1.3"
-            detail="Bachelor&apos;s thesis: Secure hybrid RAG applications in the enterprise."
-          />
-          <TimelineItem
             period="Jan 2024 – Present"
             title="Guest Studies (Open University)"
             org="University of Helsinki & Metropolia UAS, Finland"
@@ -325,12 +319,21 @@ export default function CVPage() {
             detail="Introduction to Android app development."
           />
           <TimelineItem
+            period="Oct 2021 – Mar 2025"
+            title="B.Sc. Computer Science"
+            org="Technical University Darmstadt"
+            grade="1.3"
+            detail="Bachelor&apos;s thesis: Secure hybrid RAG applications in the enterprise."
+          />
+
+          <TimelineItem
             period="2018 – 2021"
             title="Abitur (University Entrance) · Vocational Gymnasium"
             org="Berufliche Schulen des Main-Kinzig-Kreises, Gelnhausen"
             grade="1.0"
             detail="Focus on Applied Computer Science."
           />
+
           <TimelineItem
             last
             period="2012 – 2018"
@@ -345,7 +348,7 @@ export default function CVPage() {
         <Card>
           <SectionTitle icon={Cpu} title="Skills" />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1">
-            <SkillGroup icon={Code} title="Programming" skills={['C#', 'Python', 'JavaScript', 'TypeScript', 'Java']} />
+                        <SkillGroup icon={Code} title="Programming" skills={['C#', 'Python', 'JavaScript', 'TypeScript', 'Java']} />
             <SkillGroup icon={Wrench} title="Frameworks" skills={['Vue.js', 'React', 'Node.js', 'Express', 'LangChain']} />
             <SkillGroup icon={Zap} title="AI & Data" skills={['RAG Systems', 'LLMs', 'scikit-learn', 'AI Agents']} />
             <SkillGroup icon={Cloud} title="DevOps & Cloud" skills={['Docker', 'Kubernetes', 'GCP', 'Git', 'CI/CD', 'Terraform']} />
