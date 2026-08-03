@@ -104,6 +104,8 @@ export default function BlogPage({ onPostClick }) {
       setSearchQuery('');
     } else if (tabId === 'cv') {
       navigate('/cv');
+    } else if (tabId === 'learning-hub') {
+      navigate('/learning-hub');
     } else if (tabId === 'search') {
       navigate('/blog/search');
     } else if (tabId === 'categories') {
