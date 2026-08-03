@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { 
-  ChevronRight, ChevronLeft, Clock, CheckCircle2 
-} from 'lucide-react';
+import { ChevronRight, ChevronLeft, Clock } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import BlogPostContent from '../../blog/components/BlogPostContent';
 import CourseHeaderBar from './CourseHeaderBar';
 import CourseSidebar from './CourseSidebar';
+import FloatingReaderControls from './FloatingReaderControls';
+import { playSuccessSound } from '../utils/soundUtils';
 
 export default function CourseViewer({
   course,
@@ -19,8 +18,9 @@ export default function CourseViewer({
   resetCourseProgress
 }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [jumpPageInput, setJumpPageInput] = useState('');
+  
   const lessons = course.lessons || [];
-
   const activeIndex = lessons.findIndex((l) => l.id === activeLessonId);
   const currentLesson = lessons[activeIndex >= 0 ? activeIndex : 0] || lessons[0];
 
@@ -41,7 +41,6 @@ export default function CourseViewer({
         onSelectLesson(lessons[activeIndex - 1].id);
       }
     };
-
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [activeIndex, lessons, onSelectLesson]);
@@ -61,39 +60,39 @@ export default function CourseViewer({
     const nextCompleted = !isCurrentCompleted;
     toggleLessonCompleted(course.id, currentLesson.id);
 
-    if (nextCompleted && (activeIndex === lessons.length - 1 || stats.completedCount + 1 >= lessons.length)) {
-      confetti({
-        particleCount: 80,
-        spread: 70,
-        origin: { y: 0.6 }
-      });
+    if (nextCompleted) {
+      playSuccessSound();
+      if (activeIndex === lessons.length - 1 || stats.completedCount + 1 >= lessons.length) {
+        confetti({ particleCount: 150, spread: 90, origin: { y: 0.6 } });
+      } else {
+        confetti({ particleCount: 50, spread: 50, origin: { y: 0.8 } });
+      }
     }
   };
 
   const handleNextLesson = () => {
     if (!isCurrentCompleted) {
-      toggleLessonCompleted(course.id, currentLesson.id);
+      handleToggleComplete();
     }
     if (activeIndex < lessons.length - 1) {
       onSelectLesson(lessons[activeIndex + 1].id);
-    } else {
-      confetti({
-        particleCount: 100,
-        spread: 80,
-        origin: { y: 0.6 }
-      });
     }
   };
 
-  const handlePrevLesson = () => {
-    if (activeIndex > 0) {
-      onSelectLesson(lessons[activeIndex - 1].id);
+  const handleJumpSubmit = (e) => {
+    e.preventDefault();
+    const num = parseInt(jumpPageInput.trim(), 10);
+    if (!isNaN(num) && num >= 1 && num <= lessons.length) {
+      const target = lessons[num - 1];
+      if (target) {
+        onSelectLesson(target.id);
+        setJumpPageInput('');
+      }
     }
   };
 
   return (
     <div className="min-h-screen bg-background text-text flex">
-      {/* Shared Fixed Course Sidebar */}
       <CourseSidebar
         course={course}
         items={lessons}
@@ -108,9 +107,7 @@ export default function CourseViewer({
         onResetProgress={resetCourseProgress}
       />
 
-      {/* Main Reader Content Area (Offset by lg:ml-80) */}
-      <div className="lg:ml-80 flex-1 flex flex-col min-w-0">
-        {/* Shared Header Bar */}
+      <div className="lg:ml-80 flex-1 flex flex-col min-w-0 relative">
         <CourseHeaderBar
           course={course}
           activeItem={currentLesson}
@@ -122,79 +119,65 @@ export default function CourseViewer({
           onToggleSidebar={() => setIsSidebarOpen(true)}
         />
 
-        {/* Lesson Body Content */}
-        <main className="flex-1 max-w-4xl w-full mx-auto p-4 sm:p-10">
-          {/* Lesson Hero Header Banner */}
-          <div className="mb-10 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-primary/10 via-card to-card border border-border/80 shadow-sm relative overflow-hidden">
-            <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div>
-                <div className="flex items-center gap-2 mb-2 flex-wrap">
-                  <span className="px-3 py-1 rounded-full bg-primary text-white text-[11px] font-extrabold uppercase tracking-wider">
-                    Lesson {activeIndex + 1}
+        {/* Floating Controls */}
+        <FloatingReaderControls
+          currentIndex={activeIndex}
+          totalCount={lessons.length}
+          jumpInput={jumpPageInput}
+          setJumpInput={setJumpPageInput}
+          onJumpSubmit={handleJumpSubmit}
+          isBook={false}
+        />
+
+        <main className="flex-1 max-w-4xl w-full mx-auto p-4 sm:p-10 -mt-6">
+          <div className="mb-10 p-8 sm:p-12 rounded-[32px] bg-gradient-to-r from-primary/10 via-card to-card border border-primary/20 shadow-xl relative overflow-hidden">
+            <div className="relative z-10">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="px-3 py-1 rounded-full bg-primary text-white text-[11px] font-extrabold uppercase tracking-wider shadow-sm">
+                  Lesson {activeIndex + 1}
+                </span>
+                {currentLesson.duration && (
+                  <span className="inline-flex items-center gap-1 text-xs text-muted bg-background/60 backdrop-blur-sm px-3 py-1 rounded-full font-bold border border-border/50">
+                    <Clock size={13} />
+                    <span>{currentLesson.duration}</span>
                   </span>
-                  {currentLesson.duration && (
-                    <span className="inline-flex items-center gap-1 text-xs text-muted bg-border/40 px-3 py-1 rounded-full font-medium">
-                      <Clock size={13} />
-                      <span>{currentLesson.duration}</span>
-                    </span>
-                  )}
-                </div>
-
-                <h2 className="text-xl sm:text-3xl font-extrabold text-text leading-snug">
-                  {currentLesson.title}
-                </h2>
-
-                {currentLesson.description && (
-                  <p className="text-sm text-muted mt-2 leading-relaxed">
-                    {currentLesson.description}
-                  </p>
                 )}
               </div>
 
-              <div className="shrink-0">
-                <button
-                  onClick={handleToggleComplete}
-                  className={`w-full sm:w-auto px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm ${
-                    isCurrentCompleted
-                      ? 'bg-emerald-500 text-white shadow-emerald-500/20'
-                      : 'bg-card border border-border text-text hover:border-primary hover:text-primary'
-                  }`}
-                >
-                  <CheckCircle2 size={16} />
-                  <span>{isCurrentCompleted ? 'Completed' : 'Mark as Complete'}</span>
-                </button>
-              </div>
+              <h2 className="text-3xl sm:text-5xl font-black text-text leading-tight tracking-tight mt-2">
+                {currentLesson.title}
+              </h2>
+
+              {currentLesson.description && (
+                <p className="text-base sm:text-lg text-muted mt-4 max-w-2xl font-medium leading-relaxed">
+                  {currentLesson.description}
+                </p>
+              )}
             </div>
           </div>
 
           {/* Render Lesson Content */}
-          <BlogPostContent content={currentLesson.content} />
+          <div className="prose prose-lg dark:prose-invert mx-auto">
+            <BlogPostContent content={currentLesson.content} />
+          </div>
 
-          {/* Bottom Navigation Controls */}
-          <div className="mt-14 pt-8 border-t border-border/80 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <button
-              onClick={handlePrevLesson}
-              disabled={activeIndex === 0}
-              className={`w-full sm:w-auto px-6 py-3.5 rounded-2xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
-                activeIndex === 0
-                  ? 'opacity-40 cursor-not-allowed bg-card border border-border text-muted'
-                  : 'bg-card border border-border text-text hover:border-primary hover:text-primary shadow-sm'
-              }`}
-            >
-              <ChevronLeft size={16} />
-              <span>Previous Lesson</span>
-            </button>
-
+          {/* Large Navigation Buttons */}
+          <div className="mt-20 pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
+            {activeIndex > 0 && (
+              <button
+                onClick={() => onSelectLesson(lessons[activeIndex - 1].id)}
+                className="w-full sm:w-auto px-8 py-4 rounded-2xl text-sm font-bold bg-card border-2 border-border text-muted hover:border-primary hover:text-primary transition-all text-center"
+              >
+                ← Previous Lesson
+              </button>
+            )}
+            <div className="flex-1"></div>
             <button
               onClick={handleNextLesson}
-              className="w-full sm:w-auto px-7 py-3.5 rounded-2xl text-xs font-bold bg-gradient-to-r from-primary via-secondary to-primary text-white hover:opacity-95 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-xl shadow-primary/25"
+              className="w-full sm:w-auto px-10 py-4 rounded-2xl text-sm font-black bg-gradient-to-r from-primary to-secondary text-white shadow-xl shadow-primary/20 hover:opacity-95 active:scale-95 transition-all flex items-center justify-center gap-2"
             >
-              <span>
-                {activeIndex < lessons.length - 1
-                  ? 'Next Lesson'
-                  : 'Finish Course 🎉'}
-              </span>
-              <ChevronRight size={16} />
+              <span>{activeIndex < lessons.length - 1 ? 'Complete & Next' : 'Finish Course 🎉'}</span>
+              <ChevronRight size={18} />
             </button>
           </div>
         </main>
