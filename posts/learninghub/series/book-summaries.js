@@ -28,7 +28,9 @@ export default {
   </div>
 </div>
 
-Viele halten dieses Buch für das wichtigste Werk über menschliche Beziehungen, das je geschrieben wurde. Sein revolutionärer Kern: Erfolg hängt laut Studien (z.B. vom Carnegie Institute of Technology) nur zu 15 % von technischem Fachwissen ab – und zu 85 % von *Social Engineering*, also der Fähigkeit, andere Menschen zu verstehen, zu motivieren und wertzuschätzen (heute oft als "Emotionale Intelligenz" bezeichnet).
+<p class="text-xl sm:text-2xl text-text/90 font-medium mb-8 leading-relaxed max-w-4xl">
+  Viele halten dieses Buch für das wichtigste Werk über menschliche Beziehungen, das je geschrieben wurde. Sein revolutionärer Kern: Erfolg hängt laut Studien nur zu <span class="text-primary font-bold">15 % von technischem Fachwissen</span> ab – und zu <span class="text-primary font-bold">85 % von Social Engineering</span>, also der Fähigkeit, andere Menschen zu verstehen, zu motivieren und wertzuschätzen.
+</p>
 
 <Tabs>
   <Tab title="🧠 Wissenschaftliche Einordnung">
@@ -58,25 +60,42 @@ Viele halten dieses Buch für das wichtigste Werk über menschliche Beziehungen,
 
 ---
 
-## 🧱 Teil 1: Grundtechniken im Umgang mit Menschen
+## <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-500"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg> Teil 1: Grundtechniken</span>
 
 Die Basis für alles Weitere. Wer diese drei Regeln bricht, braucht die anderen 27 gar nicht erst zu versuchen.
 
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-8">
-  <div class="bg-card border border-border p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
-    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity text-5xl">🛑</div>
-    <div class="text-xl font-bold mb-3 text-red-500 dark:text-red-400">1. Nicht kritisieren</div>
-    <p class="text-sm text-text/80">Kritisiere, verurteile oder meckere nicht.</p>
+  <div class="bg-gradient-to-br from-card to-background border border-border p-6 rounded-3xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+    <div class="absolute -right-4 -top-4 opacity-5 group-hover:opacity-10 transition-opacity">
+      <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    </div>
+    <div class="w-12 h-12 rounded-2xl bg-red-500/10 text-red-500 flex items-center justify-center mb-4">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </div>
+    <div class="text-xl font-black mb-3 text-red-500 dark:text-red-400">1. Nicht kritisieren</div>
+    <p class="text-sm text-text/80 font-medium">Kritisiere, verurteile oder meckere nicht.</p>
   </div>
-  <div class="bg-card border border-border p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
-    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity text-5xl">💎</div>
-    <div class="text-xl font-bold mb-3 text-emerald-500 dark:text-emerald-400">2. Anerkennung</div>
-    <p class="text-sm text-text/80">Gib ehrliche und aufrichtige Anerkennung.</p>
+  
+  <div class="bg-gradient-to-br from-card to-background border border-border p-6 rounded-3xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+    <div class="absolute -right-4 -top-4 opacity-5 group-hover:opacity-10 transition-opacity">
+      <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22l-1-1-8-8c-3-3-3-8 0-11s8-3 11 0l1 1 1-1c3-3 8-3 11 0s3 8 0 11l-8 8-1-1z"/></svg>
+    </div>
+    <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center mb-4">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+    </div>
+    <div class="text-xl font-black mb-3 text-emerald-500 dark:text-emerald-400">2. Anerkennung</div>
+    <p class="text-sm text-text/80 font-medium">Gib ehrliche und aufrichtige Anerkennung.</p>
   </div>
-  <div class="bg-card border border-border p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
-    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity text-5xl">🎣</div>
-    <div class="text-xl font-bold mb-3 text-blue-500 dark:text-blue-400">3. Wünsche wecken</div>
-    <p class="text-sm text-text/80">Wecke im anderen ein starkes, eigenes Verlangen.</p>
+  
+  <div class="bg-gradient-to-br from-card to-background border border-border p-6 rounded-3xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+    <div class="absolute -right-4 -top-4 opacity-5 group-hover:opacity-10 transition-opacity">
+      <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1 3-6z"/></svg>
+    </div>
+    <div class="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-500 flex items-center justify-center mb-4">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"/><path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+    </div>
+    <div class="text-xl font-black mb-3 text-blue-500 dark:text-blue-400">3. Wünsche wecken</div>
+    <p class="text-sm text-text/80 font-medium">Wecke im anderen ein starkes, eigenes Verlangen.</p>
   </div>
 </div>
 
@@ -107,7 +126,7 @@ graph LR
 
 ---
 
-## 🤝 Teil 2: Sechs Wege, um sich beliebt zu machen
+## <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-500 flex items-center gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-500"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg> Teil 2: Beliebt machen</span>
 
 Wie du erreichst, dass Menschen dich auf Anhieb mögen und gerne in deiner Nähe sind. Diese Prinzipien nutzen den *Halo-Effekt* – wenn Menschen dich mögen, bewerten sie auch deine fachliche Kompetenz und deine Argumente automatisch positiver.
 
@@ -187,7 +206,7 @@ Wie du erreichst, dass Menschen dich auf Anhieb mögen und gerne in deiner Nähe
 
 ---
 
-## 🧠 Teil 3: Zwölf Wege, um Menschen von deiner Meinung zu überzeugen
+## <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500 flex items-center gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-orange-500"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Teil 3: Überzeugen</span>
 
 Wie man Konflikte vermeidet und echte Kooperation erzeugt, ohne den anderen als "Verlierer" dastehen zu lassen. 
 
@@ -294,7 +313,7 @@ Wie man Konflikte vermeidet und echte Kooperation erzeugt, ohne den anderen als 
 
 ---
 
-## 👑 Teil 4: Eine Führungspersönlichkeit werden
+## <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-600 flex items-center gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-500"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg> Teil 4: Führung</span>
 
 Neun Techniken, um das Verhalten anderer zu ändern, ohne Ärger oder Feindseligkeit hervorzurufen. Perfekt für Manager, Projektleiter, Eltern und Partner.
 
@@ -387,52 +406,73 @@ Um das Gelesene wirklich zu verinnerlichen und von bloßem Wissen zu echtem *Kö
 
 ---
 
-## 🎯 Teste dein Wissen (Active Recall)
-
-Überprüfe dein neu gewonnenes Wissen, bevor du den Tab schließt. Erst nachdenken, dann aufklappen!
-
-<details>
-  <summary>Was ist nach Carnegie (und der modernen Psychologie) das stärkste Verlangen der menschlichen Natur?</summary>
-  <div class="p-4 pt-0">
-    <div class="border-l-4 border-emerald-500 pl-4 py-2 mt-2">
-      Das Verlangen, <b>wichtig zu sein</b> (the desire to be important). Es ist der emotionale Motor hinter fast jedem menschlichen Verhalten, vom Errichten von Wolkenkratzern über das Tragen der neuesten Mode bis hin zum Kauf teurer Luxus-Autos.
-    </div>
+<div class="bg-gradient-to-br from-slate-900 to-indigo-950 p-8 sm:p-12 rounded-[2.5rem] shadow-2xl border border-white/10 my-16 relative overflow-hidden text-white">
+  <div class="absolute -right-20 -top-20 opacity-5 pointer-events-none">
+    <svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
   </div>
-</details>
-
-<details>
-  <summary>Wie solltest du in ein Konflikt- oder Verhandlungsgespräch einsteigen, wenn du jemanden von deiner Idee überzeugen willst?</summary>
-  <div class="p-4 pt-0">
-    <div class="border-l-4 border-emerald-500 pl-4 py-2 mt-2">
-      Beginne extrem freundlich und finde sofort Punkte, bei denen ihr euch einig seid. Bringe den anderen dazu, wiederholt <b>"Ja, ja"</b> zu sagen (Sokratische Methode). Dadurch polst du seine psychologische Haltung auf Zustimmung statt auf Abwehr.
-    </div>
-  </div>
-</details>
-
-<details>
-  <summary>Warum ist direkte Kritik nutzlos und oft sogar gefährlich für die Beziehung?</summary>
-  <div class="p-4 pt-0">
-    <div class="border-l-4 border-emerald-500 pl-4 py-2 mt-2">
-      Weil sie Menschen sofort in die Defensive drängt (Kognitive Dissonanz). Sie führt fast nie zu echter Verhaltensänderung oder Einsicht, sondern verletzt lediglich den kostbaren Stolz der Person. Sie zwingt den anderen, sich zu rechtfertigen und weckt oft jahrelange Feindseligkeit.
-    </div>
-  </div>
-</details>
-
-<details>
-  <summary>Wie machst du als Führungskraft am besten auf einen Fehler aufmerksam, ohne das Ego des Mitarbeiters zu verletzen?</summary>
-  <div class="p-4 pt-0">
-    <div class="border-l-4 border-emerald-500 pl-4 py-2 mt-2">
-      Mache <b>indirekt</b> auf den Fehler aufmerksam (Prinzip 4.2). Beginne immer mit echtem Lob (4.1), spreche zuerst über deine <b>eigenen Unzulänglichkeiten oder Fehler</b> (Prinzip 4.3) und stelle <b>Fragen</b> ("Denkst du, wir sollten...?"), anstatt direkte Befehle zu erteilen (Prinzip 4.4).
-    </div>
-  </div>
-</details>
-
-<div class="bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-indigo-500/10 p-8 rounded-3xl text-center mt-12 mb-12 border border-indigo-500/20 shadow-sm relative overflow-hidden">
-  <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9IiM2MzY2ZjEiIGZpbGwtb3BhY2l0eT0iMC4wNSIvPjwvc3ZnPg==')] opacity-50"></div>
+  
   <div class="relative z-10">
-    <p class="italic font-medium text-xl md:text-2xl mb-4 text-text">"Wenn es ein Geheimnis des Erfolgs gibt, dann ist es die Fähigkeit, den Standpunkt des anderen zu verstehen und die Dinge sowohl aus seiner als auch aus der eigenen Perspektive zu betrachten."</p>
-    <p class="text-sm font-black uppercase tracking-widest text-indigo-500">Henry Ford</p>
+    <h2 class="text-3xl font-black mb-4 flex items-center gap-4 text-white border-none mt-0 pb-0"><span class="bg-indigo-500 text-white w-12 h-12 flex items-center justify-center rounded-2xl shadow-lg shadow-indigo-500/30"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span> Active Recall</h2>
+    <p class="text-indigo-200/80 text-lg mb-8 max-w-2xl">Überprüfe dein neu gewonnenes Wissen, bevor du den Tab schließt. Erst nachdenken, dann aufklappen! Das zwingt dein Gehirn, die Synapsen zu feuern.</p>
+
+    <div class="space-y-4">
+      <details class="group bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl transition-colors">
+        <summary class="flex items-center font-bold p-5 cursor-pointer text-white list-none [&::-webkit-details-marker]:hidden">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-4 text-indigo-400 group-open:rotate-90 transition-transform"><path d="m9 18 6-6-6-6"/></svg>
+          Was ist nach Carnegie (und der modernen Psychologie) das stärkste Verlangen der menschlichen Natur?
+        </summary>
+        <div class="p-5 pt-0 pl-14">
+          <div class="border-l-2 border-emerald-400 pl-4 py-1 text-indigo-100/90 text-sm">
+            Das Verlangen, <b>wichtig zu sein</b> (the desire to be important). Es ist der emotionale Motor hinter fast jedem menschlichen Verhalten, vom Errichten von Wolkenkratzern über das Tragen der neuesten Mode bis hin zum Kauf teurer Luxus-Autos.
+          </div>
+        </div>
+      </details>
+
+      <details class="group bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl transition-colors">
+        <summary class="flex items-center font-bold p-5 cursor-pointer text-white list-none [&::-webkit-details-marker]:hidden">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-4 text-indigo-400 group-open:rotate-90 transition-transform"><path d="m9 18 6-6-6-6"/></svg>
+          Wie solltest du in ein Konflikt- oder Verhandlungsgespräch einsteigen?
+        </summary>
+        <div class="p-5 pt-0 pl-14">
+          <div class="border-l-2 border-emerald-400 pl-4 py-1 text-indigo-100/90 text-sm">
+            Beginne extrem freundlich und finde sofort Punkte, bei denen ihr euch einig seid. Bringe den anderen dazu, wiederholt <b>"Ja, ja"</b> zu sagen (Sokratische Methode). Dadurch polst du seine psychologische Haltung auf Zustimmung statt auf Abwehr.
+          </div>
+        </div>
+      </details>
+
+      <details class="group bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl transition-colors">
+        <summary class="flex items-center font-bold p-5 cursor-pointer text-white list-none [&::-webkit-details-marker]:hidden">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-4 text-indigo-400 group-open:rotate-90 transition-transform"><path d="m9 18 6-6-6-6"/></svg>
+          Warum ist direkte Kritik nutzlos und oft sogar gefährlich für die Beziehung?
+        </summary>
+        <div class="p-5 pt-0 pl-14">
+          <div class="border-l-2 border-emerald-400 pl-4 py-1 text-indigo-100/90 text-sm">
+            Weil sie Menschen sofort in die Defensive drängt (Kognitive Dissonanz). Sie führt fast nie zu echter Verhaltensänderung oder Einsicht, sondern verletzt lediglich den kostbaren Stolz der Person. Sie zwingt den anderen, sich zu rechtfertigen.
+          </div>
+        </div>
+      </details>
+
+      <details class="group bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl transition-colors">
+        <summary class="flex items-center font-bold p-5 cursor-pointer text-white list-none [&::-webkit-details-marker]:hidden">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-4 text-indigo-400 group-open:rotate-90 transition-transform"><path d="m9 18 6-6-6-6"/></svg>
+          Wie machst du am besten auf einen Fehler aufmerksam?
+        </summary>
+        <div class="p-5 pt-0 pl-14">
+          <div class="border-l-2 border-emerald-400 pl-4 py-1 text-indigo-100/90 text-sm">
+            Mache <b>indirekt</b> auf den Fehler aufmerksam. Beginne mit echtem Lob, spreche zuerst über deine <b>eigenen Fehler</b> und stelle <b>Fragen</b> ("Denkst du, wir sollten...?"), anstatt direkte Befehle zu erteilen.
+          </div>
+        </div>
+      </details>
+    </div>
   </div>
+</div>
+
+<div class="bg-card border border-border p-8 rounded-3xl text-center mt-12 mb-12 shadow-sm">
+  <div class="inline-block bg-indigo-500/10 p-4 rounded-full mb-4 text-indigo-500">
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+  </div>
+  <p class="italic font-medium text-xl md:text-2xl mb-6 text-text">"Wenn es ein Geheimnis des Erfolgs gibt, dann ist es die Fähigkeit, den Standpunkt des anderen zu verstehen und die Dinge sowohl aus seiner als auch aus der eigenen Perspektive zu betrachten."</p>
+  <p class="text-sm font-black uppercase tracking-widest text-indigo-500">Henry Ford</p>
 </div>
 
 <YouTube videoId="Xo2Q4PQqqWU" />
