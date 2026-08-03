@@ -11,6 +11,7 @@ All learning materials are defined as standalone JavaScript objects inside `post
 - `web-dev-foundations.js`: Interactive course (series)
 - `modern-developer-handbook.js`: Interactive course (series)
 - `schroedinger-style.js`: Paged.js eBook (book)
+- `bob-learns-infosec.js`: Paged.js eBook mit Terminal/Glitch-Design ("Bob learns Information Security Management", 6 Seiten)
 
 ### Registering a New Course/Book
 To make a new course or book visible on the website:

@@ -11,6 +11,7 @@ import FloatingReaderControls from './FloatingReaderControls';
 import BookSearchModal from './BookSearchModal';
 import PageMinimap from './PageMinimap';
 import ReaderSettingsModal from './ReaderSettingsModal';
+import BookTOCModal from './BookTOCModal';
 import { playSuccessSound } from '../utils/soundUtils';
 
 export default function PagedBookViewer({
@@ -44,6 +45,7 @@ export default function PagedBookViewer({
   // Modals & Reader Settings
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isTocOpen, setIsTocOpen] = useState(false);
 
   const [bookmarks, setBookmarks] = useState(() => {
     try {
@@ -61,14 +63,20 @@ export default function PagedBookViewer({
         theme: 'white',
         paperTexture: true,
         meshGlow: true,
-        transition: 'slide'
+        transition: 'slide',
+        pageNumberVariant: 'inline',
+        pageNumberOffset: 24,
+        showPageNumbers: true
       };
     } catch (err) {
       return {
         theme: 'white',
         paperTexture: true,
         meshGlow: true,
-        transition: 'slide'
+        transition: 'slide',
+        pageNumberVariant: 'inline',
+        pageNumberOffset: 24,
+        showPageNumbers: true
       };
     }
   });
@@ -282,6 +290,34 @@ export default function PagedBookViewer({
 
   const currentVariant = transitionVariants[settings.transition] || transitionVariants.slide;
 
+  // Bleeding page-number badge: sits outside the "proper zone" of the page
+  const renderPageBadge = (pageObj) => {
+    if (settings.showPageNumbers === false) return null;
+    if (settings.pageNumberVariant !== 'bleed' || pageObj.isCover) return null;
+
+    const offset = settings.pageNumberOffset ?? 24;
+    return (
+      <div
+        className="no-print pointer-events-none absolute z-20 flex items-center gap-1 px-3 py-1.5 rounded-xl border font-mono font-bold tabular-nums"
+        style={{
+          right: -Math.max(0, offset * 0.5),
+          top: 34,
+          background: '#052e16',
+          borderColor: '#14532d',
+          color: '#4ade80',
+          boxShadow: '4px 4px 0 rgba(34,197,94,0.25)',
+          transform: `rotate(${offset > 30 ? -3 : offset < 0 ? 3 : 0}deg) translateX(${offset}px)`,
+          transformOrigin: 'left top'
+        }}
+        data-page-badge={pageObj.globalPageNum}
+      >
+        <span className="text-[10px] text-emerald-200/70">P.</span>
+        <span className="text-lg leading-none">{pageObj.globalPageNum}</span>
+        <span className="text-[10px] text-emerald-200/50">/ {allPages.length}</span>
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-background text-text flex">
       {/* Paged.js Print & Book Styles */}
@@ -444,6 +480,7 @@ export default function PagedBookViewer({
           onZoomReset={handleZoomReset}
           onOpenSearch={() => setIsSearchOpen(true)}
           onOpenSettings={() => setIsSettingsOpen(true)}
+          onOpenToc={() => setIsTocOpen(true)}
         />
 
         {/* Main Book Content Container */}
@@ -499,6 +536,8 @@ export default function PagedBookViewer({
                                 <Bookmark size={18} fill={isBookmarked ? 'currentColor' : 'none'} />
                               </button>
                             )}
+
+                            {renderPageBadge(pageObj)}
 
                             {!noHeader && (
                               (pageObj.isFirstPageOfChapter || (pageObj.globalPageNum === 2 && pageObj.chapterIndex === 0)) ? (
@@ -578,21 +617,23 @@ export default function PagedBookViewer({
                     } ${isCover ? 'p-0' : 'p-8 sm:p-14'}`}
                   >
                     {/* Bookmark Ribbon Button */}
-                    {!isCover && (
-                      <button
-                        onClick={() => handleToggleBookmark(pageObj.globalPageNum)}
-                        className={`absolute top-6 right-6 p-2 rounded-full transition-all cursor-pointer z-10 ${
-                          isBookmarked
-                            ? 'text-amber-500 bg-amber-500/10 fill-amber-500 scale-110 shadow-sm'
-                            : 'text-muted/40 hover:text-amber-500 hover:bg-border/40'
-                        }`}
-                        title={isBookmarked ? 'Bookmarked page' : 'Bookmark this page'}
-                      >
-                        <Bookmark size={18} fill={isBookmarked ? 'currentColor' : 'none'} />
-                      </button>
-                    )}
+                        {!isCover && (
+                          <button
+                            onClick={() => handleToggleBookmark(pageObj.globalPageNum)}
+                            className={`absolute top-6 right-6 p-2 rounded-full transition-all cursor-pointer z-10 ${
+                              isBookmarked
+                                ? 'text-amber-500 bg-amber-500/10 fill-amber-500 scale-110 shadow-sm'
+                                : 'text-muted/40 hover:text-amber-500 hover:bg-border/40'
+                            }`}
+                            title={isBookmarked ? 'Bookmarked page' : 'Bookmark this page'}
+                          >
+                            <Bookmark size={18} fill={isBookmarked ? 'currentColor' : 'none'} />
+                          </button>
+                        )}
 
-                    {!noHeader && (
+                        {renderPageBadge(pageObj)}
+
+                        {!noHeader && (
                       pageObj.isFirstPageOfChapter ? (
                         <div className="mb-10 pb-6 border-b border-gray-200 flex items-center justify-between pr-10">
                           <span className="text-xs font-extrabold text-amber-600 uppercase tracking-widest">
@@ -630,6 +671,16 @@ export default function PagedBookViewer({
           onClose={() => setIsSearchOpen(false)}
           allPages={allPages}
           onJumpToPage={handleJumpToPageNum}
+        />
+
+        {/* Auto Table of Contents Modal */}
+        <BookTOCModal
+          isOpen={isTocOpen}
+          onClose={() => setIsTocOpen(false)}
+          chapters={chapters}
+          allPages={allPages}
+          onJumpToChapter={(id) => handleSelectChapter(id)}
+          onJumpToPage={(pg) => handleJumpToPageNum(pg)}
         />
 
         {/* Reader Settings Modal */}

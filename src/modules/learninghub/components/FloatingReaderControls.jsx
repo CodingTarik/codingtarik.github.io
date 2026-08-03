@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BookOpen, Layers, ZoomIn, ZoomOut, Search, Settings, ChevronLeft, ChevronRight } from 'lucide-react';
+import { BookOpen, Layers, ZoomIn, ZoomOut, Search, Settings, ChevronLeft, ChevronRight, List } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function FloatingReaderControls({
@@ -17,6 +17,7 @@ export default function FloatingReaderControls({
   onZoomReset,
   onOpenSearch,
   onOpenSettings,
+  onOpenToc,
   // optional prev/next nav
   onPrev,
   onNext,
@@ -25,7 +26,7 @@ export default function FloatingReaderControls({
 
   const hasZoom = onZoomIn && onZoomOut && onZoomReset;
   const hasViewMode = isBook && setViewMode;
-  const hasBookExtras = isBook && (onOpenSearch || onOpenSettings);
+  const hasBookExtras = isBook && (onOpenSearch || onOpenSettings || onOpenToc);
 
   const canPrev = currentIndex > 0;
   const canNext = currentIndex < totalCount - 1;
@@ -140,6 +141,11 @@ export default function FloatingReaderControls({
                 {onOpenSearch && (
                   <button onClick={onOpenSearch} className="w-8 h-8 flex items-center justify-center rounded-xl text-white/50 hover:text-amber-400 hover:bg-amber-500/12 transition-all cursor-pointer">
                     <Search size={13} />
+                  </button>
+                )}
+                {onOpenToc && (
+                  <button onClick={onOpenToc} className="w-8 h-8 flex items-center justify-center rounded-xl text-white/50 hover:text-amber-400 hover:bg-amber-500/12 transition-all cursor-pointer" title="Inhaltsverzeichnis">
+                    <List size={13} />
                   </button>
                 )}
                 {onOpenSettings && (

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Settings, X, Sparkles, Layers, Sun, Moon, ScrollText, Check } from 'lucide-react';
+import { Settings, X, Sparkles, Layers, Sun, Moon, ScrollText, Check, Hash, ArrowUpRight, EyeOff } from 'lucide-react';
 
 export default function ReaderSettingsModal({
   isOpen,
@@ -127,6 +127,70 @@ export default function ReaderSettingsModal({
                 {tr.label}
               </button>
             ))}
+          </div>
+        </div>
+
+        {/* 5. Page Number Controls — can bleed outside the page zone */}
+        <div className="space-y-3 p-3.5 rounded-2xl bg-background/60 border border-border/70">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <Hash size={18} className="text-amber-500" />
+              <div>
+                <p className="text-xs font-bold text-text">Page Number Style</p>
+                <p className="text-[11px] text-muted">Seitenzahlen, die aus der Zone ragen dürfen</p>
+              </div>
+            </div>
+            <button
+              onClick={() => onUpdateSettings({ pageNumberVariant: settings.pageNumberVariant === 'bleed' ? 'inline' : 'bleed' })}
+              className={`w-12 h-6 rounded-full transition-colors relative p-0.5 cursor-pointer ${
+                settings.pageNumberVariant === 'bleed' ? 'bg-amber-500' : 'bg-border'
+              }`}
+            >
+              <div
+                className={`w-5 h-5 rounded-full bg-white transition-transform ${
+                  settings.pageNumberVariant === 'bleed' ? 'translate-x-6' : 'translate-x-0'
+                }`}
+              />
+            </button>
+          </div>
+
+          {settings.pageNumberVariant === 'bleed' && (
+            <>
+              {/* Offset slider */}
+              <div className="flex items-center gap-2.5 bg-card border border-border rounded-xl px-3 py-2.5">
+                <ArrowUpRight size={15} className="text-muted flex-none" />
+                <input
+                  type="range"
+                  min="-40"
+                  max="80"
+                  step="2"
+                  value={settings.pageNumberOffset ?? 24}
+                  onChange={(e) => onUpdateSettings({ pageNumberOffset: Number(e.target.value) })}
+                  className="flex-1 accent-amber-500 cursor-pointer"
+                />
+                <span className="text-[11px] font-mono font-bold text-muted tabular-nums w-9 text-right">
+                  {settings.pageNumberOffset ?? 24}px
+                </span>
+              </div>
+              <div className="flex items-center justify-between px-1">
+                <span className="text-[10px] text-muted">Drinnen</span>
+                <span className="text-[10px] text-muted">Außerhalb der Zone</span>
+              </div>
+            </>
+          )}
+
+          {/* Hide / show page numbers */}
+          <div
+            onClick={() => onUpdateSettings({ showPageNumbers: !settings.showPageNumbers })}
+            className="flex items-center justify-between rounded-xl border border-border/70 bg-card px-3.5 py-2.5 cursor-pointer"
+          >
+            <div className="flex items-center gap-2">
+              <EyeOff size={15} className="text-muted" />
+              <span className="text-xs font-bold text-text">Seitenzahlen anzeigen</span>
+            </div>
+            <span className={`text-[11px] font-mono font-bold px-2 py-0.5 rounded-md ${settings.showPageNumbers !== false ? 'bg-amber-500 text-white' : 'bg-border text-muted'}`}>
+              {settings.showPageNumbers !== false ? 'AN' : 'AUS'}
+            </span>
           </div>
         </div>
 
