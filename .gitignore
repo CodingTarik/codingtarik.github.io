@@ -26,3 +26,6 @@ dist-ssr
 # PWA
 dev-dist
 
+# kilo
+.kilo
+
