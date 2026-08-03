@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowLeft, CheckCircle2, Circle, X, RotateCcw, BookMarked, FileText
@@ -20,6 +20,17 @@ export default function CourseSidebar({
 }) {
   const isBook = course.type === 'book';
   const itemTypeLabel = isBook ? 'Chapter' : 'Lesson';
+  const activeItemRef = useRef(null);
+
+  // Auto-scroll sidebar list so active item is smoothly centered in view
+  useEffect(() => {
+    if (activeItemRef.current) {
+      activeItemRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest'
+      });
+    }
+  }, [activeItemId]);
 
   return (
     <>
@@ -107,6 +118,7 @@ export default function CourseSidebar({
             return (
               <button
                 key={item.id}
+                ref={isActive ? activeItemRef : null}
                 onClick={() => {
                   onSelectItem(item.id);
                   onClose();
@@ -115,8 +127,8 @@ export default function CourseSidebar({
                   w-full text-left p-3 rounded-xl transition-all flex items-start gap-3 group cursor-pointer text-xs relative overflow-hidden border
                   ${isActive
                     ? isBook
-                      ? 'bg-amber-500/10 border-amber-500/40 text-amber-500 font-bold shadow-xs'
-                      : 'bg-primary/15 border-primary/40 text-primary font-bold shadow-xs'
+                      ? 'bg-amber-500/15 border-amber-500/50 text-amber-500 font-bold shadow-xs'
+                      : 'bg-primary/15 border-primary/50 text-primary font-bold shadow-xs'
                     : isDone
                     ? 'bg-card hover:bg-border/30 text-text font-medium border-border/40'
                     : 'text-muted hover:text-text hover:bg-border/30 border-transparent'

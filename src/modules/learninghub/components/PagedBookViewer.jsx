@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
   CheckCircle2, Circle, Printer, BookOpen, Layers, 
-  ChevronLeft, ChevronRight, Info 
+  ChevronLeft, ChevronRight, Info, ArrowRight
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import BlogPostContent from '../../blog/components/BlogPostContent';
@@ -18,7 +18,7 @@ export default function PagedBookViewer({
 }) {
   const chapters = course.chapters || [];
   const [activeChapterId, setActiveChapterId] = useState(chapters[0]?.id || null);
-  const [viewMode, setViewMode] = useState('chapter');
+  const [viewMode, setViewMode] = useState('chapter'); // 'chapter' or 'continuous'
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [jumpPageInput, setJumpPageInput] = useState('');
 
@@ -28,9 +28,40 @@ export default function PagedBookViewer({
 
   const isCurrentCompleted = activeChapter ? isLessonCompleted(course.id, activeChapter.id) : false;
 
+  // Scroll to top when changing active chapter in chapter view mode
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (viewMode === 'chapter') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   }, [activeChapterId, viewMode]);
+
+  // Scrollspy: IntersectionObserver for Continuous Scroll Mode to auto-highlight active chapter in sidebar
+  useEffect(() => {
+    if (viewMode !== 'continuous') return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const chId = entry.target.getAttribute('data-chapter-id');
+            if (chId) {
+              setActiveChapterId(chId);
+            }
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: '-15% 0px -65% 0px',
+        threshold: 0
+      }
+    );
+
+    const elements = document.querySelectorAll('[data-chapter-id]');
+    elements.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, [viewMode, chapters]);
 
   const handlePrintPdf = () => {
     window.print();
@@ -57,6 +88,13 @@ export default function PagedBookViewer({
       if (targetCh) {
         setActiveChapterId(targetCh.id);
         setJumpPageInput('');
+
+        if (viewMode === 'continuous') {
+          const targetEl = document.querySelector(`[data-chapter-id="${targetCh.id}"]`);
+          if (targetEl) {
+            targetEl.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
       }
     }
   };
@@ -103,7 +141,15 @@ export default function PagedBookViewer({
         course={course}
         items={chapters}
         activeItemId={activeChapter?.id}
-        onSelectItem={(id) => setActiveChapterId(id)}
+        onSelectItem={(id) => {
+          setActiveChapterId(id);
+          if (viewMode === 'continuous') {
+            const targetEl = document.querySelector(`[data-chapter-id="${id}"]`);
+            if (targetEl) {
+              targetEl.scrollIntoView({ behavior: 'smooth' });
+            }
+          }
+        }}
         isItemCompleted={isLessonCompleted}
         onToggleItemComplete={toggleLessonCompleted}
         stats={stats}
@@ -140,13 +186,35 @@ export default function PagedBookViewer({
 
         {/* Main Book Content Container */}
         <main className="flex-1 p-4 sm:p-10 max-w-4xl mx-auto w-full">
-          {/* Controls Bar: Reading View Mode & Page Jump */}
+          {/* Controls Bar: Right-Aligned Reading View Mode & Page Jump */}
           <div className="no-print mb-8 p-4 rounded-2xl bg-card border border-border/80 flex flex-wrap items-center justify-between gap-4 shadow-xs">
-            {/* View Mode Toggle Pill */}
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-bold text-muted uppercase tracking-wider hidden sm:inline">
-                Reading View:
-              </span>
+            <div className="text-xs font-bold text-muted">
+              Chapter <span className="text-amber-500 text-sm font-extrabold">{activeIndex + 1}</span> of {chapters.length}
+            </div>
+
+            {/* Right-aligned Reading Controls */}
+            <div className="flex flex-wrap items-center gap-3 ml-auto">
+              {/* Direct Chapter / Page Jump Input */}
+              <form onSubmit={handleJumpToChapter} className="flex items-center gap-1.5">
+                <span className="text-xs font-medium text-muted hidden sm:inline">Jump to:</span>
+                <input
+                  type="number"
+                  min="1"
+                  max={chapters.length}
+                  placeholder="#"
+                  value={jumpPageInput}
+                  onChange={(e) => setJumpPageInput(e.target.value)}
+                  className="w-14 px-2 py-1.5 bg-background border border-border rounded-xl text-xs text-center font-bold focus:outline-none focus:border-amber-500 shadow-xs"
+                />
+                <button
+                  type="submit"
+                  className="px-3 py-1.5 bg-amber-500 text-white rounded-xl text-xs font-bold hover:bg-amber-600 transition-colors shadow-xs cursor-pointer"
+                >
+                  Go
+                </button>
+              </form>
+
+              {/* View Mode Toggle Pill */}
               <div className="inline-flex items-center p-1 bg-background border border-border rounded-xl gap-1">
                 <button
                   onClick={() => setViewMode('chapter')}
@@ -155,6 +223,7 @@ export default function PagedBookViewer({
                       ? 'bg-amber-500 text-white shadow-xs'
                       : 'text-muted hover:text-text'
                   }`}
+                  title="View one chapter at a time"
                 >
                   <BookOpen size={14} />
                   <span>Chapter View</span>
@@ -167,36 +236,13 @@ export default function PagedBookViewer({
                       ? 'bg-amber-500 text-white shadow-xs'
                       : 'text-muted hover:text-text'
                   }`}
+                  title="Scroll seamlessly through all chapters"
                 >
                   <Layers size={14} />
                   <span>Continuous Scroll</span>
                 </button>
               </div>
             </div>
-
-            {/* Direct Chapter / Page Jump Input */}
-            <form onSubmit={handleJumpToChapter} className="flex items-center gap-2">
-              <span className="text-xs font-bold text-muted">
-                Chapter <span className="text-amber-500">{activeIndex + 1}</span> of {chapters.length}
-              </span>
-              <div className="relative">
-                <input
-                  type="number"
-                  min="1"
-                  max={chapters.length}
-                  placeholder="#"
-                  value={jumpPageInput}
-                  onChange={(e) => setJumpPageInput(e.target.value)}
-                  className="w-14 px-2 py-1 bg-background border border-border rounded-lg text-xs text-center font-bold focus:outline-none focus:border-amber-500"
-                />
-              </div>
-              <button
-                type="submit"
-                className="px-3 py-1 bg-amber-500 text-white rounded-lg text-xs font-bold hover:bg-amber-600 transition-colors cursor-pointer"
-              >
-                Go
-              </button>
-            </form>
           </div>
 
           {/* Reading Mode Renderer */}
@@ -272,10 +318,14 @@ export default function PagedBookViewer({
               </article>
             )
           ) : (
-            /* Continuous Scroll Mode */
+            /* Continuous Scroll Mode with Scrollspy */
             <div className="space-y-10">
               {chapters.map((ch, idx) => (
-                <article key={ch.id} className="bg-card border border-border/80 rounded-3xl p-6 sm:p-10 shadow-xs relative">
+                <article
+                  key={ch.id}
+                  data-chapter-id={ch.id}
+                  className="bg-card border border-border/80 rounded-3xl p-6 sm:p-10 shadow-xs relative scroll-mt-20"
+                >
                   <div className="mb-6 pb-4 border-b border-border/60 flex items-center justify-between">
                     <span className="text-xs font-extrabold text-amber-500 uppercase tracking-widest">
                       Chapter {idx + 1}: {ch.title}
