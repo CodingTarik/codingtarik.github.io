@@ -6,18 +6,15 @@ Welcome to the **Learning Hub** content directory! This guide explains how to cr
 
 ## 📁 File Structure & Registration
 
-All learning materials are defined as standalone JavaScript objects inside `posts/learninghub/`:
+All learning materials are defined as standalone JavaScript objects and are **auto-discovered** by `src/modules/learninghub/utils/courseUtils.js` (there is no manual registry to update). Place your files under `posts/learninghub/` (or `courses/`):
 
-- `web-dev-foundations.js`: Interactive course (series)
-- `modern-developer-handbook.js`: Interactive course (series)
-- `schroedinger-style.js`: Paged.js eBook (book)
-- `bob-learns-infosec.js`: Paged.js eBook mit Terminal/Glitch-Design ("Bob learns Information Security Management", 6 Seiten)
+- `series/bouldering.js`, `series/swimming.js`, ... : Empty/interactive course placeholders (type `series`)
+- `bob-learns-infosec.js`: Paged.js eBook (book) mit Terminal/Glitch-Design ("Bob learns Information Security Management", 6 Seiten)
 
 ### Registering a New Course/Book
 To make a new course or book visible on the website:
-1. Create your JS file in `posts/learninghub/your-course-name.js`.
-2. Open `src/modules/learninghub/data/coursesData.js`.
-3. Import your course file and add it to the exported `courses` array.
+1. Create your JS file in `posts/learninghub/your-course-name.js` (or `posts/learninghub/series/` for a series).
+2. It is picked up automatically — just give it a unique `id`, `title`, `type`, and (for series) a `lessons` array.
 
 ---
 

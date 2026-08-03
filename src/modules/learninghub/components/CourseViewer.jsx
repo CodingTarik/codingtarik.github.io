@@ -82,6 +82,30 @@ export default function CourseViewer({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [activeIndex, lessons, onSelectLesson]);
 
+  if (!lessons.length) {
+    return (
+      <div className="min-h-screen bg-background text-text flex items-center justify-center p-12">
+        <div className="text-center max-w-md">
+          <div className="mx-auto mb-6 w-16 h-16 rounded-3xl flex items-center justify-center text-3xl" style={{ background: 'rgba(99,102,241,0.12)', border: '1px solid rgba(99,102,241,0.25)' }}>
+            📚
+          </div>
+          <h2 className="text-2xl font-black text-text mb-3">{course.title}</h2>
+          <p className="text-muted text-sm leading-relaxed mb-2">
+            This series is being prepared and no lessons are published yet.
+          </p>
+          <p className="text-muted/60 text-xs mb-8">Check back soon for new content.</p>
+          <button
+            onClick={onBackToOverview}
+            className="px-6 py-3 rounded-2xl text-sm font-extrabold text-white cursor-pointer"
+            style={{ background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)', boxShadow: '0 8px 24px rgba(99,102,241,0.35)' }}
+          >
+            Back to overview
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   if (!currentLesson) {
     return (
       <div className="p-12 text-center text-muted">
