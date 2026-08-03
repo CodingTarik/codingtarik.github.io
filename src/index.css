@@ -149,3 +149,122 @@ html {
   nav, footer, button, .giscus-container { display: none !important; }
 }
 
+/* ─── Learning Hub Book Cover Templates ─── */
+.cover-page {
+  width: 100%;
+  min-height: 1000px;
+  box-sizing: border-box;
+  padding: 60px 35px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+  color-adjust: exact !important;
+}
+
+@media (max-width: 640px) {
+  .cover-page {
+    min-height: 700px;
+  }
+}
+
+/* 1. Deep Blue Cosmic Cover */
+.book-cover-blue {
+  background: #0f3460 linear-gradient(135deg, #1a1a6e 0%, #0f3460 50%, #16213e 100%) !important;
+}
+
+/* 2. Cyberpunk Neon Cover */
+.book-cover-cyberpunk {
+  background: #0f0c29 linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%) !important;
+}
+
+/* 3. Forest Emerald Cover */
+.book-cover-emerald {
+  background: #064e3b linear-gradient(135deg, #022c22 0%, #065f46 50%, #047857 100%) !important;
+}
+
+/* 4. Sunset Amber Cover */
+.book-cover-sunset {
+  background: #451a03 linear-gradient(135deg, #451a03 0%, #78350f 50%, #9a3412 100%) !important;
+}
+
+/* 5. Obsidian Gold Minimalist Cover */
+.book-cover-minimal {
+  background: #090d16 linear-gradient(135deg, #090d16 0%, #1e293b 50%, #0f172a 100%) !important;
+}
+
+.book-title-sketch {
+  font-family: 'Comic Sans MS', 'Chalkboard SE', 'Marker Felt', cursive;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #1e293b;
+  margin-bottom: 1.5rem;
+}
+
+.marker-yellow {
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+  background-color: #fef08a !important;
+  color: #92400e !important;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.marker-green {
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+  background-color: #d1fae5 !important;
+  color: #065f46 !important;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.marker-purple {
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+  background-color: #f3e8ff !important;
+  color: #6b21a8 !important;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.sketch-box {
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+  border: 3px dashed #7c3aed;
+  border-radius: 18px;
+  background-color: #faf5ff;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.quote-box-blue {
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+  background-color: #f0f9ff;
+  border-left: 6px solid #0284c7;
+  padding: 18px 22px;
+  border-radius: 0 16px 16px 0;
+  margin: 25px 0;
+}
+
+.code-box-dark {
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+  background-color: #1e293b !important;
+  border-radius: 14px;
+  padding: 22px;
+  margin: 18px 0;
+  box-shadow: 8px 8px 0 #7c3aed;
+  color: #e2e8f0 !important;
+}
+
+

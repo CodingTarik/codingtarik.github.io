@@ -1,5 +1,5 @@
 import React from 'react';
-import { BookOpen, Layers } from 'lucide-react';
+import { BookOpen, Layers, ZoomIn, ZoomOut } from 'lucide-react';
 
 export default function FloatingReaderControls({
   currentIndex,
@@ -9,29 +9,24 @@ export default function FloatingReaderControls({
   onJumpSubmit,
   viewMode,
   setViewMode,
-  isBook
+  isBook,
+  zoomLevel = 100,
+  onZoomIn,
+  onZoomOut,
+  onZoomReset
 }) {
-  const itemType = isBook ? 'Page' : 'Lesson';
-
   return (
-    <div className="no-print fixed bottom-6 right-6 z-50 flex justify-end pointer-events-none">
-      {/* Compact Floating Pill */}
-      <div className="pointer-events-auto flex items-center gap-2 p-1.5 sm:p-2 rounded-2xl bg-background/90 backdrop-blur-2xl border border-border shadow-2xl shadow-black/30">
+    <div className="no-print fixed bottom-5 right-5 z-50 flex justify-end pointer-events-none">
+      {/* Sleek, Compact Glassmorphic Reader Widget */}
+      <div className="pointer-events-auto flex items-center gap-2 px-3 py-1.5 rounded-full bg-background/85 backdrop-blur-xl border border-border/80 shadow-2xl shadow-black/40 text-xs">
         
-        {/* Page / Chapter Indicator */}
-        <div className="flex items-center gap-1 px-2 text-xs">
-          <span className="font-extrabold text-muted uppercase tracking-wider text-[10px]">{itemType}</span>
-          <span className={`font-black ${isBook ? 'text-amber-500' : 'text-primary'}`}>
-            {currentIndex + 1}
-          </span>
-          <span className="font-bold text-muted/60 text-[11px]">/ {totalCount}</span>
-        </div>
+        {/* Page counter & Jump input */}
+        <form onSubmit={onJumpSubmit} className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1 font-bold text-text">
+            <span className="text-amber-500 font-extrabold">{currentIndex + 1}</span>
+            <span className="text-muted/60 text-[11px]">/ {totalCount}</span>
+          </div>
 
-        {/* Divider */}
-        <div className="w-px h-4 bg-border/80"></div>
-
-        {/* Jump Input */}
-        <form onSubmit={onJumpSubmit} className="flex items-center gap-1">
           <input
             type="number"
             min="1"
@@ -39,46 +34,72 @@ export default function FloatingReaderControls({
             placeholder="#"
             value={jumpInput}
             onChange={(e) => setJumpInput(e.target.value)}
-            className="w-9 px-1 py-0.5 bg-card/80 border border-border rounded-lg text-xs text-center font-bold focus:outline-none focus:border-primary transition-all"
-            title={`Jump to ${itemType}`}
+            className="w-8 px-1 py-0.5 bg-card/90 border border-border/80 rounded-md text-[11px] text-center font-bold focus:outline-none focus:border-amber-500 transition-all placeholder:text-muted/50"
+            title="Type page number & press Enter"
           />
-          <button
-            type="submit"
-            className="px-2 py-0.5 bg-card border border-border hover:bg-border/80 text-text rounded-lg text-xs font-bold transition-all cursor-pointer active:scale-95"
-          >
-            Go
-          </button>
         </form>
 
-        {/* View Mode Toggle (Only for books) */}
+        {/* Zoom Controls */}
         {isBook && (
           <>
-            <div className="w-px h-4 bg-border/80"></div>
-            <div className="flex items-center gap-0.5 bg-card/60 border border-border p-0.5 rounded-xl">
+            <div className="w-px h-3.5 bg-border/70"></div>
+            <div className="flex items-center gap-0.5">
+              <button
+                onClick={onZoomOut}
+                disabled={zoomLevel <= 50}
+                className="p-1 rounded-full text-muted hover:text-text hover:bg-card/80 disabled:opacity-30 transition-all cursor-pointer"
+                title="Zoom Out (Ctrl + Scroll)"
+              >
+                <ZoomOut size={13} />
+              </button>
+
+              <button
+                onClick={onZoomReset}
+                className="px-1.5 py-0.5 rounded-md text-[10px] font-extrabold text-amber-500 hover:bg-amber-500/10 transition-all cursor-pointer"
+                title="Reset Zoom (100%)"
+              >
+                {zoomLevel}%
+              </button>
+
+              <button
+                onClick={onZoomIn}
+                disabled={zoomLevel >= 200}
+                className="p-1 rounded-full text-muted hover:text-text hover:bg-card/80 disabled:opacity-30 transition-all cursor-pointer"
+                title="Zoom In (Ctrl + Scroll)"
+              >
+                <ZoomIn size={13} />
+              </button>
+            </div>
+          </>
+        )}
+
+        {/* View Mode Segmented Controls */}
+        {isBook && (
+          <>
+            <div className="w-px h-3.5 bg-border/70"></div>
+            <div className="flex items-center gap-0.5 p-0.5 bg-card/60 rounded-full border border-border/60">
               <button
                 onClick={() => setViewMode('chapter')}
-                className={`p-1 rounded-lg text-[10px] font-bold transition-all cursor-pointer flex items-center gap-1 ${
+                className={`p-1 rounded-full transition-all cursor-pointer ${
                   viewMode === 'chapter'
                     ? 'bg-amber-500 text-white shadow-xs'
                     : 'text-muted hover:text-text'
                 }`}
                 title="Chapter View"
               >
-                <BookOpen size={13} />
-                <span className="hidden md:inline">Chapter</span>
+                <BookOpen size={12} />
               </button>
 
               <button
                 onClick={() => setViewMode('continuous')}
-                className={`p-1 rounded-lg text-[10px] font-bold transition-all cursor-pointer flex items-center gap-1 ${
+                className={`p-1 rounded-full transition-all cursor-pointer ${
                   viewMode === 'continuous'
                     ? 'bg-amber-500 text-white shadow-xs'
                     : 'text-muted hover:text-text'
                 }`}
-                title="Continuous Scroll"
+                title="Continuous Scroll Mode"
               >
-                <Layers size={13} />
-                <span className="hidden md:inline">Scroll</span>
+                <Layers size={12} />
               </button>
             </div>
           </>

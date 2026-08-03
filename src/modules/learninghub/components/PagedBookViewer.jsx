@@ -20,9 +20,55 @@ export default function PagedBookViewer({
   const chapters = course.chapters || [];
   const [activeChapterId, setActiveChapterId] = useState(chapters[0]?.id || null);
   const [activePageNum, setActivePageNum] = useState(1);
-  const [viewMode, setViewMode] = useState('chapter'); // 'chapter' or 'continuous'
+  const [viewMode, setViewMode] = useState(() => {
+    return localStorage.getItem('learninghub_book_view_mode') || 'chapter';
+  });
+
+  const handleSetViewMode = (mode) => {
+    setViewMode(mode);
+    try {
+      localStorage.setItem('learninghub_book_view_mode', mode);
+    } catch (err) {
+      console.warn('Could not save viewMode preference', err);
+    }
+  };
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [jumpPageInput, setJumpPageInput] = useState('');
+  const [zoomLevel, setZoomLevel] = useState(100);
+
+  const handleZoomIn = () => setZoomLevel((prev) => Math.min(200, prev + 10));
+  const handleZoomOut = () => setZoomLevel((prev) => Math.max(50, prev - 10));
+  const handleZoomReset = () => setZoomLevel(100);
+
+  // Butter-smooth zoom via Ctrl + Mouse Wheel or Trackpad pinch gesture
+  useEffect(() => {
+    let animFrame = null;
+
+    const handleWheel = (e) => {
+      if (e.ctrlKey || e.metaKey) {
+        e.preventDefault();
+
+        if (animFrame) cancelAnimationFrame(animFrame);
+
+        animFrame = requestAnimationFrame(() => {
+          const zoomDelta = -e.deltaY * 0.15;
+          setZoomLevel((prev) => {
+            const next = Math.round(Math.min(200, Math.max(50, prev + zoomDelta)));
+            return next;
+          });
+        });
+      }
+    };
+
+    const mainEl = document.getElementById('paged-book-main');
+    if (mainEl) {
+      mainEl.addEventListener('wheel', handleWheel, { passive: false });
+      return () => {
+        mainEl.removeEventListener('wheel', handleWheel);
+        if (animFrame) cancelAnimationFrame(animFrame);
+      };
+    }
+  }, []);
 
   // Helper function to split content by page breaks
   const splitContentIntoPages = (cnt) => {
@@ -77,41 +123,84 @@ export default function PagedBookViewer({
     }
   }, [activeChapterId, viewMode]);
 
-  // IntersectionObserver for page-level scrollspy
+  // Scrollspy for page-level reading position (works in both Chapter and Continuous mode)
   useEffect(() => {
-    if (viewMode !== 'continuous') return;
+    const handleScroll = () => {
+      const pageElements = document.querySelectorAll('[data-page-num]');
+      if (!pageElements.length) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const pageNumAttr = entry.target.getAttribute('data-page-num');
-            const chIdAttr = entry.target.getAttribute('data-chapter-id');
-            if (pageNumAttr) {
-              const pNum = parseInt(pageNumAttr, 10);
-              setActivePageNum(pNum);
-            }
-            if (chIdAttr) {
-              setActiveChapterId(chIdAttr);
-            }
+      let closestPage = null;
+      let minDistance = Infinity;
+
+      pageElements.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        // Calculate distance from top of viewport (accounting for header offset)
+        const distance = Math.abs(rect.top - 120);
+        if (rect.top <= window.innerHeight * 0.7 && rect.bottom >= 100) {
+          if (distance < minDistance) {
+            minDistance = distance;
+            closestPage = el;
           }
-        });
-      },
-      {
-        root: null,
-        rootMargin: '-15% 0px -65% 0px',
-        threshold: 0
+        }
+      });
+
+      if (closestPage) {
+        const pNum = parseInt(closestPage.getAttribute('data-page-num'), 10);
+        const chId = closestPage.getAttribute('data-chapter-id');
+        if (pNum && !isNaN(pNum)) {
+          setActivePageNum((prev) => (prev !== pNum ? pNum : prev));
+        }
+        if (chId) {
+          setActiveChapterId((prev) => (prev !== chId ? chId : prev));
+        }
       }
-    );
+    };
 
-    const elements = document.querySelectorAll('[data-page-num]');
-    elements.forEach((el) => observer.observe(el));
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Trigger initial check
+    handleScroll();
 
-    return () => observer.disconnect();
+    return () => window.removeEventListener('scroll', handleScroll);
   }, [viewMode, allPages]);
 
   const handlePrintPdf = () => {
-    window.print();
+    // Inject a powerful overriding style that forces the browser to print ALL colors
+    const printStyle = document.createElement('style');
+    printStyle.id = 'force-print-colors';
+    printStyle.innerHTML = `
+      @media print {
+        *, *::before, *::after {
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+          color-adjust: exact !important;
+        }
+        /* Force every element's background to be visible */
+        [style*="background"] {
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+        [style*="color"] {
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+        svg, svg * {
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+          shape-rendering: geometricPrecision;
+        }
+      }
+    `;
+    document.head.appendChild(printStyle);
+    
+    // Small delay to let the style settle, then print
+    setTimeout(() => {
+      window.print();
+      // Clean up after print dialog closes
+      setTimeout(() => {
+        const el = document.getElementById('force-print-colors');
+        if (el) el.remove();
+      }, 2000);
+    }, 100);
   };
 
   const handleToggleChapter = () => {
@@ -197,7 +286,7 @@ export default function PagedBookViewer({
             min-height: 700px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: flex-start;
           }
           @media (min-width: 640px) {
             .book-reading-area {
@@ -210,26 +299,47 @@ export default function PagedBookViewer({
         @media print {
           .print-only {
             display: block !important;
+            background-color: #ffffff !important;
           }
           html, body {
-            background: #ffffff !important;
+            background-color: #ffffff !important;
             color: #111827 !important;
+            margin: 0 !important;
+            padding: 0 !important;
           }
           .no-print {
             display: none !important;
           }
-          
-          /* Clean Page Breaks */
-          .book-page-break, .page-break {
-            page-break-before: always !important;
-            break-before: page !important;
-            height: 0 !important;
+
+          /* Force exact A4 sheet containers */
+          .print-page {
+            box-sizing: border-box !important;
+            width: 210mm !important;
+            height: 297mm !important;
+            min-height: 297mm !important;
+            padding: 20mm !important;
+            background-color: #ffffff !important;
+            color: #111827 !important;
+            page-break-after: always !important;
+            break-after: page !important;
+            position: relative !important;
+            overflow: hidden !important;
+          }
+
+          .print-page.is-cover {
+            padding: 0 !important;
             margin: 0 !important;
-            border: none !important;
             background: transparent !important;
           }
-          .book-page-break::after, .page-break::after {
-            display: none !important;
+
+          .print-page.is-cover .cover-page {
+            min-height: 297mm !important;
+            height: 297mm !important;
+          }
+
+          .print-page .prose {
+            color: #111827 !important;
+            max-width: 100% !important;
           }
           
           /* Prevent paragraphs and images from being cut in half across pages */
@@ -241,26 +351,10 @@ export default function PagedBookViewer({
             page-break-after: avoid !important;
             break-after: avoid !important;
           }
-
-          .prose {
-            max-width: 100% !important;
-          }
           
           @page {
             size: ${course.pagedOptions?.pageSize || 'A4'};
-            margin: ${course.pagedOptions?.margin || '20mm'};
-            
-            @top-right {
-              content: "${course.title}";
-              font-size: 9pt;
-              color: #888;
-            }
-            @bottom-right {
-              content: counter(page);
-              font-size: 10pt;
-              font-weight: bold;
-              color: #444;
-            }
+            margin: 0 !important;
           }
         }
       `}</style>
@@ -286,17 +380,6 @@ export default function PagedBookViewer({
         onBackToOverview={onBackToOverview}
         isOpen={isSidebarOpen}
         onClose={() => setIsSidebarOpen(false)}
-        customFooterNote={
-          <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400">
-            <p className="font-bold mb-1 flex items-center gap-1.5 text-xs">
-              <Info size={14} />
-              <span>PDF Export Guide</span>
-            </p>
-            <p className="text-[11px] leading-relaxed">
-              Click **Export PDF / Print** to generate an A4 optimized PDF. Use <code>&lt;div class="page-break"&gt;&lt;/div&gt;</code> in markdown to force manual page breaks!
-            </p>
-          </div>
-        }
       />
 
       {/* Main Reader Content Area */}
@@ -321,12 +404,23 @@ export default function PagedBookViewer({
           setJumpInput={setJumpPageInput}
           onJumpSubmit={handleJumpSubmit}
           viewMode={viewMode}
-          setViewMode={setViewMode}
+          setViewMode={handleSetViewMode}
           isBook={true}
+          zoomLevel={zoomLevel}
+          onZoomIn={handleZoomIn}
+          onZoomOut={handleZoomOut}
+          onZoomReset={handleZoomReset}
         />
 
         {/* Main Book Content Container (Forced White Background for Paged.js aesthetics) */}
-        <main className="flex-1 p-4 sm:p-10 max-w-4xl mx-auto w-full no-print">
+        <main
+          id="paged-book-main"
+          className="flex-1 p-4 sm:p-10 max-w-4xl mx-auto w-full no-print transition-transform duration-150 ease-out"
+          style={{
+            transform: `scale(${zoomLevel / 100})`,
+            transformOrigin: 'top center'
+          }}
+        >
           
           {/* Reading Mode Renderer */}
           {viewMode === 'chapter' ? (
@@ -335,122 +429,151 @@ export default function PagedBookViewer({
               <div className="space-y-12">
                 {allPages
                   .filter((p) => p.chapterId === activeChapter.id)
-                  .map((pageObj) => (
-                    <article
-                      key={`page-${pageObj.globalPageNum}`}
-                      data-page-num={pageObj.globalPageNum}
-                      className="book-reading-area border border-border/80 rounded-[32px] p-8 sm:p-14 relative overflow-hidden shadow-xl"
-                    >
-                      {pageObj.isFirstPageOfChapter ? (
-                        <div className="mb-10 pb-6 border-b border-gray-200 flex items-center justify-between flex-wrap gap-4">
-                          <div>
-                            <span className="text-xs font-extrabold text-amber-600 uppercase tracking-widest">
-                              Chapter {activeChapter.chapterNumber || activeIndex + 1}
-                            </span>
-                            <h2 className="text-3xl font-extrabold text-black mt-2">
-                              {activeChapter.title}
-                            </h2>
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="mb-6 pb-4 border-b border-gray-100 flex items-center justify-between">
-                          <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">
-                            Chapter {activeChapter.chapterNumber || activeIndex + 1} &bull; Page {pageObj.pageInChIdx + 1}
-                          </span>
-                          <span className="text-xs font-extrabold text-amber-600">
-                            Page {pageObj.globalPageNum} of {allPages.length}
-                          </span>
-                        </div>
-                      )}
+                  .map((pageObj) => {
+                    const isCover = pageObj.globalPageNum === 1 || pageObj.pageContent.includes('cover-page') || pageObj.pageContent.includes('full-bleed');
+                    const noHeader = isCover || pageObj.pageContent.includes('no-header');
 
-                      <div className="prose prose-lg mx-auto max-w-none">
-                        <BlogPostContent content={pageObj.pageContent} />
-                      </div>
-                      
-                      {/* Action buttons on last page of chapter */}
-                      {pageObj.isLastPageOfChapter && (
-                        <div className="mt-16 pt-8 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-4">
-                          {activeIndex > 0 && (
-                            <button
-                              onClick={() => handleSelectChapter(chapters[activeIndex - 1].id)}
-                              className="w-full sm:w-auto px-6 py-4 rounded-2xl text-sm font-bold border-2 border-gray-200 text-gray-700 hover:border-amber-500 hover:text-amber-600 transition-all text-center cursor-pointer"
-                            >
-                              ← Previous Chapter
-                            </button>
-                          )}
-                          <div className="flex-1"></div>
-                          <button
-                            onClick={() => {
-                              if (!isCurrentCompleted) handleToggleChapter();
-                              if (activeIndex < chapters.length - 1) handleSelectChapter(chapters[activeIndex + 1].id);
-                            }}
-                            className="w-full sm:w-auto px-8 py-4 rounded-2xl text-sm font-bold bg-amber-500 text-white shadow-xl shadow-amber-500/20 hover:bg-amber-600 active:scale-95 transition-all text-center cursor-pointer"
-                          >
-                            {activeIndex < chapters.length - 1 ? 'Next Chapter →' : 'Finish Book 🎉'}
-                          </button>
+                    return (
+                      <article
+                        key={`page-${pageObj.globalPageNum}`}
+                        data-page-num={pageObj.globalPageNum}
+                        className={`book-reading-area border border-border/80 rounded-[32px] relative overflow-hidden shadow-xl ${
+                          isCover ? 'p-0' : 'p-8 sm:p-14'
+                        }`}
+                      >
+                        {!noHeader && (
+                          (pageObj.isFirstPageOfChapter || (pageObj.globalPageNum === 2 && pageObj.chapterIndex === 0)) ? (
+                            <div className="mb-10 pb-6 border-b border-gray-200 flex items-center justify-between flex-wrap gap-4">
+                              <div>
+                                <span className="text-xs font-extrabold text-amber-600 uppercase tracking-widest">
+                                  Chapter {activeChapter.chapterNumber || activeIndex + 1}
+                                </span>
+                                <h2 className="text-3xl font-extrabold text-black mt-2">
+                                  {activeChapter.title}
+                                </h2>
+                              </div>
+                              <span className="text-xs font-extrabold text-amber-600">
+                                Page {pageObj.globalPageNum} of {allPages.length}
+                              </span>
+                            </div>
+                          ) : (
+                            <div className="mb-6 pb-4 border-b border-gray-100 flex items-center justify-between">
+                              <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">
+                                Chapter {activeChapter.chapterNumber || activeIndex + 1} &bull; Page {pageObj.pageInChIdx + 1}
+                              </span>
+                              <span className="text-xs font-extrabold text-amber-600">
+                                Page {pageObj.globalPageNum} of {allPages.length}
+                              </span>
+                            </div>
+                          )
+                        )}
+
+                        <div className="prose prose-lg mx-auto max-w-none w-full h-full">
+                          <BlogPostContent content={pageObj.pageContent} />
                         </div>
-                      )}
-                    </article>
-                  ))}
+                      </article>
+                    );
+                  })}
+
+                {/* Navigation Buttons placed cleanly BELOW the A4 book page cards */}
+                <div className="mt-10 pt-4 flex flex-col sm:flex-row items-center justify-center gap-4 max-w-2xl mx-auto w-full">
+                  {activeIndex > 0 && (
+                    <button
+                      onClick={() => handleSelectChapter(chapters[activeIndex - 1].id)}
+                      className="flex-1 w-full px-8 py-4 rounded-2xl text-base font-bold bg-card border border-border text-text hover:border-amber-500 hover:text-amber-500 transition-all text-center cursor-pointer shadow-md active:scale-95"
+                    >
+                      ← Previous Chapter
+                    </button>
+                  )}
+                  <button
+                    onClick={() => {
+                      if (!isCurrentCompleted) handleToggleChapter();
+                      if (activeIndex < chapters.length - 1) handleSelectChapter(chapters[activeIndex + 1].id);
+                    }}
+                    className="flex-1 w-full px-8 py-4 rounded-2xl text-base font-bold bg-amber-500 text-white shadow-xl shadow-amber-500/25 hover:bg-amber-600 active:scale-95 transition-all text-center cursor-pointer"
+                  >
+                    {activeIndex < chapters.length - 1 ? 'Next Chapter →' : 'Finish Book 🎉'}
+                  </button>
+                </div>
               </div>
             )
           ) : (
             /* Continuous Scroll Mode across ALL pages in the entire book */
             <div className="space-y-12">
-              {allPages.map((pageObj) => (
-                <article
-                  key={`page-${pageObj.globalPageNum}`}
-                  data-page-num={pageObj.globalPageNum}
-                  data-chapter-id={pageObj.isFirstPageOfChapter ? pageObj.chapterId : undefined}
-                  className="book-reading-area border border-border/80 rounded-[32px] p-8 sm:p-14 relative scroll-mt-[150px] shadow-xl"
-                >
-                  {pageObj.isFirstPageOfChapter ? (
-                    <div className="mb-10 pb-6 border-b border-gray-200 flex items-center justify-between">
-                      <span className="text-xs font-extrabold text-amber-600 uppercase tracking-widest">
-                        Chapter {pageObj.chapterNumber}: {pageObj.chapterTitle}
-                      </span>
-                      <span className="text-xs font-bold text-gray-400">
-                        Page {pageObj.globalPageNum} of {allPages.length}
-                      </span>
-                    </div>
-                  ) : (
-                    <div className="mb-6 pb-4 border-b border-gray-100 flex items-center justify-between">
-                      <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">
-                        Chapter {pageObj.chapterNumber}: {pageObj.chapterTitle} &bull; Page {pageObj.pageInChIdx + 1}
-                      </span>
-                      <span className="text-xs font-bold text-gray-400">
-                        Page {pageObj.globalPageNum} of {allPages.length}
-                      </span>
-                    </div>
-                  )}
+              {allPages.map((pageObj) => {
+                const isCover = pageObj.globalPageNum === 1 || pageObj.pageContent.includes('cover-page') || pageObj.pageContent.includes('full-bleed');
+                const noHeader = isCover || pageObj.pageContent.includes('no-header');
 
-                  <div className="prose prose-lg mx-auto max-w-none">
-                    <BlogPostContent content={pageObj.pageContent} />
-                  </div>
-                </article>
-              ))}
+                return (
+                  <article
+                    key={`page-${pageObj.globalPageNum}`}
+                    data-page-num={pageObj.globalPageNum}
+                    data-chapter-id={pageObj.isFirstPageOfChapter ? pageObj.chapterId : undefined}
+                    className={`book-reading-area border border-border/80 rounded-[32px] relative scroll-mt-[150px] shadow-xl ${
+                      isCover ? 'p-0' : 'p-8 sm:p-14'
+                    }`}
+                  >
+                    {!noHeader && (
+                      pageObj.isFirstPageOfChapter ? (
+                        <div className="mb-10 pb-6 border-b border-gray-200 flex items-center justify-between">
+                          <span className="text-xs font-extrabold text-amber-600 uppercase tracking-widest">
+                            Chapter {pageObj.chapterNumber}: {pageObj.chapterTitle}
+                          </span>
+                          <span className="text-xs font-bold text-gray-400">
+                            Page {pageObj.globalPageNum} of {allPages.length}
+                          </span>
+                        </div>
+                      ) : (
+                        <div className="mb-6 pb-4 border-b border-gray-100 flex items-center justify-between">
+                          <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">
+                            Chapter {pageObj.chapterNumber}: {pageObj.chapterTitle} &bull; Page {pageObj.pageInChIdx + 1}
+                          </span>
+                          <span className="text-xs font-bold text-gray-400">
+                            Page {pageObj.globalPageNum} of {allPages.length}
+                          </span>
+                        </div>
+                      )
+                    )}
+
+                    <div className="prose prose-lg mx-auto max-w-none w-full h-full">
+                      <BlogPostContent content={pageObj.pageContent} />
+                    </div>
+                  </article>
+                );
+              })}
             </div>
           )}
         </main>
 
         {/* Hidden Container exclusively for window.print() and Paged.js logic */}
-        <div className="print-only book-reading-area">
-          <div className="text-center py-32 border-b-2 border-black page-break">
-            <h1 className="text-5xl font-black text-black mb-6">{course.title}</h1>
-            <p className="text-2xl text-gray-800 mb-12 max-w-2xl mx-auto">{course.description}</p>
-            <p className="text-lg text-gray-500 font-bold uppercase tracking-widest">Author: {course.author || 'Tarik Azzouzi'}</p>
-          </div>
+        <div className="print-only">
+          {allPages.map((pageObj) => {
+            const isCover = pageObj.globalPageNum === 1 || pageObj.pageContent.includes('cover-page') || pageObj.pageContent.includes('full-bleed');
+            const showHeader = !isCover && !pageObj.pageContent.includes('no-header') && (
+              pageObj.isFirstPageOfChapter || (pageObj.globalPageNum === 2 && pageObj.chapterIndex === 0)
+            );
 
-          {chapters.map((ch, idx) => (
-            <div key={ch.id} className="book-page-break pt-12">
-              <h2 className="text-4xl font-black text-black border-b-2 border-gray-200 pb-4 mb-10">
-                Chapter {idx + 1}: {ch.title}
-              </h2>
-              <div className="prose prose-lg mx-auto max-w-none">
-                <BlogPostContent content={ch.content} />
+            return (
+              <div
+                key={`print-page-${pageObj.globalPageNum}`}
+                className={`print-page ${isCover ? 'is-cover' : ''}`}
+              >
+                {showHeader && (
+                  <div className="mb-8 pb-4 border-b border-gray-200 flex items-center justify-between">
+                    <span className="text-xs font-extrabold text-amber-600 uppercase tracking-widest">
+                      Chapter {pageObj.chapterNumber}: {pageObj.chapterTitle}
+                    </span>
+                    <span className="text-xs font-bold text-gray-400">
+                      Page {pageObj.globalPageNum} of {allPages.length}
+                    </span>
+                  </div>
+                )}
+                <div className="prose prose-lg mx-auto max-w-none w-full h-full">
+                  <BlogPostContent content={pageObj.pageContent} />
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>
