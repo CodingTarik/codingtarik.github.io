@@ -10,7 +10,7 @@ import { getAllCourses, getCourseCategories } from '../utils/courseUtils';
 export default function LearningHubPage({ onSelectCourse, progressHook }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [selectedType, setSelectedType] = useState('All'); // 'All', 'lessons', 'book'
+  const [selectedType, setSelectedType] = useState('All');
 
   const courses = useMemo(() => getAllCourses(), []);
   const categories = useMemo(() => getCourseCategories(), []);
@@ -21,15 +21,12 @@ export default function LearningHubPage({ onSelectCourse, progressHook }) {
   // Filtered courses
   const filteredCourses = useMemo(() => {
     return courses.filter((course) => {
-      // Type filter
       if (selectedType !== 'All' && course.type !== selectedType) {
         return false;
       }
-      // Category filter
       if (selectedCategory !== 'All' && course.category !== selectedCategory) {
         return false;
       }
-      // Search query filter
       if (searchQuery.trim()) {
         const query = searchQuery.toLowerCase();
         const matchesTitle = course.title.toLowerCase().includes(query);
@@ -43,62 +40,62 @@ export default function LearningHubPage({ onSelectCourse, progressHook }) {
 
   return (
     <div className="min-h-screen bg-background text-text p-4 sm:p-8 max-w-7xl mx-auto">
-      {/* Header Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-primary/20 via-secondary/15 to-card border border-primary/20 p-6 sm:p-10 mb-8 shadow-sm">
+      {/* Sleek Hero Header Banner */}
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-primary/15 via-card/80 to-card border border-primary/20 p-6 sm:p-10 mb-8 shadow-sm">
         <div className="relative z-10 max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold mb-4 border border-primary/20">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-bold mb-4 border border-primary/20 backdrop-blur-md">
             <GraduationCap size={16} />
-            <span>Interactive Learning Hub</span>
+            <span>Learning Hub & E-Book Studio</span>
           </div>
 
-          <h1 className="text-2xl sm:text-4xl font-extrabold bg-gradient-to-r from-text via-primary to-secondary bg-clip-text text-transparent mb-3">
-            Kurse & E-Books Meisterklasse
+          <h1 className="text-2xl sm:text-4xl font-extrabold bg-gradient-to-r from-text via-primary to-secondary bg-clip-text text-transparent mb-3 tracking-tight">
+            Interaktive Kurse & E-Books
           </h1>
 
           <p className="text-sm sm:text-base text-muted leading-relaxed">
-            Erweitere dein Wissen mit interaktiven Markdown-Artikelserien und druckfertigen Paged.js E-Büchern. 
-            Dein Lernfortschritt wird automatisch gespeichert!
+            Lerne mit strukturierten Markdown-Artikelserien oder lies druckfertige E-Bücher im Paged.js Format. 
+            Klicke einfach auf eine Kurs-Kachel, um direkt zu starten!
           </p>
 
           {/* Quick Learning Stats Widget */}
           <div className="grid grid-cols-3 gap-3 sm:gap-6 mt-6 pt-6 border-t border-border/50">
             <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-primary/10 text-primary shrink-0">
+              <div className="p-3 rounded-2xl bg-primary/10 text-primary shrink-0 shadow-xs">
                 <BookOpen size={20} />
               </div>
               <div>
-                <p className="text-base sm:text-xl font-bold text-text">{stats.startedCourses}</p>
-                <p className="text-[11px] sm:text-xs text-muted">Gestartete Kurse</p>
+                <p className="text-lg sm:text-2xl font-extrabold text-text leading-none">{stats.startedCourses}</p>
+                <p className="text-[11px] sm:text-xs text-muted font-medium mt-1">Gestartete Kurse</p>
               </div>
             </div>
 
             <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-500 shrink-0">
+              <div className="p-3 rounded-2xl bg-emerald-500/10 text-emerald-500 shrink-0 shadow-xs">
                 <CheckCircle2 size={20} />
               </div>
               <div>
-                <p className="text-base sm:text-xl font-bold text-text">{stats.totalLessonsCompleted}</p>
-                <p className="text-[11px] sm:text-xs text-muted">Gelesene Lektionen</p>
+                <p className="text-lg sm:text-2xl font-extrabold text-text leading-none">{stats.totalLessonsCompleted}</p>
+                <p className="text-[11px] sm:text-xs text-muted font-medium mt-1">Lektionen gelesen</p>
               </div>
             </div>
 
             <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-amber-500/10 text-amber-500 shrink-0">
+              <div className="p-3 rounded-2xl bg-amber-500/10 text-amber-500 shrink-0 shadow-xs">
                 <Trophy size={20} />
               </div>
               <div>
-                <p className="text-base sm:text-xl font-bold text-text">{stats.completedCourses}</p>
-                <p className="text-[11px] sm:text-xs text-muted">Abgeschlossen</p>
+                <p className="text-lg sm:text-2xl font-extrabold text-text leading-none">{stats.completedCourses}</p>
+                <p className="text-[11px] sm:text-xs text-muted font-medium mt-1">Abgeschlossen</p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Ambient Decorative Glow */}
-        <div className="absolute top-0 right-0 w-80 h-80 bg-primary/10 rounded-full blur-3xl -z-10 pointer-events-none" />
+        {/* Decorative Ambient Background Orb */}
+        <div className="absolute -top-10 -right-10 w-96 h-96 bg-primary/10 rounded-full blur-3xl -z-10 pointer-events-none" />
       </div>
 
-      {/* Filter & Search Bar Controls */}
+      {/* Controls: Search Bar & Filters */}
       <div className="space-y-4 mb-8">
         <div className="flex flex-col sm:flex-row gap-4 justify-between items-stretch sm:items-center">
           {/* Search Input */}
@@ -109,17 +106,17 @@ export default function LearningHubPage({ onSelectCourse, progressHook }) {
               placeholder="Kurse, Themen oder Tags suchen..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-card border border-border rounded-xl text-xs sm:text-sm text-text placeholder-muted focus:outline-none focus:border-primary transition-colors"
+              className="w-full pl-10 pr-4 py-2.5 bg-card border border-border rounded-2xl text-xs sm:text-sm text-text placeholder-muted focus:outline-none focus:border-primary transition-colors shadow-xs"
             />
           </div>
 
           {/* Type Filter Buttons */}
-          <div className="inline-flex items-center p-1 bg-card border border-border rounded-xl gap-1 shrink-0 self-start sm:self-auto">
+          <div className="inline-flex items-center p-1.5 bg-card border border-border rounded-2xl gap-1 shrink-0 self-start sm:self-auto shadow-xs">
             <button
               onClick={() => setSelectedType('All')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                 selectedType === 'All'
-                  ? 'bg-primary text-white shadow-sm'
+                  ? 'bg-primary text-white shadow-xs'
                   : 'text-muted hover:text-text'
               }`}
             >
@@ -127,9 +124,9 @@ export default function LearningHubPage({ onSelectCourse, progressHook }) {
             </button>
             <button
               onClick={() => setSelectedType('lessons')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                 selectedType === 'lessons'
-                  ? 'bg-primary text-white shadow-sm'
+                  ? 'bg-primary text-white shadow-xs'
                   : 'text-muted hover:text-text'
               }`}
             >
@@ -138,9 +135,9 @@ export default function LearningHubPage({ onSelectCourse, progressHook }) {
             </button>
             <button
               onClick={() => setSelectedType('book')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                 selectedType === 'book'
-                  ? 'bg-amber-500 text-white shadow-sm'
+                  ? 'bg-amber-500 text-white shadow-xs'
                   : 'text-muted hover:text-text'
               }`}
             >
@@ -155,9 +152,9 @@ export default function LearningHubPage({ onSelectCourse, progressHook }) {
           <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
             <button
               onClick={() => setSelectedCategory('All')}
-              className={`px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
                 selectedCategory === 'All'
-                  ? 'bg-text text-background'
+                  ? 'bg-text text-background shadow-xs'
                   : 'bg-card border border-border text-muted hover:text-text'
               }`}
             >
@@ -167,9 +164,9 @@ export default function LearningHubPage({ onSelectCourse, progressHook }) {
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
+                className={`px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
                   selectedCategory === cat
-                    ? 'bg-primary text-white shadow-sm'
+                    ? 'bg-primary text-white shadow-xs'
                     : 'bg-card border border-border text-muted hover:text-text'
                 }`}
               >
@@ -197,7 +194,7 @@ export default function LearningHubPage({ onSelectCourse, progressHook }) {
           <BookOpen size={48} className="mx-auto text-muted/50 mb-4" />
           <h3 className="text-lg font-bold text-text mb-1">Keine Kurse gefunden</h3>
           <p className="text-xs text-muted mb-4 max-w-sm mx-auto">
-            Es wurden keine Kurse für deine aktuellen Filtereinstellungen gefunden. Versuche den Suchbegriff zurückzusetzen.
+            Es wurden keine Kurse für deine aktuellen Filtereinstellungen gefunden.
           </p>
           <button
             onClick={() => {

@@ -12,40 +12,49 @@ export default function CourseCard({ course, stats, onSelectCourse }) {
     <motion.div
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
-      whileHover={{ y: -6, transition: { duration: 0.2 } }}
-      className="group relative bg-card border border-border rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:border-primary/40 transition-all flex flex-col h-full"
+      whileHover={{ y: -6, transition: { duration: 0.25, ease: 'easeOut' } }}
+      onClick={() => onSelectCourse(course)}
+      tabIndex={0}
+      role="button"
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onSelectCourse(course);
+        }
+      }}
+      className="group relative bg-card/90 backdrop-blur-sm border border-border/80 hover:border-primary/50 rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-primary/10 transition-all duration-300 flex flex-col h-full cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-primary"
     >
       {/* Cover Image Container */}
-      <div className="relative h-48 w-full overflow-hidden bg-muted">
+      <div className="relative h-52 w-full overflow-hidden bg-muted">
         <img
           src={course.coverImage}
           alt={course.title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-card via-card/30 to-transparent opacity-90 group-hover:opacity-75 transition-opacity" />
 
-        {/* Top Badges */}
-        <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
-          <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-md shadow-md ${
+        {/* Top Badges Overlay */}
+        <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none z-10">
+          <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold tracking-wide uppercase shadow-lg backdrop-blur-md border ${
             isBook 
-              ? 'bg-amber-500/90 text-white' 
-              : 'bg-primary/90 text-white'
+              ? 'bg-amber-500/90 text-white border-amber-400/30' 
+              : 'bg-primary/90 text-white border-primary-light/30'
           }`}>
             {isBook ? <BookMarked size={13} /> : <FileText size={13} />}
             <span>{isBook ? 'Paged.js Buch' : 'Artikel-Serie'}</span>
           </span>
 
           {course.level && (
-            <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-background/80 text-text backdrop-blur-md border border-border/50">
+            <span className="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-background/85 text-text backdrop-blur-md border border-border/60 shadow-sm">
               {course.level}
             </span>
           )}
         </div>
 
-        {/* Completed Badge overlay if 100% */}
+        {/* Completed Badge overlay */}
         {isCompleted && (
-          <div className="absolute bottom-3 right-3 flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-500/90 text-white text-xs font-bold shadow-md">
+          <div className="absolute bottom-3 right-3 flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/90 text-white text-xs font-bold shadow-lg backdrop-blur-sm">
             <CheckCircle2 size={14} />
             <span>Abgeschlossen</span>
           </div>
@@ -56,18 +65,18 @@ export default function CourseCard({ course, stats, onSelectCourse }) {
       <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
         <div>
           {/* Category & Tags */}
-          <div className="flex items-center gap-2 mb-2 flex-wrap">
-            <span className="text-xs font-bold text-primary tracking-wide uppercase">
+          <div className="flex items-center gap-2 mb-2.5 flex-wrap">
+            <span className="text-[11px] font-extrabold text-primary tracking-wider uppercase">
               {course.category}
             </span>
             {course.tags?.slice(0, 2).map((tag) => (
-              <span key={tag} className="text-[11px] px-2 py-0.5 rounded-md bg-border/40 text-muted font-medium">
+              <span key={tag} className="text-[10px] px-2 py-0.5 rounded-md bg-border/40 text-muted font-medium">
                 #{tag}
               </span>
             ))}
           </div>
 
-          <h3 className="text-lg font-bold text-text group-hover:text-primary transition-colors line-clamp-2 leading-snug">
+          <h3 className="text-lg font-bold text-text group-hover:text-primary transition-colors duration-200 line-clamp-2 leading-snug">
             {course.title}
           </h3>
 
@@ -94,25 +103,24 @@ export default function CourseCard({ course, stats, onSelectCourse }) {
           <div>
             <div className="flex justify-between items-center text-xs font-semibold mb-1.5">
               <span className="text-muted">Fortschritt</span>
-              <span className="text-primary">{percentage}%</span>
+              <span className="text-primary font-bold">{percentage}%</span>
             </div>
             <div className="w-full h-2 bg-border/60 rounded-full overflow-hidden">
               <div
-                className="h-full bg-gradient-to-r from-primary to-secondary transition-all duration-500 rounded-full"
+                className="h-full bg-gradient-to-r from-primary via-secondary to-primary transition-all duration-500 rounded-full"
                 style={{ width: `${percentage}%` }}
               />
             </div>
           </div>
 
-          {/* Action Button */}
-          <button
-            onClick={() => onSelectCourse(course)}
-            className={`w-full py-2.5 px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm ${
+          {/* Action Call-to-action indicator */}
+          <div
+            className={`w-full py-2.5 px-4 rounded-xl text-xs font-bold transition-all duration-300 flex items-center justify-center gap-2 shadow-sm ${
               isCompleted
-                ? 'bg-card border border-primary/50 text-primary hover:bg-primary/10'
+                ? 'bg-card border border-primary/40 text-primary group-hover:bg-primary group-hover:text-white'
                 : percentage > 0
-                ? 'bg-primary text-white hover:bg-primary/90 shadow-primary/20'
-                : 'bg-card border border-border text-text hover:border-primary hover:text-primary'
+                ? 'bg-primary text-white group-hover:bg-primary/90 shadow-primary/20'
+                : 'bg-card border border-border text-text group-hover:border-primary group-hover:text-primary'
             }`}
           >
             <span>
@@ -124,8 +132,8 @@ export default function CourseCard({ course, stats, onSelectCourse }) {
                 ? 'Buch lesen'
                 : 'Kurs starten'}
             </span>
-            <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-          </button>
+            <ArrowRight size={14} className="group-hover:translate-x-1.5 transition-transform duration-300" />
+          </div>
         </div>
       </div>
     </motion.div>
