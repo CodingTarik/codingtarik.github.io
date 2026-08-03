@@ -15,6 +15,7 @@ import BlogPostDetailLayout from './modules/blog/components/BlogPostDetailLayout
 import SearchPage from './modules/blog/components/SearchPage';
 import CategoriesPage from './modules/blog/components/CategoriesPage';
 import ProjectsPage from './modules/blog/components/ProjectsPage';
+import CVPage from './modules/blog/components/CVPage';
 
 import LearnBuddyView from './modules/learnbuddy/LearnBuddyView';
 import LearningHubView from './modules/learninghub/LearningHubView';
@@ -48,6 +49,13 @@ function AppContent() {
       return (
         <BlogSubpageLayout selectedTab="tools" handlePostClick={handlePostClick}>
           <ToolsOverviewPage />
+        </BlogSubpageLayout>
+      );
+    }
+    if (appView === 'cv') {
+      return (
+        <BlogSubpageLayout selectedTab="cv" handlePostClick={handlePostClick}>
+          <CVPage />
         </BlogSubpageLayout>
       );
     }

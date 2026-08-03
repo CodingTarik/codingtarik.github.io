@@ -102,6 +102,8 @@ export default function BlogPage({ onPostClick }) {
       navigate('/blog');
       setSelectedCategory(null);
       setSearchQuery('');
+    } else if (tabId === 'cv') {
+      navigate('/cv');
     } else if (tabId === 'search') {
       navigate('/blog/search');
     } else if (tabId === 'categories') {

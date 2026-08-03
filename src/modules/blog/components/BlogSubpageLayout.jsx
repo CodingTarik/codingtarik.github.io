@@ -13,6 +13,7 @@ export default function BlogSubpageLayout({ selectedTab, handlePostClick, onCate
         selectedTab={selectedTab}
         onTabChange={(tab) => {
           if (tab === 'posts') navigate('/blog');
+          else if (tab === 'cv') navigate('/cv');
           else if (tab === 'learning-hub') navigate('/learning-hub');
           else if (tab === 'search') navigate('/blog/search');
           else if (tab === 'categories') navigate('/blog/categories');

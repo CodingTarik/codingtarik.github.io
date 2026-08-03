@@ -4,6 +4,11 @@ import { updateMetaTags, updateCanonicalUrl } from '../modules/blog/utils/seoUti
 import { getPostById } from '../modules/blog/utils/blogUtils';
 
 const SEO_CONFIG = {
+  'cv': {
+    title: 'CV & Lebenslauf - Tarik Azzouzi',
+    description: 'Lebenslauf von Tarik Azzouzi: Software-Entwickler, M.Sc. Computer Science, Cybersecurity & KI.',
+    canonicalPath: 'cv'
+  },
   'tools': {
     title: 'Tools & Utilities - Tarik Azzouzi',
     description: 'Nützliche Online-Tools: PDF Tools, Piano Studio, FlashMaster, Perfect Pitch Trainer und mehr.',
@@ -74,6 +79,11 @@ export function useAppRouting() {
 
       if (path === '/imprint') {
         setAppView('imprint');
+        return;
+      }
+
+      if (path === '/cv') {
+        setAppView('cv');
         return;
       }
 

@@ -12,6 +12,7 @@ export default function Footer() {
     path.startsWith('/learning-hub') || 
     path === '/tools' || 
     path === '/tools/' || 
+    path === '/cv' || 
     path === '/' || 
     path === '';
 
