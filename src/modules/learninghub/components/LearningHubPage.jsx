@@ -49,12 +49,12 @@ export default function LearningHubPage({ onSelectCourse, progressHook }) {
           </div>
 
           <h1 className="text-2xl sm:text-4xl font-extrabold bg-gradient-to-r from-text via-primary to-secondary bg-clip-text text-transparent mb-3 tracking-tight">
-            Interaktive Kurse & E-Books
+            Interactive Courses & E-Books
           </h1>
 
           <p className="text-sm sm:text-base text-muted leading-relaxed">
-            Lerne mit strukturierten Markdown-Artikelserien oder lies druckfertige E-Bücher im Paged.js Format. 
-            Klicke einfach auf eine Kurs-Kachel, um direkt zu starten!
+            Expand your skills with structured Markdown lesson series or read print-ready Paged.js E-Books. 
+            Click any course card to dive right in!
           </p>
 
           {/* Quick Learning Stats Widget */}
@@ -65,7 +65,7 @@ export default function LearningHubPage({ onSelectCourse, progressHook }) {
               </div>
               <div>
                 <p className="text-lg sm:text-2xl font-extrabold text-text leading-none">{stats.startedCourses}</p>
-                <p className="text-[11px] sm:text-xs text-muted font-medium mt-1">Gestartete Kurse</p>
+                <p className="text-[11px] sm:text-xs text-muted font-medium mt-1">Started Courses</p>
               </div>
             </div>
 
@@ -75,7 +75,7 @@ export default function LearningHubPage({ onSelectCourse, progressHook }) {
               </div>
               <div>
                 <p className="text-lg sm:text-2xl font-extrabold text-text leading-none">{stats.totalLessonsCompleted}</p>
-                <p className="text-[11px] sm:text-xs text-muted font-medium mt-1">Lektionen gelesen</p>
+                <p className="text-[11px] sm:text-xs text-muted font-medium mt-1">Lessons Read</p>
               </div>
             </div>
 
@@ -85,13 +85,13 @@ export default function LearningHubPage({ onSelectCourse, progressHook }) {
               </div>
               <div>
                 <p className="text-lg sm:text-2xl font-extrabold text-text leading-none">{stats.completedCourses}</p>
-                <p className="text-[11px] sm:text-xs text-muted font-medium mt-1">Abgeschlossen</p>
+                <p className="text-[11px] sm:text-xs text-muted font-medium mt-1">Completed</p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Decorative Ambient Background Orb */}
+        {/* Decorative Ambient Glow */}
         <div className="absolute -top-10 -right-10 w-96 h-96 bg-primary/10 rounded-full blur-3xl -z-10 pointer-events-none" />
       </div>
 
@@ -103,7 +103,7 @@ export default function LearningHubPage({ onSelectCourse, progressHook }) {
             <Search size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted" />
             <input
               type="text"
-              placeholder="Kurse, Themen oder Tags suchen..."
+              placeholder="Search courses, topics, or tags..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-10 pr-4 py-2.5 bg-card border border-border rounded-2xl text-xs sm:text-sm text-text placeholder-muted focus:outline-none focus:border-primary transition-colors shadow-xs"
@@ -120,7 +120,7 @@ export default function LearningHubPage({ onSelectCourse, progressHook }) {
                   : 'text-muted hover:text-text'
               }`}
             >
-              Alle Formate
+              All Formats
             </button>
             <button
               onClick={() => setSelectedType('lessons')}
@@ -131,7 +131,7 @@ export default function LearningHubPage({ onSelectCourse, progressHook }) {
               }`}
             >
               <FileText size={14} />
-              <span>Serien</span>
+              <span>Series</span>
             </button>
             <button
               onClick={() => setSelectedType('book')}
@@ -142,7 +142,7 @@ export default function LearningHubPage({ onSelectCourse, progressHook }) {
               }`}
             >
               <BookMarked size={14} />
-              <span>Bücher</span>
+              <span>Books</span>
             </button>
           </div>
         </div>
@@ -158,7 +158,7 @@ export default function LearningHubPage({ onSelectCourse, progressHook }) {
                   : 'bg-card border border-border text-muted hover:text-text'
               }`}
             >
-              Alle Kategorien
+              All Categories
             </button>
             {categories.map((cat) => (
               <button
@@ -192,9 +192,9 @@ export default function LearningHubPage({ onSelectCourse, progressHook }) {
       ) : (
         <div className="text-center py-16 bg-card border border-border rounded-3xl p-8">
           <BookOpen size={48} className="mx-auto text-muted/50 mb-4" />
-          <h3 className="text-lg font-bold text-text mb-1">Keine Kurse gefunden</h3>
+          <h3 className="text-lg font-bold text-text mb-1">No courses found</h3>
           <p className="text-xs text-muted mb-4 max-w-sm mx-auto">
-            Es wurden keine Kurse für deine aktuellen Filtereinstellungen gefunden.
+            No courses matched your current filter criteria.
           </p>
           <button
             onClick={() => {
@@ -204,7 +204,7 @@ export default function LearningHubPage({ onSelectCourse, progressHook }) {
             }}
             className="px-4 py-2 bg-primary text-white rounded-xl text-xs font-bold shadow-md hover:bg-primary/90 transition-all cursor-pointer"
           >
-            Filter zurücksetzen
+            Reset Filters
           </button>
         </div>
       )}

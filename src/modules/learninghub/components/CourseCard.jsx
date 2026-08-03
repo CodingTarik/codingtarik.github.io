@@ -42,7 +42,7 @@ export default function CourseCard({ course, stats, onSelectCourse }) {
               : 'bg-primary/90 text-white border-primary-light/30'
           }`}>
             {isBook ? <BookMarked size={13} /> : <FileText size={13} />}
-            <span>{isBook ? 'Paged.js Buch' : 'Artikel-Serie'}</span>
+            <span>{isBook ? 'Paged.js Book' : 'Series'}</span>
           </span>
 
           {course.level && (
@@ -56,7 +56,7 @@ export default function CourseCard({ course, stats, onSelectCourse }) {
         {isCompleted && (
           <div className="absolute bottom-3 right-3 flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/90 text-white text-xs font-bold shadow-lg backdrop-blur-sm">
             <CheckCircle2 size={14} />
-            <span>Abgeschlossen</span>
+            <span>Completed</span>
           </div>
         )}
       </div>
@@ -95,14 +95,14 @@ export default function CourseCard({ course, stats, onSelectCourse }) {
             </span>
             <span className="flex items-center gap-1.5 font-medium">
               <BookOpen size={14} className="text-primary/80" />
-              {lessonCount} {isBook ? 'Kapitel' : 'Lektionen'}
+              {lessonCount} {isBook ? 'Chapters' : 'Lessons'}
             </span>
           </div>
 
           {/* Progress Bar */}
           <div>
             <div className="flex justify-between items-center text-xs font-semibold mb-1.5">
-              <span className="text-muted">Fortschritt</span>
+              <span className="text-muted">Progress</span>
               <span className="text-primary font-bold">{percentage}%</span>
             </div>
             <div className="w-full h-2 bg-border/60 rounded-full overflow-hidden">
@@ -113,7 +113,7 @@ export default function CourseCard({ course, stats, onSelectCourse }) {
             </div>
           </div>
 
-          {/* Action Call-to-action indicator */}
+          {/* Action CTA button */}
           <div
             className={`w-full py-2.5 px-4 rounded-xl text-xs font-bold transition-all duration-300 flex items-center justify-center gap-2 shadow-sm ${
               isCompleted
@@ -125,12 +125,12 @@ export default function CourseCard({ course, stats, onSelectCourse }) {
           >
             <span>
               {isCompleted
-                ? 'Erneut ansehen'
+                ? 'Review Course'
                 : percentage > 0
-                ? 'Weiterlernen'
+                ? 'Continue Learning'
                 : isBook
-                ? 'Buch lesen'
-                : 'Kurs starten'}
+                ? 'Read Book'
+                : 'Start Course'}
             </span>
             <ArrowRight size={14} className="group-hover:translate-x-1.5 transition-transform duration-300" />
           </div>

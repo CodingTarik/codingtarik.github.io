@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
-  ArrowLeft, Printer, BookOpen, CheckCircle2, 
-  Circle, ChevronRight, FileText, Sparkles 
+  CheckCircle2, Circle, Printer, BookOpen, Layers, 
+  ChevronLeft, ChevronRight, Hash, ArrowRight, Info 
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import BlogPostContent from '../../blog/components/BlogPostContent';
+import CourseHeaderBar from './CourseHeaderBar';
+import CourseSidebar from './CourseSidebar';
 
 export default function PagedBookViewer({
   course,
@@ -14,25 +16,48 @@ export default function PagedBookViewer({
   toggleLessonCompleted,
   getCourseStats
 }) {
-  const [activeChapterId, setActiveChapterId] = useState(course.chapters?.[0]?.id || null);
   const chapters = course.chapters || [];
-  const stats = getCourseStats(course);
+  const [activeChapterId, setActiveChapterId] = useState(chapters[0]?.id || null);
+  const [viewMode, setViewMode] = useState('chapter'); // 'chapter' or 'continuous'
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [jumpPageInput, setJumpPageInput] = useState('');
 
-  const activeChapter = chapters.find((ch) => ch.id === activeChapterId) || chapters[0];
+  const stats = getCourseStats(course);
+  const activeIndex = chapters.findIndex((ch) => ch.id === activeChapterId);
+  const activeChapter = chapters[activeIndex >= 0 ? activeIndex : 0] || chapters[0];
+
+  const isCurrentCompleted = activeChapter ? isLessonCompleted(course.id, activeChapter.id) : false;
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [activeChapterId, viewMode]);
 
   const handlePrintPdf = () => {
     window.print();
   };
 
-  const handleToggleChapter = (chId) => {
-    const isDone = isLessonCompleted(course.id, chId);
-    toggleLessonCompleted(course.id, chId);
-    if (!isDone && stats.completedCount + 1 >= chapters.length) {
+  const handleToggleChapter = () => {
+    if (!activeChapter) return;
+    const nextCompleted = !isCurrentCompleted;
+    toggleLessonCompleted(course.id, activeChapter.id);
+    if (nextCompleted && (activeIndex === chapters.length - 1 || stats.completedCount + 1 >= chapters.length)) {
       confetti({
         particleCount: 90,
         spread: 80,
         origin: { y: 0.6 }
       });
+    }
+  };
+
+  const handleJumpToChapter = (e) => {
+    e.preventDefault();
+    const num = parseInt(jumpPageInput.trim(), 10);
+    if (!isNaN(num) && num >= 1 && num <= chapters.length) {
+      const targetCh = chapters[num - 1];
+      if (targetCh) {
+        setActiveChapterId(targetCh.id);
+        setJumpPageInput('');
+      }
     }
   };
 
@@ -73,122 +98,116 @@ export default function PagedBookViewer({
         }
       `}</style>
 
-      {/* Top Header / Control Bar (Hidden on print) */}
-      <header className="no-print sticky top-0 z-30 bg-background/80 backdrop-blur-xl border-b border-border/80 px-4 sm:px-8 py-3.5 flex items-center justify-between shadow-xs">
-        <div className="flex items-center gap-3 min-w-0">
-          <button
-            onClick={onBackToOverview}
-            className="p-2 rounded-xl bg-card border border-border text-muted hover:text-text hover:border-primary transition-all cursor-pointer shrink-0"
-            title="Zurück zum Learning Hub"
-          >
-            <ArrowLeft size={18} />
-          </button>
-          <div className="min-w-0">
-            <span className="text-[10px] font-extrabold uppercase text-amber-500 tracking-wider">
-              Paged.js Buch Format
-            </span>
-            <h1 className="text-sm sm:text-base font-extrabold text-text truncate">
-              {course.title}
-            </h1>
-          </div>
-        </div>
-
-        {/* Action Buttons */}
-        <div className="flex items-center gap-3 shrink-0">
-          <button
-            onClick={handlePrintPdf}
-            className="px-4 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-amber-500 to-amber-600 text-white hover:opacity-95 transition-all flex items-center gap-2 shadow-lg shadow-amber-500/20 cursor-pointer"
-            title="Buch als PDF speichern oder drucken"
-          >
-            <Printer size={15} />
-            <span className="hidden sm:inline">PDF Exportieren / Drucken</span>
-          </button>
-        </div>
-      </header>
+      {/* Shared Header Bar */}
+      <CourseHeaderBar
+        course={course}
+        activeItem={activeChapter}
+        currentIndex={activeIndex}
+        totalCount={chapters.length}
+        isCompleted={isCurrentCompleted}
+        onToggleComplete={handleToggleChapter}
+        onBackToOverview={onBackToOverview}
+        onToggleSidebar={() => setIsSidebarOpen(true)}
+        onPrintPdf={handlePrintPdf}
+      />
 
       <div className="flex-1 flex flex-col lg:flex-row">
-        {/* TOC Sidebar */}
-        <aside className="no-print w-full lg:w-80 bg-card/95 backdrop-blur-md border-r border-border p-5 flex flex-col gap-5">
-          <div>
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="text-xs font-extrabold text-muted uppercase tracking-wider">
-                Inhaltsverzeichnis
-              </h2>
-              <span className="text-xs font-bold text-amber-500">{stats.percentage}% Gelesen</span>
-            </div>
-
-            <div className="w-full h-1.5 bg-border/60 rounded-full overflow-hidden mb-4">
-              <div
-                className="h-full bg-amber-500 transition-all duration-300 rounded-full"
-                style={{ width: `${stats.percentage}%` }}
-              />
-            </div>
-
-            <div className="space-y-1.5">
-              {chapters.map((ch, idx) => {
-                const isActive = ch.id === activeChapter?.id;
-                const isDone = isLessonCompleted(course.id, ch.id);
-
-                return (
-                  <button
-                    key={ch.id}
-                    onClick={() => setActiveChapterId(ch.id)}
-                    className={`
-                      w-full text-left p-3 rounded-xl text-xs transition-all flex items-center justify-between group cursor-pointer border
-                      ${isActive
-                        ? 'bg-amber-500/10 border-amber-500/40 text-amber-500 font-bold shadow-xs'
-                        : isDone
-                        ? 'text-text hover:bg-border/30 font-medium border-border/40'
-                        : 'text-muted hover:text-text hover:bg-border/30 border-transparent'
-                      }
-                    `}
-                  >
-                    <div className="flex items-center gap-2.5 min-w-0 pr-2">
-                      <span className="text-[10px] px-1.5 py-0.5 rounded bg-border/50 text-muted font-mono font-bold shrink-0">
-                        K{idx + 1}
-                      </span>
-                      <span className="truncate">{ch.title}</span>
-                    </div>
-
-                    <div
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleToggleChapter(ch.id);
-                      }}
-                      className="shrink-0 cursor-pointer hover:scale-110 transition-transform"
-                    >
-                      {isDone ? (
-                        <CheckCircle2 size={16} className="text-emerald-500 fill-emerald-500/20" />
-                      ) : (
-                        <Circle size={16} className="text-muted/40 group-hover:text-amber-500" />
-                      )}
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          <div className="mt-auto pt-4 border-t border-border text-[11px] text-muted space-y-2">
+        {/* Shared Sticky Course Sidebar */}
+        <CourseSidebar
+          course={course}
+          items={chapters}
+          activeItemId={activeChapter?.id}
+          onSelectItem={(id) => setActiveChapterId(id)}
+          isItemCompleted={isLessonCompleted}
+          onToggleItemComplete={toggleLessonCompleted}
+          stats={stats}
+          onBackToOverview={onBackToOverview}
+          isOpen={isSidebarOpen}
+          onClose={() => setIsSidebarOpen(false)}
+          customFooterNote={
             <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400">
-              <p className="font-bold mb-1">📖 PDF Export Hinweis</p>
-              <p className="leading-relaxed">
-                Klicke oben auf **PDF Exportieren**, um das Buch inklusive aller Kapitel als DIN-A4 Dokument zu drucken.
+              <p className="font-bold mb-1 flex items-center gap-1.5 text-xs">
+                <Info size={14} />
+                <span>PDF Export Guide</span>
+              </p>
+              <p className="text-[11px] leading-relaxed">
+                Click **Export PDF / Print** in the top bar to save the complete book as a formatted A4 PDF.
               </p>
             </div>
-          </div>
-        </aside>
+          }
+        />
 
         {/* Main Book Content Container */}
         <main className="flex-1 p-4 sm:p-10 max-w-4xl mx-auto w-full">
-          <div className="space-y-12">
-            {activeChapter && (
+          {/* Controls Bar: Reading View Mode & Page Jump */}
+          <div className="no-print mb-8 p-4 rounded-2xl bg-card border border-border/80 flex flex-wrap items-center justify-between gap-4 shadow-xs">
+            {/* View Mode Toggle Pill */}
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-bold text-muted uppercase tracking-wider hidden sm:inline">
+                Reading View:
+              </span>
+              <div className="inline-flex items-center p-1 bg-background border border-border rounded-xl gap-1">
+                <button
+                  onClick={() => setViewMode('chapter')}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                    viewMode === 'chapter'
+                      ? 'bg-amber-500 text-white shadow-xs'
+                      : 'text-muted hover:text-text'
+                  }`}
+                >
+                  <BookOpen size={14} />
+                  <span>Chapter View</span>
+                </button>
+
+                <button
+                  onClick={() => setViewMode('continuous')}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                    viewMode === 'continuous'
+                      ? 'bg-amber-500 text-white shadow-xs'
+                      : 'text-muted hover:text-text'
+                  }`}
+                >
+                  <Layers size={14} />
+                  <span>Continuous Scroll</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Direct Chapter / Page Jump Input */}
+            <form onSubmit={handleJumpToChapter} className="flex items-center gap-2">
+              <span className="text-xs font-bold text-muted">
+                Chapter <span className="text-amber-500">{activeIndex + 1}</span> of {chapters.length}
+              </span>
+              <div className="relative">
+                <input
+                  type="number"
+                  min="1"
+                  max={chapters.length}
+                  placeholder="#"
+                  value={jumpPageInput}
+                  onChange={(e) => setJumpPageInput(e.target.value)}
+                  className="w-14 px-2 py-1 bg-background border border-border rounded-lg text-xs text-center font-bold focus:outline-none focus:border-amber-500"
+                />
+              </div>
+              <button
+                type="submit"
+                className="px-3 py-1 bg-amber-500 text-white rounded-lg text-xs font-bold hover:bg-amber-600 transition-colors cursor-pointer"
+              >
+                Go
+              </button>
+            </form>
+          </div>
+
+          {/* Reading Mode Renderer */}
+          {viewMode === 'chapter' ? (
+            /* Chapter-by-Chapter Mode */
+            activeChapter && (
               <article className="bg-card border border-border/80 rounded-3xl p-6 sm:p-10 shadow-xs relative">
-                {/* Chapter Header */}
+                {/* Chapter Hero Banner */}
                 <div className="mb-8 pb-5 border-b border-border/60 flex items-center justify-between flex-wrap gap-4">
                   <div>
-                    <span className="text-xs font-bold text-amber-500 uppercase tracking-widest">
-                      Kapitel {activeChapter.chapterNumber || 1}
+                    <span className="text-xs font-extrabold text-amber-500 uppercase tracking-widest">
+                      Chapter {activeChapter.chapterNumber || activeIndex + 1}
                     </span>
                     <h2 className="text-xl sm:text-3xl font-extrabold text-text mt-1">
                       {activeChapter.title}
@@ -196,48 +215,104 @@ export default function PagedBookViewer({
                   </div>
 
                   <button
-                    onClick={() => handleToggleChapter(activeChapter.id)}
+                    onClick={handleToggleChapter}
                     className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer shadow-xs ${
-                      isLessonCompleted(course.id, activeChapter.id)
+                      isCurrentCompleted
                         ? 'bg-emerald-500/15 border border-emerald-500/40 text-emerald-500'
                         : 'bg-card border border-border text-muted hover:text-amber-500'
                     }`}
                   >
                     <CheckCircle2 size={16} />
                     <span>
-                      {isLessonCompleted(course.id, activeChapter.id)
-                        ? 'Kapitel gelesen'
-                        : 'Als gelesen markieren'}
+                      {isCurrentCompleted
+                        ? 'Completed'
+                        : 'Mark Chapter Read'}
                     </span>
                   </button>
                 </div>
 
-                {/* Chapter Content */}
-                <div className="prose dark:prose-invert max-w-none">
-                  <BlogPostContent post={{ content: activeChapter.content }} />
+                {/* Render Chapter Content */}
+                <BlogPostContent content={activeChapter.content} />
+
+                {/* Bottom Prev / Next Buttons */}
+                <div className="no-print mt-12 pt-6 border-t border-border/80 flex items-center justify-between gap-4">
+                  <button
+                    onClick={() => {
+                      if (activeIndex > 0) setActiveChapterId(chapters[activeIndex - 1].id);
+                    }}
+                    disabled={activeIndex === 0}
+                    className={`px-5 py-3 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
+                      activeIndex === 0
+                        ? 'opacity-40 cursor-not-allowed bg-card border border-border text-muted'
+                        : 'bg-card border border-border text-text hover:border-amber-500 hover:text-amber-500 shadow-sm'
+                    }`}
+                  >
+                    <ChevronLeft size={16} />
+                    <span>Previous Chapter</span>
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      if (activeIndex < chapters.length - 1) {
+                        setActiveChapterId(chapters[activeIndex + 1].id);
+                      }
+                    }}
+                    disabled={activeIndex === chapters.length - 1}
+                    className={`px-5 py-3 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
+                      activeIndex === chapters.length - 1
+                        ? 'opacity-40 cursor-not-allowed bg-card border border-border text-muted'
+                        : 'bg-amber-500 text-white hover:bg-amber-600 shadow-md shadow-amber-500/20'
+                    }`}
+                  >
+                    <span>Next Chapter</span>
+                    <ChevronRight size={16} />
+                  </button>
                 </div>
               </article>
-            )}
-
-            {/* Hidden Printable Container for window.print() */}
-            <div className="hidden print:block space-y-12">
-              <div className="text-center py-20 border-b border-black">
-                <h1 className="text-4xl font-extrabold text-black mb-4">{course.title}</h1>
-                <p className="text-lg text-gray-700 mb-8">{course.description}</p>
-                <p className="text-sm text-gray-500">Autor: {course.author || 'Tarik Azzouzi'}</p>
-              </div>
-
+            )
+          ) : (
+            /* Continuous Scroll Mode */
+            <div className="space-y-10">
               {chapters.map((ch, idx) => (
-                <div key={ch.id} className="book-page-break pt-8">
-                  <h2 className="text-2xl font-bold text-black border-b border-gray-300 pb-2 mb-6">
-                    Kapitel {idx + 1}: {ch.title}
-                  </h2>
-                  <div className="prose text-black max-w-none">
-                    <BlogPostContent post={{ content: ch.content }} />
+                <article key={ch.id} className="bg-card border border-border/80 rounded-3xl p-6 sm:p-10 shadow-xs relative">
+                  <div className="mb-6 pb-4 border-b border-border/60 flex items-center justify-between">
+                    <span className="text-xs font-extrabold text-amber-500 uppercase tracking-widest">
+                      Chapter {idx + 1}: {ch.title}
+                    </span>
+                    <button
+                      onClick={() => toggleLessonCompleted(course.id, ch.id)}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
+                        isLessonCompleted(course.id, ch.id)
+                          ? 'bg-emerald-500/15 text-emerald-500'
+                          : 'bg-card border border-border text-muted hover:text-amber-500'
+                      }`}
+                    >
+                      <CheckCircle2 size={15} />
+                      <span>{isLessonCompleted(course.id, ch.id) ? 'Completed' : 'Mark Read'}</span>
+                    </button>
                   </div>
-                </div>
+                  <BlogPostContent content={ch.content} />
+                </article>
               ))}
             </div>
+          )}
+
+          {/* Hidden Container for window.print() */}
+          <div className="hidden print:block space-y-12">
+            <div className="text-center py-20 border-b border-black">
+              <h1 className="text-4xl font-extrabold text-black mb-4">{course.title}</h1>
+              <p className="text-lg text-gray-700 mb-8">{course.description}</p>
+              <p className="text-sm text-gray-500">Author: {course.author || 'Tarik Azzouzi'}</p>
+            </div>
+
+            {chapters.map((ch, idx) => (
+              <div key={ch.id} className="book-page-break pt-8">
+                <h2 className="text-2xl font-bold text-black border-b border-gray-300 pb-2 mb-6">
+                  Chapter {idx + 1}: {ch.title}
+                </h2>
+                <BlogPostContent content={ch.content} />
+              </div>
+            ))}
           </div>
         </main>
       </div>

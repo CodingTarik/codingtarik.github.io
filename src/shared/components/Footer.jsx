@@ -7,7 +7,13 @@ export default function Footer() {
 
   // Check if page has sidebar - use getPath for offline compatibility
   const path = getPath();
-  const hasSidebar = path.startsWith('/blog') || path === '/tools' || path === '/tools/' || path === '/' || path === '';
+  const hasSidebar = 
+    path.startsWith('/blog') || 
+    path.startsWith('/learning-hub') || 
+    path === '/tools' || 
+    path === '/tools/' || 
+    path === '/' || 
+    path === '';
 
   const handleOpenConsentBanner = () => {
     window.dispatchEvent(new CustomEvent('open-consent-banner'));

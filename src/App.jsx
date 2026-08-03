@@ -116,7 +116,9 @@ function AppContent() {
     return <BlogPage onPostClick={handlePostClick} />;
   };
 
-  const showFooter = !['learnbuddy', 'piano-studio', 'flashmaster', 'markdown-editor', 'perfect-pitch'].includes(appView);
+  const currentPath = getPath();
+  const isCourseDetail = currentPath.startsWith('/learning-hub/course/');
+  const showFooter = !['learnbuddy', 'piano-studio', 'flashmaster', 'markdown-editor', 'perfect-pitch'].includes(appView) && !isCourseDetail;
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-text transition-colors duration-300">

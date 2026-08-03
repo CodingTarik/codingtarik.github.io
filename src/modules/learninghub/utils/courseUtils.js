@@ -1,24 +1,32 @@
-// Utility functions for discovering and loading courses dynamically
+// Utility functions for discovering and loading courses dynamically from /posts/learninghub/ and /courses/
+
+const postsLearningHub = import.meta.glob('/posts/learninghub/**/*.js', { eager: true });
+const relativePostsLearningHub = import.meta.glob('../../../../posts/learninghub/**/*.js', { eager: true });
 
 const rootCourses = import.meta.glob('/courses/**/*.js', { eager: true });
-const srcCourses = import.meta.glob('../../../courses/**/*.js', { eager: true });
+const relativeCourses = import.meta.glob('../../../../courses/**/*.js', { eager: true });
 
 const allCourseModules = {
+  ...postsLearningHub,
+  ...relativePostsLearningHub,
   ...rootCourses,
-  ...srcCourses,
+  ...relativeCourses,
 };
 
-// Extract courses array
-const courses = Object.entries(allCourseModules)
-  .map(([filepath, module]) => {
-    const course = module.default;
-    if (!course || !course.id) return null;
-    return {
+// Deduplicate courses by ID
+const coursesMap = new Map();
+
+Object.entries(allCourseModules).forEach(([filepath, module]) => {
+  const course = module.default;
+  if (course && course.id) {
+    coursesMap.set(course.id, {
       ...course,
       _filepath: filepath,
-    };
-  })
-  .filter(Boolean);
+    });
+  }
+});
+
+const courses = Array.from(coursesMap.values());
 
 /**
  * Get all available courses
@@ -31,7 +39,7 @@ export function getAllCourses() {
  * Get a course by its ID
  */
 export function getCourseById(courseId) {
-  return courses.find((c) => c.id === courseId) || null;
+  return coursesMap.get(courseId) || null;
 }
 
 /**
