@@ -17,6 +17,7 @@ import CategoriesPage from './modules/blog/components/CategoriesPage';
 import ProjectsPage from './modules/blog/components/ProjectsPage';
 
 import LearnBuddyView from './modules/learnbuddy/LearnBuddyView';
+import LearningHubView from './modules/learninghub/LearningHubView';
 import ToolsOverviewPage from './modules/blog/components/ToolsOverviewPage';
 
 import PianoStudio from './modules/tools/piano/PianoStudio';
@@ -40,6 +41,7 @@ function AppContent() {
   }, []);
 
   const renderContent = () => {
+    if (appView === 'learning-hub') return <LearningHubView />;
     if (appView === 'privacy') return <PrivacyPage />;
     if (appView === 'imprint') return <ImprintPageFooter />;
     if (appView === 'tools') {

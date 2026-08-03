@@ -1,11 +1,12 @@
 import React from 'react';
-import { FileText, FolderOpen, Search } from 'lucide-react';
+import { FileText, FolderOpen, Search, GraduationCap } from 'lucide-react';
 import { navigate, getPath } from '../../../utils/navigation';
 
 export default function BlogSubNav() {
   const currentPath = getPath();
 
   const isPosts = currentPath === '/blog' || currentPath === '/' || currentPath === '' || currentPath.startsWith('/blog/post');
+  const isLearningHub = currentPath.startsWith('/learning-hub');
   const isCategories = currentPath === '/blog/categories';
   const isSearch = currentPath.startsWith('/blog/search');
 
@@ -22,6 +23,18 @@ export default function BlogSubNav() {
         >
           <FileText size={15} />
           <span>Articles</span>
+        </button>
+
+        <button
+          onClick={() => navigate('/learning-hub')}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+            isLearningHub
+              ? 'bg-primary text-white shadow-sm'
+              : 'text-muted hover:text-text hover:bg-border/30'
+          }`}
+        >
+          <GraduationCap size={15} />
+          <span>Kurse</span>
         </button>
 
         <button

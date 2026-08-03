@@ -2,7 +2,7 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Mail, Github, Linkedin, FileText, Sun, Moon, 
-  FolderOpen, Code, Coffee, Box, Target, X, Rss, Search, Wrench 
+  FolderOpen, Code, Coffee, Box, Target, X, Rss, Search, Wrench, GraduationCap 
 } from 'lucide-react';
 import { useTheme } from '../../learnbuddy/context/ThemeContext';
 import { generateRSSFeed } from '../utils/rssUtils';
@@ -35,6 +35,7 @@ export default function BlogSidebar({
 
   const tabs = [
     { id: 'posts', label: 'Blog', icon: FileText },
+    { id: 'learning-hub', label: 'Learning Hub', icon: GraduationCap },
     { id: 'projects', label: 'Projects', icon: Code },
     { id: 'tools', label: 'Tools & Apps', icon: Wrench }
   ];

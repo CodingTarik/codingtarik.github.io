@@ -33,6 +33,11 @@ const SEO_CONFIG = {
     title: 'Perfect Pitch Trainer - Ear Training for Musical Notes & Intervals',
     description: 'Train your ear to identify musical notes and intervals. Three difficulty modes: White Keys, All Keys, and Intervals.',
     canonicalPath: 'tools/perfect-pitch'
+  },
+  'learning-hub': {
+    title: 'Learning Hub - Interaktive Kurse & E-Books',
+    description: 'Interaktive Kurse, Markdown-Artikelserien und Paged.js E-Bücher mit automatischem Lernfortschritt.',
+    canonicalPath: 'learning-hub'
   }
 };
 
@@ -56,6 +61,11 @@ export function useAppRouting() {
     const handleRouteChange = () => {
       const path = getPath();
       setCurrentPath(path);
+
+      if (path.startsWith('/learning-hub')) {
+        setAppView('learning-hub');
+        return;
+      }
 
       if (path === '/privacy') {
         setAppView('privacy');
