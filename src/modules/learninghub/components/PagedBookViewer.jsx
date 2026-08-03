@@ -414,7 +414,7 @@ export default function PagedBookViewer({
       />
 
       {/* Main Reader Content Area */}
-      <div className="lg:ml-80 flex-1 flex flex-col min-w-0 relative">
+      <div className="lg:ml-72 flex-1 flex flex-col min-w-0 relative">
         <CourseHeaderBar
           course={course}
           activeItem={activeChapter}
@@ -426,6 +426,7 @@ export default function PagedBookViewer({
           onToggleSidebar={() => setIsSidebarOpen(true)}
           onPrintPdf={handlePrintPdf}
         />
+
 
         {/* Floating sticky right control bar tracking PAGES */}
         <FloatingReaderControls

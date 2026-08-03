@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  ArrowLeft, CheckCircle2, Circle, X, RotateCcw, ChevronDown, ChevronRight, Bookmark, FileText, BookMarked
+import {
+  ArrowLeft, CheckCircle2, Circle, X, RotateCcw, ChevronDown, ChevronRight, Bookmark
 } from 'lucide-react';
 
 export default function CourseSidebar({
@@ -26,125 +26,120 @@ export default function CourseSidebar({
   const itemTypeLabel = isBook ? 'Chapter' : 'Lesson';
   const activeItemRef = useRef(null);
 
-  // Track expanded chapters (by default only active chapter is expanded)
   const [expandedChapters, setExpandedChapters] = useState(() => {
     const initial = {};
-    items.forEach((ch) => {
-      initial[ch.id] = ch.id === activeItemId;
-    });
+    items.forEach((ch) => { initial[ch.id] = ch.id === activeItemId; });
     return initial;
   });
 
   const toggleExpandChapter = (id, e) => {
     e.stopPropagation();
-    setExpandedChapters((prev) => ({
-      ...prev,
-      [id]: !prev[id]
-    }));
+    setExpandedChapters((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
-  // Auto-scroll sidebar list so active item is smoothly centered in view
   useEffect(() => {
     if (activeItemRef.current) {
-      activeItemRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest'
-      });
+      activeItemRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
   }, [activeItemId]);
 
+  const progressPct = stats?.percentage || 0;
+  const completedCount = stats?.completedCount || 0;
+  const totalCount = stats?.totalCount || items.length;
+
   return (
     <>
-      {/* Mobile Backdrop Overlay */}
+      {/* Mobile Backdrop */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/70 backdrop-blur-md z-40 lg:hidden"
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
             onClick={onClose}
           />
         )}
       </AnimatePresence>
 
-      {/* Fixed Sidebar Container */}
+      {/* Sidebar */}
       <aside
         className={`
-          no-print fixed left-0 top-0 bottom-0 z-40 w-[85vw] sm:w-80 bg-card/95 backdrop-blur-md border-r border-border
-          flex flex-col h-screen transition-transform duration-300 ease-in-out shadow-2xl lg:shadow-none shrink-0
+          no-print fixed left-0 top-0 bottom-0 z-40 w-[82vw] sm:w-72 flex flex-col h-screen shrink-0
+          transition-transform duration-300 ease-in-out
           ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
         `}
+        style={{
+          background: 'rgba(10, 14, 23, 0.85)',
+          backdropFilter: 'blur(40px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(40px) saturate(180%)',
+          borderRight: '1px solid rgba(255,255,255,0.07)',
+          boxShadow: '4px 0 24px rgba(0,0,0,0.3)'
+        }}
       >
-        {/* Sidebar Header */}
-        <div className="p-4 border-b border-border flex flex-col gap-3 bg-card/40 shrink-0">
+        {/* ── Header ── */}
+        <div className="shrink-0 p-4 space-y-4" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+          {/* Back + close */}
           <div className="flex items-center justify-between">
             <button
               onClick={onBackToOverview}
-              className="inline-flex items-center gap-2 text-xs font-bold text-muted hover:text-amber-500 transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-muted hover:text-amber-400 transition-colors cursor-pointer group"
             >
-              <ArrowLeft size={14} />
+              <ArrowLeft size={13} className="group-hover:-translate-x-0.5 transition-transform" />
               <span>Learning Hub</span>
             </button>
             <button
               onClick={onClose}
-              className="lg:hidden p-1 text-muted hover:text-text rounded-lg"
-              title="Close sidebar"
+              className="lg:hidden p-1.5 rounded-lg text-muted hover:text-text hover:bg-white/8 transition-colors cursor-pointer"
             >
-              <X size={18} />
+              <X size={16} />
             </button>
           </div>
 
-          <div>
-            <span className={`text-[10px] font-extrabold uppercase tracking-wider ${
-              isBook ? 'text-amber-500' : 'text-primary'
-            }`}>
-              {course.category || (isBook ? 'Book' : 'Course')}
+          {/* Course info */}
+          <div className="space-y-0.5">
+            <span className={`text-[10px] font-extrabold uppercase tracking-widest ${isBook ? 'text-amber-400' : 'text-indigo-400'}`}>
+              {course.category || (isBook ? 'E-Book' : 'Course')}
             </span>
-            <h2 className="text-base font-extrabold text-text line-clamp-1 mt-0.5">
-              {course.title}
-            </h2>
+            <h2 className="text-sm font-bold text-text line-clamp-2 leading-snug">{course.title}</h2>
           </div>
 
-          {/* Progress Summary */}
-          <div className="space-y-1.5 pt-2 border-t border-border/50">
-            <div className="flex justify-between items-center text-xs font-bold">
-              <span className="text-muted">Progress</span>
-              <span className={isBook ? 'text-amber-500 font-bold' : 'text-primary font-bold'}>
-                {stats?.percentage || 0}%
+          {/* Progress section */}
+          <div className="space-y-2">
+            <div className="flex items-center justify-between text-xs">
+              <span className="text-muted font-medium">Progress</span>
+              <span className={`font-black ${isBook ? 'text-amber-400' : 'text-indigo-400'}`}>
+                {progressPct}%
               </span>
             </div>
-            <div className="w-full h-2 bg-border/60 rounded-full overflow-hidden">
-              <div
-                className={`h-full transition-all duration-300 rounded-full ${
-                  isBook 
-                    ? 'bg-amber-500' 
-                    : 'bg-gradient-to-r from-primary via-secondary to-primary'
-                }`}
-                style={{ width: `${stats?.percentage || 0}%` }}
+
+            {/* Track */}
+            <div className="w-full h-1.5 bg-white/8 rounded-full overflow-hidden">
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: `${progressPct}%` }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+                className={`h-full rounded-full ${isBook ? 'bg-amber-500' : 'bg-indigo-500'}`}
               />
             </div>
-            <p className="text-[11px] text-muted">
-              {stats?.completedCount || 0} of {stats?.totalCount || items.length} {isBook ? 'chapters' : 'lessons'} completed
+
+            <p className="text-[11px] text-muted/70">
+              {completedCount} of {totalCount} {isBook ? 'chapters' : 'lessons'} completed
             </p>
           </div>
         </div>
 
-        {/* Item List (Independently Scrollable with Collapsible Sub-Pages for Books) */}
-        <div className="flex-1 overflow-y-auto p-3 space-y-2 scrollbar-thin">
+        {/* ── Item List ── */}
+        <div className="flex-1 overflow-y-auto lh-sidebar-scroll p-3 space-y-1">
           {items.map((item, idx) => {
             const isActive = item.id === activeItemId;
             const isDone = isItemCompleted ? isItemCompleted(course.id, item.id) : false;
-            const isExpanded = expandedChapters[item.id] ?? true;
-
-            // Pages belonging to this chapter
-            const chapterPages = isBook 
-              ? allPages.filter((p) => p.chapterId === item.id)
-              : [];
+            const isExpanded = expandedChapters[item.id] ?? (item.id === activeItemId);
+            const chapterPages = isBook ? allPages.filter((p) => p.chapterId === item.id) : [];
 
             return (
-              <div key={item.id} className="space-y-1">
-                {/* Chapter Parent Row */}
+              <div key={item.id} className="space-y-0.5">
+                {/* Main item row */}
                 <div
                   ref={isActive ? activeItemRef : null}
                   onClick={() => {
@@ -156,108 +151,101 @@ export default function CourseSidebar({
                     }
                   }}
                   className={`
-                    w-full text-left p-3 rounded-2xl transition-all flex items-center justify-between gap-2 group cursor-pointer text-xs relative border
+                    w-full text-left px-3 py-2.5 rounded-xl transition-all flex items-center gap-2.5 cursor-pointer group relative
                     ${isActive
-                      ? isBook
-                        ? 'bg-amber-500/15 border-amber-500/50 text-amber-500 font-bold shadow-xs'
-                        : 'bg-primary/15 border-primary/50 text-primary font-bold shadow-xs'
+                      ? 'text-text'
                       : isDone
-                      ? 'bg-card hover:bg-border/30 text-text font-medium border-border/40'
-                      : 'text-muted hover:text-text hover:bg-border/30 border-transparent'
+                      ? 'text-text/70 hover:text-text hover:bg-white/5'
+                      : 'text-muted hover:text-text hover:bg-white/5'
                     }
                   `}
+                  style={isActive ? {
+                    background: isBook ? 'rgba(245,158,11,0.1)' : 'rgba(99,102,241,0.1)',
+                    border: `1px solid ${isBook ? 'rgba(245,158,11,0.25)' : 'rgba(99,102,241,0.25)'}`,
+                  } : { border: '1px solid transparent' }}
                 >
+                  {/* Active left accent bar */}
                   {isActive && (
-                    <div className={`absolute left-0 top-0 bottom-0 w-1 rounded-r-full ${
-                      isBook ? 'bg-amber-500' : 'bg-primary'
-                    }`} />
+                    <div
+                      className="absolute left-0 top-2 bottom-2 w-0.5 rounded-r-full"
+                      style={{ background: isBook ? '#f59e0b' : '#6366f1' }}
+                    />
                   )}
 
-                  <div className="flex items-center gap-2.5 min-w-0 flex-1">
-                    <div
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        if (onToggleItemComplete) onToggleItemComplete(course.id, item.id);
-                      }}
-                      className="shrink-0 hover:scale-110 transition-transform cursor-pointer"
-                      title={isDone ? 'Mark as incomplete' : 'Mark as completed'}
-                    >
-                      {isDone ? (
-                        <CheckCircle2 size={16} className="text-emerald-500 fill-emerald-500/20" />
-                      ) : (
-                        <Circle size={16} className={`text-muted/60 ${isBook ? 'group-hover:text-amber-500' : 'group-hover:text-primary'} transition-colors`} />
-                      )}
-                    </div>
-
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-1.5">
-                        <span className="text-[10px] uppercase font-bold text-muted">
-                          {itemTypeLabel} {item.chapterNumber || idx + 1}
-                        </span>
-                      </div>
-                      <p className={`line-clamp-1 leading-snug ${isActive ? (isBook ? 'text-amber-500 font-bold' : 'text-primary font-bold') : 'text-text'}`}>
-                        {item.title.replace(/^(Lektion|Kapitel|Lesson|Chapter) \d+:\s*/i, '')}
-                      </p>
-                    </div>
+                  {/* Completion toggle */}
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (onToggleItemComplete) onToggleItemComplete(course.id, item.id);
+                    }}
+                    className="shrink-0 hover:scale-110 transition-transform cursor-pointer"
+                    title={isDone ? 'Mark as unread' : 'Mark as read'}
+                  >
+                    {isDone ? (
+                      <CheckCircle2 size={15} className="text-emerald-400" style={{ fill: 'rgba(52,211,153,0.2)' }} />
+                    ) : (
+                      <Circle size={15} className={`text-white/20 ${isActive ? (isBook ? 'group-hover:text-amber-400' : 'group-hover:text-indigo-400') : 'group-hover:text-white/50'} transition-colors`} />
+                    )}
                   </div>
 
-                  {/* Expand / Collapse Icon for Books */}
+                  {/* Text content */}
+                  <div className="min-w-0 flex-1">
+                    <div className="text-[10px] font-bold text-muted/60 uppercase tracking-wider mb-0.5">
+                      {itemTypeLabel} {item.chapterNumber || idx + 1}
+                    </div>
+                    <p className={`text-xs line-clamp-1 leading-snug font-semibold ${isActive ? (isBook ? 'text-amber-300' : 'text-indigo-300') : ''}`}>
+                      {item.title.replace(/^(Lektion|Kapitel|Lesson|Chapter) \d+:\s*/i, '')}
+                    </p>
+                  </div>
+
+                  {/* Expand/collapse for books */}
                   {isBook && chapterPages.length > 0 && (
                     <button
                       onClick={(e) => toggleExpandChapter(item.id, e)}
-                      className="p-1 text-muted hover:text-text rounded-md hover:bg-border/40 transition-colors"
-                      title={isExpanded ? 'Collapse pages' : 'Expand pages'}
+                      className="shrink-0 p-0.5 rounded text-muted/50 hover:text-text transition-colors"
                     >
-                      {isExpanded ? <ChevronDown size={15} /> : <ChevronRight size={15} />}
+                      {isExpanded
+                        ? <ChevronDown size={13} />
+                        : <ChevronRight size={13} />
+                      }
                     </button>
                   )}
                 </div>
 
-                {/* Collapsible Sub-Pages List for Books */}
+                {/* Sub-pages for books */}
                 {isBook && isExpanded && chapterPages.length > 0 && (
-                  <div className="pl-4 pr-1 space-y-1 border-l-2 border-amber-500/20 ml-4 py-1">
+                  <div className="pl-6 pr-1 space-y-0.5 py-0.5">
                     {chapterPages.map((page) => {
                       const isPageActive = page.globalPageNum === activePageNum;
                       const isBookmarked = bookmarks.includes(page.globalPageNum);
-
                       return (
                         <div
                           key={`sub-page-${page.globalPageNum}`}
-                          onClick={() => {
-                            if (onSelectPage) onSelectPage(page.globalPageNum);
-                            onClose();
-                          }}
+                          onClick={() => { if (onSelectPage) onSelectPage(page.globalPageNum); onClose(); }}
                           className={`
-                            flex items-center justify-between px-3 py-1.5 rounded-xl text-[11px] font-medium transition-all cursor-pointer group/sub
+                            flex items-center justify-between px-2.5 py-1.5 rounded-lg text-[11px] font-medium transition-all cursor-pointer group/sub
                             ${isPageActive
-                              ? 'bg-amber-500 text-white font-bold shadow-xs'
-                              : 'text-muted hover:text-text hover:bg-border/40'
+                              ? 'bg-amber-500 text-white shadow-sm'
+                              : 'text-muted hover:text-text hover:bg-white/5'
                             }
                           `}
                         >
-                          <div className="flex items-center gap-2 min-w-0">
-                            <span className={`text-[10px] font-extrabold ${isPageActive ? 'text-white' : 'text-amber-500'}`}>
-                              Pg {page.globalPageNum}
+                          <div className="flex items-center gap-1.5 min-w-0">
+                            <span className={`text-[10px] font-extrabold ${isPageActive ? 'text-white/70' : 'text-amber-500/70'}`}>
+                              {page.globalPageNum}
                             </span>
                             <span className="truncate">
                               {page.pageInChIdx === 0 ? 'Start' : `Page ${page.pageInChIdx + 1}`}
                             </span>
                           </div>
-
-                          {/* Bookmark Toggle Icon */}
                           <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              if (onToggleBookmark) onToggleBookmark(page.globalPageNum);
-                            }}
-                            className={`p-0.5 rounded transition-colors ${
-                              isBookmarked
-                                ? isPageActive ? 'text-white fill-white' : 'text-amber-500 fill-amber-500'
-                                : 'text-muted/40 hover:text-amber-500'
+                            onClick={(e) => { e.stopPropagation(); if (onToggleBookmark) onToggleBookmark(page.globalPageNum); }}
+                            className={`p-0.5 rounded transition-colors ${isBookmarked
+                              ? isPageActive ? 'text-white' : 'text-amber-400'
+                              : 'text-white/20 hover:text-amber-400'
                             }`}
-                            title={isBookmarked ? 'Bookmarked' : 'Add bookmark'}
                           >
-                            <Bookmark size={11} fill={isBookmarked ? 'currentColor' : 'none'} />
+                            <Bookmark size={10} fill={isBookmarked ? 'currentColor' : 'none'} />
                           </button>
                         </div>
                       );
@@ -269,18 +257,20 @@ export default function CourseSidebar({
           })}
         </div>
 
-        {/* Footer */}
+        {/* ── Footer ── */}
         {onResetProgress && (
-          <div className="p-3 border-t border-border flex items-center justify-between text-xs text-muted bg-card/40 shrink-0">
+          <div
+            className="shrink-0 px-4 py-3 flex items-center justify-between"
+            style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
+          >
             <button
               onClick={() => onResetProgress(course.id)}
-              className="flex items-center gap-1.5 hover:text-rose-500 transition-colors text-[11px] font-medium"
-              title="Reset progress for this course"
+              className="inline-flex items-center gap-1.5 text-[11px] font-medium text-muted/60 hover:text-rose-400 transition-colors cursor-pointer"
             >
-              <RotateCcw size={13} />
-              <span>Reset Progress</span>
+              <RotateCcw size={12} />
+              <span>Reset progress</span>
             </button>
-            <span className="text-[11px] text-muted/80 font-mono">Press ← → Navigate</span>
+            <span className="text-[10px] text-muted/40 font-mono">← →</span>
           </div>
         )}
       </aside>
