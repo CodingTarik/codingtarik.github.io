@@ -57,6 +57,7 @@ export default function LearningHubView({ routeParams }) {
           isLessonCompleted={isLessonCompleted}
           toggleLessonCompleted={toggleLessonCompleted}
           getCourseStats={getCourseStats}
+          resetCourseProgress={resetCourseProgress}
         />
       );
     }

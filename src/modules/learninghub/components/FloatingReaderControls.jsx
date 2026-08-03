@@ -1,5 +1,5 @@
 import React from 'react';
-import { BookOpen, Layers, ZoomIn, ZoomOut } from 'lucide-react';
+import { BookOpen, Layers, ZoomIn, ZoomOut, Search, Settings } from 'lucide-react';
 
 export default function FloatingReaderControls({
   currentIndex,
@@ -13,7 +13,9 @@ export default function FloatingReaderControls({
   zoomLevel = 100,
   onZoomIn,
   onZoomOut,
-  onZoomReset
+  onZoomReset,
+  onOpenSearch,
+  onOpenSettings
 }) {
   return (
     <div className="no-print fixed bottom-5 right-5 z-50 flex justify-end pointer-events-none">
@@ -100,6 +102,30 @@ export default function FloatingReaderControls({
                 title="Continuous Scroll Mode"
               >
                 <Layers size={12} />
+              </button>
+            </div>
+          </>
+        )}
+
+        {/* Search & Settings Quick Actions */}
+        {isBook && (
+          <>
+            <div className="w-px h-3.5 bg-border/70"></div>
+            <div className="flex items-center gap-1">
+              <button
+                onClick={onOpenSearch}
+                className="p-1 rounded-full text-muted hover:text-amber-500 hover:bg-amber-500/10 transition-all cursor-pointer"
+                title="Search Book (Cmd + K)"
+              >
+                <Search size={13} />
+              </button>
+
+              <button
+                onClick={onOpenSettings}
+                className="p-1 rounded-full text-muted hover:text-amber-500 hover:bg-amber-500/10 transition-all cursor-pointer"
+                title="Reader & Aesthetic Settings"
+              >
+                <Settings size={13} />
               </button>
             </div>
           </>

@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  ArrowLeft, CheckCircle2, Circle, X, RotateCcw, BookMarked, FileText
+  ArrowLeft, CheckCircle2, Circle, X, RotateCcw, ChevronDown, ChevronRight, Bookmark, FileText, BookMarked
 } from 'lucide-react';
 
 export default function CourseSidebar({
@@ -16,11 +16,32 @@ export default function CourseSidebar({
   isOpen,
   onClose,
   onResetProgress,
-  customFooterNote
+  allPages = [],
+  activePageNum = 1,
+  onSelectPage,
+  bookmarks = [],
+  onToggleBookmark
 }) {
   const isBook = course.type === 'book';
   const itemTypeLabel = isBook ? 'Chapter' : 'Lesson';
   const activeItemRef = useRef(null);
+
+  // Track expanded chapters (by default only active chapter is expanded)
+  const [expandedChapters, setExpandedChapters] = useState(() => {
+    const initial = {};
+    items.forEach((ch) => {
+      initial[ch.id] = ch.id === activeItemId;
+    });
+    return initial;
+  });
+
+  const toggleExpandChapter = (id, e) => {
+    e.stopPropagation();
+    setExpandedChapters((prev) => ({
+      ...prev,
+      [id]: !prev[id]
+    }));
+  };
 
   // Auto-scroll sidebar list so active item is smoothly centered in view
   useEffect(() => {
@@ -60,7 +81,7 @@ export default function CourseSidebar({
           <div className="flex items-center justify-between">
             <button
               onClick={onBackToOverview}
-              className="inline-flex items-center gap-2 text-xs font-bold text-muted hover:text-primary transition-colors cursor-pointer"
+              className="inline-flex items-center gap-2 text-xs font-bold text-muted hover:text-amber-500 transition-colors cursor-pointer"
             >
               <ArrowLeft size={14} />
               <span>Learning Hub</span>
@@ -90,7 +111,7 @@ export default function CourseSidebar({
             <div className="flex justify-between items-center text-xs font-bold">
               <span className="text-muted">Progress</span>
               <span className={isBook ? 'text-amber-500 font-bold' : 'text-primary font-bold'}>
-                {stats.percentage}%
+                {stats?.percentage || 0}%
               </span>
             </div>
             <div className="w-full h-2 bg-border/60 rounded-full overflow-hidden">
@@ -100,86 +121,153 @@ export default function CourseSidebar({
                     ? 'bg-amber-500' 
                     : 'bg-gradient-to-r from-primary via-secondary to-primary'
                 }`}
-                style={{ width: `${stats.percentage}%` }}
+                style={{ width: `${stats?.percentage || 0}%` }}
               />
             </div>
             <p className="text-[11px] text-muted">
-              {stats.completedCount} of {stats.totalCount} {isBook ? 'chapters' : 'lessons'} completed
+              {stats?.completedCount || 0} of {stats?.totalCount || items.length} {isBook ? 'chapters' : 'lessons'} completed
             </p>
           </div>
         </div>
 
-        {/* Item List (Independently Scrollable) */}
-        <div className="flex-1 overflow-y-auto p-3 space-y-1.5 scrollbar-thin">
+        {/* Item List (Independently Scrollable with Collapsible Sub-Pages for Books) */}
+        <div className="flex-1 overflow-y-auto p-3 space-y-2 scrollbar-thin">
           {items.map((item, idx) => {
             const isActive = item.id === activeItemId;
-            const isDone = isItemCompleted(course.id, item.id);
+            const isDone = isItemCompleted ? isItemCompleted(course.id, item.id) : false;
+            const isExpanded = expandedChapters[item.id] ?? true;
+
+            // Pages belonging to this chapter
+            const chapterPages = isBook 
+              ? allPages.filter((p) => p.chapterId === item.id)
+              : [];
 
             return (
-              <button
-                key={item.id}
-                ref={isActive ? activeItemRef : null}
-                onClick={() => {
-                  onSelectItem(item.id);
-                  onClose();
-                }}
-                className={`
-                  w-full text-left p-3 rounded-xl transition-all flex items-start gap-3 group cursor-pointer text-xs relative overflow-hidden border
-                  ${isActive
-                    ? isBook
-                      ? 'bg-amber-500/15 border-amber-500/50 text-amber-500 font-bold shadow-xs'
-                      : 'bg-primary/15 border-primary/50 text-primary font-bold shadow-xs'
-                    : isDone
-                    ? 'bg-card hover:bg-border/30 text-text font-medium border-border/40'
-                    : 'text-muted hover:text-text hover:bg-border/30 border-transparent'
-                  }
-                `}
-              >
-                {isActive && (
-                  <div className={`absolute left-0 top-0 bottom-0 w-1 rounded-r-full ${
-                    isBook ? 'bg-amber-500' : 'bg-primary'
-                  }`} />
-                )}
-
+              <div key={item.id} className="space-y-1">
+                {/* Chapter Parent Row */}
                 <div
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onToggleItemComplete(course.id, item.id);
+                  ref={isActive ? activeItemRef : null}
+                  onClick={() => {
+                    onSelectItem(item.id);
+                    if (isBook) {
+                      setExpandedChapters((prev) => ({ ...prev, [item.id]: true }));
+                    } else {
+                      onClose();
+                    }
                   }}
-                  className="mt-0.5 shrink-0 hover:scale-110 transition-transform cursor-pointer"
-                  title={isDone ? 'Mark as incomplete' : 'Mark as completed'}
+                  className={`
+                    w-full text-left p-3 rounded-2xl transition-all flex items-center justify-between gap-2 group cursor-pointer text-xs relative border
+                    ${isActive
+                      ? isBook
+                        ? 'bg-amber-500/15 border-amber-500/50 text-amber-500 font-bold shadow-xs'
+                        : 'bg-primary/15 border-primary/50 text-primary font-bold shadow-xs'
+                      : isDone
+                      ? 'bg-card hover:bg-border/30 text-text font-medium border-border/40'
+                      : 'text-muted hover:text-text hover:bg-border/30 border-transparent'
+                    }
+                  `}
                 >
-                  {isDone ? (
-                    <CheckCircle2 size={16} className="text-emerald-500 fill-emerald-500/20" />
-                  ) : (
-                    <Circle size={16} className={`text-muted/60 ${isBook ? 'group-hover:text-amber-500' : 'group-hover:text-primary'} transition-colors`} />
+                  {isActive && (
+                    <div className={`absolute left-0 top-0 bottom-0 w-1 rounded-r-full ${
+                      isBook ? 'bg-amber-500' : 'bg-primary'
+                    }`} />
+                  )}
+
+                  <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                    <div
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (onToggleItemComplete) onToggleItemComplete(course.id, item.id);
+                      }}
+                      className="shrink-0 hover:scale-110 transition-transform cursor-pointer"
+                      title={isDone ? 'Mark as incomplete' : 'Mark as completed'}
+                    >
+                      {isDone ? (
+                        <CheckCircle2 size={16} className="text-emerald-500 fill-emerald-500/20" />
+                      ) : (
+                        <Circle size={16} className={`text-muted/60 ${isBook ? 'group-hover:text-amber-500' : 'group-hover:text-primary'} transition-colors`} />
+                      )}
+                    </div>
+
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-[10px] uppercase font-bold text-muted">
+                          {itemTypeLabel} {item.chapterNumber || idx + 1}
+                        </span>
+                      </div>
+                      <p className={`line-clamp-1 leading-snug ${isActive ? (isBook ? 'text-amber-500 font-bold' : 'text-primary font-bold') : 'text-text'}`}>
+                        {item.title.replace(/^(Lektion|Kapitel|Lesson|Chapter) \d+:\s*/i, '')}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Expand / Collapse Icon for Books */}
+                  {isBook && chapterPages.length > 0 && (
+                    <button
+                      onClick={(e) => toggleExpandChapter(item.id, e)}
+                      className="p-1 text-muted hover:text-text rounded-md hover:bg-border/40 transition-colors"
+                      title={isExpanded ? 'Collapse pages' : 'Expand pages'}
+                    >
+                      {isExpanded ? <ChevronDown size={15} /> : <ChevronRight size={15} />}
+                    </button>
                   )}
                 </div>
 
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between gap-1 mb-0.5">
-                    <span className="text-[10px] uppercase font-bold text-muted">
-                      {itemTypeLabel} {item.chapterNumber || idx + 1}
-                    </span>
-                    {item.duration && (
-                      <span className="text-[10px] text-muted/80">{item.duration}</span>
-                    )}
+                {/* Collapsible Sub-Pages List for Books */}
+                {isBook && isExpanded && chapterPages.length > 0 && (
+                  <div className="pl-4 pr-1 space-y-1 border-l-2 border-amber-500/20 ml-4 py-1">
+                    {chapterPages.map((page) => {
+                      const isPageActive = page.globalPageNum === activePageNum;
+                      const isBookmarked = bookmarks.includes(page.globalPageNum);
+
+                      return (
+                        <div
+                          key={`sub-page-${page.globalPageNum}`}
+                          onClick={() => {
+                            if (onSelectPage) onSelectPage(page.globalPageNum);
+                            onClose();
+                          }}
+                          className={`
+                            flex items-center justify-between px-3 py-1.5 rounded-xl text-[11px] font-medium transition-all cursor-pointer group/sub
+                            ${isPageActive
+                              ? 'bg-amber-500 text-white font-bold shadow-xs'
+                              : 'text-muted hover:text-text hover:bg-border/40'
+                            }
+                          `}
+                        >
+                          <div className="flex items-center gap-2 min-w-0">
+                            <span className={`text-[10px] font-extrabold ${isPageActive ? 'text-white' : 'text-amber-500'}`}>
+                              Pg {page.globalPageNum}
+                            </span>
+                            <span className="truncate">
+                              {page.pageInChIdx === 0 ? 'Start' : `Page ${page.pageInChIdx + 1}`}
+                            </span>
+                          </div>
+
+                          {/* Bookmark Toggle Icon */}
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (onToggleBookmark) onToggleBookmark(page.globalPageNum);
+                            }}
+                            className={`p-0.5 rounded transition-colors ${
+                              isBookmarked
+                                ? isPageActive ? 'text-white fill-white' : 'text-amber-500 fill-amber-500'
+                                : 'text-muted/40 hover:text-amber-500'
+                            }`}
+                            title={isBookmarked ? 'Bookmarked' : 'Add bookmark'}
+                          >
+                            <Bookmark size={11} fill={isBookmarked ? 'currentColor' : 'none'} />
+                          </button>
+                        </div>
+                      );
+                    })}
                   </div>
-                  <p className={`line-clamp-2 leading-snug ${isActive ? (isBook ? 'text-amber-500 font-bold' : 'text-primary font-bold') : 'text-text'}`}>
-                    {item.title.replace(/^(Lektion|Kapitel|Lesson|Chapter) \d+:\s*/i, '')}
-                  </p>
-                </div>
-              </button>
+                )}
+              </div>
             );
           })}
         </div>
-
-        {/* Custom Footer Note (e.g. PDF Export Guide) */}
-        {customFooterNote && (
-          <div className="p-3 border-t border-border bg-card/30 shrink-0">
-            {customFooterNote}
-          </div>
-        )}
 
         {/* Footer */}
         {onResetProgress && (
