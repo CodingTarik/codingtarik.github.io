@@ -136,8 +136,8 @@ export default {
     Don't binge-read it. Read one part, apply it for a week, then return. Carnegie himself insisted his book be re-read monthly: *"Knowledge isn't power until it is applied."*
   </Tab>
   <Tab title="⚠️ The Authenticity Rule">
-    > [!WARNING]
-    > **These principles only work when they come from the heart.** Used as cheap manipulation tactics, they create an "uncanny valley" of fake charm that people detect instantly — destroying trust faster than rudeness ever could. Carnegie was explicit: this is a book about *genuine* interest in others, not performance art. If you take only one rule: **be sincere or don't bother.**
+> [!WARNING]
+> **These principles only work when they come from the heart.** Used as cheap manipulation tactics, they create an "uncanny valley" of fake charm that people detect instantly — destroying trust faster than rudeness ever could. Carnegie was explicit: this is a book about *genuine* interest in others, not performance art. If you take only one rule: **be sincere or don't bother.**
   </Tab>
   <Tab title="👤 Who This Is For">
     - 🧑‍💼 **Leaders & managers** who want to inspire rather than control
@@ -189,47 +189,87 @@ The bedrock. Break these three rules and the other 27 won't save you — because
       <h4 class="text-lg font-black text-text mt-0 mb-2">Why Criticism Always Backfires</h4>
       <p class="text-sm text-text/70 mb-0">Direct criticism is processed by the brain like a physical attack: the amygdala fires, cortisol floods the system, and the prefrontal cortex — the part that could actually learn from your feedback — goes offline. Appreciation does the opposite: it signals safety, opens the mind, and makes people *want* to change.</p>
     </div>
-    <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+    <svg viewBox="0 0 480 250" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
       <defs>
         <linearGradient id="brainGrad" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stop-color="#818cf8"/>
           <stop offset="100%" stop-color="#c084fc"/>
         </linearGradient>
+        <radialGradient id="amygdalaGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#f43f5e" stop-opacity="0.9"/>
+          <stop offset="100%" stop-color="#f43f5e" stop-opacity="0.1"/>
+        </radialGradient>
       </defs>
-      <!-- Brain -->
-      <g transform="translate(200,110)">
-        <ellipse cx="0" cy="0" rx="70" ry="55" fill="url(#brainGrad)" opacity="0.25"/>
-        <ellipse cx="0" cy="0" rx="70" ry="55" fill="none" stroke="url(#brainGrad)" stroke-width="2"/>
-        <path d="M-40 -20 Q-20 -35 0 -20 Q20 -35 40 -20 M-45 5 Q-22 -10 0 5 Q22 -10 45 5 M-35 28 Q-17 17 0 28 Q17 17 35 28" fill="none" stroke="url(#brainGrad)" stroke-width="1.5" opacity="0.7"/>
-        <!-- Amygdala -->
-        <circle cx="-18" cy="12" r="9" fill="#f43f5e">
-          <animate attributeName="r" values="8;11;8" dur="2s" repeatCount="indefinite"/>
+
+      <!-- Right Column: Brain & Amygdala (Threat Center) -->
+      <g transform="translate(340,125)">
+        <!-- Outer Defensive Ego Shield -->
+        <ellipse cx="0" cy="0" rx="95" ry="75" fill="url(#brainGrad)" opacity="0.12"/>
+        <ellipse cx="0" cy="0" rx="95" ry="75" fill="none" stroke="url(#brainGrad)" stroke-width="2.5" stroke-dasharray="6 4" opacity="0.6">
+          <animate attributeName="stroke-dashoffset" values="0;40" dur="10s" repeatCount="indefinite"/>
+        </ellipse>
+        <ellipse cx="0" cy="0" rx="85" ry="65" fill="none" stroke="url(#brainGrad)" stroke-width="1.5" opacity="0.8"/>
+
+        <!-- Brain Cortex Wave Folds -->
+        <path d="M-60 -25 Q-30 -45 0 -25 Q30 -45 60 -25 M-65 10 Q-35 -15 0 10 Q35 -15 65 10 M-55 40 Q-25 25 0 40 Q25 25 55 40" fill="none" stroke="url(#brainGrad)" stroke-width="1.8" opacity="0.6"/>
+
+        <!-- Amygdala Threat Center Nodes -->
+        <circle cx="-25" cy="15" r="14" fill="url(#amygdalaGlow)"/>
+        <circle cx="-25" cy="15" r="8" fill="#f43f5e">
+          <animate attributeName="r" values="7;10;7" dur="2s" repeatCount="indefinite"/>
         </circle>
-        <circle cx="18" cy="12" r="9" fill="#f43f5e">
-          <animate attributeName="r" values="8;11;8" dur="2s" repeatCount="indefinite"/>
+        <circle cx="25" cy="15" r="14" fill="url(#amygdalaGlow)"/>
+        <circle cx="25" cy="15" r="8" fill="#f43f5e">
+          <animate attributeName="r" values="7;10;7" dur="2s" repeatCount="indefinite"/>
         </circle>
-        <text x="0" y="80" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.6">Amygdala (threat center)</text>
+
+        <text x="0" y="105" text-anchor="middle" font-size="11" font-weight="600" fill="currentColor" opacity="0.75">Amygdala (threat center)</text>
       </g>
-      <!-- Criticism arrow (blocked) -->
-      <g transform="translate(60,60)">
-        <text x="0" y="-25" text-anchor="middle" font-size="11" font-weight="bold" fill="#ef4444">Criticism</text>
-        <line x1="20" y1="0" x2="85" y2="35" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="6 4">
+
+      <!-- Left Column Top: Criticism Flow (Blocked) -->
+      <g transform="translate(15,35)">
+        <!-- Label: Criticism -->
+        <text x="10" y="20" font-size="13" font-weight="800" fill="#ef4444" letter-spacing="0.5">Criticism</text>
+
+        <!-- Dashed red attack ray -->
+        <line x1="85" y1="16" x2="225" y2="70" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="6 4">
           <animate attributeName="stroke-dashoffset" values="0;-20" dur="1s" repeatCount="indefinite"/>
         </line>
-        <path d="M85 35 l-10 -2 l4 10 z" fill="#ef4444"/>
-        <line x1="95" y1="20" x2="115" y2="50" stroke="#ef4444" stroke-width="3"/>
-        <line x1="115" y1="20" x2="95" y2="50" stroke="#ef4444" stroke-width="3"/>
-        <text x="105" y="70" text-anchor="middle" font-size="9" fill="#ef4444">Blocked: defensiveness</text>
+        <path d="M225 70 l-10 -1 l6 8 z" fill="#ef4444"/>
+
+        <!-- Blocked Badge & Red X at Shield -->
+        <g transform="translate(225,55)">
+          <circle cx="0" cy="15" r="13" fill="#ef4444" opacity="0.2"/>
+          <circle cx="0" cy="15" r="10" fill="#ef4444"/>
+          <path d="M-4 11 L4 19 M4 11 L-4 19" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+        </g>
+
+        <!-- Status Tag -->
+        <rect x="75" y="32" width="135" height="22" rx="11" fill="#ef4444" fill-opacity="0.12" stroke="#ef4444" stroke-opacity="0.3"/>
+        <text x="142" y="47" text-anchor="middle" font-size="10" font-weight="700" fill="#ef4444">Blocked: defensiveness</text>
       </g>
-      <!-- Appreciation arrow (welcomed) -->
-      <g transform="translate(60,160)">
-        <text x="0" y="45" text-anchor="middle" font-size="11" font-weight="bold" fill="#10b981">Appreciation</text>
-        <line x1="20" y1="0" x2="85" y2="-35" stroke="#10b981" stroke-width="2.5">
+
+      <!-- Left Column Bottom: Appreciation Flow (Received) -->
+      <g transform="translate(15,160)">
+        <!-- Label: Appreciation -->
+        <text x="10" y="45" font-size="13" font-weight="800" fill="#10b981" letter-spacing="0.5">Appreciation</text>
+
+        <!-- Solid green welcome ray passing into mind -->
+        <line x1="105" y1="40" x2="250" y2="-10" stroke="#10b981" stroke-width="3">
           <animate attributeName="stroke-width" values="2.5;4;2.5" dur="2s" repeatCount="indefinite"/>
         </line>
-        <path d="M85 -35 l-10 2 l4 -10 z" fill="#10b981"/>
-        <polyline points="95,-45 100,-38 112,-52" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round"/>
-        <text x="105" y="-20" text-anchor="middle" font-size="9" fill="#10b981">Received: openness</text>
+        <path d="M250 -10 l-10 4 l2 -9 z" fill="#10b981"/>
+
+        <!-- Received Checkmark Badge inside mind opening -->
+        <g transform="translate(250,-10)">
+          <circle cx="0" cy="0" r="13" fill="#10b981" opacity="0.2"/>
+          <circle cx="0" cy="0" r="10" fill="#10b981"/>
+          <polyline points="-4,-1 -1,3 4,-3" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+
+        <!-- Status Tag -->
+        <rect x="95" y="5" width="125" height="22" rx="11" fill="#10b981" fill-opacity="0.12" stroke="#10b981" stroke-opacity="0.3"/>
+        <text x="157" y="20" text-anchor="middle" font-size="10" font-weight="700" fill="#10b981">Received: openness</text>
       </g>
     </svg>
   </div>

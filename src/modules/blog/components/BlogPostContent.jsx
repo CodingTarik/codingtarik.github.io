@@ -193,12 +193,12 @@ const Callout = ({ children, type = 'info', title }) => {
       bar: 'bg-teal-500',
     },
     warning: {
-      icon: <AlertTriangleIcon size={20} />,
+      icon: <AlertTriangleIcon size={22} className="text-amber-500 animate-pulse" />,
       label: 'Warning',
-      wrapper: 'border-amber-500/40 bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-transparent dark:from-amber-500/15 dark:via-amber-500/5',
-      iconBox: 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30',
-      labelClasses: 'text-amber-700 dark:text-amber-300',
-      bar: 'bg-amber-500',
+      wrapper: 'border-amber-500/60 bg-gradient-to-br from-amber-500/20 via-orange-500/10 to-amber-950/30 dark:from-amber-500/25 dark:via-orange-950/30 dark:to-slate-900/50 shadow-xl shadow-amber-500/10 border-l-4 border-l-amber-500 backdrop-blur-sm',
+      iconBox: 'bg-gradient-to-br from-amber-500 to-orange-500 text-white border-amber-400/50 shadow-md shadow-amber-500/25',
+      labelClasses: 'text-amber-700 dark:text-amber-300 font-extrabold tracking-widest text-xs uppercase',
+      bar: 'bg-gradient-to-b from-amber-400 via-amber-500 to-orange-500',
     },
     alert: {
       icon: <XCircleIcon size={20} />,
@@ -237,7 +237,7 @@ const Callout = ({ children, type = 'info', title }) => {
           {title || cfg.label}
         </span>
       </div>
-      <div className="text-text [&>p]:last:mb-0 [&>p]:text-base">{children}</div>
+      <div className="text-text [&>p]:last:mb-0 [&>p]:text-base [&_strong]:font-extrabold [&_strong]:text-text dark:[&_strong]:text-white [&_b]:font-extrabold">{children}</div>
     </div>
   );
 };
@@ -348,6 +348,24 @@ const Tabs = ({ children }) => {
   );
 };
 
+function unindentMarkdown(str) {
+  if (typeof str !== 'string') return str;
+  const lines = str.split('\n');
+  let minIndent = Infinity;
+  for (const line of lines) {
+    if (line.trim().length > 0) {
+      const match = line.match(/^(\s*)/);
+      if (match && match[1].length < minIndent) {
+        minIndent = match[1].length;
+      }
+    }
+  }
+  if (minIndent > 0 && minIndent !== Infinity) {
+    return lines.map(line => (line.trim().length > 0 ? line.slice(minIndent) : '')).join('\n');
+  }
+  return str;
+}
+
 // Custom Tab Component for Markdown Tabbed Code Blocks
 const Tab = ({ children }) => {
   const childrenArray = React.Children.toArray(children);
@@ -367,7 +385,16 @@ const Tab = ({ children }) => {
     });
   }
   
-  return <div className="p-4">{children}</div>;
+  return (
+    <div className="p-5 text-text leading-relaxed [&_strong]:font-extrabold [&_strong]:text-text dark:[&_strong]:text-white">
+      {childrenArray.map((child, index) => {
+        if (typeof child === 'string') {
+          return <BlogPostContent key={index} content={unindentMarkdown(child)} />;
+        }
+        return child;
+      })}
+    </div>
+  );
 };
 
 // Interactive Live Code Sandbox Component
@@ -849,6 +876,8 @@ const Accordion = ({ title, children, badge }) => (
 
 
 export default function BlogPostContent({ content }) {
+  const cleanedContent = useMemo(() => unindentMarkdown(content || ''), [content]);
+
   return (
     <article className="prose prose-lg dark:prose-invert max-w-none">
       <Markdown
@@ -875,7 +904,7 @@ export default function BlogPostContent({ content }) {
             th: { component: 'th', props: { className: 'px-6 py-3 text-left text-xs font-semibold text-text uppercase tracking-wider' } },
             td: { component: 'td', props: { className: 'px-6 py-4 text-sm text-text' } },
             hr: { component: 'hr', props: { className: 'my-8 border-border' } },
-            strong: { component: 'strong', props: { className: 'font-bold text-text' } },
+            strong: { component: 'strong', props: { className: 'font-extrabold text-text dark:text-white' } },
             em: { component: 'em', props: { className: 'italic text-text' } },
             del: { component: 'del', props: { className: 'line-through text-muted' } },
 
@@ -884,31 +913,65 @@ export default function BlogPostContent({ content }) {
                 const children = React.Children.toArray(props.children);
                 let calloutType = null;
                 
-                if (children.length > 0 && children[0].type === 'p') {
-                  const firstP = children[0];
-                  const pChildren = React.Children.toArray(firstP.props.children);
-                  if (pChildren.length > 0 && typeof pChildren[0] === 'string') {
-                    const firstChildText = pChildren[0];
-                    const tagMatch = /^\[!(INFO|NOTE|TIP|SUCCESS|WARNING|ALERT|DANGER|QUOTE)\]\s*/i.exec(firstChildText);
+                const inspectTextNode = (val) => {
+                  if (typeof val !== 'string') return null;
+                  const match = /^(?:\[!|#+\s*|\b)(INFO|NOTE|TIP|SUCCESS|WARNING|ALERT|DANGER|QUOTE)(?:\]|:|\b)\s*/i.exec(val.trim());
+                  return match ? match[1].toLowerCase() : null;
+                };
 
-                    if (tagMatch) {
-                      calloutType = tagMatch[1].toLowerCase();
-                      const remaining = firstChildText.substring(tagMatch[0].length);
-                      if (remaining) {
-                        pChildren[0] = remaining;
-                      } else {
-                        pChildren.shift();
+                if (children.length > 0) {
+                  const first = children[0];
+                  if (React.isValidElement(first) && first.props?.children) {
+                    const pChildren = React.Children.toArray(first.props.children);
+                    if (pChildren.length > 0) {
+                      const firstSub = pChildren[0];
+                      const textToTest = typeof firstSub === 'string' ? firstSub : (React.isValidElement(firstSub) ? firstSub.props?.children : null);
+                      const foundType = inspectTextNode(textToTest);
+
+                      if (foundType) {
+                        calloutType = foundType;
+                        const fullMatch = /^(?:\[!|#+\s*|\b)(INFO|NOTE|TIP|SUCCESS|WARNING|ALERT|DANGER|QUOTE)(?:\]|:|\b)\s*/i.exec((typeof textToTest === 'string' ? textToTest : '').trim());
+                        const matchLen = fullMatch ? fullMatch[0].length : 0;
+
+                        if (typeof firstSub === 'string') {
+                          const remaining = firstSub.trim().substring(matchLen);
+                          if (remaining) {
+                            pChildren[0] = remaining;
+                          } else {
+                            pChildren.shift();
+                          }
+                        } else if (React.isValidElement(firstSub)) {
+                          const strVal = typeof firstSub.props?.children === 'string' ? firstSub.props.children : '';
+                          const remaining = strVal.trim().substring(matchLen);
+                          if (remaining) {
+                            pChildren[0] = React.cloneElement(firstSub, {}, remaining);
+                          } else {
+                            pChildren.shift();
+                          }
+                        }
+                        children[0] = React.cloneElement(first, {}, pChildren);
                       }
-                      children[0] = React.cloneElement(firstP, {}, pChildren);
+                    }
+                  } else if (typeof first === 'string') {
+                    const foundType = inspectTextNode(first);
+                    if (foundType) {
+                      calloutType = foundType;
+                      const fullMatch = /^(?:\[!|#+\s*|\b)(INFO|NOTE|TIP|SUCCESS|WARNING|ALERT|DANGER|QUOTE)(?:\]|:|\b)\s*/i.exec(first.trim());
+                      const remaining = first.trim().substring(fullMatch ? fullMatch[0].length : 0);
+                      if (remaining) {
+                        children[0] = remaining;
+                      } else {
+                        children.shift();
+                      }
                     }
                   }
                 }
-                
+
                 if (calloutType) {
                   return <Callout type={calloutType}>{children}</Callout>;
                 }
                 return (
-                  <blockquote className="border-l-4 border-primary bg-primary/5 pl-6 pr-4 py-4 my-6 italic text-text rounded-r-lg">
+                  <blockquote className="border-l-4 border-amber-500/80 bg-amber-500/10 pl-6 pr-4 py-4 my-6 text-text rounded-r-2xl font-medium [&_strong]:font-extrabold [&_strong]:text-text dark:[&_strong]:text-white">
                     {children}
                   </blockquote>
                 );
@@ -937,7 +1000,7 @@ export default function BlogPostContent({ content }) {
           },
         }}
       >
-        {content || '*No content*'}
+        {cleanedContent || '*No content*'}
       </Markdown>
     </article>
   );
