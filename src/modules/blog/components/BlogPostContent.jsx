@@ -875,133 +875,167 @@ const Accordion = ({ title, children, badge }) => (
 );
 
 
+class ContentErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.error('BlogPostContent rendering error:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="p-6 my-6 border border-red-500/30 bg-red-500/10 text-red-400 rounded-2xl not-prose">
+          <h3 className="text-lg font-bold text-red-500 mb-2">Content Render Notice</h3>
+          <p className="text-sm opacity-90 mb-2">
+            A rendering issue occurred with a component in this post. The full details have been logged to the console.
+          </p>
+          <pre className="text-xs bg-black/40 p-3 rounded overflow-x-auto font-mono text-red-300">
+            {this.state.error?.toString()}
+          </pre>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 export default function BlogPostContent({ content }) {
   const cleanedContent = useMemo(() => unindentMarkdown(content || ''), [content]);
 
   return (
     <article className="prose prose-lg dark:prose-invert max-w-none">
-      <Markdown
-        options={{
-          overrides: {
-            code: { component: MarkdownCode },
-            pre: { component: MarkdownCodeBlock },
-            h1: { component: 'h1', props: { className: 'text-4xl font-extrabold text-text mt-12 mb-6 scroll-mt-20' } },
-            h2: { component: 'h2', props: { className: 'text-3xl font-bold text-text mt-10 mb-4 scroll-mt-20 border-b border-border pb-2' } },
-            h3: { component: 'h3', props: { className: 'text-2xl font-bold text-text mt-8 mb-3 scroll-mt-20' } },
-            h4: { component: 'h4', props: { className: 'text-xl font-semibold text-text mt-6 mb-2' } },
-            h5: { component: 'h5', props: { className: 'text-lg font-semibold text-text mt-4 mb-2' } },
-            h6: { component: 'h6', props: { className: 'text-base font-semibold text-text mt-4 mb-2' } },
-            p: { component: 'p', props: { className: 'text-text mb-6 leading-relaxed text-lg' } },
-            a: { component: 'a', props: { className: 'text-primary hover:text-secondary underline decoration-2 underline-offset-2 transition-colors font-medium', target: '_blank', rel: 'noopener noreferrer' } },
-            ul: { component: 'ul', props: { className: 'list-disc list-outside ml-6 text-text mb-6 space-y-2' } },
-            ol: { component: 'ol', props: { className: 'list-decimal list-outside ml-6 text-text mb-6 space-y-2' } },
-            li: { component: 'li', props: { className: 'text-text leading-relaxed' } },
-            img: { component: 'img', props: { className: 'rounded-xl my-8 w-full shadow-lg' } },
-            table: { component: 'table', props: { className: 'min-w-full divide-y divide-border my-6 border border-border rounded-lg overflow-hidden' } },
-            thead: { component: 'thead', props: { className: 'bg-card' } },
-            tbody: { component: 'tbody', props: { className: 'divide-y divide-border bg-background' } },
-            tr: { component: 'tr', props: { className: 'hover:bg-card/50 transition-colors' } },
-            th: { component: 'th', props: { className: 'px-6 py-3 text-left text-xs font-semibold text-text uppercase tracking-wider' } },
-            td: { component: 'td', props: { className: 'px-6 py-4 text-sm text-text' } },
-            hr: { component: 'hr', props: { className: 'my-8 border-border' } },
-            strong: { component: 'strong', props: { className: 'font-extrabold text-text dark:text-white' } },
-            em: { component: 'em', props: { className: 'italic text-text' } },
-            del: { component: 'del', props: { className: 'line-through text-muted' } },
+      <ContentErrorBoundary>
+        <Markdown
+          options={{
+            overrides: {
+              code: { component: MarkdownCode },
+              pre: { component: MarkdownCodeBlock },
+              h1: { component: 'h1', props: { className: 'text-4xl font-extrabold text-text mt-12 mb-6 scroll-mt-20' } },
+              h2: { component: 'h2', props: { className: 'text-3xl font-bold text-text mt-10 mb-4 scroll-mt-20 border-b border-border pb-2' } },
+              h3: { component: 'h3', props: { className: 'text-2xl font-bold text-text mt-8 mb-3 scroll-mt-20' } },
+              h4: { component: 'h4', props: { className: 'text-xl font-semibold text-text mt-6 mb-2' } },
+              h5: { component: 'h5', props: { className: 'text-lg font-semibold text-text mt-4 mb-2' } },
+              h6: { component: 'h6', props: { className: 'text-base font-semibold text-text mt-4 mb-2' } },
+              p: { component: 'p', props: { className: 'text-text mb-6 leading-relaxed text-lg' } },
+              a: { component: 'a', props: { className: 'text-primary hover:text-secondary underline decoration-2 underline-offset-2 transition-colors font-medium', target: '_blank', rel: 'noopener noreferrer' } },
+              ul: { component: 'ul', props: { className: 'list-disc list-outside ml-6 text-text mb-6 space-y-2' } },
+              ol: { component: 'ol', props: { className: 'list-decimal list-outside ml-6 text-text mb-6 space-y-2' } },
+              li: { component: 'li', props: { className: 'text-text leading-relaxed' } },
+              img: { component: 'img', props: { className: 'rounded-xl my-8 w-full shadow-lg' } },
+              table: { component: 'table', props: { className: 'min-w-full divide-y divide-border my-6 border border-border rounded-lg overflow-hidden' } },
+              thead: { component: 'thead', props: { className: 'bg-card' } },
+              tbody: { component: 'tbody', props: { className: 'divide-y divide-border bg-background' } },
+              tr: { component: 'tr', props: { className: 'hover:bg-card/50 transition-colors' } },
+              th: { component: 'th', props: { className: 'px-6 py-3 text-left text-xs font-semibold text-text uppercase tracking-wider' } },
+              td: { component: 'td', props: { className: 'px-6 py-4 text-sm text-text' } },
+              hr: { component: 'hr', props: { className: 'my-8 border-border' } },
+              strong: { component: 'strong', props: { className: 'font-extrabold text-text dark:text-white' } },
+              em: { component: 'em', props: { className: 'italic text-text' } },
+              del: { component: 'del', props: { className: 'line-through text-muted' } },
 
-            blockquote: {
-              component: (props) => {
-                const children = React.Children.toArray(props.children);
-                let calloutType = null;
-                
-                const inspectTextNode = (val) => {
-                  if (typeof val !== 'string') return null;
-                  const match = /^(?:\[!|#+\s*|\b)(INFO|NOTE|TIP|SUCCESS|WARNING|ALERT|DANGER|QUOTE)(?:\]|:|\b)\s*/i.exec(val.trim());
-                  return match ? match[1].toLowerCase() : null;
-                };
+              blockquote: {
+                component: (props) => {
+                  const children = React.Children.toArray(props.children);
+                  let calloutType = null;
+                  
+                  const inspectTextNode = (val) => {
+                    if (typeof val !== 'string') return null;
+                    const match = /^(?:\[!|#+\s*|\b)(INFO|NOTE|TIP|SUCCESS|WARNING|ALERT|DANGER|QUOTE)(?:\]|:|\b)\s*/i.exec(val.trim());
+                    return match ? match[1].toLowerCase() : null;
+                  };
 
-                if (children.length > 0) {
-                  const first = children[0];
-                  if (React.isValidElement(first) && first.props?.children) {
-                    const pChildren = React.Children.toArray(first.props.children);
-                    if (pChildren.length > 0) {
-                      const firstSub = pChildren[0];
-                      const textToTest = typeof firstSub === 'string' ? firstSub : (React.isValidElement(firstSub) ? firstSub.props?.children : null);
-                      const foundType = inspectTextNode(textToTest);
+                  if (children.length > 0) {
+                    const first = children[0];
+                    if (React.isValidElement(first) && first.props?.children) {
+                      const pChildren = React.Children.toArray(first.props.children);
+                      if (pChildren.length > 0) {
+                        const firstSub = pChildren[0];
+                        const textToTest = typeof firstSub === 'string' ? firstSub : (React.isValidElement(firstSub) ? firstSub.props?.children : null);
+                        const foundType = inspectTextNode(textToTest);
 
+                        if (foundType) {
+                          calloutType = foundType;
+                          const fullMatch = /^(?:\[!|#+\s*|\b)(INFO|NOTE|TIP|SUCCESS|WARNING|ALERT|DANGER|QUOTE)(?:\]|:|\b)\s*/i.exec((typeof textToTest === 'string' ? textToTest : '').trim());
+                          const matchLen = fullMatch ? fullMatch[0].length : 0;
+
+                          if (typeof firstSub === 'string') {
+                            const remaining = firstSub.trim().substring(matchLen);
+                            if (remaining) {
+                              pChildren[0] = remaining;
+                            } else {
+                              pChildren.shift();
+                            }
+                          } else if (React.isValidElement(firstSub)) {
+                            const strVal = typeof firstSub.props?.children === 'string' ? firstSub.props.children : '';
+                            const remaining = strVal.trim().substring(matchLen);
+                            if (remaining) {
+                              pChildren[0] = React.cloneElement(firstSub, {}, remaining);
+                            } else {
+                              pChildren.shift();
+                            }
+                          }
+                          children[0] = React.cloneElement(first, {}, pChildren);
+                        }
+                      }
+                    } else if (typeof first === 'string') {
+                      const foundType = inspectTextNode(first);
                       if (foundType) {
                         calloutType = foundType;
-                        const fullMatch = /^(?:\[!|#+\s*|\b)(INFO|NOTE|TIP|SUCCESS|WARNING|ALERT|DANGER|QUOTE)(?:\]|:|\b)\s*/i.exec((typeof textToTest === 'string' ? textToTest : '').trim());
-                        const matchLen = fullMatch ? fullMatch[0].length : 0;
-
-                        if (typeof firstSub === 'string') {
-                          const remaining = firstSub.trim().substring(matchLen);
-                          if (remaining) {
-                            pChildren[0] = remaining;
-                          } else {
-                            pChildren.shift();
-                          }
-                        } else if (React.isValidElement(firstSub)) {
-                          const strVal = typeof firstSub.props?.children === 'string' ? firstSub.props.children : '';
-                          const remaining = strVal.trim().substring(matchLen);
-                          if (remaining) {
-                            pChildren[0] = React.cloneElement(firstSub, {}, remaining);
-                          } else {
-                            pChildren.shift();
-                          }
+                        const fullMatch = /^(?:\[!|#+\s*|\b)(INFO|NOTE|TIP|SUCCESS|WARNING|ALERT|DANGER|QUOTE)(?:\]|:|\b)\s*/i.exec(first.trim());
+                        const remaining = first.trim().substring(fullMatch ? fullMatch[0].length : 0);
+                        if (remaining) {
+                          children[0] = remaining;
+                        } else {
+                          children.shift();
                         }
-                        children[0] = React.cloneElement(first, {}, pChildren);
-                      }
-                    }
-                  } else if (typeof first === 'string') {
-                    const foundType = inspectTextNode(first);
-                    if (foundType) {
-                      calloutType = foundType;
-                      const fullMatch = /^(?:\[!|#+\s*|\b)(INFO|NOTE|TIP|SUCCESS|WARNING|ALERT|DANGER|QUOTE)(?:\]|:|\b)\s*/i.exec(first.trim());
-                      const remaining = first.trim().substring(fullMatch ? fullMatch[0].length : 0);
-                      if (remaining) {
-                        children[0] = remaining;
-                      } else {
-                        children.shift();
                       }
                     }
                   }
-                }
 
-                if (calloutType) {
-                  return <Callout type={calloutType}>{children}</Callout>;
-                }
-                return (
-                  <blockquote className="border-l-4 border-amber-500/80 bg-amber-500/10 pl-6 pr-4 py-4 my-6 text-text rounded-r-2xl font-medium [&_strong]:font-extrabold [&_strong]:text-text dark:[&_strong]:text-white">
-                    {children}
-                  </blockquote>
-                );
+                  if (calloutType) {
+                    return <Callout type={calloutType}>{children}</Callout>;
+                  }
+                  return (
+                    <blockquote className="border-l-4 border-amber-500/80 bg-amber-500/10 pl-6 pr-4 py-4 my-6 text-text rounded-r-2xl font-medium [&_strong]:font-extrabold [&_strong]:text-text dark:[&_strong]:text-white">
+                      {children}
+                    </blockquote>
+                  );
+                },
               },
+              
+              Info: { component: Info },
+              Note: { component: Note },
+              Tip: { component: Tip },
+              Success: { component: Success },
+              Warning: { component: Warning },
+              Alert: { component: Alert },
+              Danger: { component: Danger },
+              YouTube: { component: YouTube },
+              GeoGebra: { component: GeoGebra },
+              Katex: { component: Katex },
+              details: { component: Spoiler },
+              summary: { component: MarkdownSummary },
+              Tabs: { component: Tabs },
+              Tab: { component: Tab },
+              Quote: { component: Quote },
+              StatGrid: { component: StatGrid },
+              Stat: { component: Stat },
+              KeyTakeaway: { component: KeyTakeaway },
+              Accordion: { component: Accordion },
             },
-            
-            Info: { component: Info },
-            Note: { component: Note },
-            Tip: { component: Tip },
-            Success: { component: Success },
-            Warning: { component: Warning },
-            Alert: { component: Alert },
-            Danger: { component: Danger },
-            YouTube: { component: YouTube },
-            GeoGebra: { component: GeoGebra },
-            Katex: { component: Katex },
-            details: { component: Spoiler },
-            summary: { component: MarkdownSummary },
-            Tabs: { component: Tabs },
-            Tab: { component: Tab },
-            Quote: { component: Quote },
-            StatGrid: { component: StatGrid },
-            Stat: { component: Stat },
-            KeyTakeaway: { component: KeyTakeaway },
-            Accordion: { component: Accordion },
-          },
-        }}
-      >
-        {cleanedContent || '*No content*'}
-      </Markdown>
+          }}
+        >
+          {cleanedContent || '*No content*'}
+        </Markdown>
+      </ContentErrorBoundary>
     </article>
   );
 }
