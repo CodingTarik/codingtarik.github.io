@@ -103,16 +103,16 @@ function generateSession(cfg) {
 /* ═══ THEME CONFIG ═══ */
 const THEMES = {
   dark: {
-    staffBg: 'linear-gradient(180deg,#07101f 0%,#0a1525 100%)',
-    staffBorder: 'rgba(148,163,184,0.1)',
-    lineOuter: '#64748b', lineInner: '#2d3f58',
-    barLine: '#253347',
-    clef: c => c==='treble'?'#38bdf8':'#c084fc',
-    highlightFill: 'rgba(124,58,237,0.1)', highlightStroke: '#7c3aed',
-    note: { default:'#e2e8f0', correct:'#34d399', wrong:'#f87171', future:'rgba(30,58,95,0.9)' },
+    staffBg: 'linear-gradient(180deg,#0e1a2e 0%,#12233d 100%)',
+    staffBorder: 'rgba(148,163,184,0.16)',
+    lineOuter: '#8aa0bd', lineInner: '#3f5c80',
+    barLine: '#35506f',
+    clef: c => c==='treble'?'#7dd3fc':'#e0b3ff',
+    highlightFill: 'rgba(124,58,237,0.16)', highlightStroke: '#a78bfa',
+    note: { default:'#f1f5f9', correct:'#34d399', wrong:'#f87171', future:'#4a6a95' },
     resultOk:'#34d399', resultBad:'#f87171',
-    arrow:'#7c3aed',
-    labelColor:'#475569',
+    arrow:'#a78bfa',
+    labelColor:'#6882a2',
   },
   paper: {
     staffBg: '#fefefe',
@@ -161,7 +161,7 @@ function ScrollingStaff({ tasks, currentIdx, results, clef, revealCurrent=true, 
       >
         <svg width={svgW} height={svgH} style={{display:'block'}}>
           {/* Background fill */}
-          <rect x={0} y={0} width={svgW} height={svgH} fill={theme==='paper'?'#fefefe':'#071020'}/>
+          <rect x={0} y={0} width={svgW} height={svgH} fill={theme==='paper'?'#fefefe':'#0f1d33'}/>
 
           {/* Staff lines */}
           {Array.from({length:NL},(_,i)=>{
@@ -414,7 +414,7 @@ function NotePreview({ task, clef, theme }) {
 
   return (
     <svg width={svgW} height={svgH} style={{display:'block'}}>
-      <rect x={0} y={0} width={svgW} height={svgH} fill={theme==='paper'?'#fefefe':'#071020'} rx={10}/>
+      <rect x={0} y={0} width={svgW} height={svgH} fill={theme==='paper'?'#fefefe':'#0f1d33'} rx={10}/>
       {/* Staff lines */}
       {Array.from({length:NL},(_,i)=>{
         const y=staffTopAdj+i*GAP; const isOuter=i===0||i===NL-1;
@@ -475,7 +475,7 @@ const DEFAULT_CFG = {
   autoPlaySound:true, autoAdvance:true, advanceSpeed:'fast',
   timedMode:false, timeLimit:10, chordLevel:'beginner',
   intervalLevel:'beginner', staffTheme:'dark',
-  showNextPreview:true,  // show upcoming note preview panel
+  showNextPreview:false,  // preview of upcoming note (notes already visible in staff)
 };
 const ADVANCE_DELAYS={instant:[60,250],fast:[280,650],normal:[700,1400]};
 const KEY_H={small:100,medium:140,large:180,xlarge:220};
@@ -611,7 +611,7 @@ export default function PianoTrainer() {
     clearTimeout(advTimRef.current); clearInterval(timerRef.current);
     const tasks=generateSession(cfg);
     setSessionTasks(tasks); setCurrentIdx(0); setResults([]);
-    setFeedback(null); setIsAnswered(false); setRevealEar(false);
+    setFlashFeedback(null); setIsAnswered(false); setRevealEar(false);
     setScore(0); setStreak(0); setBestStreak(0);
     setScreen('training');
     startRef.current=performance.now();
@@ -732,7 +732,7 @@ export default function PianoTrainer() {
   const correctKeys=new Set(),wrongKeys=new Set();
   if(isAnswered&&currentTask){
     const midis=currentTask.type==='chord-training'?currentTask.midis:currentTask.type==='interval-training'?[currentTask.rootMidi,currentTask.topMidi]:[currentTask.midi];
-    if(feedback?.ok) midis.forEach(m=>correctKeys.add(m));
+    if(flashFeedback?.ok) midis.forEach(m=>correctKeys.add(m));
     else midis.forEach(m=>wrongKeys.add(m));
   }
 
@@ -1009,11 +1009,11 @@ export default function PianoTrainer() {
                     return (
                       <motion.button key={n} whileHover={!isAnswered?{scale:1.07}:{}} whileTap={!isAnswered?{scale:0.92}:{}}
                         disabled={isAnswered} onClick={()=>submitAnswer(n)}
-                        style={{padding:'14px 0',borderRadius:12,cursor:isAnswered?'default':'pointer',fontSize:17,fontWeight:900,border:'none',transition:'all 0.12s',
+                        style={{padding:'14px 0',borderRadius:12,cursor:isAnswered?'default':'pointer',fontSize:17,fontWeight:900,transition:'all 0.12s',
                           background:isCorrBtn?'linear-gradient(135deg,#22c55e,#15803d)':isAnswered?(isPaper?'rgba(0,0,0,0.04)':'rgba(255,255,255,0.04)'):(isPaper?'rgba(0,0,0,0.06)':'rgba(255,255,255,0.08)'),
                           color:isAnswered&&!isCorrBtn?(isPaper?'#9ca3af':'#374151'):(isPaper?'#111827':'white'),
                           boxShadow:isCorrBtn?'0 4px 18px rgba(34,197,94,0.4)':'none',
-                          border:isPaper&&!isAnswered?'1px solid rgba(0,0,0,0.1)':'none',
+                          border:isCorrBtn?'none':(isPaper?'1px solid rgba(0,0,0,0.1)':'none'),
                         }}>{n}</motion.button>
                     );
                   })}
