@@ -6,6 +6,11 @@ import {
   Info as InfoIcon,
   AlertTriangle as AlertTriangleIcon,
   XCircle as XCircleIcon,
+  Lightbulb as LightbulbIcon,
+  StickyNote as StickyNoteIcon,
+  CheckCircle2 as CheckCircle2Icon,
+  Flame as FlameIcon,
+  Quote as QuoteIcon,
   ChevronDown, Youtube, ArrowUpDown 
 } from 'lucide-react';
 import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
@@ -153,47 +158,97 @@ const findCodeElement = (node) => {
   return null;
 };
 
-const Callout = ({ children, type = 'info' }) => {
+const Callout = ({ children, type = 'info', title }) => {
   const configs = {
     info: {
-      icon: <InfoIcon size={18} />,
+      icon: <InfoIcon size={20} />,
       label: 'Info',
-      classes: 'border-l-blue-500 bg-blue-50 dark:bg-blue-950/40 text-text',
-      labelClasses: 'bg-blue-100 dark:bg-blue-900/60 text-blue-800 dark:text-blue-200',
-      iconClasses: 'text-blue-600 dark:text-blue-400',
+      wrapper: 'border-blue-500/40 bg-gradient-to-br from-blue-500/10 via-blue-500/5 to-transparent dark:from-blue-500/15 dark:via-blue-500/5',
+      iconBox: 'bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30',
+      labelClasses: 'text-blue-700 dark:text-blue-300',
+      bar: 'bg-blue-500',
+    },
+    note: {
+      icon: <StickyNoteIcon size={20} />,
+      label: 'Note',
+      wrapper: 'border-violet-500/40 bg-gradient-to-br from-violet-500/10 via-violet-500/5 to-transparent dark:from-violet-500/15 dark:via-violet-500/5',
+      iconBox: 'bg-violet-500/15 text-violet-600 dark:text-violet-400 border-violet-500/30',
+      labelClasses: 'text-violet-700 dark:text-violet-300',
+      bar: 'bg-violet-500',
+    },
+    tip: {
+      icon: <LightbulbIcon size={20} />,
+      label: 'Tip',
+      wrapper: 'border-emerald-500/40 bg-gradient-to-br from-emerald-500/10 via-emerald-500/5 to-transparent dark:from-emerald-500/15 dark:via-emerald-500/5',
+      iconBox: 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30',
+      labelClasses: 'text-emerald-700 dark:text-emerald-300',
+      bar: 'bg-emerald-500',
+    },
+    success: {
+      icon: <CheckCircle2Icon size={20} />,
+      label: 'Success',
+      wrapper: 'border-teal-500/40 bg-gradient-to-br from-teal-500/10 via-teal-500/5 to-transparent dark:from-teal-500/15 dark:via-teal-500/5',
+      iconBox: 'bg-teal-500/15 text-teal-600 dark:text-teal-400 border-teal-500/30',
+      labelClasses: 'text-teal-700 dark:text-teal-300',
+      bar: 'bg-teal-500',
     },
     warning: {
-      icon: <AlertTriangleIcon size={18} />,
-      label: 'Warnung',
-      classes: 'border-l-amber-500 bg-amber-50 dark:bg-amber-950/40 text-text',
-      labelClasses: 'bg-amber-100 dark:bg-amber-900/60 text-amber-800 dark:text-amber-200',
-      iconClasses: 'text-amber-600 dark:text-amber-400',
+      icon: <AlertTriangleIcon size={20} />,
+      label: 'Warning',
+      wrapper: 'border-amber-500/40 bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-transparent dark:from-amber-500/15 dark:via-amber-500/5',
+      iconBox: 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30',
+      labelClasses: 'text-amber-700 dark:text-amber-300',
+      bar: 'bg-amber-500',
     },
     alert: {
-      icon: <XCircleIcon size={18} />,
-      label: 'Achtung',
-      classes: 'border-l-red-500 bg-red-50 dark:bg-red-950/40 text-text',
-      labelClasses: 'bg-red-100 dark:bg-red-900/60 text-red-800 dark:text-red-200',
-      iconClasses: 'text-red-600 dark:text-red-400',
+      icon: <XCircleIcon size={20} />,
+      label: 'Alert',
+      wrapper: 'border-red-500/40 bg-gradient-to-br from-red-500/10 via-red-500/5 to-transparent dark:from-red-500/15 dark:via-red-500/5',
+      iconBox: 'bg-red-500/15 text-red-600 dark:text-red-400 border-red-500/30',
+      labelClasses: 'text-red-700 dark:text-red-300',
+      bar: 'bg-red-500',
+    },
+    danger: {
+      icon: <FlameIcon size={20} />,
+      label: 'Danger',
+      wrapper: 'border-rose-500/50 bg-gradient-to-br from-rose-500/15 via-rose-500/5 to-transparent dark:from-rose-500/20 dark:via-rose-500/5',
+      iconBox: 'bg-rose-500/15 text-rose-600 dark:text-rose-400 border-rose-500/30',
+      labelClasses: 'text-rose-700 dark:text-rose-300',
+      bar: 'bg-rose-500',
+    },
+    quote: {
+      icon: <QuoteIcon size={20} />,
+      label: 'Quote',
+      wrapper: 'border-slate-400/40 bg-gradient-to-br from-slate-500/10 via-slate-500/5 to-transparent dark:from-slate-400/10 dark:via-slate-400/5',
+      iconBox: 'bg-slate-500/15 text-slate-600 dark:text-slate-300 border-slate-400/30',
+      labelClasses: 'text-slate-700 dark:text-slate-300',
+      bar: 'bg-slate-400',
     },
   };
-  const cfg = configs[type];
+  const cfg = configs[type] || configs.info;
   return (
-    <div className={`not-prose my-6 rounded-lg border-l-4 p-4 ${cfg.classes}`}>
-      <div className="flex items-center gap-3 pb-1">
-        <span className={`flex-shrink-0 ${cfg.iconClasses}`}>{cfg.icon}</span>
-        <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-md ${cfg.labelClasses}`}>
-          {cfg.label}
+    <div className={`not-prose my-6 relative rounded-2xl border p-5 pl-6 shadow-sm overflow-hidden ${cfg.wrapper}`}>
+      <div className={`absolute left-0 top-0 bottom-0 w-1.5 ${cfg.bar}`} />
+      <div className="flex items-center gap-3 mb-2">
+        <span className={`flex-shrink-0 w-9 h-9 rounded-xl border flex items-center justify-center ${cfg.iconBox}`}>
+          {cfg.icon}
+        </span>
+        <span className={`text-sm font-bold uppercase tracking-wider ${cfg.labelClasses}`}>
+          {title || cfg.label}
         </span>
       </div>
-      <div className="[&>p]:last:mb-0">{children}</div>
+      <div className="text-text [&>p]:last:mb-0 [&>p]:text-base">{children}</div>
     </div>
   );
 };
 
 const Info = (props) => <Callout {...props} type="info" />;
+const Note = (props) => <Callout {...props} type="note" />;
+const Tip = (props) => <Callout {...props} type="tip" />;
+const Success = (props) => <Callout {...props} type="success" />;
 const Warning = (props) => <Callout {...props} type="warning" />;
 const Alert = (props) => <Callout {...props} type="alert" />;
+const Danger = (props) => <Callout {...props} type="danger" />;
 
 const YouTube = ({ videoId, title = 'Embedded YouTube Video' }) => {
   if (!videoId) return <Callout type="alert">Missing 'videoId' for YouTube component.</Callout>;
@@ -347,14 +402,13 @@ const LiveCodeBlock = ({ codeString }) => {
 };
 
 const ChartBlock = ({ codeString, type = 'bar' }) => {
+  const { isDark } = useTheme();
   let data;
   try {
     data = JSON.parse(codeString);
   } catch (e) {
     return <Callout type="alert">Error parsing chart JSON: {e.message}</Callout>;
   }
-
-  const { isDark } = useTheme();
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -475,32 +529,57 @@ const MermaidBlock = ({ codeString }) => {
   const { isDark } = useTheme();
   const [viewMode, setViewMode] = useState('diagram');
   const [isCopied, setIsCopied] = useState(false);
+  const [renderError, setRenderError] = useState(null);
   const mermaidRef = useRef(null);
-  const [mermaidId] = useState(() => `mermaid-svg-${Math.random().toString(36).substr(2, 9)}`);
+  const renderCounter = useRef(0);
+  const [baseId] = useState(() => `mermaid-${Math.random().toString(36).slice(2, 10)}`);
 
   useEffect(() => {
-    if (viewMode === 'diagram' && mermaidRef.current && codeString) {
-      mermaid.initialize({
-        startOnLoad: false,
-        theme: isDark ? 'dark' : 'default',
-        securityLevel: 'loose',
-      });
-      mermaid.render(mermaidId, codeString)
-        .then(({ svg }) => {
-          if (mermaidRef.current) {
-            mermaidRef.current.innerHTML = svg;
-          }
-        })
-        .catch((err) => {
-          console.error('Mermaid rendering error:', err);
-          if (mermaidRef.current) {
-            mermaidRef.current.innerHTML = `<div class="text-red-500 p-4 text-sm">Error rendering diagram: ${err.message}</div>`;
-          }
+    if (viewMode !== 'diagram' || !codeString) return;
+
+    let cancelled = false;
+    // Unique ID per render attempt — prevents races when React StrictMode
+    // double-invokes effects or when the theme/view toggles quickly.
+    renderCounter.current += 1;
+    const renderId = `${baseId}-${renderCounter.current}`;
+
+    const renderDiagram = async () => {
+      try {
+        mermaid.initialize({
+          startOnLoad: false,
+          theme: isDark ? 'dark' : 'default',
+          securityLevel: 'loose',
         });
-    } else if (mermaidRef.current) {
-      mermaidRef.current.innerHTML = '';
-    }
-  }, [codeString, viewMode, isDark, mermaidId]);
+        const { svg } = await mermaid.render(renderId, codeString);
+        if (!cancelled && mermaidRef.current) {
+          mermaidRef.current.innerHTML = svg;
+          setRenderError(null);
+        }
+      } catch (err) {
+        // Mermaid leaves a stale temp element in the DOM on parse errors.
+        const stale = document.getElementById(renderId);
+        if (stale && stale.parentNode) stale.parentNode.removeChild(stale);
+        const staleD = document.getElementById(`d${renderId}`);
+        if (staleD && staleD.parentNode) staleD.parentNode.removeChild(staleD);
+        if (!cancelled) {
+          console.error('Mermaid rendering error:', err);
+          setRenderError(err?.message || 'Failed to render diagram');
+        }
+      }
+    };
+
+    // Defer one frame so the container is laid out and measurable before
+    // mermaid calculates SVG dimensions — this fixes the "empty until you
+    // toggle Code and back" bug.
+    const raf = requestAnimationFrame(() => {
+      renderDiagram();
+    });
+
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(raf);
+    };
+  }, [codeString, viewMode, isDark, baseId]);
 
   const handleCopy = async () => {
     try {
@@ -562,10 +641,13 @@ const MermaidBlock = ({ codeString }) => {
 
       <div className="relative">
         {viewMode === 'diagram' ? (
-          <div
-            ref={mermaidRef}
-            className="p-4 flex items-center justify-center min-h-[200px] bg-background/30"
-          />
+          <div className="p-4 flex items-center justify-center min-h-[200px] bg-background/30">
+            {renderError ? (
+              <div className="text-red-500 p-4 text-sm">Error rendering diagram: {renderError}</div>
+            ) : (
+              <div ref={mermaidRef} className="w-full flex items-center justify-center [&>svg]:max-w-full [&>svg]:h-auto" />
+            )}
+          </div>
         ) : (
           <div className="overflow-x-auto">
             <SyntaxHighlighter
@@ -690,6 +772,80 @@ const MarkdownCodeBlock = ({ children, className, isTabbed }) => {
     </div>
   );
 };
+// --- Reusable content components (usable in any post/lesson) ---
+
+// Elegant pull-quote card: <Quote author="Dale Carnegie" source="How to Win Friends...">Text</Quote>
+const Quote = ({ children, author, source }) => (
+  <figure className="not-prose my-8 relative rounded-2xl border border-border bg-gradient-to-br from-primary/5 via-card to-card p-6 sm:p-8 shadow-sm overflow-hidden">
+    <QuoteIcon size={80} className="absolute -top-2 -left-2 text-primary/10 pointer-events-none" />
+    <blockquote className="relative text-lg sm:text-xl font-medium italic text-text leading-relaxed m-0">
+      {children}
+    </blockquote>
+    {(author || source) && (
+      <figcaption className="relative mt-4 flex items-center gap-3">
+        <span className="h-px w-8 bg-primary/50" />
+        <span className="text-sm font-bold text-text">{author}</span>
+        {source && <span className="text-sm text-text/60">· {source}</span>}
+      </figcaption>
+    )}
+  </figure>
+);
+
+// Big-number stat row: <StatGrid><Stat value="85%" label="Soft skills" /></StatGrid>
+const StatGrid = ({ children }) => (
+  <div className="not-prose my-8 grid grid-cols-2 md:grid-cols-4 gap-3">{children}</div>
+);
+
+const Stat = ({ value, label, sub, color = 'indigo' }) => {
+  const palette = {
+    indigo: 'from-indigo-500/15 to-indigo-500/5 border-indigo-500/30 text-indigo-600 dark:text-indigo-400',
+    emerald: 'from-emerald-500/15 to-emerald-500/5 border-emerald-500/30 text-emerald-600 dark:text-emerald-400',
+    amber: 'from-amber-500/15 to-amber-500/5 border-amber-500/30 text-amber-600 dark:text-amber-400',
+    rose: 'from-rose-500/15 to-rose-500/5 border-rose-500/30 text-rose-600 dark:text-rose-400',
+    sky: 'from-sky-500/15 to-sky-500/5 border-sky-500/30 text-sky-600 dark:text-sky-400',
+    violet: 'from-violet-500/15 to-violet-500/5 border-violet-500/30 text-violet-600 dark:text-violet-400',
+  };
+  const classes = palette[color] || palette.indigo;
+  return (
+    <div className={`rounded-2xl border bg-gradient-to-b p-4 text-center ${classes}`}>
+      <div className="text-2xl sm:text-3xl font-black tracking-tight">{value}</div>
+      <div className="text-xs font-bold uppercase tracking-wider mt-1 text-text/80">{label}</div>
+      {sub && <div className="text-[11px] text-text/50 mt-1">{sub}</div>}
+    </div>
+  );
+};
+
+// Highlighted key-takeaway strip: <KeyTakeaway>One sentence to remember.</KeyTakeaway>
+const KeyTakeaway = ({ children, label = 'Key Takeaway' }) => (
+  <div className="not-prose my-8 relative rounded-2xl border border-amber-500/40 bg-gradient-to-r from-amber-500/15 via-amber-500/5 to-transparent p-5 pl-6 shadow-sm overflow-hidden">
+    <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-amber-500" />
+    <div className="flex items-center gap-2 mb-2">
+      <LightbulbIcon size={16} className="text-amber-500" />
+      <span className="text-xs font-black uppercase tracking-widest text-amber-600 dark:text-amber-400">{label}</span>
+    </div>
+    <div className="text-base sm:text-lg font-semibold text-text leading-relaxed [&>p]:mb-0 [&>p]:text-base [&>p]:sm:text-lg">
+      {children}
+    </div>
+  </div>
+);
+
+// Styled accordion: <Accordion title="...">content</Accordion>
+const Accordion = ({ title, children, badge }) => (
+  <details className="not-prose group my-3 bg-card border border-border rounded-2xl shadow-sm overflow-hidden">
+    <summary className="flex items-center gap-3 font-semibold p-4 cursor-pointer hover:bg-background/60 list-none [&::-webkit-details-marker]:hidden select-none">
+      <ChevronDown size={18} className="text-text/40 transition-transform duration-200 group-open:rotate-180 shrink-0" />
+      <span className="flex-1 text-text">{title}</span>
+      {badge && (
+        <span className="text-[11px] font-bold uppercase tracking-wider text-text/50 bg-background border border-border rounded-full px-2.5 py-0.5 shrink-0">
+          {badge}
+        </span>
+      )}
+    </summary>
+    <div className="px-4 pb-4 pt-1 pl-11 text-text/90 border-t border-border/60 [&>p]:text-base [&>p]:mb-3">
+      {children}
+    </div>
+  </details>
+);
 
 
 export default function BlogPostContent({ content }) {
@@ -725,30 +881,24 @@ export default function BlogPostContent({ content }) {
 
             blockquote: {
               component: (props) => {
-                let children = React.Children.toArray(props.children);
+                const children = React.Children.toArray(props.children);
                 let calloutType = null;
                 
                 if (children.length > 0 && children[0].type === 'p') {
                   const firstP = children[0];
                   const pChildren = React.Children.toArray(firstP.props.children);
                   if (pChildren.length > 0 && typeof pChildren[0] === 'string') {
-                    let firstChildText = pChildren[0];
-                    let matched = true;
+                    const firstChildText = pChildren[0];
+                    const tagMatch = /^\[!(INFO|NOTE|TIP|SUCCESS|WARNING|ALERT|DANGER|QUOTE)\]\s*/i.exec(firstChildText);
 
-                    if (firstChildText.startsWith('[!INFO]')) {
-                      calloutType = 'info';
-                      pChildren[0] = firstChildText.substring(7).trimStart();
-                    } else if (firstChildText.startsWith('[!WARNING]')) {
-                      calloutType = 'warning';
-                      pChildren[0] = firstChildText.substring(10).trimStart();
-                    } else if (firstChildText.startsWith('[!ALERT]')) {
-                      calloutType = 'alert';
-                      pChildren[0] = firstChildText.substring(8).trimStart();
-                    } else {
-                      matched = false;
-                    }
-                    
-                    if (matched) {
+                    if (tagMatch) {
+                      calloutType = tagMatch[1].toLowerCase();
+                      const remaining = firstChildText.substring(tagMatch[0].length);
+                      if (remaining) {
+                        pChildren[0] = remaining;
+                      } else {
+                        pChildren.shift();
+                      }
                       children[0] = React.cloneElement(firstP, {}, pChildren);
                     }
                   }
@@ -766,8 +916,12 @@ export default function BlogPostContent({ content }) {
             },
             
             Info: { component: Info },
+            Note: { component: Note },
+            Tip: { component: Tip },
+            Success: { component: Success },
             Warning: { component: Warning },
             Alert: { component: Alert },
+            Danger: { component: Danger },
             YouTube: { component: YouTube },
             GeoGebra: { component: GeoGebra },
             Katex: { component: Katex },
@@ -775,6 +929,11 @@ export default function BlogPostContent({ content }) {
             summary: { component: MarkdownSummary },
             Tabs: { component: Tabs },
             Tab: { component: Tab },
+            Quote: { component: Quote },
+            StatGrid: { component: StatGrid },
+            Stat: { component: Stat },
+            KeyTakeaway: { component: KeyTakeaway },
+            Accordion: { component: Accordion },
           },
         }}
       >
