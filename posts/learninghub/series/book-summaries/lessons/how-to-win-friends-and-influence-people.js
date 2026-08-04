@@ -2,7 +2,7 @@ export default {
   "id": "how-to-win-friends-and-influence-people",
   "title": "How to Win Friends and Influence People – Dale Carnegie",
   "duration": "20 Min.",
-  "description": "The 30 classic principles of interpersonal success — enriched with behavioral psychology, active recall, real-world examples, and actionable steps for every rule.",
+  "description": "The 30 classic principles of interpersonal success — enriched with behavioral psychology, active recall, custom UI controls, reusable components, and actionable challenges for every rule.",
   "content": `
 <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 p-8 sm:p-12 mb-10 shadow-2xl text-white border border-white/10">
   
@@ -105,6 +105,44 @@ export default {
   </div>
 </div>
 
+<!-- Reusable Control Component 1: Executive Summary Banner -->
+<div class="not-prose my-8 bg-gradient-to-r from-indigo-900/40 via-purple-900/30 to-slate-900/50 border border-indigo-500/30 rounded-3xl p-6 sm:p-8 backdrop-blur-md shadow-xl">
+  <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 pb-6 border-b border-indigo-500/20">
+    <div class="flex items-center gap-3">
+      <div class="w-12 h-12 rounded-2xl bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center font-bold text-xl">
+        ⚡
+      </div>
+      <div>
+        <h3 class="text-xl font-black text-text m-0">Executive Summary</h3>
+        <p class="text-xs text-text/60 m-0">Core Takeaways & Success Formula</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-2 bg-indigo-500/10 border border-indigo-500/20 rounded-full px-4 py-1.5 text-xs font-bold text-indigo-400">
+      <span>85% Soft Skills</span>
+      <span>•</span>
+      <span>15% Hard Skills</span>
+    </div>
+  </div>
+  
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="bg-card/60 border border-border p-4 rounded-2xl">
+      <div class="text-xs font-bold text-indigo-500 uppercase tracking-wider mb-1">Key Rule #1</div>
+      <div class="font-bold text-sm text-text mb-1">Ditch Criticism Entirely</div>
+      <p class="text-xs text-text/70">Criticism forces people to defend their pride. Empathy and appreciation inspire voluntary change.</p>
+    </div>
+    <div class="bg-card/60 border border-border p-4 rounded-2xl">
+      <div class="text-xs font-bold text-emerald-500 uppercase tracking-wider mb-1">Key Rule #2</div>
+      <div class="font-bold text-sm text-text mb-1">Feed the Hunger for Status</div>
+      <p class="text-xs text-text/70">The deepest human craving is to feel important. Give specific, honest appreciation every day.</p>
+    </div>
+    <div class="bg-card/60 border border-border p-4 rounded-2xl">
+      <div class="text-xs font-bold text-amber-500 uppercase tracking-wider mb-1">Key Rule #3</div>
+      <div class="font-bold text-sm text-text mb-1">Frame Around Their Wants</div>
+      <p class="text-xs text-text/70">Nobody cares what you want. Show people how your goal fulfills *their* intrinsic desires.</p>
+    </div>
+  </div>
+</div>
+
 <p class="text-xl sm:text-2xl text-text/90 font-medium mb-8 leading-relaxed max-w-4xl">
   Many consider this book the most important work on human relationships ever written. Its revolutionary core thesis: research shows that financial and professional success is only <span class="text-primary font-bold">15% dependent on technical knowledge</span> — and <span class="text-primary font-bold">85% on human engineering</span>, the ability to understand, motivate, and appreciate people.
 </p>
@@ -147,23 +185,24 @@ export default {
 
 ---
 
+<!-- Reusable Control Component 2: 4-Part Interactive Navigation Timeline -->
 <div class="my-10 grid grid-cols-2 md:grid-cols-4 gap-3 not-prose">
-  <div class="flex flex-col items-center text-center p-4 rounded-2xl bg-gradient-to-b from-indigo-500/10 to-transparent border border-indigo-500/20">
+  <div class="flex flex-col items-center text-center p-4 rounded-2xl bg-gradient-to-b from-indigo-500/10 to-transparent border border-indigo-500/20 hover:border-indigo-500/40 transition-colors">
     <div class="w-10 h-10 rounded-full bg-indigo-500 text-white font-black text-lg flex items-center justify-center mb-2 shadow-lg shadow-indigo-500/30">1</div>
     <div class="font-bold text-sm text-text">Fundamental Techniques</div>
     <div class="text-xs text-text/60 mt-1">3 Principles</div>
   </div>
-  <div class="flex flex-col items-center text-center p-4 rounded-2xl bg-gradient-to-b from-emerald-500/10 to-transparent border border-emerald-500/20">
+  <div class="flex flex-col items-center text-center p-4 rounded-2xl bg-gradient-to-b from-emerald-500/10 to-transparent border border-emerald-500/20 hover:border-emerald-500/40 transition-colors">
     <div class="w-10 h-10 rounded-full bg-emerald-500 text-white font-black text-lg flex items-center justify-center mb-2 shadow-lg shadow-emerald-500/30">2</div>
     <div class="font-bold text-sm text-text">Make People Like You</div>
     <div class="text-xs text-text/60 mt-1">6 Principles</div>
   </div>
-  <div class="flex flex-col items-center text-center p-4 rounded-2xl bg-gradient-to-b from-orange-500/10 to-transparent border border-orange-500/20">
+  <div class="flex flex-col items-center text-center p-4 rounded-2xl bg-gradient-to-b from-orange-500/10 to-transparent border border-orange-500/20 hover:border-orange-500/40 transition-colors">
     <div class="w-10 h-10 rounded-full bg-orange-500 text-white font-black text-lg flex items-center justify-center mb-2 shadow-lg shadow-orange-500/30">3</div>
     <div class="font-bold text-sm text-text">Win People to Your Thinking</div>
     <div class="text-xs text-text/60 mt-1">12 Principles</div>
   </div>
-  <div class="flex flex-col items-center text-center p-4 rounded-2xl bg-gradient-to-b from-amber-500/10 to-transparent border border-amber-500/20">
+  <div class="flex flex-col items-center text-center p-4 rounded-2xl bg-gradient-to-b from-amber-500/10 to-transparent border border-amber-500/20 hover:border-amber-500/40 transition-colors">
     <div class="w-10 h-10 rounded-full bg-amber-500 text-white font-black text-lg flex items-center justify-center mb-2 shadow-lg shadow-amber-500/30">4</div>
     <div class="font-bold text-sm text-text">Be a Leader</div>
     <div class="text-xs text-text/60 mt-1">9 Principles</div>
@@ -179,7 +218,7 @@ The bedrock for everything that follows. If you break these three rules, the oth
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 my-8">
   <div class="bg-gradient-to-br from-card to-background border border-border p-6 rounded-3xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
     <div class="absolute -right-4 -top-4 opacity-5 group-hover:opacity-10 transition-opacity">
-      <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
     </div>
     <div class="w-12 h-12 rounded-2xl bg-red-500/10 text-red-500 flex items-center justify-center mb-4">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
@@ -207,7 +246,7 @@ The bedrock for everything that follows. If you break these three rules, the oth
   
   <div class="bg-gradient-to-br from-card to-background border border-border p-6 rounded-3xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
     <div class="absolute -right-4 -top-4 opacity-5 group-hover:opacity-10 transition-opacity">
-      <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1 3-6z"/></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
     </div>
     <div class="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-500 flex items-center justify-center mb-4">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"/><path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
@@ -598,6 +637,237 @@ Nine strategies for guiding behavior without breeding resentment. Essential for 
       <div class="bg-black/40 p-3 rounded-xl text-xs text-purple-200 italic border-l-2 border-purple-400">
         "It's just a minor tweak needed, and I know you'll nail it on the next run."
       </div>
+    </div>
+  </div>
+</div>
+
+---
+
+<!-- Reusable Control Component 3: Psychological Concept Glossary with Custom SVGs -->
+<div class="my-12 not-prose">
+  <div class="flex items-center gap-3 mb-6">
+    <div class="w-10 h-10 rounded-2xl bg-purple-500/10 text-purple-500 border border-purple-500/20 flex items-center justify-center font-bold text-xl">
+      🧬
+    </div>
+    <div>
+      <h3 class="text-2xl font-black text-text m-0">Psychological Concept Glossary</h3>
+      <p class="text-xs text-text/60 m-0">Key Behavioral Science Concepts Prefigured by Carnegie</p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <!-- Concept 1: Pygmalion Effect -->
+    <div class="bg-card border border-border p-5 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+      <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center mb-3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <h4 class="font-bold text-base text-text mb-1">Pygmalion Effect</h4>
+      <div class="text-xs text-amber-500 font-semibold mb-2">Part 4 · Principle 7</div>
+      <p class="text-xs text-text/70 leading-relaxed">High expectations set by leaders directly elevate measurable human performance. People unconsciously adapt their effort to match the reputation you assign to them.</p>
+    </div>
+
+    <!-- Concept 2: IKEA Effect -->
+    <div class="bg-card border border-border p-5 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+      <div class="w-10 h-10 rounded-xl bg-teal-500/10 text-teal-500 flex items-center justify-center mb-3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+      </div>
+      <h4 class="font-bold text-base text-text mb-1">IKEA Effect</h4>
+      <div class="text-xs text-teal-500 font-semibold mb-2">Part 3 · Principle 7</div>
+      <p class="text-xs text-text/70 leading-relaxed">Cognitive bias where consumers place disproportionately high value on products or ideas they helped build or co-create.</p>
+    </div>
+
+    <!-- Concept 3: Backfire Effect -->
+    <div class="bg-card border border-border p-5 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+      <div class="w-10 h-10 rounded-xl bg-red-500/10 text-red-500 flex items-center justify-center mb-3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      </div>
+      <h4 class="font-bold text-base text-text mb-1">Backfire Effect</h4>
+      <div class="text-xs text-red-500 font-semibold mb-2">Part 3 · Principle 1 & 2</div>
+      <p class="text-xs text-text/70 leading-relaxed">Confronting individuals with direct factual disproof causes them to defend and double down on their original beliefs to protect identity.</p>
+    </div>
+
+    <!-- Concept 4: Amygdala Hijack -->
+    <div class="bg-card border border-border p-5 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+      <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-500 flex items-center justify-center mb-3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+      </div>
+      <h4 class="font-bold text-base text-text mb-1">Amygdala Hijack</h4>
+      <div class="text-xs text-purple-500 font-semibold mb-2">Part 1 · Principle 1</div>
+      <p class="text-xs text-text/70 leading-relaxed">Direct criticism triggers immediate emotional threat responses in the limbic system, bypassing prefrontal logic entirely.</p>
+    </div>
+
+    <!-- Concept 5: Cocktail Party Effect -->
+    <div class="bg-card border border-border p-5 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+      <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center mb-3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h20"/><path d="M20 12v8H4v-8"/><path d="m4 12 8-8 8 8"/></svg>
+      </div>
+      <h4 class="font-bold text-base text-text mb-1">Cocktail Party Effect</h4>
+      <div class="text-xs text-blue-500 font-semibold mb-2">Part 2 · Principle 3</div>
+      <p class="text-xs text-text/70 leading-relaxed">The brain's ability to focus selective auditory attention on one's own name, triggering instant self-awareness amid noise.</p>
+    </div>
+
+    <!-- Concept 6: Duchenne Smile -->
+    <div class="bg-card border border-border p-5 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+      <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center mb-3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+      </div>
+      <h4 class="font-bold text-base text-text mb-1">Duchenne Smile</h4>
+      <div class="text-xs text-emerald-500 font-semibold mb-2">Part 2 · Principle 2</div>
+      <p class="text-xs text-text/70 leading-relaxed">A genuine smile involving both zygomatic major and orbicularis oculi muscles, signaling authentic warmth and psychological safety.</p>
+    </div>
+  </div>
+</div>
+
+---
+
+<!-- Reusable Control Component 4: Do's and Don'ts Side-by-Side Comparison -->
+<div class="my-12 not-prose">
+  <div class="flex items-center gap-3 mb-6">
+    <div class="w-10 h-10 rounded-2xl bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 flex items-center justify-center font-bold text-xl">
+      ⚖️
+    </div>
+    <div>
+      <h3 class="text-2xl font-black text-text m-0">Do's and Don'ts: Real-World Scenarios</h3>
+      <p class="text-xs text-text/60 m-0">Common Mistakes vs. Carnegie Masterclass Approach</p>
+    </div>
+  </div>
+
+  <div class="space-y-4">
+    <!-- Scenario 1: Correcting a Mistake -->
+    <div class="bg-card border border-border rounded-2xl overflow-hidden shadow-sm">
+      <div class="bg-muted/40 px-5 py-3 border-b border-border font-bold text-sm text-text flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-indigo-500"></span> Scenario 1: Pointing Out a Teammate's Error
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-border">
+        <div class="p-5 bg-red-500/5">
+          <div class="text-xs font-bold text-red-500 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            Don't (Amateur Way)
+          </div>
+          <p class="text-xs text-text/80 mb-2">"You messed up this report! Why didn't you double-check the figures before sending it?"</p>
+          <div class="text-[11px] text-red-600 dark:text-red-400">Result: Triggers defensive excuses, hostility, and ego threat.</div>
+        </div>
+        <div class="p-5 bg-emerald-500/5">
+          <div class="text-xs font-bold text-emerald-500 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Do (Carnegie Masterclass)
+          </div>
+          <p class="text-xs text-text/80 mb-2">"I love how thorough your analysis is! I made a similar calculation error when I started out. Do you think we could adjust line 4 together?"</p>
+          <div class="text-[11px] text-emerald-600 dark:text-emerald-400">Result: Preserves dignity, encourages ownership, builds trust.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scenario 2: Winning an Argument -->
+    <div class="bg-card border border-border rounded-2xl overflow-hidden shadow-sm">
+      <div class="bg-muted/40 px-5 py-3 border-b border-border font-bold text-sm text-text flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-indigo-500"></span> Scenario 2: Handling a Disagreement in a Meeting
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-border">
+        <div class="p-5 bg-red-500/5">
+          <div class="text-xs font-bold text-red-500 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            Don't (Amateur Way)
+          </div>
+          <p class="text-xs text-text/80 mb-2">"You're completely wrong about this budget estimate. Look at these charts, facts don't lie!"</p>
+          <div class="text-[11px] text-red-600 dark:text-red-400">Result: Backfire effect — opponent doubles down publicly.</div>
+        </div>
+        <div class="p-5 bg-emerald-500/5">
+          <div class="text-xs font-bold text-emerald-500 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Do (Carnegie Masterclass)
+          </div>
+          <p class="text-xs text-text/80 mb-2">"I can certainly see why you feel that way given your experience. I might be mistaken, but let's review these numbers together to see what fits best."</p>
+          <div class="text-[11px] text-emerald-600 dark:text-emerald-400">Result: De-escalates threat, invites collaborative review.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+---
+
+<!-- Reusable Control Component 5: 7-Day Carnegie Challenge Habit Tracker -->
+<div class="my-12 not-prose bg-gradient-to-br from-slate-900 to-indigo-950 text-white rounded-3xl p-6 sm:p-8 border border-white/10 shadow-2xl">
+  <div class="flex items-center gap-3 mb-6">
+    <div class="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-400 border border-amber-500/30 flex items-center justify-center font-bold text-2xl">
+      🏆
+    </div>
+    <div>
+      <h3 class="text-2xl font-black text-white m-0">The 7-Day Carnegie Action Challenge</h3>
+      <p class="text-xs text-indigo-200/70 m-0">Put Principles into Daily Habit — One Day at a Time</p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-7 gap-3">
+    <!-- Day 1 -->
+    <div class="bg-white/5 border border-white/10 p-3 rounded-2xl flex flex-col justify-between hover:bg-white/10 transition-colors">
+      <div>
+        <div class="text-[10px] font-black uppercase text-amber-400 tracking-wider">Day 1</div>
+        <div class="font-bold text-xs text-white mt-1 mb-1">Zero Complaints</div>
+        <p class="text-[11px] text-slate-300">Go 24 hours without complaining, judging, or criticizing anyone.</p>
+      </div>
+      <div class="mt-3 text-[10px] text-slate-400 border-t border-white/10 pt-1.5 font-mono">Principle 1</div>
+    </div>
+
+    <!-- Day 2 -->
+    <div class="bg-white/5 border border-white/10 p-3 rounded-2xl flex flex-col justify-between hover:bg-white/10 transition-colors">
+      <div>
+        <div class="text-[10px] font-black uppercase text-blue-400 tracking-wider">Day 2</div>
+        <div class="font-bold text-xs text-white mt-1 mb-1">Name Master</div>
+        <p class="text-[11px] text-slate-300">Use people's first names in every interaction today.</p>
+      </div>
+      <div class="mt-3 text-[10px] text-slate-400 border-t border-white/10 pt-1.5 font-mono">Principle 6</div>
+    </div>
+
+    <!-- Day 3 -->
+    <div class="bg-white/5 border border-white/10 p-3 rounded-2xl flex flex-col justify-between hover:bg-white/10 transition-colors">
+      <div>
+        <div class="text-[10px] font-black uppercase text-emerald-400 tracking-wider">Day 3</div>
+        <div class="font-bold text-xs text-white mt-1 mb-1">Specific Praise</div>
+        <p class="text-[11px] text-slate-300">Give 3 specific, honest compliments for good work.</p>
+      </div>
+      <div class="mt-3 text-[10px] text-slate-400 border-t border-white/10 pt-1.5 font-mono">Principle 2</div>
+    </div>
+
+    <!-- Day 4 -->
+    <div class="bg-white/5 border border-white/10 p-3 rounded-2xl flex flex-col justify-between hover:bg-white/10 transition-colors">
+      <div>
+        <div class="text-[10px] font-black uppercase text-purple-400 tracking-wider">Day 4</div>
+        <div class="font-bold text-xs text-white mt-1 mb-1">Deep Listener</div>
+        <p class="text-[11px] text-slate-300">Ask 2 follow-up questions before offering your opinion.</p>
+      </div>
+      <div class="mt-3 text-[10px] text-slate-400 border-t border-white/10 pt-1.5 font-mono">Principle 7</div>
+    </div>
+
+    <!-- Day 5 -->
+    <div class="bg-white/5 border border-white/10 p-3 rounded-2xl flex flex-col justify-between hover:bg-white/10 transition-colors">
+      <div>
+        <div class="text-[10px] font-black uppercase text-red-400 tracking-wider">Day 5</div>
+        <div class="font-bold text-xs text-white mt-1 mb-1">Instant Admission</div>
+        <p class="text-[11px] text-slate-300">Admit any mistake immediately and without defense.</p>
+      </div>
+      <div class="mt-3 text-[10px] text-slate-400 border-t border-white/10 pt-1.5 font-mono">Principle 12</div>
+    </div>
+
+    <!-- Day 6 -->
+    <div class="bg-white/5 border border-white/10 p-3 rounded-2xl flex flex-col justify-between hover:bg-white/10 transition-colors">
+      <div>
+        <div class="text-[10px] font-black uppercase text-sky-400 tracking-wider">Day 6</div>
+        <div class="font-bold text-xs text-white mt-1 mb-1">Ask Don't Order</div>
+        <p class="text-[11px] text-slate-300">Replace direct commands with questions: "Do you think we could..."</p>
+      </div>
+      <div class="mt-3 text-[10px] text-slate-400 border-t border-white/10 pt-1.5 font-mono">Principle 25</div>
+    </div>
+
+    <!-- Day 7 -->
+    <div class="bg-white/5 border border-white/10 p-3 rounded-2xl flex flex-col justify-between hover:bg-white/10 transition-colors">
+      <div>
+        <div class="text-[10px] font-black uppercase text-teal-400 tracking-wider">Day 7</div>
+        <div class="font-bold text-xs text-white mt-1 mb-1">Face Saver</div>
+        <p class="text-[11px] text-slate-300">Protect someone's pride during a mistake by giving them a dignity exit.</p>
+      </div>
+      <div class="mt-3 text-[10px] text-slate-400 border-t border-white/10 pt-1.5 font-mono">Principle 26</div>
     </div>
   </div>
 </div>
