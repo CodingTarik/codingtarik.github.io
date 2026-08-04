@@ -3,8 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   Play, Volume2, Headphones, Layers, Check, Flame,
   BookOpen, Shuffle, Home, Eye, EyeOff, RefreshCw, Music,
-  ArrowRight, Zap
+  ArrowRight, Zap, VolumeX
 } from 'lucide-react';
+import * as Tone from 'tone';
 
 /* ═══ DATA ═══ */
 const NOTE_NAMES_DE = ['C','C#','D','D#','E','F','F#','G','G#','A','B','H'];
@@ -475,6 +476,7 @@ const DEFAULT_CFG = {
   autoPlaySound:true, autoAdvance:true, advanceSpeed:'fast',
   timedMode:false, timeLimit:10, chordLevel:'beginner',
   intervalLevel:'beginner', staffTheme:'dark',
+  volume:0.8, feedbackSound:true,  // grand-piano sampler engine + muteable feedback
   showNextPreview:false,  // preview of upcoming note (notes already visible in staff)
 };
 const ADVANCE_DELAYS={instant:[60,250],fast:[280,650],normal:[700,1400]};
@@ -509,8 +511,10 @@ export default function PianoTrainer() {
   const audioRef     = React.useRef(null);
   const gainRef      = React.useRef(null);
   const resultsRef   = React.useRef([]); // mirror of results for closures
+  const samplerRef   = React.useRef(null);   // Tone Sampler (grand piano like Piano Studio)
+  const feedbackMutedRef = React.useRef(false);
 
-  /* ── Audio: realistic piano with 8 harmonics + hammer noise ── */
+  /* ── Audio: Tone.js grand-piano sampler (same engine as Piano Studio) + OSC fallbacks ── */
   const getCtx=React.useCallback(()=>{
     if(!audioRef.current||audioRef.current.state==='closed'){
       audioRef.current=new(window.AudioContext||window.webkitAudioContext)();
@@ -522,45 +526,53 @@ export default function PianoTrainer() {
     return audioRef.current;
   },[]);
 
+  // Lazily create the Tone grand-piano sampler (mirrors Piano Studio)
+  const getSampler=React.useCallback(()=>{
+    if(samplerRef.current) return samplerRef.current;
+    try{
+      const s=new Tone.Sampler({
+        urls:{
+          A0:'A0.mp3',C1:'C1.mp3','D#1':'Ds1.mp3','F#1':'Fs1.mp3',A1:'A1.mp3',C2:'C2.mp3','D#2':'Ds2.mp3','F#2':'Fs2.mp3',
+          A2:'A2.mp3',C3:'C3.mp3','D#3':'Ds3.mp3','F#3':'Fs3.mp3',A3:'A3.mp3',C4:'C4.mp3','D#4':'Ds4.mp3','F#4':'Fs4.mp3',
+          A4:'A4.mp3',C5:'C5.mp3','D#5':'Ds5.mp3','F#5':'Fs5.mp3',A5:'A5.mp3',C6:'C6.mp3','D#6':'Ds6.mp3','F#6':'Fs6.mp3',
+          A6:'A6.mp3',C7:'C7.mp3','D#7':'Ds7.mp3','F#7':'Fs7.mp3',A7:'A7.mp3',C8:'C8.mp3',
+        },
+        release:1.4,
+        baseUrl:'https://tonejs.github.io/audio/salamander/',
+      }).toDestination();
+      s.volume.value=Tone.gainToDb(cfg.volume);
+      samplerRef.current=s;
+      return s;
+    }catch(e){ return null; }
+  },[cfg.volume]);
+
+  // Apply initial audio unlock on first interaction
+  React.useEffect(()=>{
+    const unlock=()=>{ try{ if(Tone.getContext().state==='suspended') Tone.getContext().resume(); }catch(e){} };
+    window.addEventListener('pointerdown',unlock,{once:false});
+    window.addEventListener('keydown',unlock,{once:false});
+    return ()=>{ window.removeEventListener('pointerdown',unlock); window.removeEventListener('keydown',unlock); };
+  },[]);
+
+  // Keep feedback mute and volume in sync with config
+  React.useEffect(()=>{ feedbackMutedRef.current=!cfg.feedbackSound; },[cfg.feedbackSound]);
+  React.useEffect(()=>{ if(samplerRef.current) samplerRef.current.volume.value=Tone.gainToDb(cfg.volume); },[cfg.volume]);
+
   const playNote=React.useCallback((midi,dur=1.4,vol=1.0)=>{
     try{
-      const ctx=getCtx(),now=ctx.currentTime,f=440*Math.pow(2,(midi-69)/12),m=gainRef.current;
+      // Grand piano via tone sampler when selected
       if(cfg.soundType==='piano'){
-        // 8-harmonic piano with slight detuning for richness
-        const harmonics=[
-          [1,0.48*vol,1.1,0],
-          [2,0.20*vol,0.70,+1.2],
-          [3,0.11*vol,0.50,-0.8],
-          [4,0.055*vol,0.35,+0.6],
-          [5,0.026*vol,0.24,-0.4],
-          [6,0.013*vol,0.17,+0.3],
-          [7,0.006*vol,0.12,0],
-          [8,0.003*vol,0.09,0],
-        ];
-        harmonics.forEach(([mult,g,dm,detCents])=>{
-          const osc=ctx.createOscillator(),gn=ctx.createGain();
-          osc.type='sine';
-          const detF=f*mult*Math.pow(2,detCents/1200);
-          osc.frequency.setValueAtTime(detF,now);
-          gn.gain.setValueAtTime(0,now);
-          gn.gain.linearRampToValueAtTime(g,now+0.006);
-          gn.gain.setValueAtTime(g,now+0.01);
-          gn.gain.exponentialRampToValueAtTime(g*0.4,now+dur*0.15);
-          gn.gain.exponentialRampToValueAtTime(0.0001,now+dur*dm);
-          osc.connect(gn).connect(m);osc.start(now);osc.stop(now+dur*dm+0.05);
-        });
-        // Hammer noise transient
         try{
-          const bSize=Math.floor(ctx.sampleRate*0.06);
-          const nbuf=ctx.createBuffer(1,bSize,ctx.sampleRate);
-          const data=nbuf.getChannelData(0);
-          for(let k=0;k<bSize;k++) data[k]=(Math.random()*2-1)*Math.exp(-k/(bSize*0.08));
-          const ns=ctx.createBufferSource(),nf=ctx.createBiquadFilter(),ng=ctx.createGain();
-          ns.buffer=nbuf; nf.type='bandpass'; nf.frequency.value=f*1.5; nf.Q.value=0.8;
-          ng.gain.setValueAtTime(0.018*vol,now); ng.gain.exponentialRampToValueAtTime(0.0001,now+0.05);
-          ns.connect(nf).connect(ng).connect(m); ns.start(now); ns.stop(now+0.07);
-        }catch(e){}
-      }else if(cfg.soundType==='organ'){
+          const s=getSampler();
+          if(s){
+            const note=Tone.Frequency(midi,'midi').toNote();
+            s.triggerAttackRelease(note,dur,undefined,Math.max(0.15,vol));
+            return;
+          }
+        }catch(e){/* fall through to oscillator */}
+      }
+      const ctx=getCtx(),now=ctx.currentTime,f=440*Math.pow(2,(midi-69)/12),m=gainRef.current;
+      if(cfg.soundType==='organ'){
         [1,2,3,4,6,8].forEach((mult,i)=>{
           const osc=ctx.createOscillator(),gn=ctx.createGain();
           osc.type='sine';osc.frequency.setValueAtTime(f*mult,now);
@@ -570,21 +582,25 @@ export default function PianoTrainer() {
           osc.connect(gn).connect(m);osc.start(now);osc.stop(now+dur+0.02);
         });
       }else{
-        const osc=ctx.createOscillator(),gn=ctx.createGain();
-        osc.type='triangle';osc.frequency.setValueAtTime(f,now);
-        gn.gain.setValueAtTime(0,now);gn.gain.linearRampToValueAtTime(0.3*vol,now+0.01);
-        gn.gain.exponentialRampToValueAtTime(0.0001,now+dur);
-        osc.connect(gn).connect(m);osc.start(now);osc.stop(now+dur+0.02);
+        // synth / fallback: rich layered triangle+sine
+        [[1,0.30,0.90],[2,0.10,0.5],[3,0.05,0.3]].forEach(([mult,g,dm])=>{
+          const osc=ctx.createOscillator(),gn=ctx.createGain();
+          osc.type=mult===1?'triangle':'sine';osc.frequency.setValueAtTime(f*mult,now);
+          gn.gain.setValueAtTime(0,now);gn.gain.linearRampToValueAtTime(g*vol,now+0.01);
+          gn.gain.exponentialRampToValueAtTime(0.0001,now+dur*dm);
+          osc.connect(gn).connect(m);osc.start(now);osc.stop(now+dur*dm+0.05);
+        });
       }
     }catch(e){console.warn('audio:',e);}
-  },[cfg.soundType,getCtx]);
+  },[cfg.soundType,cfg.volume,getSampler,getCtx]);
 
   const playChord=React.useCallback(midis=>{midis.forEach((m,i)=>setTimeout(()=>playNote(m,2),i*55));},[playNote]);
 
-  /* ── Feedback sounds: correct replays note, wrong is gentle drop ── */
+  /* ── Feedback sounds: correct replays note, wrong is gentle drop ──
+     Respects feedbackSound mute toggle. */
   const playFeedback=React.useCallback((ok,task)=>{
-    if(ok){
-      // Replay the correct note/chord beautifully
+    if(feedbackMutedRef.current) return;
+    if(ok){      // Replay the correct note/chord beautifully
       if(task.type==='chord-training'&&task.midis) task.midis.forEach((m,i)=>setTimeout(()=>playNote(m,1.6),i*40));
       else if(task.type==='interval-training') {
         setTimeout(()=>playNote(task.rootMidi,1.2),0);
@@ -823,6 +839,15 @@ export default function PianoTrainer() {
                 <SToggle label="Auto-Weiter" sub="Nach Antwort automatisch nächste Note" value={s.autoAdvance} onChange={set('autoAdvance')}/>
                 <SToggle label="Nächste Note Vorschau" sub="Zeigt die kommende Note als große Vorschau rechts vom Notensystem" value={s.showNextPreview} onChange={set('showNextPreview')}/>
                 <div><div style={{fontSize:11,color:'#4b5563',marginBottom:5}}>Klangfarbe</div><Pills options={[{id:'piano',label:'🎹 Piano'},{id:'organ',label:'🎸 Orgel'},{id:'synth',label:'🌊 Synth'}]} value={s.soundType} onChange={set('soundType')} color="#d97706"/></div>
+                <div>
+                  <div style={{fontSize:11,color:'#4b5563',marginBottom:5,display:'flex',justifyContent:'space-between'}}>
+                    <span>Lautstärke</span><span style={{color:'#64748b',fontFamily:'monospace'}}>{Math.round(s.volume*100)}%</span>
+                  </div>
+                  <input type="range" min={0} max={1} step={0.05} value={s.volume}
+                    onChange={e=>setCfg(p=>({...p,volume:Number(e.target.value)}))}
+                    style={{width:'100%',accentColor:'#d97706',cursor:'pointer'}}/>
+                </div>
+                <SToggle label="Feedback-Sound" sub="Richtig-/Falsch-Töne nach Antwort abspielen" value={s.feedbackSound} onChange={set('feedbackSound')}/>
                 <SToggle label="Auto-Play" sub="Ton sofort beim Erscheinen abspielen" value={s.autoPlaySound} onChange={set('autoPlaySound')}/>
                 <SToggle label="Zeitmodus" sub="Countdown-Timer pro Note" value={s.timedMode} onChange={set('timedMode')}/>
                 {s.timedMode&&<div><div style={{fontSize:11,color:'#4b5563',marginBottom:5}}>Zeit/Note</div><Pills options={[5,8,10,15].map(n=>({id:n,label:`${n}s`}))} value={s.timeLimit} onChange={setN('timeLimit')} color="#dc2626" small/></div>}
@@ -880,6 +905,8 @@ export default function PianoTrainer() {
               else if(currentTask.type==='interval-training'){playNote(currentTask.rootMidi,1.3);setTimeout(()=>playNote(currentTask.topMidi,1.3),250);}
               else playNote(currentTask.midi,1.3);
             }} style={{width:34,height:34,borderRadius:10,cursor:'pointer',background:`${badgeColor}20`,border:`1px solid ${badgeColor}40`,display:'flex',alignItems:'center',justifyContent:'center',color:badgeColor,flexShrink:0}}><Volume2 size={14}/></button>
+            <button onClick={()=>setCfg(p=>({...p,feedbackSound:!p.feedbackSound}))} title={cfg.feedbackSound?'Feedback-Sound aus':'Feedback-Sound an'}
+              style={{width:34,height:34,borderRadius:10,cursor:'pointer',background:isPaper?'rgba(0,0,0,0.06)':'rgba(255,255,255,0.07)',border:`1px solid ${isPaper?'rgba(0,0,0,0.1)':'rgba(255,255,255,0.1)'}`,display:'flex',alignItems:'center',justifyContent:'center',color:cfg.feedbackSound?(isPaper?'#059669':'#34d399'):(isPaper?'#9ca3af':'#4b5563'),flexShrink:0}}>{cfg.feedbackSound?<Volume2 size={14}/>:<VolumeX size={15}/>}</button>
           </div>
         </div>
 
