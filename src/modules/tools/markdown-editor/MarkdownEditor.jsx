@@ -226,7 +226,11 @@ export default function MarkdownEditor() {
   const [showLibrary, setShowLibrary] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [editorContent, setEditorContent] = useState('');
+  // Deferred + debounced preview: prevents the heavy markdown/katex/mermaid
+  // renderer from reflowing the layout on every keystroke, which caused the
+  // panes to "wobble" while typing.
   const deferredEditorContent = useDeferredValue(editorContent);
+  const [previewContent, setPreviewContent] = useState(editorContent);
   const [docTitle, setDocTitle] = useState('');
   const [editingTitle, setEditingTitle] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(null);
@@ -238,8 +242,20 @@ export default function MarkdownEditor() {
   const previewRef = useRef(null);
   const titleInputRef = useRef(null);
   const saveTimeoutRef = useRef(null);
+  const previewDebounceRef = useRef(null);
   const scrollSyncRef = useRef(false);
   const activeScrollPaneRef = useRef(null);
+
+  // Debounce the preview value (usually ~150ms after you stop typing) so the
+  // expensive renderer and the scroll-sync don't fight the layout on each keystroke.
+  useEffect(() => {
+    if (previewDebounceRef.current) clearTimeout(previewDebounceRef.current);
+    previewDebounceRef.current = setTimeout(() => {
+      setPreviewContent(deferredEditorContent);
+      if (viewMode !== 'split') { scrollSyncRef.current = false; }
+    }, 120);
+    return () => { if (previewDebounceRef.current) clearTimeout(previewDebounceRef.current); };
+  }, [deferredEditorContent]);
 
   // Active document
   const activeDoc = documents.find((d) => d.id === activeDocId);
@@ -1040,29 +1056,30 @@ export default function MarkdownEditor() {
               className="flex-1 w-full resize-none p-4 sm:p-6 bg-white dark:bg-stone-900 text-stone-800 dark:text-stone-200 font-mono text-sm leading-relaxed focus:outline-none placeholder-stone-400"
               placeholder="Start writing markdown..."
               spellCheck={false}
-              style={{ tabSize: 2, MozTabSize: 2 }}
+              style={{ tabSize: 2, MozTabSize: 2, scrollbarGutter: 'stable both-edges' }}
             />
           </div>
         )}
 
         {/* ── PREVIEW PANE ────────────────────────────────── */}
-        <div
-          ref={previewRef}
-          onScroll={handlePreviewScroll}
-          onMouseEnter={() => { activeScrollPaneRef.current = 'preview'; }}
-          onTouchStart={() => { activeScrollPaneRef.current = 'preview'; }}
-          className={`mdpad-preview-pane overflow-y-auto ${
-            viewMode === 'preview' ? 'flex-1' : viewMode === 'split' ? 'w-1/2' : 'absolute -left-[9999px] w-[800px]'
-          } bg-white dark:bg-stone-900`}
-        >
-          <div className="mdpad-preview-content max-w-3xl mx-auto p-4 sm:p-8 prose prose-stone dark:prose-invert prose-headings:font-bold prose-a:text-indigo-600 dark:prose-a:text-indigo-400 prose-img:rounded-lg prose-pre:bg-transparent prose-pre:p-0 max-w-none">
-            {deferredEditorContent ? (
+          <div
+            ref={previewRef}
+            onScroll={handlePreviewScroll}
+            onMouseEnter={() => { activeScrollPaneRef.current = 'preview'; }}
+            onTouchStart={() => { activeScrollPaneRef.current = 'preview'; }}
+            style={{ scrollbarGutter: 'stable' }}
+            className={`mdpad-preview-pane overflow-y-auto ${
+              viewMode === 'preview' ? 'flex-1' : viewMode === 'split' ? 'w-1/2' : 'absolute -left-[9999px] w-[800px]'
+            } bg-white dark:bg-stone-900`}
+          >
+          <div className="mdpad-preview-content max-w-3xl mx-auto p-4 sm:p-8 prose prose-stone dark:prose-invert prose-headings:font-bold prose-a:text-indigo-600 dark:prose-a:text-indigo-400 prose-img:rounded-lg prose-pre:bg-transparent prose-pre:p-0">
+            {previewContent ? (
               <ReactMarkdown
                 remarkPlugins={REMARK_PLUGINS}
                 rehypePlugins={REHYPE_PLUGINS}
                 components={markdownComponents}
               >
-                {deferredEditorContent}
+                {previewContent}
               </ReactMarkdown>
             ) : (
               <div className="text-stone-400 dark:text-stone-500 text-center py-20">

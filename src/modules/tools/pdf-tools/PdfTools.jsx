@@ -47,7 +47,7 @@ const generateThumbnail = async (file) => {
 };
 
 // ─── DropZone Component ──────────────────────────────────────────────────────
-function DropZone({ onFiles, multiple = false, accept = '.pdf', label, sublabel }) {
+function DropZone({ onFiles, multiple = false, accept = '.pdf', label, sublabel, gradient = 'from-rose-500 to-orange-500' }) {
   const [isDragging, setIsDragging] = useState(false);
   const inputRef = useRef(null);
 
@@ -86,14 +86,18 @@ function DropZone({ onFiles, multiple = false, accept = '.pdf', label, sublabel 
       onDragOver={handleDrag}
       onDrop={handleDrop}
       className={`
-        relative cursor-pointer rounded-2xl border-2 border-dashed p-12 text-center
-        transition-all duration-300
+        relative cursor-pointer rounded-3xl border-2 border-dashed p-12 text-center
+        transition-all duration-300 overflow-hidden
         ${isDragging
-          ? 'border-rose-500 bg-rose-500/5 scale-[1.02]'
-          : 'border-border hover:border-rose-400 hover:bg-rose-500/5'
+          ? `border-transparent bg-gradient-to-br ${gradient} scale-[1.02] shadow-2xl`
+          : 'border-border hover:border-rose-400/60 hover:bg-rose-500/[0.03]'
         }
       `}
     >
+      {/* subtle glow when dragging */}
+      {isDragging && (
+        <div className="absolute inset-0 bg-white/10 pointer-events-none" />
+      )}
       <input
         ref={inputRef}
         type="file"
@@ -110,14 +114,17 @@ function DropZone({ onFiles, multiple = false, accept = '.pdf', label, sublabel 
         animate={isDragging ? { scale: 1.1, y: -4 } : { scale: 1, y: 0 }}
         transition={{ type: 'spring', stiffness: 300 }}
       >
-        <div className="mx-auto mb-4 w-16 h-16 rounded-2xl bg-gradient-to-br from-rose-500 to-orange-500 flex items-center justify-center">
-          <Upload size={28} className="text-white" />
+        <div className={`mx-auto mb-5 relative w-20 h-20 rounded-3xl bg-gradient-to-br ${gradient} flex items-center justify-center shadow-xl`}>
+          <Upload size={30} className="text-white" />
+          <span className="absolute -right-1 -top-1 w-5 h-5 rounded-full bg-emerald-400 border-2 border-background flex items-center justify-center">
+            <Check size={10} className="text-white" />
+          </span>
         </div>
-        <p className="text-lg font-semibold text-text mb-1">
-          {label || 'Drop your PDF here'}
+        <p className={`text-lg font-bold mb-1 ${isDragging ? 'text-white' : 'text-text'}`}>
+          {isDragging ? 'Drop it to add!' : (label || 'Drop your PDF here')}
         </p>
-        <p className="text-sm text-muted">
-          {sublabel || 'or click to browse files'}
+        <p className={`text-sm ${isDragging ? 'text-white/80' : 'text-muted'}`}>
+          {sublabel || 'Klicken oder Dateien hierher ziehen'}
         </p>
       </motion.div>
     </motion.div>
@@ -125,20 +132,20 @@ function DropZone({ onFiles, multiple = false, accept = '.pdf', label, sublabel 
 }
 
 // ─── FileChip Component ──────────────────────────────────────────────────────
-function FileChip({ file, onRemove, index, pageCount, thumbnail }) {
+function FileChip({ file, onRemove, index, pageCount, thumbnail, gradient = 'from-rose-500 to-orange-500' }) {
   return (
     <motion.div
       layout
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.8 }}
-      className="group flex items-center gap-3 bg-card border border-border rounded-xl p-3 hover:shadow-md transition-shadow"
+      className="group flex items-center gap-3 bg-card border border-border rounded-2xl p-3 hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-black/20 hover:border-rose-400/30 transition-all"
     >
       {thumbnail ? (
-        <img src={thumbnail} alt="" className="w-10 h-12 rounded-lg object-cover border border-border" />
+        <img src={thumbnail} alt="" className="w-11 h-13 rounded-xl object-cover border border-border" />
       ) : (
-        <div className="w-10 h-12 rounded-lg bg-gradient-to-br from-rose-100 to-orange-100 dark:from-rose-900/30 dark:to-orange-900/30 flex items-center justify-center flex-shrink-0">
-          <FileText size={18} className="text-rose-600 dark:text-rose-400" />
+        <div className={`w-11 h-14 rounded-xl bg-gradient-to-br ${gradient} flex items-center justify-center flex-shrink-0 shadow-md`}>
+          <FileText size={18} className="text-white" />
         </div>
       )}
       <div className="flex-1 min-w-0">
@@ -161,17 +168,20 @@ function FileChip({ file, onRemove, index, pageCount, thumbnail }) {
 }
 
 // ─── ProgressBar Component ───────────────────────────────────────────────────
-function ProgressBar({ progress, label }) {
+function ProgressBar({ progress, label, gradient = 'from-rose-500 to-orange-500' }) {
   return (
     <div className="w-full">
-      {label && <p className="text-sm text-muted mb-2">{label}</p>}
-      <div className="h-2 bg-border rounded-full overflow-hidden">
+      <div className="flex items-center justify-between mb-2">
+        {label && <p className="text-sm text-muted">{label}</p>}
+        <span className="text-xs font-mono text-muted">{Math.round(progress)}%</span>
+      </div>
+      <div className="h-2.5 bg-border rounded-full overflow-hidden relative">
         <motion.div
-          initial={{ width: 0 }}
           animate={{ width: `${progress}%` }}
-          className="h-full bg-gradient-to-r from-rose-500 to-orange-500 rounded-full"
+          className={`h-full bg-gradient-to-r ${gradient} rounded-full`}
           transition={{ duration: 0.3 }}
         />
+        <div className="absolute inset-0 rounded-full shadow-[inset_0_1px_2px_rgba(0,0,0,0.2)] pointer-events-none" />
       </div>
     </div>
   );
@@ -180,20 +190,20 @@ function ProgressBar({ progress, label }) {
 // ─── StatusMessage Component ─────────────────────────────────────────────────
 function StatusMessage({ type, children }) {
   const styles = {
-    success: 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300',
-    error: 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800 text-red-700 dark:text-red-300',
-    info: 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300',
+    success: 'bg-emerald-500/10 border-emerald-500/30 text-emerald-700 dark:text-emerald-300',
+    error: 'bg-red-500/10 border-red-500/30 text-red-700 dark:text-red-300',
+    info: 'bg-blue-500/10 border-blue-500/30 text-blue-700 dark:text-blue-300',
   };
   const icons = {
-    success: <Check size={16} />,
-    error: <AlertCircle size={16} />,
-    info: <Loader2 size={16} className="animate-spin" />,
+    success: <div className="w-6 h-6 rounded-full bg-emerald-500/15 flex items-center justify-center"><Check size={14} className="text-emerald-400" /></div>,
+    error: <div className="w-6 h-6 rounded-full bg-red-500/15 flex items-center justify-center"><AlertCircle size={14} className="text-red-400" /></div>,
+    info: <Loader2 size={16} className="animate-spin text-blue-400" />,
   };
   return (
     <motion.div
-      initial={{ opacity: 0, y: -10 }}
-      animate={{ opacity: 1, y: 0 }}
-      className={`flex items-center gap-2 px-4 py-3 rounded-xl border text-sm font-medium ${styles[type]}`}
+      initial={{ opacity: 0, y: -8, scale: 0.98 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      className={`flex items-center gap-2.5 px-4 py-3 rounded-2xl border text-sm font-medium backdrop-blur-sm ${styles[type]}`}
     >
       {icons[type]}
       {children}
@@ -202,11 +212,11 @@ function StatusMessage({ type, children }) {
 }
 
 // ─── ActionButton Component ──────────────────────────────────────────────────
-function ActionButton({ onClick, disabled, loading, children, variant = 'primary' }) {
-  const base = 'inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed';
+function ActionButton({ onClick, disabled, loading, children, variant = 'primary', gradient = null }) {
+  const base = 'inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg';
   const variants = {
-    primary: 'bg-gradient-to-r from-rose-500 to-orange-500 text-white hover:shadow-lg hover:shadow-rose-500/25 active:scale-[0.98]',
-    secondary: 'bg-card border border-border text-text hover:bg-border/50',
+    primary: `${gradient || 'from-rose-500 to-orange-500'} text-white bg-gradient-to-r hover:shadow-xl active:scale-[0.98] shadow-black/10 dark:shadow-black/30`,
+    secondary: 'bg-card border border-border text-text hover:bg-border/50 shadow-none',
   };
   return (
     <motion.button
@@ -2349,7 +2359,13 @@ export default function PdfTools() {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="relative min-h-screen bg-background overflow-hidden">
+      {/* Ambient background glows */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute -top-24 -right-24 w-[500px] h-[500px] bg-rose-500/[0.06] rounded-full blur-3xl" />
+        <div className="absolute bottom-0 -left-24 w-[500px] h-[500px] bg-orange-500/[0.05] rounded-full blur-3xl" />
+      </div>
+
       {/* Header */}
       <div className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center gap-3">
@@ -2368,7 +2384,7 @@ export default function PdfTools() {
             </a>
           )}
           <div className="flex items-center gap-3 flex-1 min-w-0">
-            <div className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 ${
+            <div className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg ${
               activeToolData ? `bg-gradient-to-br ${activeToolData.gradient}` : 'bg-gradient-to-br from-rose-500 to-orange-500'
             }`}>
               {activeToolData ? <activeToolData.icon size={18} className="text-white" /> : <FileText size={18} className="text-white" />}
@@ -2377,23 +2393,38 @@ export default function PdfTools() {
               <h1 className="text-base font-bold text-text leading-tight truncate">
                 {activeToolData ? activeToolData.name : 'PDF Tools'}
               </h1>
-              {!activeTool && <p className="text-[11px] text-muted hidden sm:block">Free &middot; Private &middot; Browser-only</p>}
+              {!activeTool && <p className="text-[11px] text-muted hidden sm:block">Kostenlos &middot; Privat &middot; Nur im Browser</p>}
             </div>
           </div>
           {!activeTool && (
             <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-full">
               <Lock size={12} className="text-emerald-600 dark:text-emerald-400" />
-              <span className="text-[11px] font-medium text-emerald-700 dark:text-emerald-300">Files stay on your device</span>
+              <span className="text-[11px] font-medium text-emerald-700 dark:text-emerald-300">Dateien bleiben auf deinem Gerät</span>
             </div>
           )}
         </div>
       </div>
 
       {/* Content */}
-      <div className={`mx-auto px-4 py-6 ${activeTool === 'organizer' ? 'max-w-6xl' : 'max-w-5xl'}`}>
+      <div className="relative z-10 mx-auto px-4 py-6 ${activeTool === 'organizer' ? 'max-w-6xl' : 'max-w-5xl'}">
         <AnimatePresence mode="wait">
           {!activeTool ? (
             <motion.div key="hub" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, y: -20 }}>
+
+              {/* Hero strip */}
+              <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+                className="relative mb-8 rounded-3xl overflow-hidden bg-gradient-to-br from-rose-500/[0.07] via-transparent to-orange-500/[0.07] border border-border p-6 sm:p-8">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                  <div className="flex-1">
+                    <h1 className="text-2xl sm:text-3xl font-black text-text tracking-tight">PDF Tools</h1>
+                    <p className="text-sm text-muted mt-1">Alle Bearbeitung läuft lokal in deinem Browser – nichts wird hochgeladen.</p>
+                  </div>
+                  <div className="flex items-center gap-2 text-xs text-muted">
+                    <Sparkles size={14} className="text-rose-400" />
+                    <span>9 Tools · 100% kostenlos</span>
+                  </div>
+                </div>
+              </motion.div>
 
               {/* Featured Tool — Page Organizer */}
               {featured.map((tool) => {
@@ -2406,10 +2437,10 @@ export default function PdfTools() {
                     whileHover={{ y: -3 }}
                     whileTap={{ scale: 0.995 }}
                     onClick={() => setActiveTool(tool.id)}
-                    className="group relative w-full bg-gradient-to-br from-indigo-500/[0.04] via-card to-violet-500/[0.04] border border-border rounded-2xl p-5 sm:p-6 text-left hover:shadow-xl hover:border-indigo-500/30 transition-all duration-300 overflow-hidden mb-6"
+                    className="group relative w-full bg-gradient-to-br from-indigo-500/[0.04] via-card to-violet-500/[0.04] border border-border rounded-3xl p-5 sm:p-6 text-left hover:shadow-xl shadow-black/5 hover:border-indigo-500/30 transition-all duration-300 overflow-hidden mb-8"
                   >
                     <div className="relative flex items-center gap-4 sm:gap-5">
-                      <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${tool.gradient} flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg shadow-indigo-500/20`}>
+                      <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${tool.gradient} flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg`}>
                         <Icon size={26} className="text-white" />
                       </div>
                       <div className="flex-1 min-w-0">
@@ -2418,7 +2449,7 @@ export default function PdfTools() {
                           <span className="px-2 py-0.5 bg-gradient-to-r from-indigo-500 to-violet-500 text-white text-[10px] font-bold rounded-full leading-tight">PRO</span>
                         </div>
                         <p className="text-sm text-muted leading-relaxed">{tool.description}</p>
-                        <p className="text-[11px] text-muted/70 mt-1 hidden sm:block">Multi-document workspace &middot; Drag & drop &middot; Ctrl+C/V &middot; Export per document</p>
+                        <p className="text-[11px] text-muted/70 mt-1 hidden sm:block">Multi-Dokument-Arbeitsbereich &middot; Drag &amp; drop &middot; Ctrl+C/V &middot; Export pro Dokument</p>
                       </div>
                       <ArrowLeft size={20} className="text-muted rotate-180 group-hover:translate-x-1 transition-transform flex-shrink-0 hidden sm:block" />
                     </div>
@@ -2449,10 +2480,10 @@ export default function PdfTools() {
                           whileHover={{ y: -4, scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                           onClick={() => setActiveTool(tool.id)}
-                          className="group relative bg-card border border-border rounded-2xl p-4 text-left hover:shadow-lg hover:shadow-black/5 dark:hover:shadow-black/20 hover:border-border transition-all duration-200 overflow-hidden"
+                          className="group relative bg-card border border-border rounded-2xl p-4 text-left hover:shadow-xl shadow-black/5 hover:border-border transition-all duration-200 overflow-hidden"
                         >
-                          <div className={`absolute inset-0 bg-gradient-to-br ${tool.gradient} opacity-0 group-hover:opacity-[0.05] transition-opacity duration-200`} />
-                          <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${tool.gradient} flex items-center justify-center mb-2.5 group-hover:scale-110 transition-transform duration-200`}>
+                          <div className={`absolute inset-0 bg-gradient-to-br ${tool.gradient} opacity-0 group-hover:opacity-[0.06] transition-opacity duration-200`} />
+                          <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${tool.gradient} flex items-center justify-center mb-2.5 group-hover:scale-110 transition-transform duration-200 shadow-md`}>
                             <Icon size={18} className="text-white" />
                           </div>
                           <h3 className="font-semibold text-text text-[13px] mb-0.5">{tool.name}</h3>
@@ -2473,7 +2504,7 @@ export default function PdfTools() {
               >
                 <Lock size={12} className="text-muted" />
                 <p className="text-[11px] text-muted">
-                  All processing happens locally. No files are uploaded to any server. Built with pdf-lib &amp; pdf.js.
+                  Alle Verarbeitung erfolgt lokal. Keine Dateien werden auf einen Server hochgeladen. Erstellt mit pdf-lib &amp; pdf.js.
                 </p>
               </motion.div>
             </motion.div>

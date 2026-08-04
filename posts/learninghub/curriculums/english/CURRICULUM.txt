@@ -1,0 +1,487 @@
+═══════════════════════════════════════════════════════════════════════════════
+🗣️ DER SPRACH-KOMPASS (MODULARER GESAMT-LEHRPLAN A1-C2)
+═══════════════════════════════════════════════════════════════════════════════
+
+Ziel: Dieses Dokument dient als ein einziger, umfassender und aufbauender Lehrplan. Jedes Modul repräsentiert ein Sprachniveau (A1-C2) und integriert alle notwendigen Grammatik-Lektionen sowie die praktischen Fähigkeiten (Wortschatz, Sprechen, Hören, Schreiben).
+
+Die Nummerierung der Grammatikpunkte (z.B. "G-1", "G-2") stammt aus der umfassenden Grammatik-Referenz und dient der systematischen Erfassung.
+
+HINWEIS ZU GAMES UND LEKTIONEN:
+Die passenden Grammatik-Spiele befinden sich im Ordner `games_grammar` (bzw. `grammar-games`) und sollten so oft wie möglich in die Lektionen integriert werden, um das Gelernte spielerisch zu festigen.
+Lektionen müssen sehr ausführlich gestaltet sein! Erkläre jedes Konzept mit viel Fließtext: Was ist es? Wofür braucht man es? Wann nutzt man es? Gib viele Beispiele und Kontext, bevor die Übungen beginnen. Vermeide reine Listen ohne Erklärung.
+
+═══════════════════════════════════════════════════════════════════════════════
+MODUL 1: DAS FUNDAMENT (NIVEAU A1 - Anfänger)
+Ziel: Grundlegendes Verstehen und Verwenden alltäglicher Ausdrücke.
+═══════════════════════════════════════════════════════════════════════════════
+
+1.1 GRAMMATIK (A1)
+
+1.1.0 Grundlagen (Essentials) - NEU
+□ G-0A Verb 'to be' (I am, you are...)
+□ G-0B Subject Pronouns (I, you, he...) & Object Pronouns (me, you, him...)
+□ G-0C Possessive Adjectives (my, your, his...)
+□ G-0D Demonstratives (this, that, these, those)
+
+1.1.1 Gegenwart (Present) & 'Sein'
+□ G-1 Present continuous (I am doing)
+□ G-2 Present simple (I do)
+□ G-3 Present continuous and present simple 1 (I am doing and I do)
+□ G-4 Present continuous and present simple 2 (I am doing and I do)
+□ G-17 have and have got
+
+1.1.2 Vergangenheit & Zukunft (Basis)
+□ G-5 Past simple (I did) - (Einführung mit 'to be' -> was/were und regulären Verben)
+□ G-20 I’m going to (do) - (Einführung für Pläne)
+□ G-21 will and shall 1 - (Einführung für Angebote)
+
+1.1.3 Modalverben & Imperativ (Basis)
+□ G-26 can, could and (be) able to - (Fokus auf 'can' für Fähigkeit)
+□ G-37 can/could/would you … ? etc. (Fokus auf 'Would you like...?' & 'Can I have...?')
+□ (Appendix) The imperative: Sit down! Don’t talk!
+
+1.1.4 Fragen & Satzbau (Basis)
+□ G-49 Questions 1 (Wortstellung, Fragewörter: What, Where, Who, When, Why, How)
+□ G-109 Word order 1: verb + object; place and time
+□ G-X Short Answers (Yes, I do / No, I don't)
+
+1.1.5 Nomen, Artikel & Pronomen (Basis)
+□ G-69 Countable and uncountable 1
+□ G-70 Countable and uncountable 2
+□ G-71 Countable nouns with a/an and some
+□ G-72 a/an and the
+□ G-79 Singular and plural (Regeln & Ausnahmen)
+□ G-81 -’s (your sister’s name) and of … (Fokus auf -'s)
+□ G-82 myself/yourself/themselves etc. (Reflexive Pronouns - Basis)
+□ G-84 there … and it …
+□ G-85 some and any
+
+1.1.6 Adjektive & Adverben (Basis)
+□ G-98 Adjectives ending in -ing and -ed (boring/bored etc.)
+□ G-99 Adjectives: a nice new house, you look tired
+□ G-100 Adjectives and adverbs 1 (quick/quickly)
+□ G-105 Comparative 1 (cheaper, more expensive etc.)
+□ G-108 Superlative (the longest, the most enjoyable etc.)
+
+1.1.7 Präpositionen (Basis)
+□ G-121 at/on/in (time)
+□ G-123 in/at/on (position) 1
+□ G-124 in/at/on (position) 2
+□ (Appendix) Prepositions of place: Next to, under, between, etc.
+
+1.2 WORTSCHATZ (A1)
+
+□ Begrüßung, Vorstellung, Zahlen, Wochentage, Monate, Uhrzeit
+□ Familie, Essen (Basis), Getränke, Berufe
+□ Farben, Kleidung, Räume im Haus
+□ Einfache Verben (go, eat, sleep, work, like, love, have)
+
+1.3 SPRECHEN (A1)
+
+□ Sich vorstellen, buchstabieren, nach dem Namen/Alter/Herkunft fragen
+□ Einfache Sätze bilden (I am..., I have..., I like...)
+□ Einfache Ja/Nein-Fragen und W-Fragen stellen
+□ PRONUNCIATION: The English Alphabet & Spelling
+□ PRONUNCIATION: th-sound (think vs. this)
+
+1.4 HÖREN (A1)
+
+□ Sehr langsame, klare Dialoge und Anweisungen verstehen
+□ Namen, Zahlen und grundlegende Informationen heraushören
+
+1.5 SCHREIBEN (A1)
+
+□ Einfache Formulare ausfüllen (Name, Adresse, Nationalität)
+□ 3-5 Sätze über sich selbst, die eigene Familie oder den eigenen Tag schreiben
+□ PUNCTUATION: Capital letters & full stops (Basics)
+
+═══════════════════════════════════════════════════════════════════════════════
+MODUL 2: DER AUFBAU (NIVEAU A2 - Grundlegend)
+Ziel: Sätze und häufig gebrauchte Ausdrücke verstehen (z.B. Einkaufen, Arbeit, Umgebung).
+═══════════════════════════════════════════════════════════════════════════════
+
+2.1 GRAMMATIK (A2)
+
+2.1.1 Zeitformen (Erweitert)
+□ G-6 Past continuous (I was doing)
+□ G-7 Present perfect 1 (I have done) - (Einführung: Erfahrung)
+□ G-8 Present perfect 2 (I have done)
+□ G-11 how long have you (been) … ?
+□ G-12 for and since when … ? and how long … ?
+□ G-13 Present perfect and past 1 (I have done and I did) - (Der wichtige Unterschied!)
+□ G-14 Present perfect and past 2 (I have done and I did)
+□ G-19 Present tenses (I am doing / I do) for the future
+□ G-23 I will and I’m going to - (Unterschiede Pläne vs. Vorhersagen)
+
+2.1.2 Modalverben & Verwandtes (Erweitert)
+□ G-18 used to (do)
+□ G-26 can, could and (be) able to - (Fokus auf 'could' Vergangenheit/Höflichkeit)
+□ G-29 may and might 1
+□ G-30 may and might 2
+□ G-31 have to and must
+□ G-33 should 1
+
+2.1.3 Konditional & Passiv (Basis)
+□ G-38 if I do … and if I did … - (Fokus auf Typ 1: If I do...)
+□ G-42 Passive 1 (is done / was done)
+
+2.1.4 Indirekte Rede & Fragen (Basis)
+□ G-47 Reported speech 1 (he said that …) - (Einführung)
+□ G-50 Questions 2 (do you know where … ? / he asked me where …) (Indirect Questions)
+
+2.1.5 Gerund/Infinitiv (Basis)
+□ G-53 Verb + -ing (enjoy doing / stop doing etc.)
+□ G-54 Verb + to … (decide to … / forget to … etc.)
+□ G-64 to … , for … and so that … (Purpose)
+
+2.1.6 Pronomen & Quantifiers (Erweitert)
+□ G-86 no/none/any nothing/nobody etc.
+□ G-87 much, many, little, few, a lot, plenty
+□ G-89 both / both of neither / neither of either / either of
+
+2.1.7 Relativsätze (Basis)
+□ G-92 Relative clauses 1: clauses with who/that/which
+□ G-93 Relative clauses 2: clauses with and without who/that/which
+
+2.1.8 Adjektive/Adverben & Vergleiche
+□ G-101 Adjectives and adverbs 2 (well, fast, late, hard/hardly)
+□ G-103 enough and too
+□ G-107 Comparative 3 (as … as / than)
+
+2.1.9 Konjunktionen & Präpositionen
+□ G-113 although though even though in spite of despite - (Fokus auf although/because)
+□ G-119 during for while
+□ G-120 by and until by the time …
+□ G-126 to, at, in and into
+
+2.2 WORTSCHATZ (A2)
+
+□ Hobbys, Freizeit, Reisen, Transportmittel
+□ Orte in der Stadt (Bank, Post, Restaurant), Wegbeschreibungen
+□ Körperteile, einfache Krankheiten (headache, cold)
+□ Einkaufen (Kleidung, Lebensmittel), Preise
+
+2.3 SPRECHEN (A2)
+
+□ Über den eigenen Tag/das Wochenende sprechen (Vergangenheit)
+□ Essen im Restaurant bestellen, nach dem Weg fragen
+□ Einfache Pläne und Absichten ausdrücken (going to)
+□ Über Erfahrungen sprechen (Have you ever...?)
+□ PRONUNCIATION: Past Simple endings (-ed: /t/, /d/, /ɪd/)
+
+2.4 HÖREN (A2)
+
+□ Einfache Alltagsgespräche und Ankündigungen verstehen (Bahnhof, Flughafen)
+□ Kurze, klare Mitteilungen und Durchsagen verstehen
+
+2.5 SCHREIBEN (A2)
+
+□ Postkarten, kurze Urlaubs-E-Mails verfassen
+□ Einen einfachen Tagesablauf oder eine vergangene Begebenheit beschreiben
+□ Kurze Notizen und Mitteilungen schreiben
+□ PUNCTUATION: Commas in lists and with 'but'/'and'
+
+═══════════════════════════════════════════════════════════════════════════════
+MODUL 3: DIE MITTELSTUFE (NIVEAU B1 - Selbstständigkeit)
+Ziel: Die meisten Situationen bewältigen, denen man auf Reisen begegnet; über Erfahrungen, Träume, Hoffnungen und Ziele sprechen.
+═══════════════════════════════════════════════════════════════════════════════
+
+3.1 GRAMMATIK (B1)
+
+3.1.1 Zeitformen (Konsolidierung & Vertiefung)
+□ G-9 Present perfect continuous (I have been doing)
+□ G-10 Present perfect continuous and simple (I have been doing and I have done)
+□ G-15 Past perfect (I had done)
+□ G-16 Past perfect continuous (I had been doing)
+□ (Appendix) Review: Alle Present, Past & Perfect Tenses
+
+3.1.2 Zukunft (Erweitert)
+□ G-24 will be doing (Future Continuous) and will have done (Future Perfect)
+□ G-25 when I do and when I’ve done if and when (Future time clauses)
+
+3.1.3 Modalverben (Nuancen & Deduktion)
+□ G-27 could (do) and could have (done)
+□ G-28 must and can’t (Deduktion)
+□ G-32 must mustn’t needn’t
+□ G-34 should 2 (inkl. 'should have done')
+□ G-35 I’d better … it’s time …
+□ G-36 would (Vergangene Gewohnheiten)
+
+3.1.4 Konditionalsätze & Wish (Alle Haupttypen)
+□ G-38 if I do … and if I did … (Typ 1 & 2)
+□ G-39 if I knew … I wish I knew … (Typ 2 & Wish)
+□ G-40 if I had known … I wish I had known … (Typ 3 & Wish)
+□ G-41 wish (Alle Formen)
+
+3.1.5 Passiv (Erweitert)
+□ G-43 Passive 2 (be done / been done / being done)
+□ G-44 Passive 3 (Alle Zeitformen)
+□ G-45 it is said that … he is said to … he is supposed to …
+□ G-46 have something done (Causative)
+
+3.1.6 Indirekte Rede & Hilfsverben
+□ G-48 Reported speech 2 (Komplexe Formen, Backshift)
+□ G-51 Auxiliary verbs (have/do/can etc.) I think so / I hope so etc.
+□ G-52 Question tags (do you? isn’t it? etc.)
+
+3.1.7 Gerund/Infinitiv (Muster & Präpositionen)
+□ G-55 Verb (+ object) + to … (I want you to …)
+□ G-56 Verb + -ing or to … 1 (remember, regret etc.)
+□ G-57 Verb + -ing or to … 2 (try, need, help)
+□ G-58 Verb + -ing or to … 3 (like / would like etc.)
+□ G-59 prefer and would rather
+□ G-60 Preposition (in/for/about etc.) + -ing
+□ G-61 be/get used to … (I’m used to …)
+□ G-62 Verb + preposition + -ing (succeed in -ing / insist on -ing etc.)
+□ G-63 there’s no point in -ing, it’s worth -ing etc.
+□ G-65 Adjective + to …
+□ G-66 to … (afraid to do) and preposition + -ing (afraid of -ing)
+□ G-67 see somebody do and see somebody doing
+
+3.1.8 Artikel & Nomen (Details)
+□ G-73 the 1 (Spezifische Verwendung)
+□ G-74 the 2 (school / the school etc.) (Ortsnamen)
+□ Example
+□ G-75 the 3 (children / the children) (Verallgemeinerungen)
+□ G-76 the 4 (the giraffe / the telephone / the old etc.)
+□ G-77 Names with and without the 1
+□ G-78 Names with and without the 2
+□ G-80 Noun + noun (a bus driver / a headache)
+
+3.1.9 Pronomen & Quantifiers (Details)
+□ G-83 a friend of mine my own house on my own / by myself
+□ G-88 all / all of most / most of no / none of etc.
+□ G-90 all every whole
+□ G-91 each and every
+
+3.1.10 Relativsätze (Erweitert)
+□ G-94 Relative clauses 3: whose/whom/where
+□ G-95 Relative clauses 4: extra information clauses (1) (Non-defining)
+□ G-96 Relative clauses 5: extra information clauses (2) (Non-defining)
+
+3.1.11 Adjektive & Adverben (Details)
+□ G-102 so and such
+□ G-104 quite, pretty, rather and fairly
+□ G-106 Comparative 2 (much better / any better etc.)
+□ G-110 Word order 2: adverbs with the verb
+□ G-111 still any more yet already
+□ G-112 even
+
+3.1.12 Konjunktionen & Präpositionen (Details)
+□ G-113 although though even though in spite of despite
+□ G-114 in case
+□ G-115 unless as long as provided
+□ G-116 as (as I walked … / as I was … etc.)
+□ G-117 like and as
+□ G-118 like as if
+□ G-122 on time and in time at the end and in the end
+□ G-125 in/at/on (position) 3
+□ G-127 in/on/at (other uses)
+□ G-128 by
+□ G-129 Noun + preposition (reason for, cause of etc.)
+□ G-130 Adjective + preposition 1
+□ G-131 Adjective + preposition 2
+□ G-132 Verb + preposition 1
+□ G-133 Verb + preposition 2
+□ G-134 Verb + preposition 3
+□ G-135 Verb + preposition 4
+□ G-136 Verb + preposition 5
+
+3.1.13 Phrasal Verbs (Einführung)
+□ G-137 Phrasal verbs 1 Introduction
+□ G-138 - G-145 (Thematische Gruppen: in/out, up/down, etc.)
+
+3.2 WORTSCHATZ (B1)
+
+□ Gefühle & Emotionen, Meinungen (zustimmen/ablehnen)
+□ Arbeit & Studium (Bewerbung, Meeting, Prüfung)
+□ Medien, Technologie, Umwelt
+□ Charakter-Adjektive, "False Friends"
+
+3.3 SPRECHEN (B1)
+
+□ Meinungen äußern, Ratschläge geben, Vor- und Nachteile diskutieren
+□ Über Erfahrungen, Träume, Hoffnungen und Pläne sprechen
+□ Hypothetische Situationen (Typ 2) durchspielen ("What would you do if...")
+□ PRONUNCIATION: Word stress (record/record) & Sentence stress
+
+3.4 HÖREN (B1)
+
+□ Die Hauptpunkte von normal gesprochenen Alltagsgesprächen verstehen
+□ Interviews, Podcasts für Lerner, Radio- und Fernsehnachrichten (Hauptpunkte) verstehen
+
+3.5 SCHREIBEN (B1)
+
+□ Formelle und informelle E-Mails/Briefe
+□ Kurze, zusammenhängende Texte über vertraute Themen
+□ Eine einfache Geschichte oder Meinungsäußerung schreiben (Blog-Kommentar)
+
+═══════════════════════════════════════════════════════════════════════════════
+MODUL 4: DIE OBERSTUFE (NIVEAU B2 - Flüssigkeit)
+Ziel: Komplexe Texte verstehen, sich spontan und fließend verständigen, detaillierte Texte zu vielen Themen schreiben.
+═══════════════════════════════════════════════════════════════════════════════
+
+4.1 GRAMMATIK (B2)
+
+4.1.1 Zeitformen (Narrative & Vertiefung)
+□ Vertiefung: G-5, G-6, G-15, G-16 (Narrative Tenses: Einsatz aller Vergangenheitsformen zum Erzählen einer Geschichte)
+□ Vertiefung: G-24 (Future Continuous/Perfect) für Annahmen über die Gegenwart/Vergangenheit ("He will have arrived by now.")
+
+4.1.2 Modalverben (Vertiefung)
+□ Vertiefung: G-27 (could have), G-28 (must have / can't have)
+□ (Appendix) Past Modals (should have, might have, needn't have)
+
+4.1.3 Konditionalsätze (Alle Formen & Varianten)
+□ Vertiefung: G-38, G-39, G-40 (Alle Typen, inkl. Mixed Conditionals)
+□ G-115 unless as long as provided (Alternative Konjunktionen)
+□ (C-Level Intro) Inversion bei Konditionalsätzen ("Had I known...")
+
+4.1.4 Passiv & Causative (Vertiefung)
+□ Vertiefung: G-45 (Reporting Passive: "He is thought to be...")
+□ Vertiefung: G-46 (have something done - komplexe Anwendung)
+
+4.1.5 Satzbau & Partizipien (Sehr wichtig!)
+□ G-68 -ing clauses (He hurt his knee playing football.) (Participle Clauses)
+□ G-97 -ing and -ed clauses (Reduced Relative Clauses)
+
+4.1.6 Stilistik & Emphase (Einführung)
+□ (C-Level Intro) Cleft Sentences (What I need is..., It was John who...)
+□ (C-Level Intro) Inversion (Not only... did he, Never have I seen...)
+
+4.1.7 (Neu) Konnektoren & Diskursmarker (Linking & Discourse)
+□ Vertiefung G-113 (Contrast: although, despite) & G-115 (Condition: unless, provided)
+□ (Neu) Diskursmarker (Strukturierung): Firstly, Secondly, In conclusion, Furthermore, However, Consequently, On the one hand...
+□ (Neu) Adverbien als Konnektoren (z.B. Therefore, Moreover, Nevertheless)
+
+4.2 WORTSCHATZ (B2)
+
+□ Redewendungen (Idioms), Phrasal Verbs (vertieft)
+□ Politik, Gesellschaft, Wirtschaft, Wissenschaft
+□ Nuancierte Synonyme (good -> excellent, viable, superb)
+□ Formelles vs. Informelles Vokabular (Register)
+
+4.3 SPRECHEN (B2)
+
+□ Flüssiges Debattieren und Argumentieren (Vor- und Nachteile abwägen)
+□ Eine klare, detaillierte Präsentation halten
+□ Komplexe hypothetische Situationen (Mixed Conditionals) diskutieren
+□ PRONUNCIATION: Connected Speech (Linking, Elision)
+
+4.4 HÖREN (B2)
+
+□ Filme/Serien im Original (ggf. mit engl. Untertiteln)
+□ Nachrichten (BBC, CNN), TED Talks, die meisten Podcasts
+□ Längeren, komplexen Vorträgen und Argumentationen folgen
+
+4.5 SCHREIBEN (B2)
+
+□ Strukturierte Aufsätze (Essays): Einleitung, Hauptteil, Schluss
+□ Formelle Beschwerdebriefe, Bewerbungen (Cover Letter)
+□ Berichte, Rezensionen (Film, Buch)
+□ PUNCTUATION: Semicolons & Colons (Introduction)
+
+═══════════════════════════════════════════════════════════════════════════════
+MODUL 5: DER FEINSCHLIFF (NIVEAU C1 - Kompetenz)
+Ziel: Ein breites Spektrum anspruchsvoller Texte verstehen, sich implizit ausdrücken, Sprache flexibel gebrauchen.
+═══════════════════════════════════════════════════════════════════════════════
+
+5.1 GRAMMATIK (C1 - Stilistik & Meisterschaft)
+
+(Fokus auf Nuancen, Register und fortgeschrittene Strukturen, die über die Standard-Grammatik hinausgehen)
+
+□ 5.1.1 Fortgeschrittene Satzstrukturen (Emphase & Stil)
+□ Inversion (Vertiefung: Not only..., Seldom..., Under no circumstances...)
+□ Cleft Sentences (Vertiefung: What...is..., It...that...)
+□ (Neu) Emphatisches 'do/did' (Betonung: "I do believe you are correct.")
+
+□ 5.1.2 Konjunktiv (Subjunctive)
+□ (z.B. "I suggest that he be quiet.", "It is vital that...")
+
+□ 5.1.3 Ellipsen & Substitution
+□ (Bewusstes Weglassen von Satzteilen in formeller/informeller Sprache)
+
+□ 5.1.4 (Neu) Formelles Englisch & Nominalisierung
+□ (Neu) Nominalisierung (Verben in Nomen umwandeln für formellen Stil: "investigate" -> "an investigation of")
+
+□ 5.1.5 (Neu) Fortgeschrittene Nebensätze
+□ (Neu) Fortgeschrittene Relativsätze (gestapelt, "of which", "whereby")
+□ (Neu) Adverbialsätze (Nuancen: manner, concession)
+
+□ 5.1.6 Nuancen & Register
+□ (z.B. Unterschied 'hard' vs 'hardly', 'like' vs 'as' in allen Details)
+
+□ 5.1.7 Fortgeschrittene Partizipialkonstruktionen
+□ (Vertiefung von G-68, G-97 für komplexe Satzverbindungen)
+
+5.2 WORTSCHATZ (C1)
+
+□ Fachjargon (je nach Interessengebiet)
+□ Umgangssprache (Slang) und formelle Register fließend anwenden
+□ Nuancierte Verben (stroll, wander, stride, saunter)
+□ Kollokationen (Wörter, die "fest" zusammengehören)
+
+5.3 SPRECHEN (C1)
+
+□ Spontan und fließend über komplexe, unbekannte Themen sprechen
+□ Humor, Ironie und Sarkasmus verstehen und anwenden
+□ Akzent-Reduktion, "Connected Speech" (fließende Wortverbindungen)
+□ PRONUNCIATION: Intonation & Pitch for subtle meaning
+
+5.4 HÖREN (C1)
+
+□ Alles verstehen, inkl. starker regionaler Akzente, schnelle Sprecher, Wortspiele
+□ Akademische Vorlesungen oder Fachvorträge verstehen
+
+5.5 SCHREIBEN (C1)
+
+□ Komplexe Berichte, wissenschaftliche Aufsätze
+□ Kreatives Schreiben (Geschichten, Artikel in einem bestimmten Stil)
+□ Klar, flüssig und stilistisch angemessen schreiben
+
+═══════════════════════════════════════════════════════════════════════════════
+MODUL 6: MEISTERSCHAFT (NIVEAU C2 - "Native-Like")
+Ziel: Müheloses Verstehen von praktisch allem; präzise, flüssige und nuancierte Ausdrucksweise.
+═══════════════════════════════════════════════════════════════════════════════
+
+6.1 GRAMMATIK (C2 - Perfektion & Stilistik)
+
+(C2 fügt keine neuen Regeln hinzu, sondern perfektioniert die Anwendung aller C1-Themen.)
+
+□ 6.1.1 Vollständige Beherrschung & Stilistik
+□ Meisterung aller 145 Grammatik-Themen und ihrer Ausnahmen.
+
+□ 6.1.2 Rhetorische Mittel
+□ Bewusster Einsatz von stilistischer Inversion, komplexen Ellipsen und Archaismen (z.B. "whom", seltener Konjunktiv) zur Erzielung einer bestimmten Wirkung.
+
+□ 6.1.3 (Neu) Pragmatik & Tonalität (Abschwächung & Verstärkung)
+□ (Neu) "Hedging" (Vermeidungssprache: "It would seem that...", "Arguably...", "It is likely...")
+□ (Neu) Emphatische Adverbien & Intensivierer (z.B. utterly, deeply, profoundly, indeed)
+
+□ 6.1.4 Verständnis für Jargon & Historische Grammatik
+□ Fähigkeit, juristische, akademische oder literarische Texte zu dekonstruieren, die von Standardstrukturen abweichen.
+
+□ 6.1.5 (Neu) Fortgeschrittene Interpunktion (Stilistik)
+□ (Neu) Meisterung von Semikolon (;) und Geviertstrich (—) (Semicolon & Em-dash)
+□ (Neu) Nuancierte Kommasetzung (z.B. Oxford Comma, Kommas bei Partizipialsätzen)
+
+6.2 WORTSCHATZ (C2)
+
+□ Akademischer, literarischer und archaischer Wortschatz
+□ Beherrschung von Fachjargon in mehreren Disziplinen
+□ Müheloser Umgang mit komplexen Kollokationen und Idiomatik
+
+6.3 SPRECHEN (C2)
+
+□ Mühelose, präzise und idiomatische Kommunikation in jedem Kontext
+□ Fähigkeit, komplexe Ideen zu synthetisieren und eloquent zu präsentieren
+□ Vorträge auf muttersprachlichem Niveau halten
+
+6.4 HÖREN & LESEN (C2)
+
+□ Müheloses Verstehen von hochkomplexen, technischen oder akademischen Texten und Vorträgen
+□ Verständnis für subtile stilistische Nuancen in Literatur und Rhetorik
+
+6.5 SCHREIBEN (C2)
+
+□ Verfassen von Texten auf Publikationsniveau (z.B. akademische Paper, Literaturkritiken)
+□ Perfekter, flexibler Umgang mit Ton, Stil und Register je nach Zielgruppe
