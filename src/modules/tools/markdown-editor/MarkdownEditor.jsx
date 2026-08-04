@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo, useDeferredValue } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
@@ -17,8 +17,64 @@ import {
   Sun, Moon
 } from 'lucide-react';
 
-// ─── Mermaid Init ───────────────────────────────────────────
+// ─── Mermaid & Plugin Init ─────────────────────────────────
 mermaid.initialize({ startOnLoad: false, theme: 'default', securityLevel: 'loose' });
+
+const REMARK_PLUGINS = [remarkGfm, remarkMath];
+const REHYPE_PLUGINS = [rehypeKatex, rehypeRaw];
+
+// ─── MermaidBlock ───────────────────────────────────────────
+const MermaidBlock = React.memo(function MermaidBlock({ code }) {
+  const containerRef = useRef(null);
+  const [svg, setSvg] = useState('');
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    const id = `mermaid-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    mermaid.render(id, code)
+      .then(({ svg: renderedSvg }) => {
+        if (!cancelled) {
+          setSvg(renderedSvg);
+          setError(null);
+        }
+      })
+      .catch((err) => {
+        if (!cancelled) setError(String(err));
+      });
+    return () => { cancelled = true; };
+  }, [code]);
+
+  if (error) {
+    return (
+      <div className="text-red-400 bg-red-950/30 border border-red-800/50 rounded-lg p-3 text-sm font-mono my-2">
+        Mermaid Error: {error}
+      </div>
+    );
+  }
+  return <div ref={containerRef} dangerouslySetInnerHTML={{ __html: svg }} className="flex justify-center my-4" />;
+});
+
+// ─── Toolbar Components ─────────────────────────────────────
+const ToolbarButton = React.memo(function ToolbarButton({ icon: Icon, label, onClick, className = '' }) {
+  return (
+    <button
+      onClick={onClick}
+      title={label}
+      className={`p-1.5 rounded-md hover:bg-stone-200 dark:hover:bg-stone-600 text-stone-600 dark:text-stone-300 transition-colors ${className}`}
+    >
+      {typeof Icon === 'string' ? (
+        <span className="text-xs font-bold w-5 h-5 flex items-center justify-center">{Icon}</span>
+      ) : (
+        <Icon size={16} />
+      )}
+    </button>
+  );
+});
+
+const ToolbarSep = React.memo(function ToolbarSep() {
+  return <div className="w-px h-6 bg-stone-300 dark:bg-stone-600 mx-1" />;
+});
 
 // ─── Constants ──────────────────────────────────────────────
 const STORAGE_KEY = 'markdownpad_documents';
@@ -83,33 +139,7 @@ graph LR
 
 ---
 
-> Start writing! Open the **document library** to manage your notes.
 `;
-
-// ─── MermaidBlock ───────────────────────────────────────────
-function MermaidBlock({ code }) {
-  const containerRef = useRef(null);
-  const [svg, setSvg] = useState('');
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    let cancelled = false;
-    const id = `mermaid-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
-    mermaid.render(id, code)
-      .then(({ svg: renderedSvg }) => { if (!cancelled) setSvg(renderedSvg); })
-      .catch((err) => { if (!cancelled) setError(String(err)); });
-    return () => { cancelled = true; };
-  }, [code]);
-
-  if (error) {
-    return (
-      <div className="text-red-400 bg-red-950/30 border border-red-800/50 rounded-lg p-3 text-sm font-mono my-2">
-        Mermaid Error: {error}
-      </div>
-    );
-  }
-  return <div ref={containerRef} dangerouslySetInnerHTML={{ __html: svg }} className="flex justify-center my-4" />;
-}
 
 // ─── Storage Helpers ────────────────────────────────────────
 function loadDocuments() {
@@ -196,6 +226,7 @@ export default function MarkdownEditor() {
   const [showLibrary, setShowLibrary] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [editorContent, setEditorContent] = useState('');
+  const deferredEditorContent = useDeferredValue(editorContent);
   const [docTitle, setDocTitle] = useState('');
   const [editingTitle, setEditingTitle] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(null);
@@ -208,6 +239,7 @@ export default function MarkdownEditor() {
   const titleInputRef = useRef(null);
   const saveTimeoutRef = useRef(null);
   const scrollSyncRef = useRef(false);
+  const activeScrollPaneRef = useRef(null);
 
   // Active document
   const activeDoc = documents.find((d) => d.id === activeDocId);
@@ -535,7 +567,7 @@ export default function MarkdownEditor() {
 
   // --- Scroll sync ---
   const handleEditorScroll = useCallback(() => {
-    if (scrollSyncRef.current || viewMode !== 'split') return;
+    if (scrollSyncRef.current || viewMode !== 'split' || activeScrollPaneRef.current !== 'editor') return;
     const editor = editorRef.current;
     const preview = previewRef.current;
     if (!editor || !preview) return;
@@ -546,7 +578,7 @@ export default function MarkdownEditor() {
   }, [viewMode]);
 
   const handlePreviewScroll = useCallback(() => {
-    if (scrollSyncRef.current || viewMode !== 'split') return;
+    if (scrollSyncRef.current || viewMode !== 'split' || activeScrollPaneRef.current !== 'preview') return;
     const editor = editorRef.current;
     const preview = previewRef.current;
     if (!editor || !preview) return;
@@ -590,7 +622,7 @@ export default function MarkdownEditor() {
   }, [editingTitle]);
 
   // --- ReactMarkdown components ---
-  const markdownComponents = {
+  const markdownComponents = useMemo(() => ({
     pre({ children }) {
       return <div className="not-prose my-4">{children}</div>;
     },
@@ -668,24 +700,7 @@ export default function MarkdownEditor() {
       }
       return <input type={type} {...props} />;
     },
-  };
-
-  // ─── TOOLBAR COMPONENT ─────────────────────────────────────
-  const ToolbarButton = ({ icon: Icon, label, onClick, className = '' }) => (
-    <button
-      onClick={onClick}
-      title={label}
-      className={`p-1.5 rounded-md hover:bg-stone-200 dark:hover:bg-stone-600 text-stone-600 dark:text-stone-300 transition-colors ${className}`}
-    >
-      {typeof Icon === 'string' ? (
-        <span className="text-xs font-bold w-5 h-5 flex items-center justify-center">{Icon}</span>
-      ) : (
-        <Icon size={16} />
-      )}
-    </button>
-  );
-
-  const ToolbarSep = () => <div className="w-px h-6 bg-stone-300 dark:bg-stone-600 mx-1" />;
+  }), [isDark]);
 
   // ─── RENDER ────────────────────────────────────────────────
   return (
@@ -1008,7 +1023,11 @@ export default function MarkdownEditor() {
 
         {/* ── EDITOR PANE ─────────────────────────────────── */}
         {(viewMode === 'edit' || viewMode === 'split') && (
-          <div className={`mdpad-editor-pane flex flex-col ${viewMode === 'split' ? 'w-1/2' : 'flex-1'} ${viewMode === 'split' ? 'border-r border-stone-200 dark:border-stone-700' : ''}`}>
+          <div
+            className={`mdpad-editor-pane flex flex-col ${viewMode === 'split' ? 'w-1/2' : 'flex-1'} ${viewMode === 'split' ? 'border-r border-stone-200 dark:border-stone-700' : ''}`}
+            onMouseEnter={() => { activeScrollPaneRef.current = 'editor'; }}
+            onTouchStart={() => { activeScrollPaneRef.current = 'editor'; }}
+          >
             <textarea
               ref={editorRef}
               value={editorContent}
@@ -1030,18 +1049,20 @@ export default function MarkdownEditor() {
         <div
           ref={previewRef}
           onScroll={handlePreviewScroll}
+          onMouseEnter={() => { activeScrollPaneRef.current = 'preview'; }}
+          onTouchStart={() => { activeScrollPaneRef.current = 'preview'; }}
           className={`mdpad-preview-pane overflow-y-auto ${
             viewMode === 'preview' ? 'flex-1' : viewMode === 'split' ? 'w-1/2' : 'absolute -left-[9999px] w-[800px]'
           } bg-white dark:bg-stone-900`}
         >
           <div className="mdpad-preview-content max-w-3xl mx-auto p-4 sm:p-8 prose prose-stone dark:prose-invert prose-headings:font-bold prose-a:text-indigo-600 dark:prose-a:text-indigo-400 prose-img:rounded-lg prose-pre:bg-transparent prose-pre:p-0 max-w-none">
-            {editorContent ? (
+            {deferredEditorContent ? (
               <ReactMarkdown
-                remarkPlugins={[remarkGfm, remarkMath]}
-                rehypePlugins={[rehypeKatex, rehypeRaw]}
+                remarkPlugins={REMARK_PLUGINS}
+                rehypePlugins={REHYPE_PLUGINS}
                 components={markdownComponents}
               >
-                {editorContent}
+                {deferredEditorContent}
               </ReactMarkdown>
             ) : (
               <div className="text-stone-400 dark:text-stone-500 text-center py-20">

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { navigate } from '../../../utils/navigation';
 import * as Tone from 'tone';
 import { Midi } from '@tonejs/midi';
 import Peer from 'peerjs';
@@ -1222,7 +1223,7 @@ export default function PianoStudio() {
         }}>
           {/* ── Left: Logo & File ── */}
           <div className="flex items-center gap-1.5 mr-2">
-            <a href="#/tools" className="p-1.5 rounded-lg transition-colors hover:bg-white/5">
+            <a href="#/tools" onClick={(e) => { e.preventDefault(); navigate('/tools'); }} className="p-1.5 rounded-lg transition-colors hover:bg-white/5" title="Back to Tools">
               <ArrowLeft size={15} className="text-white/35" />
             </a>
             <div className="w-8 h-8 rounded-xl flex items-center justify-center shadow-lg"

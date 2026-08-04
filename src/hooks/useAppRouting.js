@@ -35,9 +35,14 @@ const SEO_CONFIG = {
     canonicalPath: 'tools/device-test'
   },
   'perfect-pitch': {
-    title: 'Perfect Pitch Trainer - Ear Training for Musical Notes & Intervals',
-    description: 'Train your ear to identify musical notes and intervals. Three difficulty modes: White Keys, All Keys, and Intervals.',
+    title: 'Piano Trainer - Sight Reading, Chords & Ear Training',
+    description: 'Interaktiver Piano & Notentrainer: Notenlesen auf Notenlinien, Akkorde (Dur/Moll/Septimen), Gehörtraining & virtuelles Keyboard.',
     canonicalPath: 'tools/perfect-pitch'
+  },
+  'piano-trainer': {
+    title: 'Piano Trainer - Sight Reading, Chords & Ear Training',
+    description: 'Interaktiver Piano & Notentrainer: Notenlesen auf Notenlinien, Akkorde (Dur/Moll/Septimen), Gehörtraining & virtuelles Keyboard.',
+    canonicalPath: 'tools/piano-trainer'
   },
   'learning-hub': {
     title: 'Learning Hub - Interaktive Kurse & E-Books',
@@ -117,7 +122,7 @@ export function useAppRouting() {
         return;
       }
 
-      if (path === '/tools/perfect-pitch') {
+      if (path === '/tools/perfect-pitch' || path === '/tools/piano-trainer') {
         setAppView('perfect-pitch');
         return;
       }

@@ -4,7 +4,7 @@ import {
   Sparkles, Wrench, ArrowUpRight, FileText, Music, 
   Layers, Mic, Edit3, Headphones, Search, 
   ShieldCheck, Zap, LayoutGrid, List, Cpu, GraduationCap, Palette,
-  Star
+  Star, Piano
 } from 'lucide-react';
 import ParticleBackground from './ParticleBackground';
 import { navigate } from '../../../utils/navigation';
@@ -133,18 +133,18 @@ export default function ToolsOverviewPage() {
       tags: ['Audio Visualizer', 'Camera Test', 'Local Canvas']
     },
     {
-      id: 'perfect-pitch',
-      title: 'Perfect Pitch Trainer',
-      tagline: 'Musical Ear & Interval Training',
-      description: 'Ear training program to develop pitch recognition. Test yourself on single notes, intervals, and harmonic chords with adaptive difficulty.',
-      icon: Headphones,
-      accentColor: 'from-fuchsia-500 via-pink-600 to-rose-500',
-      borderGlow: 'hover:border-pink-500/50 hover:shadow-pink-500/10',
-      link: '/tools/perfect-pitch',
+      id: 'piano-trainer',
+      title: 'Piano Trainer',
+      tagline: 'Notenlesen, Akkorde & Gehörtraining',
+      description: 'Umfassendes Musik-Training: Notenlesen auf Linien/Zwischenräumen (Violin- & Bassschlüssel), Akkord-Erkennung (Dur/Moll/Septimen), Gehörtraining & virtuelles Piano Keyboard.',
+      icon: Piano,
+      accentColor: 'from-violet-600 via-fuchsia-600 to-pink-500',
+      borderGlow: 'hover:border-violet-500/50 hover:shadow-violet-500/10',
+      link: '/tools/piano-trainer',
       category: 'Learning',
-      stats: '3 Game Modes',
-      badge: 'Ear Training',
-      tags: ['Note Recognition', 'Intervals', 'Audio Feedback']
+      stats: 'Noten · Akkorde · Gehör',
+      badge: 'Interactive Staff & Synth',
+      tags: ['Notenlesen', 'Akkorde', 'Gehörtraining', 'Violinschlüssel', 'Bassschlüssel']
     }
   ];
 

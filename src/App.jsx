@@ -26,7 +26,7 @@ import PdfTools from './modules/tools/pdf-tools/PdfTools';
 import FlashMaster from './modules/tools/flashmaster/FlashMaster';
 import DeviceTest from './modules/tools/device-test/DeviceTest';
 import MarkdownEditor from './modules/tools/markdown-editor/MarkdownEditor';
-import PerfectPitch from './modules/tools/perfect-pitch/PerfectPitch';
+import PianoTrainer from './modules/tools/perfect-pitch/PianoTrainer';
 
 import Footer from './shared/components/Footer';
 import PrivacyPage from './shared/components/PrivacyPage';
@@ -64,7 +64,7 @@ function AppContent() {
     if (appView === 'flashmaster') return <FlashMaster />;
     if (appView === 'markdown-editor') return <MarkdownEditor />;
     if (appView === 'device-test') return <DeviceTest />;
-    if (appView === 'perfect-pitch') return <PerfectPitch />;
+    if (appView === 'perfect-pitch' || appView === 'piano-trainer') return <PianoTrainer />;
 
     if (appView === 'learnbuddy') {
       return <LearnBuddyView onSwitchToBlog={() => navigate('/blog')} />;

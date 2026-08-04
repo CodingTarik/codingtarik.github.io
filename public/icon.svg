@@ -1,23 +1,76 @@
 <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-  <!-- Background Circle -->
-  <circle cx="100" cy="100" r="95" fill="#14b8a6"/>
-  
-  <!-- Climbing Wall -->
-  <rect x="40" y="30" width="120" height="140" rx="8" fill="#fafaf9" opacity="0.9"/>
-  
-  <!-- Holds -->
-  <ellipse cx="70" cy="60" rx="12" ry="9" fill="#f97316"/>
-  <circle cx="130" cy="70" r="10" fill="#f97316"/>
-  <rect x="60" y="105" width="18" height="14" rx="4" fill="#f97316"/>
-  <circle cx="140" cy="120" r="11" fill="#f97316"/>
-  <ellipse cx="90" cy="145" rx="14" ry="10" fill="#f97316"/>
-  
-  <!-- Climber -->
-  <circle cx="100" cy="115" r="10" fill="#44403c"/>
-  <line x1="100" y1="125" x2="100" y2="155" stroke="#44403c" stroke-width="5" stroke-linecap="round"/>
-  <line x1="100" y1="135" x2="80" y2="145" stroke="#44403c" stroke-width="5" stroke-linecap="round"/>
-  <line x1="100" y1="135" x2="120" y2="145" stroke="#44403c" stroke-width="5" stroke-linecap="round"/>
-  <line x1="100" y1="155" x2="90" y2="170" stroke="#44403c" stroke-width="5" stroke-linecap="round"/>
-  <line x1="100" y1="155" x2="110" y2="170" stroke="#44403c" stroke-width="5" stroke-linecap="round"/>
-</svg>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366F1"/>
+      <stop offset="55%" stop-color="#8B5CF6"/>
+      <stop offset="100%" stop-color="#A855F7"/>
+    </linearGradient>
+    <linearGradient id="wall" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.97"/>
+      <stop offset="100%" stop-color="#EDE9FE" stop-opacity="0.97"/>
+    </linearGradient>
+    <linearGradient id="holdA" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F43F5E"/>
+      <stop offset="100%" stop-color="#FB7185"/>
+    </linearGradient>
+    <linearGradient id="holdB" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#FBBF24"/>
+    </linearGradient>
+    <linearGradient id="holdC" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22D3EE"/>
+      <stop offset="100%" stop-color="#38BDF8"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="topGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="10" result="b"/>
+    </filter>
+  </defs>
 
+  <!-- Outer glow halo -->
+  <circle cx="100" cy="100" r="88" fill="#A855F7" filter="url(#topGlow)" opacity="0.45"/>
+
+  <!-- Rounded background with brand gradient -->
+  <rect x="6" y="6" width="188" height="188" rx="46" fill="url(#bg)"/>
+  <!-- Inner subtle border ring -->
+  <rect x="10" y="10" width="180" height="180" rx="42" fill="none" stroke="#ffffff" stroke-opacity="0.18" stroke-width="2"/>
+
+  <!-- Climbing Wall (perspective slab) -->
+  <g transform="translate(100,168) scale(1,-1) translate(-100,-168)">
+    <path d="M55 172 L55 62 Q55 44 72 42 L136 32 Q150 30 152 44 L156 172 Z" fill="url(#wall)" opacity="0.95"/>
+    <!-- subtle texture lines -->
+    <g stroke="#A5B4FC" stroke-width="2" stroke-opacity="0.35" stroke-linecap="round" fill="none">
+      <path d="M60 140 Q105 132 152 128"/>
+      <path d="M60 104 Q105 96 153 90"/>
+      <path d="M60 66 Q105 58 153 54"/>
+    </g>
+
+    <!-- Holds (multicolor, on-brand) -->
+    <!-- top rose pair -->
+    <ellipse cx="78" cy="52" rx="11" ry="8" fill="url(#holdA)"/>
+    <circle cx="126" cy="44" r="9" fill="url(#holdC)"/>
+    <!-- right mid -->
+    <rect x="118" y="66" width="17" height="12" rx="5" transform="rotate(-8 126 72)" fill="url(#holdB)"/>
+    <circle cx="82" cy="78" r="10" fill="url(#holdC)"/>
+    <!-- center left -->
+    <ellipse cx="70" cy="96" rx="12" ry="9" fill="url(#holdA)"/>
+    <!-- right lower -->
+    <circle cx="132" cy="104" r="11" fill="url(#holdB)"/>
+    <!-- bottom -->
+    <ellipse cx="92" cy="122" rx="11" ry="8" fill="url(#holdC)"/>
+    <circle cx="126" cy="134" r="9" fill="url(#holdA)"/>
+  </g>
+
+  <!-- Climber (clean silhouette, inverting on light wall) -->
+  <g fill="#312E81">
+    <circle cx="100" cy="118" r="9" filter="url(#glow)"/>
+    <path d="M100 127 L100 152" stroke="#312E81" stroke-width="5" stroke-linecap="round" filter="url(#glow)"/>
+    <path d="M100 134 L82 146" stroke="#312E81" stroke-width="5" stroke-linecap="round" filter="url(#glow)"/>
+    <path d="M100 134 L120 146" stroke="#312E81" stroke-width="5" stroke-linecap="round" filter="url(#glow)"/>
+    <path d="M100 152 L92 168" stroke="#312E81" stroke-width="5" stroke-linecap="round" filter="url(#glow)"/>
+    <path d="M100 152 L110 168" stroke="#312E81" stroke-width="5" stroke-linecap="round" filter="url(#glow)"/>
+  </g>
+</svg>
